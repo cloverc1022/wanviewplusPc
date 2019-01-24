@@ -42,9 +42,9 @@ public class DeviceCache {
         if (cameraOrigin == null) {
             hashTable.put(camera.deviceId, camera);
             camera.refreshStatus = 0;
-            if (camera.aliasName != null) {
-                camera.sortStr = Trans2PinYin.trans2PinYin(DeviceInfoDictionary.getNameByDevice(camera).trim()).toLowerCase();
-            }
+//            if (camera.aliasName != null) {
+//                camera.sortStr = Trans2PinYin.trans2PinYin(DeviceInfoDictionary.getNameByDevice(camera).trim()).toLowerCase();
+//            }
         }
     }
 

@@ -6,6 +6,7 @@ import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.http.Interceptor.CommonInterceptor;
 import net.ajcloud.wansviewplusw.support.http.Interceptor.HttpLoggingInterceptor;
+import net.ajcloud.wansviewplusw.support.http.Interceptor.OkSignatureInterceptor;
 import net.ajcloud.wansviewplusw.support.http.bean.*;
 import net.ajcloud.wansviewplusw.support.http.bean.device.DeviceListBean;
 import net.ajcloud.wansviewplusw.support.http.bean.start.AppStartUpBean;
@@ -35,6 +36,7 @@ public class RequestApiUnit {
         loggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY);
         loggingInterceptor.setColorLevel(Level.INFO);
         okHttpClient.addInterceptor(new CommonInterceptor());
+        okHttpClient.addInterceptor(new OkSignatureInterceptor());
         okHttpClient.addInterceptor(loggingInterceptor);
     }
 
@@ -197,7 +199,7 @@ public class RequestApiUnit {
         jsonObject.add("devices", jsonArray);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://sdc.ajcloud.net")
+                .baseUrl("https://sdc.ajcloud.net/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient.build())
                 .build();
@@ -252,7 +254,7 @@ public class RequestApiUnit {
         dataJson.add("devices", devicesJson);
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(url)
+                .baseUrl(url + "/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient.build())
                 .build();
@@ -283,6 +285,42 @@ public class RequestApiUnit {
         });
     }
 
+    public void getLiveSrcToken(String deviceId, int reqType, int quality,final HttpCommonListener<LiveSrcBean> listener){
+        Camera camera = DeviceCache.getInstance().get(deviceId);
+        if (camera == null) {
+            listener.onFail(-1, "param empty");
+            return;
+        }
+
+        JsonObject dataJson = new JsonObject();
+        dataJson.addProperty("reqType", reqType);
+        dataJson.addProperty("quality", quality);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(camera.getGatewayUrl() + "/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient.build())
+                .build();
+        IRequest startup = retrofit.create(IRequest.class);
+        Call<ResponseBean<LiveSrcBean>> getDeviceInfo = startup.getLiveSrcToken(ApiConstant.getReqBody(dataJson, deviceId));
+        getDeviceInfo.enqueue(new Callback<ResponseBean<LiveSrcBean>>() {
+            @Override
+            public void onResponse(Call<ResponseBean<LiveSrcBean>> call, Response<ResponseBean<LiveSrcBean>> response) {
+                ResponseBean responseBean = response.body();
+                if (responseBean.isSuccess()) {
+                    LiveSrcBean bean = (LiveSrcBean) responseBean.result;
+                    listener.onSuccess(bean);
+                } else {
+                    listener.onFail(responseBean.getResultCode(), responseBean.message);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBean<LiveSrcBean>> call, Throwable throwable) {
+                listener.onFail(-1, throwable.getMessage());
+            }
+        });
+    }
 
     private void doGetDeviceList(List<Camera> devices) {
         List<String> deviceIds = new ArrayList<>();

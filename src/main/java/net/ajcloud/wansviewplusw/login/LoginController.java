@@ -2,19 +2,32 @@ package net.ajcloud.wansviewplusw.login;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import net.ajcloud.wansviewplusw.BaseController;
 import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
 import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
 import net.ajcloud.wansviewplusw.support.http.bean.SigninBean;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 
-public class LoginController {
+public class LoginController implements BaseController {
     public TextField tf_name;
     public PasswordField tf_password;
     private RequestApiUnit requestApiUnit;
+    private OnLoginListener onLoginListener;
+
+    public interface OnLoginListener {
+        void onLoginSuccess();
+
+        void onLoginError();
+    }
+
+    public void setOnLoginListener(OnLoginListener onLoginListener) {
+        this.onLoginListener = onLoginListener;
+    }
 
     public void handleSubmitButtonAction(ActionEvent event) {
         if (requestApiUnit == null) {
@@ -32,18 +45,28 @@ public class LoginController {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        //更新JavaFX的主线程的代码放在此处
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION, "登陆成功", ButtonType.OK);
-                        alert.showAndWait();
+                        if (onLoginListener != null) {
+                            onLoginListener.onLoginSuccess();
+                        }
                     }
                 });
-
             }
 
             @Override
             public void onFail(int code, String msg) {
-
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (onLoginListener != null) {
+                            onLoginListener.onLoginError();
+                        }
+                    }
+                });
             }
         });
+    }
+
+    @FXML
+    private void initialize() {
     }
 }

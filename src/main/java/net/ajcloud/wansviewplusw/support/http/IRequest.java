@@ -21,12 +21,12 @@ public interface IRequest {
     @POST("device-list")
     Call<ResponseBean<DeviceListBean>> getDeviceList(@Body JsonObject body);
 
-    @POST("/api/v1/cam-config")
+    @POST("api/v1/cam-config")
     Call<ResponseBean<DeviceUrlBean>> getDeviceUrl(@Body JsonObject body);
 
-    @POST("/v1/fetch-infos")
+    @POST("v1/fetch-infos")
     Call<ResponseBean<DevicesInfosBean>> getDeviceInfo(@Body JsonObject body);
 
-    @POST("/v1/live-sec-token")
+    @POST("v1/live-sec-token")
     Call<ResponseBean<LiveSrcBean>> getLiveSrcToken(@Body JsonObject body);
 }
