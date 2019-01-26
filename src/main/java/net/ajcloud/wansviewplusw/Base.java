@@ -1,5 +1,7 @@
 package net.ajcloud.wansviewplusw;
 
+import com.sun.jna.Native;
+import com.sun.jna.NativeLibrary;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
@@ -16,6 +18,8 @@ import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
 import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
 import net.ajcloud.wansviewplusw.support.http.bean.LiveSrcBean;
 import net.ajcloud.wansviewplusw.support.http.bean.start.AppStartUpBean;
+import uk.co.caprica.vlcj.binding.LibVlc;
+import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 import java.io.InputStream;
 import java.util.logging.Level;
@@ -25,8 +29,11 @@ public class Base extends Application implements LoginController.OnLoginListener
 
     private final double MINIMUM_WINDOW_WIDTH = 900.0;
     private final double MINIMUM_WINDOW_HEIGHT = 600.0;
+    private static final String NATIVE_LIBRARY_SEARCH_PATH = "D:\\vpn";
     private Stage stage;
     private RequestApiUnit requestApiUnit;
+    MainController main;
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -48,6 +55,8 @@ public class Base extends Application implements LoginController.OnLoginListener
     public void init() throws Exception {
         super.init();
         requestApiUnit = new RequestApiUnit();
+        NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), NATIVE_LIBRARY_SEARCH_PATH);
+        Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
     }
 
     private void startUp() {
@@ -75,7 +84,7 @@ public class Base extends Application implements LoginController.OnLoginListener
 
     private void go2Main() {
         try {
-            MainController main = (MainController) replaceSceneContent("/fxml/main.fxml");
+            main = (MainController) replaceSceneContent("/fxml/main.fxml");
             main.init();
             main.setOnItemClickListener(this);
         } catch (Exception ex) {
@@ -121,7 +130,7 @@ public class Base extends Application implements LoginController.OnLoginListener
             requestApiUnit.getLiveSrcToken(deviceId, 1, 5, new HttpCommonListener<LiveSrcBean>() {
                 @Override
                 public void onSuccess(LiveSrcBean bean) {
-
+                    main.play(bean.stream.localUrl);
                 }
 
                 @Override

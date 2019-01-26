@@ -157,6 +157,7 @@ public class HttpLoggingInterceptor implements Interceptor {
     private Response logForResponse(Response response, long tookMs) {
         Response.Builder builder = response.newBuilder();
         Response clone = builder.build();
+//        response.close();
         ResponseBody responseBody = clone.body();
         boolean logBody = (printLevel == Level.BODY);
         boolean logHeaders = (printLevel == Level.BODY || printLevel == Level.HEADERS);
