@@ -27,8 +27,8 @@ import java.util.logging.Logger;
 
 public class Base extends Application implements LoginController.OnLoginListener, MainController.OnItemClickListener {
 
-    private final double MINIMUM_WINDOW_WIDTH = 900.0;
-    private final double MINIMUM_WINDOW_HEIGHT = 600.0;
+    private final double MINIMUM_WINDOW_WIDTH =1280;
+    private final double MINIMUM_WINDOW_HEIGHT = 800;
     private static final String NATIVE_LIBRARY_SEARCH_PATH = "D:\\vpn";
     private Stage stage;
     private RequestApiUnit requestApiUnit;
@@ -45,6 +45,13 @@ public class Base extends Application implements LoginController.OnLoginListener
         stage.show();
 
         startUp();
+    }
+
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+        if (main != null)
+            main.stop();
     }
 
     public static void main(String[] args) {
@@ -106,7 +113,7 @@ public class Base extends Application implements LoginController.OnLoginListener
         } finally {
             in.close();
         }
-        Scene scene = new Scene(page, 800, 600);
+        Scene scene = new Scene(page, MINIMUM_WINDOW_WIDTH, MINIMUM_WINDOW_HEIGHT);
         stage.setScene(scene);
         stage.sizeToScene();
         return loader.getController();
