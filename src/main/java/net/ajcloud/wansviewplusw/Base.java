@@ -3,13 +3,17 @@ package net.ajcloud.wansviewplusw;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import net.ajcloud.wansviewplusw.login.LoginController;
 import net.ajcloud.wansviewplusw.main.MainController;
 import net.ajcloud.wansviewplusw.support.device.Camera;
@@ -29,7 +33,7 @@ public class Base extends Application implements LoginController.OnLoginListener
 
     private final double MINIMUM_WINDOW_WIDTH =1280;
     private final double MINIMUM_WINDOW_HEIGHT = 800;
-    private static final String NATIVE_LIBRARY_SEARCH_PATH = "D:\\vpn";
+    private static final String NATIVE_LIBRARY_SEARCH_PATH = "lib/dll";
     private Stage stage;
     private RequestApiUnit requestApiUnit;
     MainController main;
@@ -38,7 +42,15 @@ public class Base extends Application implements LoginController.OnLoginListener
     @Override
     public void start(Stage primaryStage) throws Exception {
         stage = primaryStage;
+        primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent event) {
+                Platform.exit();
+                System.exit(0);
+            }
+        });
         stage.setTitle("WansviewPlus");
+        stage.getIcons().add(new Image("image/ic_launcher.png"));
         stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
         stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
         go2Login();
