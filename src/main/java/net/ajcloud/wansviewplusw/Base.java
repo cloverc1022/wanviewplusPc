@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 
 public class Base extends Application implements LoginController.OnLoginListener, MainController.OnItemClickListener {
 
-    private final double MINIMUM_WINDOW_WIDTH =1280;
+    private final double MINIMUM_WINDOW_WIDTH = 1280;
     private final double MINIMUM_WINDOW_HEIGHT = 800;
     private static final String NATIVE_LIBRARY_SEARCH_PATH = "lib/dll";
     private Stage stage;
@@ -103,9 +103,22 @@ public class Base extends Application implements LoginController.OnLoginListener
 
     private void go2Main() {
         try {
-            main = (MainController) replaceSceneContent("/fxml/main.fxml");
-            main.init();
-            main.setOnItemClickListener(this);
+            FXMLLoader loader = new FXMLLoader();
+            InputStream in = Base.class.getResourceAsStream("/fxml/main.fxml");
+            loader.setBuilderFactory(new JavaFXBuilderFactory());
+            loader.setLocation(Base.class.getResource("/fxml/main.fxml"));
+            Pane page;
+            try {
+                page = loader.load(in);
+                main = loader.getController();
+                main.init();
+                main.setOnItemClickListener(this);
+            } finally {
+                in.close();
+            }
+            Scene scene = new Scene(page, MINIMUM_WINDOW_WIDTH, MINIMUM_WINDOW_HEIGHT);
+            stage.setScene(scene);
+            stage.sizeToScene();
         } catch (Exception ex) {
             Logger.getLogger(Base.class.getName()).log(Level.SEVERE, null, ex);
         }

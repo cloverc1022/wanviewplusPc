@@ -1,21 +1,20 @@
 package net.ajcloud.wansviewplusw.main;
 
 import com.sun.jna.Memory;
-import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
+import javafx.beans.property.FloatProperty;
+import javafx.beans.property.SimpleFloatProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.canvas.Canvas;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SplitPane;
-import javafx.scene.image.PixelFormat;
-import javafx.scene.image.PixelWriter;
-import javafx.scene.image.WritablePixelFormat;
+import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Screen;
 import javafx.util.Callback;
 import net.ajcloud.wansviewplusw.BaseController;
 import net.ajcloud.wansviewplusw.support.device.Camera;
@@ -24,7 +23,7 @@ import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
 import uk.co.caprica.vlcj.component.DirectMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.direct.BufferFormat;
 import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
-import uk.co.caprica.vlcj.player.direct.DefaultDirectMediaPlayer;
+import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.format.RV32BufferFormat;
 
 import java.nio.ByteBuffer;
@@ -48,27 +47,16 @@ public class MainController implements BaseController {
      */
     private static final int HEIGHT = 607;
 
-    /**
-     * Lightweight JavaFX canvas, the video is rendered here.
-     */
-    private Canvas canvas;
+    private ImageView imageView;
 
-    /**
-     * Pixel writer to update the canvas.
-     */
-    private PixelWriter pixelWriter;
-
-    /**
-     * Pixel format.
-     */
-    private WritablePixelFormat<ByteBuffer> pixelFormat;
-
-    /**
-     * The vlcj direct rendering media player component.
-     */
     private DirectMediaPlayerComponent mediaPlayerComponent;
 
-    private AnimationTimer timer;
+    private WritableImage writableImage;
+
+    private WritablePixelFormat<ByteBuffer> pixelFormat;
+
+    private FloatProperty videoSourceRatioProperty;
+
 
     @FXML
     private ListView<Camera> deviceList;
@@ -99,17 +87,10 @@ public class MainController implements BaseController {
      * 初始化
      */
     public void init() {
-        canvas = new Canvas();
-        pixelWriter = canvas.getGraphicsContext2D().getPixelWriter();
-        pixelFormat = PixelFormat.getByteBgraInstance();
-        playPane.setCenter(canvas);
-        mediaPlayerComponent = new TestMediaPlayerComponent();
-        timer = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                renderFrame();
-            }
-        };
+        mediaPlayerComponent = new CanvasPlayerComponent();
+        videoSourceRatioProperty = new SimpleFloatProperty(0.4f);
+        pixelFormat = PixelFormat.getByteBgraPreInstance();
+        initializeImageView();
 
         if (requestApiUnit == null) {
             requestApiUnit = new RequestApiUnit();
@@ -136,73 +117,94 @@ public class MainController implements BaseController {
         });
     }
 
+    private void initializeImageView() {
+        Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
+        writableImage = new WritableImage((int) visualBounds.getWidth(), (int) visualBounds.getHeight());
+
+        imageView = new ImageView(writableImage);
+        playPane.getChildren().add(imageView);
+
+        playPane.widthProperty().addListener((observable, oldValue, newValue) -> {
+            fitImageViewSize(newValue.floatValue(), (float) playPane.getHeight());
+        });
+
+        playPane.heightProperty().addListener((observable, oldValue, newValue) -> {
+            fitImageViewSize((float) playPane.getWidth(), newValue.floatValue());
+        });
+
+        videoSourceRatioProperty.addListener((observable, oldValue, newValue) -> {
+            fitImageViewSize((float) playPane.getWidth(), (float) playPane.getHeight());
+        });
+    }
+
+    private void fitImageViewSize(float width, float height) {
+        Platform.runLater(() -> {
+            float fitHeight = videoSourceRatioProperty.get() * width;
+            if (fitHeight > height) {
+                imageView.setFitHeight(height);
+                double fitWidth = height / videoSourceRatioProperty.get();
+                imageView.setFitWidth(fitWidth);
+                imageView.setX((width - fitWidth) / 2);
+                imageView.setY(0);
+            } else {
+                imageView.setFitWidth(width);
+                imageView.setFitHeight(fitHeight);
+                imageView.setY((height - fitHeight) / 2);
+                imageView.setX(0);
+            }
+        });
+    }
+
+    private class CanvasPlayerComponent extends DirectMediaPlayerComponent {
+
+        public CanvasPlayerComponent() {
+            super(new CanvasBufferFormatCallback());
+        }
+
+        PixelWriter pixelWriter = null;
+
+        private PixelWriter getPW() {
+            if (pixelWriter == null) {
+                pixelWriter = writableImage.getPixelWriter();
+            }
+            return pixelWriter;
+        }
+
+        @Override
+        public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat) {
+            if (writableImage == null) {
+                return;
+            }
+            Platform.runLater(() -> {
+                Memory nativeBuffer = mediaPlayer.lock()[0];
+                try {
+                    ByteBuffer byteBuffer = nativeBuffer.getByteBuffer(0, nativeBuffer.size());
+                    getPW().setPixels(0, 0, bufferFormat.getWidth(), bufferFormat.getHeight(), pixelFormat, byteBuffer, bufferFormat.getPitches()[0]);
+                } finally {
+                    mediaPlayer.unlock();
+                }
+            });
+        }
+    }
+
+    private class CanvasBufferFormatCallback implements BufferFormatCallback {
+        @Override
+        public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
+            Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
+            Platform.runLater(() -> videoSourceRatioProperty.set((float) sourceHeight / (float) sourceWidth));
+            return new RV32BufferFormat((int) visualBounds.getWidth(), (int) visualBounds.getHeight());
+        }
+    }
+
     @FXML
     private void initialize() {
     }
 
-    /**
-     * Implementation of a direct rendering media player component that renders
-     * the video to a JavaFX canvas.
-     */
-    private class TestMediaPlayerComponent extends DirectMediaPlayerComponent {
-
-        public TestMediaPlayerComponent() {
-            super(new TestBufferFormatCallback());
-        }
-    }
-
-    /**
-     * Callback to get the buffer format to use for video playback.
-     */
-    private class TestBufferFormatCallback implements BufferFormatCallback {
-
-        @Override
-        public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
-            final int width;
-            final int height;
-            if (useSourceSize) {
-                width = sourceWidth;
-                height = sourceHeight;
-            } else {
-                width = WIDTH;
-                height = HEIGHT;
-            }
-            Platform.runLater(new Runnable() {
-                @Override
-                public void run() {
-                    canvas.setWidth(width);
-                    canvas.setHeight(height);
-                }
-            });
-            return new RV32BufferFormat(width, height);
-        }
-    }
-
-    protected final void renderFrame() {
-        Memory[] nativeBuffers = mediaPlayerComponent.getMediaPlayer().lock();
-        if (nativeBuffers != null) {
-            // FIXME there may be more efficient ways to do this...
-            // Since this is now being called by a specific rendering time, independent of the native video callbacks being
-            // invoked, some more defensive conditional checks are needed
-            Memory nativeBuffer = nativeBuffers[0];
-            if (nativeBuffer != null) {
-                ByteBuffer byteBuffer = nativeBuffer.getByteBuffer(0, nativeBuffer.size());
-                BufferFormat bufferFormat = ((DefaultDirectMediaPlayer) mediaPlayerComponent.getMediaPlayer()).getBufferFormat();
-                if (bufferFormat.getWidth() > 0 && bufferFormat.getHeight() > 0) {
-                    pixelWriter.setPixels(0, 0, bufferFormat.getWidth(), bufferFormat.getHeight(), pixelFormat, byteBuffer, bufferFormat.getPitches()[0]);
-                }
-            }
-        }
-        mediaPlayerComponent.getMediaPlayer().unlock();
-    }
-
     public void play(String url) {
         mediaPlayerComponent.getMediaPlayer().playMedia(url);
-        timer.start();
     }
 
     public void stop() {
-        timer.stop();
         mediaPlayerComponent.getMediaPlayer().stop();
         mediaPlayerComponent.getMediaPlayer().release();
     }
