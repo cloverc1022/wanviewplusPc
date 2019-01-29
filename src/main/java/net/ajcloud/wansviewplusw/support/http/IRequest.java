@@ -7,6 +7,7 @@ import net.ajcloud.wansviewplusw.support.http.bean.start.AppStartUpBean;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface IRequest {
     @POST("/api/v1/app-startup")
@@ -29,4 +30,7 @@ public interface IRequest {
 
     @POST("v1/live-sec-token")
     Call<ResponseBean<LiveSrcBean>> getLiveSrcToken(@Body JsonObject body);
+
+    @POST("{url}")
+    Call<ResponseBean<LanProbeBean>> doLanProbe(@Path("url") String url, @Body JsonObject body);
 }

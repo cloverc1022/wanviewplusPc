@@ -42,27 +42,27 @@ public class ApiConstant {
     public static String URL_DEVICE_WIPE_DATA = URL_BASE + "/api/v1/wipe-data";
 
     // uac账号相关
-    public static String URL_UAC_CHALLENGE = BASE_UAC_URL + "/challenge";
-    public static String URL_UAC_SIGNIN = BASE_UAC_URL + "/signin";
-    public static String URL_UAC_RESET_PASSWORD = BASE_UAC_URL + "/reset-password";
-    public static String URL_UAC_SIGNUP = BASE_UAC_URL + "/signup";
-    public static String URL_UAC_SIGNOUT = BASE_UAC_URL + "/signout";
-    public static String URL_UAC_USER_ACTIVE = BASE_UAC_URL + "/user-active";
-    public static String URL_UAC_CHANGE_PASSWORD = BASE_UAC_URL + "/change-password";
-    public static String URL_UAC_REFRESH_TOKEN = BASE_UAC_URL + "/refresh-token";
-    public static String URL_UAC_DELETE_ACCOUNT = BASE_UAC_URL + "/logout";
+    public static String URL_UAC_CHALLENGE = BASE_UAC_URL + "challenge";
+    public static String URL_UAC_SIGNIN = BASE_UAC_URL + "signin";
+    public static String URL_UAC_RESET_PASSWORD = BASE_UAC_URL + "reset-password";
+    public static String URL_UAC_SIGNUP = BASE_UAC_URL + "signup";
+    public static String URL_UAC_SIGNOUT = BASE_UAC_URL + "signout";
+    public static String URL_UAC_USER_ACTIVE = BASE_UAC_URL + "user-active";
+    public static String URL_UAC_CHANGE_PASSWORD = BASE_UAC_URL + "change-password";
+    public static String URL_UAC_REFRESH_TOKEN = BASE_UAC_URL + "refresh-token";
+    public static String URL_UAC_DELETE_ACCOUNT = BASE_UAC_URL + "logout";
     //uac设备相关
-    public static String URL_UAC_PREBIND = BASE_UAC_URL + "/req-bind";
-    public static String URL_UAC_GET_BIND_STATUS = BASE_UAC_URL + "/bind-status";
-    public static String URL_UAC_GET_BIND_STATUS_BY_TOKEN = BASE_UAC_URL + "/check-bind";
-    public static String URL_UAC_GET_DEVICE_LIST = BASE_UAC_URL + "/device-list";
-    public static String URL_UAC_SET_DEVICE_NAME_UAC = BASE_UAC_URL + "/change-alias-name";
-    public static String URL_UAC_UNBIND = BASE_UAC_URL + "/unbind";
-    public static String URL_UAC_SHARE = BASE_UAC_URL + "/share-camera";
-    public static String URL_UAC_SHARE_DELETE = BASE_UAC_URL + "/delete-share-entry";
-    public static String URL_UAC_SHARE_DELETE_ALL = BASE_UAC_URL + "/delete-share-all";
-    public static String URL_UAC_GUEST_BIND = BASE_UAC_URL + "/bind-invite-camera";
-    public static String URL_UAC_GUEST_UNBIND = BASE_UAC_URL + "/unbind-invite-camera";
+    public static String URL_UAC_PREBIND = BASE_UAC_URL + "req-bind";
+    public static String URL_UAC_GET_BIND_STATUS = BASE_UAC_URL + "bind-status";
+    public static String URL_UAC_GET_BIND_STATUS_BY_TOKEN = BASE_UAC_URL + "check-bind";
+    public static String URL_UAC_GET_DEVICE_LIST = BASE_UAC_URL + "device-list";
+    public static String URL_UAC_SET_DEVICE_NAME_UAC = BASE_UAC_URL + "change-alias-name";
+    public static String URL_UAC_UNBIND = BASE_UAC_URL + "unbind";
+    public static String URL_UAC_SHARE = BASE_UAC_URL + "share-camera";
+    public static String URL_UAC_SHARE_DELETE = BASE_UAC_URL + "delete-share-entry";
+    public static String URL_UAC_SHARE_DELETE_ALL = BASE_UAC_URL + "delete-share-all";
+    public static String URL_UAC_GUEST_BIND = BASE_UAC_URL + "bind-invite-camera";
+    public static String URL_UAC_GUEST_UNBIND = BASE_UAC_URL + "unbind-invite-camera";
     //emc
     public static String URL_EMC_PUSH_SETTING = "/v1/push-setting";
     public static String URL_EMC_ALARMS_LIST = "/v1/alarms-list";
@@ -137,27 +137,27 @@ public class ApiConstant {
         //v2
         BASE_UAC_V2_URL = UAC_URL + "/v2/";
         // uac账号相关
-        URL_UAC_CHALLENGE = BASE_UAC_URL + "/challenge";
-        URL_UAC_SIGNIN = BASE_UAC_URL + "/signin";
-        URL_UAC_RESET_PASSWORD = BASE_UAC_URL + "/reset-password";
-        URL_UAC_SIGNUP = BASE_UAC_URL + "/signup";
-        URL_UAC_SIGNOUT = BASE_UAC_URL + "/signout";
-        URL_UAC_USER_ACTIVE = BASE_UAC_URL + "/user-active";
-        URL_UAC_CHANGE_PASSWORD = BASE_UAC_URL + "/change-password";
-        URL_UAC_REFRESH_TOKEN = BASE_UAC_URL + "/refresh-token";
-        URL_UAC_DELETE_ACCOUNT = BASE_UAC_URL + "/logout";
+        URL_UAC_CHALLENGE = BASE_UAC_URL + "challenge";
+        URL_UAC_SIGNIN = BASE_UAC_URL + "signin";
+        URL_UAC_RESET_PASSWORD = BASE_UAC_URL + "reset-password";
+        URL_UAC_SIGNUP = BASE_UAC_URL + "signup";
+        URL_UAC_SIGNOUT = BASE_UAC_URL + "signout";
+        URL_UAC_USER_ACTIVE = BASE_UAC_URL + "user-active";
+        URL_UAC_CHANGE_PASSWORD = BASE_UAC_URL + "change-password";
+        URL_UAC_REFRESH_TOKEN = BASE_UAC_URL + "refresh-token";
+        URL_UAC_DELETE_ACCOUNT = BASE_UAC_URL + "logout";
         //uac设备相关
-        URL_UAC_PREBIND = BASE_UAC_URL + "/req-bind";
-        URL_UAC_GET_BIND_STATUS = BASE_UAC_URL + "/bind-status";
-        URL_UAC_GET_BIND_STATUS_BY_TOKEN = BASE_UAC_URL + "/check-bind";
-        URL_UAC_GET_DEVICE_LIST = BASE_UAC_URL + "/device-list";
-        URL_UAC_SET_DEVICE_NAME_UAC = BASE_UAC_URL + "/change-alias-name";
-        URL_UAC_UNBIND = BASE_UAC_URL + "/unbind";
-        URL_UAC_SHARE = BASE_UAC_URL + "/share-camera";
-        URL_UAC_SHARE_DELETE = BASE_UAC_URL + "/delete-share-entry";
-        URL_UAC_SHARE_DELETE_ALL = BASE_UAC_URL + "/delete-share-all";
-        URL_UAC_GUEST_BIND = BASE_UAC_URL + "/bind-invite-camera";
-        URL_UAC_GUEST_UNBIND = BASE_UAC_URL + "/unbind-invite-camera";
+        URL_UAC_PREBIND = BASE_UAC_URL + "req-bind";
+        URL_UAC_GET_BIND_STATUS = BASE_UAC_URL + "bind-status";
+        URL_UAC_GET_BIND_STATUS_BY_TOKEN = BASE_UAC_URL + "check-bind";
+        URL_UAC_GET_DEVICE_LIST = BASE_UAC_URL + "device-list";
+        URL_UAC_SET_DEVICE_NAME_UAC = BASE_UAC_URL + "change-alias-name";
+        URL_UAC_UNBIND = BASE_UAC_URL + "unbind";
+        URL_UAC_SHARE = BASE_UAC_URL + "share-camera";
+        URL_UAC_SHARE_DELETE = BASE_UAC_URL + "delete-share-entry";
+        URL_UAC_SHARE_DELETE_ALL = BASE_UAC_URL + "delete-share-all";
+        URL_UAC_GUEST_BIND = BASE_UAC_URL + "bind-invite-camera";
+        URL_UAC_GUEST_UNBIND = BASE_UAC_URL + "unbind-invite-camera";
         //emc_portal
         URL_EMC_PORTAL_ALARMS_SURVEY = BASE_EMC_PORTAL_URL + "/alarms-survey";
         URL_SYSTEM_MSG_LIST = BASE_EMC_PORTAL_URL + "/sysmsg-list";

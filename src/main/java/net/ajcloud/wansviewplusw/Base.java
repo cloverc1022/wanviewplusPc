@@ -22,6 +22,8 @@ import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
 import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
 import net.ajcloud.wansviewplusw.support.http.bean.LiveSrcBean;
 import net.ajcloud.wansviewplusw.support.http.bean.start.AppStartUpBean;
+import net.ajcloud.wansviewplusw.support.utils.P2pInterface;
+import net.ajcloud.wansviewplusw.support.utils.RelayUtils;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
@@ -29,7 +31,7 @@ import java.io.InputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Base extends Application implements LoginController.OnLoginListener, MainController.OnItemClickListener {
+public class Base extends Application implements LoginController.OnLoginListener {
 
     private final double MINIMUM_WINDOW_WIDTH = 1280;
     private final double MINIMUM_WINDOW_HEIGHT = 800;
@@ -79,6 +81,8 @@ public class Base extends Application implements LoginController.OnLoginListener
     }
 
     private void startUp() {
+//        RelayUtils relayUtils = new RelayUtils();
+//        relayUtils.relayInit();
         requestApiUnit.appStartup(new HttpCommonListener<AppStartUpBean>() {
             @Override
             public void onSuccess(AppStartUpBean bean) {
@@ -112,7 +116,6 @@ public class Base extends Application implements LoginController.OnLoginListener
                 page = loader.load(in);
                 main = loader.getController();
                 main.init();
-                main.setOnItemClickListener(this);
             } finally {
                 in.close();
             }
@@ -155,21 +158,4 @@ public class Base extends Application implements LoginController.OnLoginListener
         alert.showAndWait();
     }
 
-    @Override
-    public void onItemClick(String deviceId) {
-        Camera camera = DeviceCache.getInstance().get(deviceId);
-        if (camera != null) {
-            requestApiUnit.getLiveSrcToken(deviceId, 1, 5, new HttpCommonListener<LiveSrcBean>() {
-                @Override
-                public void onSuccess(LiveSrcBean bean) {
-                    main.play(bean.stream.localUrl);
-                }
-
-                @Override
-                public void onFail(int code, String msg) {
-
-                }
-            });
-        }
-    }
 }

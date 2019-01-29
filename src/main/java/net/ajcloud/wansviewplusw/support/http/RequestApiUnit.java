@@ -285,7 +285,7 @@ public class RequestApiUnit {
         });
     }
 
-    public void getLiveSrcToken(String deviceId, int reqType, int quality,final HttpCommonListener<LiveSrcBean> listener){
+    public void getLiveSrcToken(String deviceId, int reqType, int quality, final HttpCommonListener<LiveSrcBean> listener) {
         Camera camera = DeviceCache.getInstance().get(deviceId);
         if (camera == null) {
             listener.onFail(-1, "param empty");
@@ -317,6 +317,46 @@ public class RequestApiUnit {
 
             @Override
             public void onFailure(Call<ResponseBean<LiveSrcBean>> call, Throwable throwable) {
+                listener.onFail(-1, throwable.getMessage());
+            }
+        });
+    }
+
+    public void doLanProbe(String url, String deviceId, final HttpCommonListener<LanProbeBean> listener) {
+        Camera camera = DeviceCache.getInstance().get(deviceId);
+        if (camera == null) {
+            listener.onFail(-1, "param empty");
+            return;
+        }
+
+        JsonObject dataJson = new JsonObject();
+        dataJson.addProperty("accessKey", camera.accessKey);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(url + "/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient.build())
+                .build();
+        IRequest startup = retrofit.create(IRequest.class);
+        Call<ResponseBean<LanProbeBean>> doLanProbe = startup.doLanProbe("", ApiConstant.getReqBody(dataJson, deviceId));
+        doLanProbe.enqueue(new Callback<ResponseBean<LanProbeBean>>() {
+            @Override
+            public void onResponse(Call<ResponseBean<LanProbeBean>> call, Response<ResponseBean<LanProbeBean>> response) {
+                ResponseBean responseBean = response.body();
+                if (responseBean.isSuccess()) {
+                    LanProbeBean bean = (LanProbeBean) responseBean.result;
+                    if (StringUtil.equals(bean.deviceId, deviceId)) {
+                        listener.onSuccess(bean);
+                    } else {
+                        listener.onFail(-1, responseBean.message);
+                    }
+                } else {
+                    listener.onFail(responseBean.getResultCode(), responseBean.message);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBean<LanProbeBean>> call, Throwable throwable) {
                 listener.onFail(-1, throwable.getMessage());
             }
         });
@@ -366,7 +406,7 @@ public class RequestApiUnit {
      * 登陆成功后的操作
      */
     private void saveAccount(String mail, String password, SigninBean bean) {
-        if (!(StringUtil.isNullOrEmpty(mail) || StringUtil.isNullOrEmpty(password))) {
+        if (!((StringUtil.isNullOrEmpty(mail) || StringUtil.isNullOrEmpty(password)))) {
             //存储账号信息 TODO
             DeviceCache.getInstance().signinBean = bean;
         }

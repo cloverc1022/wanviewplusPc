@@ -18,8 +18,12 @@ import javafx.stage.Screen;
 import javafx.util.Callback;
 import net.ajcloud.wansviewplusw.BaseController;
 import net.ajcloud.wansviewplusw.support.device.Camera;
+import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
 import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
+import net.ajcloud.wansviewplusw.support.utils.P2pInterface;
+import net.ajcloud.wansviewplusw.support.utils.WLog;
+import net.ajcloud.wansviewplusw.support.utils.play.PoliceHelper;
 import uk.co.caprica.vlcj.component.DirectMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.direct.BufferFormat;
 import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
@@ -29,7 +33,7 @@ import uk.co.caprica.vlcj.player.direct.format.RV32BufferFormat;
 import java.nio.ByteBuffer;
 import java.util.List;
 
-public class MainController implements BaseController {
+public class MainController implements BaseController, PoliceHelper.PoliceControlListener {
 
     /**
      * Set this to <code>true</code> to resize the display to the dimensions of the
@@ -66,27 +70,57 @@ public class MainController implements BaseController {
     private SplitPane listSplit;
     private RequestApiUnit requestApiUnit;
     private ObservableList<Camera> mInfos = FXCollections.observableArrayList();
-    private OnItemClickListener onItemClickListener;
+    private PoliceHelper policeHelper;
+    private String deviceId;
+    private String localUrl;
+    private String relay_server_ip;
+    private int port = 10001;
+    private static final String TAG = "MainController";
 
-    @FXML
-    public void handleMouseClick(MouseEvent mouseEvent) {
-        if (onItemClickListener != null) {
-            onItemClickListener.onItemClick(deviceList.getSelectionModel().getSelectedItem().deviceId);
+    class P2pTask extends Thread {
+        @Override
+        public void run() {
+            WLog.w(TAG, "p2p-----process:relayconnect");
+            int p2pNum = P2pInterface.instanceDll.SE_SetServInfo(deviceId, DeviceCache.getInstance().get(deviceId).getStunServers(), relay_server_ip, port);
+            WLog.w(TAG, "p2p----- status:" + p2pNum);
+
+            if (p2pNum > 0) {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        //更新JavaFX的主线程的代码放在此处
+                        StringBuilder url = new StringBuilder();
+                        String token = localUrl.split("live")[1];
+
+                        url.append("rtsp://");
+                        url.append("127.0.0.1:");
+                        url.append(port);
+                        url.append("/live");
+                        url.append(token);
+
+                        WLog.w("p2p_debug", "------p2p-play-----" + url.toString());
+                        mediaPlayerComponent.getMediaPlayer().playMedia(url.toString());
+                    }
+                });
+            }
         }
     }
 
-    public interface OnItemClickListener {
-        void onItemClick(String deviceId);
-    }
-
-    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
-        this.onItemClickListener = onItemClickListener;
+    @FXML
+    public void handleMouseClick(MouseEvent mouseEvent) {
+        this.deviceId = deviceList.getSelectionModel().getSelectedItem().deviceId;
+        Camera camera = DeviceCache.getInstance().get(deviceId);
+        if (camera != null) {
+            policeHelper.setCamera(camera);
+            policeHelper.getUrlAndPlay();
+        }
     }
 
     /**
      * 初始化
      */
     public void init() {
+        policeHelper = new PoliceHelper(this);
         mediaPlayerComponent = new CanvasPlayerComponent();
         videoSourceRatioProperty = new SimpleFloatProperty(0.4f);
         pixelFormat = PixelFormat.getByteBgraPreInstance();
@@ -200,12 +234,25 @@ public class MainController implements BaseController {
     private void initialize() {
     }
 
-    public void play(String url) {
-        mediaPlayerComponent.getMediaPlayer().playMedia(url);
-    }
-
     public void stop() {
         mediaPlayerComponent.getMediaPlayer().stop();
         mediaPlayerComponent.getMediaPlayer().release();
+    }
+
+    @Override
+    public void onCannotPlay() {
+
+    }
+
+    @Override
+    public void onPlay(int playMethod, String url, int mVideoHeight, int mVideoWidth) {
+        mediaPlayerComponent.getMediaPlayer().playMedia(url);
+    }
+
+    @Override
+    public void onP2pPlay(String relayServer, String url) {
+        this.localUrl = url;
+        this.relay_server_ip = relayServer;
+        new P2pTask().start();
     }
 }
