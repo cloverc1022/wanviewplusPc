@@ -81,9 +81,10 @@ public class MainController implements BaseController, PoliceHelper.PoliceContro
         @Override
         public void run() {
             WLog.w(TAG, "p2p-----process:relayconnect");
-            int p2pNum = P2pInterface.instanceDll.SE_SetServInfo(deviceId, DeviceCache.getInstance().get(deviceId).getStunServers(), relay_server_ip, port);
-            WLog.w(TAG, "p2p----- status:" + p2pNum);
-
+//            int p2pNum = P2pInterface.instanceDll.SE_SetServInfo(deviceId, DeviceCache.getInstance().get(deviceId).getStunServers(), relay_server_ip, port);
+            int p2pNum = 0;
+//            WLog.w(TAG, "p2p----- status:" + p2pNum);
+//
             if (p2pNum > 0) {
                 Platform.runLater(new Runnable() {
                     @Override

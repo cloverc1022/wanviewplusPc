@@ -6,540 +6,19 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="更新">
-      <change afterPath="$PROJECT_DIR$/lib/dll/SE_P2PSDK.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libaom_plugin.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libdav1d_plugin.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libx26410b_plugin.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_av1_plugin.dll" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/P2pInterface.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/RelayUtils.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/play/PlayMethod.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/play/PoliceHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/lib/dll/P2pJni_Multi.dll" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/dll/librelay.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/libvlc.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/libvlc.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/libvlccore.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/libvlccore.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libaccess_concat_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libaccess_concat_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libaccess_imem_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libaccess_imem_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libaccess_mms_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libaccess_mms_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libaccess_realrtsp_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libaccess_realrtsp_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libaccess_srt_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libaccess_srt_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libaccess_wasapi_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libaccess_wasapi_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libattachment_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libattachment_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libbluray-j2se-1.0.2.jar" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libbluray-j2se-1.0.2.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libcdda_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libcdda_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libdcp_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libdcp_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libdshow_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libdshow_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libdtv_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libdtv_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libdvdnav_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libdvdnav_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libdvdread_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libdvdread_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libfilesystem_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libfilesystem_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libftp_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libftp_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libhttp_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libhttp_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libhttps_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libhttps_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libidummy_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libidummy_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libimem_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libimem_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/liblibbluray_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/liblibbluray_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/liblive555_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/liblive555_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libnfs_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libnfs_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/librtp_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/librtp_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libsatip_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libsatip_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libscreen_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libscreen_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libsdp_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libsdp_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libsftp_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libsftp_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libshm_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libshm_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libsmb_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libsmb_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libtcp_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libtcp_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libtimecode_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libtimecode_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libudp_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libudp_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libvcd_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libvcd_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libvdr_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libvdr_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access/libvnc_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access/libvnc_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access_output/libaccess_output_dummy_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access_output/libaccess_output_dummy_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access_output/libaccess_output_file_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access_output/libaccess_output_file_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access_output/libaccess_output_http_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access_output/libaccess_output_http_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access_output/libaccess_output_livehttp_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access_output/libaccess_output_livehttp_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access_output/libaccess_output_shout_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access_output/libaccess_output_shout_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access_output/libaccess_output_srt_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access_output/libaccess_output_srt_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/access_output/libaccess_output_udp_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/access_output/libaccess_output_udp_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libaudio_format_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libaudio_format_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libaudiobargraph_a_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libaudiobargraph_a_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libchorus_flanger_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libchorus_flanger_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libcompressor_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libcompressor_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libdolby_surround_decoder_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libdolby_surround_decoder_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libequalizer_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libequalizer_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libgain_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libgain_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libheadphone_channel_mixer_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libheadphone_channel_mixer_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libkaraoke_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libkaraoke_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libmad_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libmad_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libmono_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libmono_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libnormvol_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libnormvol_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libparam_eq_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libparam_eq_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libremap_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libremap_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libsamplerate_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libsamplerate_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libscaletempo_pitch_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libscaletempo_pitch_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libscaletempo_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libscaletempo_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libsimple_channel_mixer_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libsimple_channel_mixer_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libspatialaudio_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libspatialaudio_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libspatializer_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libspatializer_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libspeex_resampler_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libspeex_resampler_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libstereo_widen_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libstereo_widen_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libtospdif_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libtospdif_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libtrivial_channel_mixer_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libtrivial_channel_mixer_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libugly_resampler_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_filter/libugly_resampler_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_mixer/libfloat_mixer_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_mixer/libfloat_mixer_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_mixer/libinteger_mixer_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_mixer/libinteger_mixer_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_output/libadummy_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_output/libadummy_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_output/libafile_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_output/libafile_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_output/libamem_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_output/libamem_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_output/libdirectsound_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_output/libdirectsound_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_output/libmmdevice_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_output/libmmdevice_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_output/libwasapi_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_output/libwasapi_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/audio_output/libwaveout_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/audio_output/libwaveout_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/liba52_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/liba52_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libadpcm_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libadpcm_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libaes3_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libaes3_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libaraw_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libaraw_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libaribsub_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libaribsub_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libavcodec_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libavcodec_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libcc_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libcc_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libcdg_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libcdg_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libcrystalhd_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libcrystalhd_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libcvdsub_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libcvdsub_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libd3d11va_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libd3d11va_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libdca_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libdca_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libddummy_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libddummy_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libdmo_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libdmo_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libdvbsub_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libdvbsub_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libdxva2_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libdxva2_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libedummy_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libedummy_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libfaad_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libfaad_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libflac_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libflac_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libfluidsynth_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libfluidsynth_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libg711_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libg711_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libjpeg_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libjpeg_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libkate_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libkate_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/liblibass_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/liblibass_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/liblibmpeg2_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/liblibmpeg2_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/liblpcm_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/liblpcm_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libmft_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libmft_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libmpg123_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libmpg123_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/liboggspots_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/liboggspots_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libopus_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libopus_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libpng_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libpng_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libqsv_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libqsv_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/librawvideo_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/librawvideo_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/librtpvideo_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/librtpvideo_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libschroedinger_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libschroedinger_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libscte18_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libscte18_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libscte27_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libscte27_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libsdl_image_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libsdl_image_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libspdif_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libspdif_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libspeex_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libspeex_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libspudec_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libspudec_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libstl_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libstl_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libsubsdec_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libsubsdec_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libsubstx3g_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libsubstx3g_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libsubsusf_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libsubsusf_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libsvcdsub_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libsvcdsub_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libt140_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libt140_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libtextst_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libtextst_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libtheora_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libtheora_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libttml_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libttml_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libtwolame_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libtwolame_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libuleaddvaudio_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libuleaddvaudio_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libvorbis_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libvorbis_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libvpx_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libvpx_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libwebvtt_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libwebvtt_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libx264_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libx264_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libx265_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libx265_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/codec/libzvbi_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/codec/libzvbi_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/control/libdummy_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/control/libdummy_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/control/libgestures_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/control/libgestures_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/control/libhotkeys_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/control/libhotkeys_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/control/libnetsync_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/control/libnetsync_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/control/libntservice_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/control/libntservice_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/control/liboldrc_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/control/liboldrc_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/control/libwin_hotkeys_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/control/libwin_hotkeys_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/control/libwin_msg_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/control/libwin_msg_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/d3d11/libdirect3d11_filters_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/d3d11/libdirect3d11_filters_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/d3d9/libdirect3d9_filters_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/d3d9/libdirect3d9_filters_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libadaptive_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libadaptive_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libaiff_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libaiff_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libasf_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libasf_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libau_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libau_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libavi_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libavi_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libcaf_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libcaf_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libdemux_cdg_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libdemux_cdg_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libdemux_chromecast_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libdemux_chromecast_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libdemux_stl_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libdemux_stl_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libdemuxdump_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libdemuxdump_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libdiracsys_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libdiracsys_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libdirectory_demux_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libdirectory_demux_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libes_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libes_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libflacsys_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libflacsys_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libgme_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libgme_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libh26x_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libh26x_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libimage_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libimage_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libmjpeg_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libmjpeg_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libmkv_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libmkv_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libmod_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libmod_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libmp4_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libmp4_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libmpc_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libmpc_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libmpgv_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libmpgv_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libnoseek_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libnoseek_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libnsc_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libnsc_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libnsv_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libnsv_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libnuv_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libnuv_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libogg_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libogg_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libplaylist_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libplaylist_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libps_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libps_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libpva_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libpva_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/librawaud_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/librawaud_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/librawdv_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/librawdv_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/librawvid_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/librawvid_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libreal_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libreal_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libsid_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libsid_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libsmf_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libsmf_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libsubtitle_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libsubtitle_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libts_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libts_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libtta_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libtta_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libty_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libty_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libvc1_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libvc1_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libvobsub_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libvobsub_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libvoc_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libvoc_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libwav_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libwav_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/demux/libxa_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/demux/libxa_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/gui/libqt_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/gui/libqt_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/gui/libskins2_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/gui/libskins2_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/keystore/libfile_keystore_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/keystore/libfile_keystore_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/keystore/libmemory_keystore_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/keystore/libmemory_keystore_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/logger/libconsole_logger_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/logger/libconsole_logger_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/logger/libfile_logger_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/logger/libfile_logger_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/lua/liblua_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/lua/liblua_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/meta_engine/libfolder_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/meta_engine/libfolder_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/meta_engine/libtaglib_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/meta_engine/libtaglib_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/misc/libaddonsfsstorage_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/misc/libaddonsfsstorage_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/misc/libaddonsvorepository_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/misc/libaddonsvorepository_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/misc/libaudioscrobbler_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/misc/libaudioscrobbler_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/misc/libexport_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/misc/libexport_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/misc/libfingerprinter_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/misc/libfingerprinter_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/misc/libgnutls_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/misc/libgnutls_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/misc/liblogger_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/misc/liblogger_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/misc/libstats_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/misc/libstats_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/misc/libvod_rtsp_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/misc/libvod_rtsp_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/misc/libxml_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/misc/libxml_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/mux/libmux_asf_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/mux/libmux_asf_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/mux/libmux_avi_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/mux/libmux_avi_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/mux/libmux_dummy_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/mux/libmux_dummy_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/mux/libmux_mp4_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/mux/libmux_mp4_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/mux/libmux_mpjpeg_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/mux/libmux_mpjpeg_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/mux/libmux_ogg_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/mux/libmux_ogg_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/mux/libmux_ps_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/mux/libmux_ps_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/mux/libmux_ts_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/mux/libmux_ts_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/mux/libmux_wav_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/mux/libmux_wav_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_a52_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_a52_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_copy_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_copy_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_dirac_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_dirac_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_dts_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_dts_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_flac_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_flac_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_h264_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_h264_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_hevc_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_hevc_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_mlp_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_mlp_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_mpeg4audio_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_mpeg4audio_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_mpeg4video_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_mpeg4video_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_mpegaudio_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_mpegaudio_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_mpegvideo_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_mpegvideo_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_vc1_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/packetizer/libpacketizer_vc1_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/plugins.dat" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/plugins.dat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/services_discovery/libmediadirs_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/services_discovery/libmediadirs_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/services_discovery/libmicrodns_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/services_discovery/libmicrodns_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/services_discovery/libpodcast_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/services_discovery/libpodcast_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/services_discovery/libsap_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/services_discovery/libsap_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/services_discovery/libupnp_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/services_discovery/libupnp_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/services_discovery/libwindrive_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/services_discovery/libwindrive_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/spu/libaudiobargraph_v_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/spu/libaudiobargraph_v_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/spu/liblogo_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/spu/liblogo_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/spu/libmarq_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/spu/libmarq_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/spu/libmosaic_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/spu/libmosaic_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/spu/libremoteosd_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/spu/libremoteosd_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/spu/librss_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/spu/librss_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/spu/libsubsdelay_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/spu/libsubsdelay_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_extractor/libarchive_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_extractor/libarchive_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_filter/libadf_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_filter/libadf_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_filter/libaribcam_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_filter/libaribcam_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_filter/libcache_block_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_filter/libcache_block_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_filter/libcache_read_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_filter/libcache_read_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_filter/libhds_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_filter/libhds_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_filter/libinflate_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_filter/libinflate_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_filter/libprefetch_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_filter/libprefetch_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_filter/librecord_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_filter/librecord_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_filter/libskiptags_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_filter/libskiptags_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_autodel_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_autodel_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_bridge_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_bridge_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_chromaprint_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_chromaprint_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_chromecast_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_chromecast_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_cycle_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_cycle_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_delay_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_delay_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_description_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_description_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_display_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_display_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_dummy_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_dummy_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_duplicate_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_duplicate_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_es_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_es_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_gather_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_gather_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_mosaic_bridge_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_mosaic_bridge_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_record_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_record_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_rtp_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_rtp_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_setid_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_setid_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_smem_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_smem_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_standard_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_standard_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_stats_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_stats_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_transcode_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/stream_out/libstream_out_transcode_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/text_renderer/libfreetype_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/text_renderer/libfreetype_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/text_renderer/libsapi_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/text_renderer/libsapi_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/text_renderer/libtdummy_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/text_renderer/libtdummy_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libchain_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libchain_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libgrey_yuv_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libgrey_yuv_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi420_10_p010_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi420_10_p010_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi420_nv12_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi420_nv12_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi420_rgb_mmx_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi420_rgb_mmx_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi420_rgb_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi420_rgb_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi420_rgb_sse2_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi420_rgb_sse2_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi420_yuy2_mmx_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi420_yuy2_mmx_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi420_yuy2_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi420_yuy2_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi420_yuy2_sse2_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi420_yuy2_sse2_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi422_i420_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi422_i420_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi422_yuy2_mmx_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi422_yuy2_mmx_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi422_yuy2_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi422_yuy2_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi422_yuy2_sse2_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libi422_yuy2_sse2_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/librv32_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/librv32_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libswscale_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libswscale_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libyuvp_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libyuvp_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libyuy2_i420_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libyuy2_i420_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libyuy2_i422_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_chroma/libyuy2_i422_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libadjust_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libadjust_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libalphamask_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libalphamask_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libanaglyph_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libanaglyph_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libantiflicker_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libantiflicker_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libball_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libball_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libblend_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libblend_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libblendbench_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libblendbench_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libbluescreen_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libbluescreen_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libcanvas_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libcanvas_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libcolorthres_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libcolorthres_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libcroppadd_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libcroppadd_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libdeinterlace_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libdeinterlace_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libedgedetection_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libedgedetection_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/liberase_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/liberase_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libextract_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libextract_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libfps_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libfps_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libfreeze_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libfreeze_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libgaussianblur_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libgaussianblur_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libgradfun_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libgradfun_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libgradient_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libgradient_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libgrain_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libgrain_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libhqdn3d_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libhqdn3d_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libinvert_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libinvert_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libmagnify_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libmagnify_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libmirror_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libmirror_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libmotionblur_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libmotionblur_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libmotiondetect_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libmotiondetect_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/liboldmovie_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/liboldmovie_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libposterize_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libposterize_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libpostproc_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libpostproc_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libpsychedelic_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libpsychedelic_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libpuzzle_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libpuzzle_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libripple_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libripple_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/librotate_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/librotate_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libscale_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libscale_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libscene_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libscene_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libsepia_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libsepia_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libsharpen_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libsharpen_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libtransform_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libtransform_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libvhs_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libvhs_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libwave_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_filter/libwave_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_output/libcaca_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_output/libcaca_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_output/libdirect3d11_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_output/libdirect3d11_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_output/libdirect3d9_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_output/libdirect3d9_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_output/libdirectdraw_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_output/libdirectdraw_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_output/libdrawable_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_output/libdrawable_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_output/libflaschen_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_output/libflaschen_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_output/libgl_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_output/libgl_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_output/libglwin32_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_output/libglwin32_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_output/libvdummy_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_output/libvdummy_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_output/libvmem_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_output/libvmem_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_output/libwgl_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_output/libwgl_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_output/libwingdi_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_output/libwingdi_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_output/libwinhibit_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_output/libwinhibit_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_output/libyuv_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_output/libyuv_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_splitter/libclone_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_splitter/libclone_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_splitter/libpanoramix_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_splitter/libpanoramix_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/video_splitter/libwall_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/video_splitter/libwall_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/visualization/libglspectrum_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/visualization/libglspectrum_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/visualization/libgoom_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/visualization/libgoom_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/visualization/libprojectm_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/visualization/libprojectm_plugin.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/dll/plugins/visualization/libvisual_plugin.dll" beforeDir="false" afterPath="$PROJECT_DIR$/lib/dll/plugins/visualization/libvisual_plugin.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/Base$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/Base$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/Base$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/Base$2.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/Base.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/Base.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/BaseController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/BaseController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/login/LoginController$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/login/LoginController$1$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/login/LoginController$1$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/login/LoginController$1$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/login/LoginController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/login/LoginController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/login/LoginController$OnLoginListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/login/LoginController$OnLoginListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/login/LoginController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/login/LoginController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/main/CameraData.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/main/CameraData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/main/DeviceListCell.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/main/DeviceListCell.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/main/MainController$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/main/MainController$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/main/MainController$OnItemClickListener.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/main/MainController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/main/MainController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/device/AlarmCountCache.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/device/AlarmCountCache.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/device/Camera$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/device/Camera$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/device/Camera.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/device/Camera.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/device/DeviceCache$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/device/DeviceCache$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/device/DeviceCache$DeviceCacheHolder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/device/DeviceCache$DeviceCacheHolder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/device/DeviceCache.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/device/DeviceCache.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/device/DeviceInfoDictionary$DeviceInfoDataBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/device/DeviceInfoDictionary$DeviceInfoDataBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/device/DeviceInfoDictionary.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/device/DeviceInfoDictionary.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/ApiConstant.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/ApiConstant.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/HttpCommonListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/HttpCommonListener.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/IRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/IRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/Interceptor/CommonInterceptor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/Interceptor/CommonInterceptor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/Interceptor/HttpLoggingInterceptor$Level.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/Interceptor/HttpLoggingInterceptor$Level.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/Interceptor/HttpLoggingInterceptor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/Interceptor/HttpLoggingInterceptor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/Interceptor/OkSignatureInterceptor.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/Interceptor/OkSignatureInterceptor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/RequestApiUnit$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/RequestApiUnit$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/RequestApiUnit$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/RequestApiUnit$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/RequestApiUnit$3$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/RequestApiUnit$3$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/RequestApiUnit$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/RequestApiUnit$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/RequestApiUnit$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/RequestApiUnit$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/RequestApiUnit$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/RequestApiUnit$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/RequestApiUnit$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/RequestApiUnit$6.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/RequestApiUnit$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/RequestApiUnit$7.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/RequestApiUnit$8$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/RequestApiUnit$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/RequestApiUnit$8.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/RequestApiUnit.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/RequestApiUnit.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/AlarmBean$ItemInfoBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/AlarmBean$ItemInfoBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/AlarmBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/AlarmBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/AlarmCalendarBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/AlarmCalendarBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/AlarmListBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/AlarmListBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/AlermsBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/AlermsBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/AudioInfoBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/AudioInfoBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/B2UploadInfoBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/B2UploadInfoBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/BindStatusBean$AccountInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/BindStatusBean$AccountInfo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/BindStatusBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/BindStatusBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/CalendarDayBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/CalendarDayBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/CameraState.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/CameraState.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/CapabilityBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/CapabilityBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/CapabilityOfModeBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/CapabilityOfModeBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/ChallengeBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/ChallengeBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/CloudStorBean$Policy.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/CloudStorBean$Policy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/CloudStorBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/CloudStorBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/CloudStorPlanBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/CloudStorPlanBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/DeviceBaseInfoBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/DeviceBaseInfoBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/DeviceBindBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/DeviceBindBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/DeviceConfigBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/DeviceConfigBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/DeviceListBean$Device.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/DeviceListBean$Device.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/DeviceListBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/DeviceListBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/DeviceTimeBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/DeviceTimeBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/DeviceUrlBean$UrlInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/DeviceUrlBean$UrlInfo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/DeviceUrlBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/DeviceUrlBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/DevicesInfosBean$DeviceInfoBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/DevicesInfosBean$DeviceInfoBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/DevicesInfosBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/DevicesInfosBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/GroupListBean$GroupInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/GroupListBean$GroupInfo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/GroupListBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/GroupListBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/LanProbeBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/LanProbeBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/LivePolicyBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/LivePolicyBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/LiveSrcBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/LiveSrcBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/LocalAccountConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/LocalAccountConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/LocalStorBean$Policy.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/LocalStorBean$Policy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/LocalStorBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/LocalStorBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/MoveMonitorBean$Policy.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/MoveMonitorBean$Policy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/MoveMonitorBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/MoveMonitorBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/NetworkInfoBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/NetworkInfoBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/NewVersionBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/NewVersionBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/OnvifConfigBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/OnvifConfigBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/PictureInfoBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/PictureInfoBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/PreBindBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/PreBindBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/RefreshTokenBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/RefreshTokenBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/RequestBuyBean$Url.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/RequestBuyBean$Url.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/RequestBuyBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/RequestBuyBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/ResponseBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/ResponseBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/ResponseErrorBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/ResponseErrorBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/ShareBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/ShareBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/ShareResultBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/ShareResultBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/SigninBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/SigninBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/SoundMonitorBean$Policy.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/SoundMonitorBean$Policy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/SoundMonitorBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/SoundMonitorBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/StreamInfoBean$StreamInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/StreamInfoBean$StreamInfo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/StreamInfoBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/StreamInfoBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/SystemMsgBean$Acts.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/SystemMsgBean$Acts.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/SystemMsgBean$Avs.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/SystemMsgBean$Avs.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/SystemMsgBean$Image.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/SystemMsgBean$Image.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/SystemMsgBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/SystemMsgBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/SystemMsgJsonBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/SystemMsgJsonBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/SystemMsgStatusBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/SystemMsgStatusBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/TfcardConfigBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/TfcardConfigBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/TimezonesBean$TimezoneInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/TimezonesBean$TimezoneInfo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/TimezonesBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/TimezonesBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/UpdateBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/UpdateBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/ViewAnglesBean$ViewAngle.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/ViewAnglesBean$ViewAngle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/ViewAnglesBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/ViewAnglesBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/advertise/AdvertiseUrl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/advertise/AdvertiseUrl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/advertise/AdvertisementBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/advertise/AdvertisementBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/advertise/TittleBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/advertise/TittleBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudPaymentHistory/AmountBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudPaymentHistory/AmountBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudPaymentHistory/OriginalTransactionBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudPaymentHistory/OriginalTransactionBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudPaymentHistory/TransactionBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudPaymentHistory/TransactionBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudPaymentHistory/TransactionListBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudPaymentHistory/TransactionListBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/BuyerBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/BuyerBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/CloudStorageDeviceBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/CloudStorageDeviceBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/CloudStorageOrderBean$CloudStorageOrder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/CloudStorageOrderBean$CloudStorageOrder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/CloudStorageOrderBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/CloudStorageOrderBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/CloudStoragePlanBean$CloudStoragePlan.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/CloudStoragePlanBean$CloudStoragePlan.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/CloudStoragePlanBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/CloudStoragePlanBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/Package.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/Package.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/Plan.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/Plan.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/Price.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/Price.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/Produce.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/Produce.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/RefBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/RefBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/TrialBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/cloudStoragePlan/TrialBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/device/ConDeviceBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/device/ConDeviceBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/device/DeviceGeneralsBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/device/DeviceGeneralsBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/device/DeviceListBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/device/DeviceListBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/device/GroupsBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/device/GroupsBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/device/InvitesBean$InviteInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/device/InvitesBean$InviteInfo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/device/InvitesBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/device/InvitesBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/start/AppConfigBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/start/AppConfigBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/start/AppStartUpBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/start/AppStartUpBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/start/AppVersionBean$Version.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/start/AppVersionBean$Version.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/start/AppVersionBean.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/bean/start/AppVersionBean.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/converters/GsonConverterFactory.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/converters/GsonConverterFactory.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/converters/GsonRequestBodyConverter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/converters/GsonRequestBodyConverter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/converters/GsonResponseBodyConverter.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/converters/GsonResponseBodyConverter.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/converters/package-info.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/http/converters/package-info.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/jnacl/NaCl.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/jnacl/NaCl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/jnacl/curve25519.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/jnacl/curve25519.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/jnacl/curve25519xsalsa20poly1305.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/jnacl/curve25519xsalsa20poly1305.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/jnacl/hsalsa20.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/jnacl/hsalsa20.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/jnacl/poly1305.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/jnacl/poly1305.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/jnacl/salsa20.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/jnacl/salsa20.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/jnacl/verify_16.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/jnacl/verify_16.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/jnacl/xsalsa20.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/jnacl/xsalsa20.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/jnacl/xsalsa20poly1305.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/jnacl/xsalsa20poly1305.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/utils/CipherUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/utils/CipherUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/utils/DigitalUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/utils/DigitalUtils.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/utils/StringUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/utils/StringUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/utils/Trans2PinYin.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/utils/Trans2PinYin.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/utils/WLog.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/utils/WLog.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/vlc/VlcUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/WansViewCloud_win/net/ajcloud/wansviewplusw/support/vlc/VlcUtils.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/Base.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/Base.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/main/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/main/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/http/ApiConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/http/ApiConstant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/http/IRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/http/IRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/http/RequestApiUnit.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/http/RequestApiUnit.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/login.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/login.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/P2pInterface.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/P2pInterface.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/RelayUtils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/RelayUtils.java" afterDir="false" />
     </list>
     <list id="57352798-1176-4491-83e7-01b53a4c6698" name="Local" comment="Local">
       <change beforePath="$PROJECT_DIR$/.idea/artifacts/JavaFXApp.xml" beforeDir="false" />
@@ -615,7 +94,19 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/P2pInterface.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="110">
-              <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
+              <caret line="5" column="29" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="29" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LoginController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/login/LoginController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="269">
+              <caret line="33" column="31" lean-forward="true" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -626,17 +117,33 @@
       <file leaf-file-name="RelayUtils.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/RelayUtils.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
+            <state relative-caret-position="132">
+              <caret line="6" column="13" lean-forward="true" selection-start-line="6" selection-start-column="13" selection-end-line="13" selection-end-column="7" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RequestApiUnit.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="MainController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/main/MainController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="161">
+              <caret line="84" column="26" selection-start-line="84" selection-start-column="26" selection-end-line="84" selection-end-column="26" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#fitImageViewSize#0;class#MainController#0" />
+                <element signature="class#CanvasPlayerComponent#0;class#MainController#0" />
+                <element signature="class#CanvasBufferFormatCallback#0;class#MainController#0" />
+                <element signature="method#stop#0;class#MainController#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RequestApiUnit.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/http/RequestApiUnit.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="340" column="74" selection-start-line="340" selection-start-column="74" selection-end-line="340" selection-end-column="74" />
+            <state relative-caret-position="4224">
+              <caret line="345" column="47" selection-start-line="345" selection-start-column="47" selection-end-line="345" selection-end-column="47" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#challenge#0;class#RequestApiUnit#0" />
@@ -652,7 +159,7 @@
       <file leaf-file-name="OkSignatureInterceptor.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/http/Interceptor/OkSignatureInterceptor.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
+            <state relative-caret-position="858">
               <caret line="47" selection-start-line="47" selection-end-line="47" />
             </state>
           </provider>
@@ -661,34 +168,11 @@
       <file leaf-file-name="Base.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/Base.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
-              <caret line="82" column="28" lean-forward="true" selection-start-line="82" selection-start-column="28" selection-end-line="82" selection-end-column="28" />
-              <folding>
-                <element signature="docComment;method#replaceSceneContent#0;class#Base#0" />
-                <element signature="e#3743#3744#0" expanded="true" />
-                <element signature="e#3768#3769#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="MainController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/main/MainController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="337">
-              <caret line="119" column="10" lean-forward="true" selection-start-line="119" selection-start-column="10" selection-end-line="119" selection-end-column="10" />
+            <state relative-caret-position="150">
+              <caret line="81" column="21" selection-start-line="81" selection-start-column="21" selection-end-line="81" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="class#P2pTask#0;class#MainController#0" />
-                <element signature="class#3535:4228" />
-                <element signature="e#5356#5357#0" expanded="true" />
-                <element signature="e#5439#5440#0" expanded="true" />
-                <element signature="method#fitImageViewSize#0;class#MainController#0" />
-                <element signature="class#CanvasPlayerComponent#0;class#MainController#0" />
-                <element signature="e#6192#6193#0" expanded="true" />
-                <element signature="e#6255#6256#0" expanded="true" />
-                <element signature="class#CanvasBufferFormatCallback#0;class#MainController#0" />
-                <element signature="method#stop#0;class#MainController#0" />
+                <element signature="docComment;method#replaceSceneContent#0;class#Base#0" />
               </folding>
             </state>
           </provider>
@@ -697,7 +181,7 @@
       <file leaf-file-name="PoliceHelper.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/play/PoliceHelper.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
+            <state relative-caret-position="2794">
               <caret line="159" column="26" selection-start-line="159" selection-start-column="26" selection-end-line="159" selection-end-column="26" />
               <folding>
                 <element signature="method#tryNextPolicy#0;class#PoliceHelper#0" />
@@ -709,8 +193,8 @@
       <file leaf-file-name="DeviceCache.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/device/DeviceCache.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="131">
-              <caret line="18" column="28" lean-forward="true" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="32" />
+            <state relative-caret-position="242">
+              <caret line="18" column="28" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -721,8 +205,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="FxmlFile" />
-        <option value="Interface" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -750,14 +234,14 @@
       <find>SE_Initialize</find>
       <find>NativeLibrary</find>
       <find>P2pUtils</find>
-      <find>P2pInterface</find>
       <find>onItemClick</find>
       <find>signinBean</find>
       <find>BASE_UAC_URL</find>
       <find>main</find>
       <find>lanDetectionUnit</find>
-      <find>saveAccount</find>
       <find>pingLocal</find>
+      <find>saveAccount</find>
+      <find>P2pInterface</find>
     </findStrings>
     <replaceStrings>
       <replace>StringUtil</replace>
@@ -777,8 +261,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/http/bean/CapabilityBean.java" />
-        <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/http/bean/RefreshTokenBean.java" />
         <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/http/bean/ResponseBean.java" />
         <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/http/HttpUtils.java" />
         <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/http/Startup.java" />
@@ -806,7 +288,6 @@
         <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/account/AccountCache.java" />
         <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/http/Interceptor/OkSignatureInterceptor.java" />
         <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/Check.java" />
-        <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/login/LoginController.java" />
         <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/main/DeviceListCell.java" />
         <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/device/DeviceInfoDictionary.java" />
         <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/device/DeviceCache.java" />
@@ -817,17 +298,20 @@
         <option value="$PROJECT_DIR$/src/main/resources/fxml/main.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/P2pUtils.java" />
         <option value="$PROJECT_DIR$/src/main/resources/fxml/login.fxml" />
-        <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/RelayUtils.java" />
-        <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/P2pInterface.java" />
         <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/PoliceHelper.java" />
         <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/PlayMethod.java" />
         <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/play/PlayMethod.java" />
-        <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/Base.java" />
-        <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/main/MainController.java" />
         <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/play/PoliceHelper.java" />
         <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/http/ApiConstant.java" />
         <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/http/IRequest.java" />
         <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/http/RequestApiUnit.java" />
+        <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/WLog.java" />
+        <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/test.java" />
+        <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/login/LoginController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/P2pInterface.java" />
+        <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/Base.java" />
+        <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/RelayUtils.java" />
+        <option value="$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/main/MainController.java" />
       </list>
     </option>
   </component>
@@ -863,7 +347,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
+      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <expand>
@@ -875,7 +359,7 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -886,6 +370,17 @@
             <path>
               <item name="WansViewCloud_win" type="b2602c69:ProjectViewProjectNode" />
               <item name="WansViewCloud_win" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WansViewCloud_win" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WansViewCloud_win" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
+              <item name="dll" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WansViewCloud_win" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WansViewCloud_win" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -927,6 +422,17 @@
               <item name="net" type="462c0819:PsiDirectoryNode" />
               <item name="ajcloud" type="462c0819:PsiDirectoryNode" />
               <item name="wansviewplusw" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WansViewCloud_win" type="b2602c69:ProjectViewProjectNode" />
+              <item name="WansViewCloud_win" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="net" type="462c0819:PsiDirectoryNode" />
+              <item name="ajcloud" type="462c0819:PsiDirectoryNode" />
+              <item name="wansviewplusw" type="462c0819:PsiDirectoryNode" />
+              <item name="login" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="WansViewCloud_win" type="b2602c69:ProjectViewProjectNode" />
@@ -938,31 +444,6 @@
               <item name="ajcloud" type="462c0819:PsiDirectoryNode" />
               <item name="wansviewplusw" type="462c0819:PsiDirectoryNode" />
               <item name="support" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WansViewCloud_win" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WansViewCloud_win" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="net" type="462c0819:PsiDirectoryNode" />
-              <item name="ajcloud" type="462c0819:PsiDirectoryNode" />
-              <item name="wansviewplusw" type="462c0819:PsiDirectoryNode" />
-              <item name="support" type="462c0819:PsiDirectoryNode" />
-              <item name="http" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="WansViewCloud_win" type="b2602c69:ProjectViewProjectNode" />
-              <item name="WansViewCloud_win" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="net" type="462c0819:PsiDirectoryNode" />
-              <item name="ajcloud" type="462c0819:PsiDirectoryNode" />
-              <item name="wansviewplusw" type="462c0819:PsiDirectoryNode" />
-              <item name="support" type="462c0819:PsiDirectoryNode" />
-              <item name="http" type="462c0819:PsiDirectoryNode" />
-              <item name="Interceptor" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="WansViewCloud_win" type="b2602c69:ProjectViewProjectNode" />
@@ -975,6 +456,10 @@
               <item name="wansviewplusw" type="462c0819:PsiDirectoryNode" />
               <item name="support" type="462c0819:PsiDirectoryNode" />
               <item name="utils" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="WansViewCloud_win" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
           <select />
@@ -998,7 +483,7 @@
     <property name="OverrideImplement.combined" value="false" />
     <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="Repository.Attach.Sources" value="false" />
-    <property name="SearchEverywhereHistoryKey" value="Vlc&#9;FILE&#9;file://D:/WansViewCloud_win/src/main/java/net/ajcloud/wansviewplusw/support/vlc/VlcUtils.java&#10;WL&#9;FILE&#9;file://D:/WansViewCloud_win/src/main/java/net/ajcloud/wansviewplusw/support/utils/WLog.java&#10;Http&#9;FILE&#9;file://D:/WansViewCloud_win/src/main/java/net/ajcloud/wansviewplusw/support/http/Interceptor/HttpLoggingInterceptor.java&#10;apic&#9;FILE&#9;file://D:/WansViewCloud_win/src/main/java/net/ajcloud/wansviewplusw/support/http/ApiConstant.java" />
+    <property name="SearchEverywhereHistoryKey" value="WL&#9;FILE&#9;file://D:/WansViewCloud_win/src/main/java/net/ajcloud/wansviewplusw/support/utils/WLog.java&#10;Vlc&#9;FILE&#9;file://D:/WansViewCloud_win/src/main/java/net/ajcloud/wansviewplusw/support/vlc/VlcUtils.java&#10;Http&#9;FILE&#9;file://D:/WansViewCloud_win/src/main/java/net/ajcloud/wansviewplusw/support/http/Interceptor/HttpLoggingInterceptor.java&#10;apic&#9;FILE&#9;file://D:/WansViewCloud_win/src/main/java/net/ajcloud/wansviewplusw/support/http/ApiConstant.java" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="dynamic.classpath" value="false" />
@@ -1010,19 +495,19 @@
     <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\WansViewCloud_win\lib\dll" />
+      <recent name="D:\WansViewCloud_win\src\main\java\net\ajcloud\wansviewplusw\support\utils" />
+      <recent name="D:\WansViewCloud_win" />
+      <recent name="D:\WansViewCloud_win\src" />
+      <recent name="D:\WansViewCloud_win\libs\dll" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\WansViewCloud_win\lib" />
       <recent name="D:\WansViewCloud_win\src\main\resources\image" />
       <recent name="D:\WansViewCloud_win\src\main\resources\fxml" />
       <recent name="D:\WansViewCloud_win\src\main\java\net\ajcloud\wansviewplusw\support\http\converters" />
       <recent name="D:\WansViewCloud_win\src\main\resources\css" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="D:\WansViewCloud_win\src\main\java\net\ajcloud\wansviewplusw\support\utils" />
-      <recent name="D:\WansViewCloud_win\lib\dll" />
-      <recent name="D:\WansViewCloud_win" />
-      <recent name="D:\WansViewCloud_win\src" />
-      <recent name="D:\WansViewCloud_win\libs\dll" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -1127,7 +612,8 @@
       <updated>1359379246138</updated>
       <workItem from="1359379250712" duration="1302000" />
       <workItem from="1547550187767" duration="36978000" />
-      <workItem from="1548297013073" duration="59834000" />
+      <workItem from="1548297013073" duration="62179000" />
+      <workItem from="1548732933363" duration="5086000" />
     </task>
     <task id="LOCAL-00001" summary="更新">
       <created>1548323120892</created>
@@ -1164,11 +650,18 @@
       <option name="project" value="LOCAL" />
       <updated>1548644141441</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="更新">
+      <created>1548729647876</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1548729647876</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="98114000" />
+    <option name="totallyTimeSpent" value="105545000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1180,41 +673,41 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-6" y="-6" width="1864" height="1093" extended-state="6" />
+    <frame x="-6" y="-6" width="1864" height="1093" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" order="3" />
-      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.393134" side_tool="true" weight="0.47390395" />
-      <window_info anchor="right" id="Maven Projects" order="3" weight="0.32945737" />
-      <window_info anchor="bottom" id="Database Changes" order="14" show_stripe_button="false" />
-      <window_info id="Capture Tool" order="1" />
-      <window_info id="Designer" order="2" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24972315" />
-      <window_info anchor="right" id="Database" order="3" />
-      <window_info id="Structure" order="6" sideWeight="0.4287599" side_tool="true" weight="0.17220376" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info id="UI Designer" order="3" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.57087487" weight="0.446186" />
       <window_info anchor="bottom" id="TODO" order="6" sideWeight="0.49833888" weight="0.3291536" />
       <window_info anchor="bottom" id="Messages" order="8" sideWeight="0.49114063" weight="0.3291536" />
       <window_info anchor="right" id="Palette&#9;" order="4" />
       <window_info id="Image Layers" order="0" />
       <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.393134" side_tool="true" weight="0.47390395" />
+      <window_info anchor="right" id="Maven Projects" order="3" weight="0.32945737" />
+      <window_info anchor="bottom" id="Database Changes" order="14" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.3291536" />
-      <window_info active="true" anchor="bottom" id="Run" order="1" sideWeight="0.606866" visible="true" weight="0.3782654" />
-      <window_info anchor="right" id="Coverage" side_tool="true" weight="0.32945737" />
+      <window_info anchor="bottom" id="Run" order="1" sideWeight="0.606866" visible="true" weight="0.3782654" />
       <window_info anchor="bottom" id="Terminal" order="15" sideWeight="0.49889258" weight="0.3291536" />
-      <window_info content_ui="combo" id="Project" order="4" sideWeight="0.5712401" visible="true" weight="0.18106312" />
-      <window_info anchor="bottom" id="Find" order="2" sideWeight="0.49723145" weight="0.39811912" />
+      <window_info id="Capture Tool" order="1" />
+      <window_info id="Designer" order="2" />
+      <window_info active="true" content_ui="combo" id="Project" order="4" sideWeight="0.5712401" visible="true" weight="0.18272425" />
+      <window_info anchor="right" id="Database" order="3" />
+      <window_info id="Structure" order="6" sideWeight="0.4287599" side_tool="true" weight="0.17220376" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info id="UI Designer" order="3" />
       <window_info anchor="right" id="Theme Preview" order="4" />
       <window_info id="Favorites" order="5" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.57087487" weight="0.446186" />
       <window_info anchor="right" id="JetGradle" order="3" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="bottom" id="Problems" order="12" />
+      <window_info anchor="bottom" id="Find" order="2" sideWeight="0.49723145" weight="0.39811912" />
       <window_info anchor="bottom" id="Changes" order="10" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="right" id="Coverage" order="5" side_tool="true" weight="0.32945737" />
       <window_info anchor="bottom" id="Profiler" order="11" />
-      <window_info anchor="bottom" id="Problems" order="12" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.24972315" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Application Servers" order="13" />
     </layout>
@@ -1304,22 +797,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/account.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/http/bean/SigninBean.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/account/AccountCache.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/device/AlarmCountCache.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="880">
-          <caret line="45" column="5" selection-start-line="45" selection-start-column="5" selection-end-line="45" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk-10.0.1/lib/src.zip!/javafx.controls/javafx/scene/control/ButtonType.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="310">
@@ -1348,20 +825,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/Check.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="3" column="34" selection-start-line="3" selection-start-column="34" selection-end-line="3" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/Controller.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="2" column="23" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/Check.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/Controller.java" />
     <entry file="jar://C:/Program Files/Java/jdk-10.0.1/lib/src.zip!/javafx.graphics/javafx/scene/layout/AnchorPane.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="310">
@@ -1411,10 +876,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="157">
           <caret line="91" column="13" selection-start-line="91" selection-start-column="13" selection-end-line="91" selection-end-column="13" />
-          <folding>
-            <element signature="e#3357#3358#0" expanded="true" />
-            <element signature="e#3389#3390#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1422,10 +883,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="259">
           <caret line="141" column="21" selection-start-line="141" selection-start-column="21" selection-end-line="141" selection-end-column="21" />
-          <folding>
-            <element signature="e#4803#4804#0" expanded="true" />
-            <element signature="e#4824#4825#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1433,16 +890,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="343">
           <caret line="19" selection-start-line="19" selection-end-line="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/login/LoginController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-790">
-          <caret line="19" column="4" lean-forward="true" selection-start-line="19" selection-start-column="4" selection-end-line="29" selection-end-column="5" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1457,12 +904,12 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/fxml/item_device_list.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
           <caret line="4" column="32" lean-forward="true" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
         </state>
       </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
     <entry file="jar://C:/Program Files/Java/jdk-10.0.1/lib/src.zip!/javafx.graphics/javafx/scene/image/Image.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -1472,7 +919,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/fxml/main.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="253">
           <caret line="28" column="26" selection-start-line="28" selection-start-column="26" selection-end-line="28" selection-end-column="26" />
@@ -1483,6 +929,7 @@
           </folding>
         </state>
       </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/main/DeviceListCell.java">
       <provider selected="true" editor-type-id="text-editor">
@@ -1494,17 +941,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/libs/vlcj-3.10.1.jar!/uk/co/caprica/vlcj/player/direct/BufferFormat.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="166">
-          <caret line="29" column="21" selection-start-line="29" selection-start-column="21" selection-end-line="29" selection-end-column="21" />
-          <folding>
-            <element signature="e#834#835#0" expanded="true" />
-            <element signature="e#867#868#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://$PROJECT_DIR$/libs/vlcj-3.10.1.jar!/uk/co/caprica/vlcj/player/direct/BufferFormat.class" />
     <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/main/CameraData.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="277">
@@ -1532,13 +969,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="165">
           <caret line="2448" column="17" selection-start-line="2448" selection-start-column="17" selection-end-line="2448" selection-end-column="17" />
-          <folding>
-            <element signature="e#84213#84214#0" expanded="true" />
-            <element signature="e#84253#84254#0" expanded="true" />
-            <element signature="e#86546#86576#0" expanded="true" />
-            <element signature="e#86610#86611#0" expanded="true" />
-            <element signature="e#86646#86647#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1560,10 +990,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="194">
           <caret line="49" column="25" selection-start-line="49" selection-start-column="25" selection-end-line="49" selection-end-column="25" />
-          <folding>
-            <element signature="e#1517#1518#0" expanded="true" />
-            <element signature="e#1570#1571#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1571,10 +997,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="186">
           <caret line="126" column="47" lean-forward="true" selection-start-line="126" selection-start-column="47" selection-end-line="126" selection-end-column="47" />
-          <folding>
-            <element signature="e#3840#3841#0" expanded="true" />
-            <element signature="e#3893#3894#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1585,45 +1007,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/WLog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="137" column="51" selection-start-line="137" selection-start-column="51" selection-end-line="137" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/fxml/login.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="195">
           <caret line="24" column="63" selection-start-line="24" selection-start-column="63" selection-end-line="24" selection-end-column="63" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/main/MainController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
-          <caret line="119" column="10" lean-forward="true" selection-start-line="119" selection-start-column="10" selection-end-line="119" selection-end-column="10" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="class#P2pTask#0;class#MainController#0" />
-            <element signature="class#3535:4228" />
-            <element signature="e#5356#5357#0" expanded="true" />
-            <element signature="e#5439#5440#0" expanded="true" />
-            <element signature="method#fitImageViewSize#0;class#MainController#0" />
-            <element signature="class#CanvasPlayerComponent#0;class#MainController#0" />
-            <element signature="e#6192#6193#0" expanded="true" />
-            <element signature="e#6255#6256#0" expanded="true" />
-            <element signature="class#CanvasBufferFormatCallback#0;class#MainController#0" />
-            <element signature="method#stop#0;class#MainController#0" />
-          </folding>
-        </state>
-      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/device/DeviceCache.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="131">
-          <caret line="18" column="28" lean-forward="true" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="32" />
+        <state relative-caret-position="242">
+          <caret line="18" column="28" selection-start-line="18" selection-start-column="22" selection-end-line="18" selection-end-column="32" />
         </state>
       </provider>
     </entry>
@@ -1644,18 +1039,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/Base.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="82" column="28" lean-forward="true" selection-start-line="82" selection-start-column="28" selection-end-line="82" selection-end-column="28" />
-          <folding>
-            <element signature="docComment;method#replaceSceneContent#0;class#Base#0" />
-            <element signature="e#3743#3744#0" expanded="true" />
-            <element signature="e#3768#3769#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/http/Interceptor/HttpLoggingInterceptor.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-4019">
@@ -1666,23 +1049,6 @@
             <element signature="e#2080#2081#0" expanded="true" />
             <element signature="e#2114#2115#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/P2pInterface.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/RelayUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="13" column="5" selection-start-line="13" selection-start-column="5" selection-end-line="13" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -1698,7 +1064,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/http/Interceptor/OkSignatureInterceptor.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
+        <state relative-caret-position="858">
           <caret line="47" selection-start-line="47" selection-end-line="47" />
         </state>
       </provider>
@@ -1712,7 +1078,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/play/PoliceHelper.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
+        <state relative-caret-position="2794">
           <caret line="159" column="26" selection-start-line="159" selection-start-column="26" selection-end-line="159" selection-end-column="26" />
           <folding>
             <element signature="method#tryNextPolicy#0;class#PoliceHelper#0" />
@@ -1722,8 +1088,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/http/RequestApiUnit.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="340" column="74" selection-start-line="340" selection-start-column="74" selection-end-line="340" selection-end-column="74" />
+        <state relative-caret-position="4224">
+          <caret line="345" column="47" selection-start-line="345" selection-start-column="47" selection-end-line="345" selection-end-column="47" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#challenge#0;class#RequestApiUnit#0" />
@@ -1731,6 +1097,99 @@
             <element signature="method#getDeviceUrlInfo#0;class#RequestApiUnit#0" />
             <element signature="method#getDeviceInfo#0;class#RequestApiUnit#0" />
             <element signature="method#doGetDeviceList#0;class#RequestApiUnit#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_201/src.zip!/java/util/logging/LogRecord.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="176" column="11" selection-start-line="176" selection-start-column="11" selection-end-line="176" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_201/src.zip!/java/util/logging/Logger.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6151">
+          <caret line="786" column="32" selection-start-line="786" selection-start-column="32" selection-end-line="786" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files (x86)/Java/jdk1.8.0_201/jre/lib/rt.jar!/com/sun/istack/internal/logging/Logger.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="24" column="25" selection-start-line="24" selection-start-column="25" selection-end-line="24" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/WLog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="7" column="3" lean-forward="true" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/login/LoginController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="33" column="31" lean-forward="true" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="5" column="21" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/P2pInterface.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="5" column="29" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/Base.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="81" column="21" selection-start-line="81" selection-start-column="21" selection-end-line="81" selection-end-column="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="docComment;method#replaceSceneContent#0;class#Base#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/support/utils/RelayUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="6" column="13" lean-forward="true" selection-start-line="6" selection-start-column="13" selection-end-line="13" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/net/ajcloud/wansviewplusw/main/MainController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="161">
+          <caret line="84" column="26" selection-start-line="84" selection-start-column="26" selection-end-line="84" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#fitImageViewSize#0;class#MainController#0" />
+            <element signature="class#CanvasPlayerComponent#0;class#MainController#0" />
+            <element signature="class#CanvasBufferFormatCallback#0;class#MainController#0" />
+            <element signature="method#stop#0;class#MainController#0" />
           </folding>
         </state>
       </provider>

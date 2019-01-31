@@ -16,14 +16,10 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import net.ajcloud.wansviewplusw.login.LoginController;
 import net.ajcloud.wansviewplusw.main.MainController;
-import net.ajcloud.wansviewplusw.support.device.Camera;
-import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
 import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
-import net.ajcloud.wansviewplusw.support.http.bean.LiveSrcBean;
 import net.ajcloud.wansviewplusw.support.http.bean.start.AppStartUpBean;
 import net.ajcloud.wansviewplusw.support.utils.P2pInterface;
-import net.ajcloud.wansviewplusw.support.utils.RelayUtils;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
@@ -81,8 +77,7 @@ public class Base extends Application implements LoginController.OnLoginListener
     }
 
     private void startUp() {
-//        RelayUtils relayUtils = new RelayUtils();
-//        relayUtils.relayInit();
+        P2pInterface.instanceDll.relayinit();
         requestApiUnit.appStartup(new HttpCommonListener<AppStartUpBean>() {
             @Override
             public void onSuccess(AppStartUpBean bean) {
