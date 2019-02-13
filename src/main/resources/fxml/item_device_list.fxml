@@ -8,24 +8,21 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane fx:id="pane" minHeight="200.0" minWidth="380.0" prefHeight="200.0" prefWidth="380.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="pane" minHeight="80.0" minWidth="220.0" prefHeight="80.0" prefWidth="220.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <ImageView fx:id="icon" fitHeight="150.0" fitWidth="150.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="25.0">
+        <ImageView fx:id="icon" fitHeight="48.0" fitWidth="48.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0">
         </ImageView>
-        <VBox alignment="CENTER_LEFT" layoutX="302.0" layoutY="82.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox alignment="CENTER_LEFT" layoutX="302.0" layoutY="82.0" minHeight="64.0" minWidth="140.0" prefHeight="64.0" prefWidth="140.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="56.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label fx:id="deviceName" alignment="BOTTOM_LEFT" layoutX="302.0" layoutY="82.0" minHeight="100.0" prefHeight="100.0" text="Name" VBox.vgrow="ALWAYS">
-               <padding>
-                  <Insets bottom="10.0" />
-               </padding></Label>
-                <Label fx:id="deviceId" alignment="TOP_LEFT" layoutX="302.0" layoutY="118.0" minHeight="100.0" prefHeight="100.0" text="Id" VBox.vgrow="ALWAYS">
+                <Label fx:id="deviceName" alignment="BOTTOM_LEFT" layoutX="302.0" layoutY="82.0" minHeight="32.0" minWidth="140.0" prefHeight="32.0" prefWidth="140.0" text="Name" VBox.vgrow="ALWAYS" />
+                <Label fx:id="deviceId" alignment="TOP_LEFT" layoutX="302.0" layoutY="118.0" minHeight="32.0" minWidth="140.0" prefHeight="32.0" prefWidth="140.0" text="Id" VBox.vgrow="ALWAYS">
                <opaqueInsets>
                   <Insets />
-               </opaqueInsets>
-               <padding>
-                  <Insets top="10.0" />
-               </padding></Label>
+               </opaqueInsets></Label>
             </children>
         </VBox>
     </children>
+   <padding>
+      <Insets bottom="8.0" left="12.0" right="12.0" top="8.0" />
+   </padding>
 </AnchorPane>

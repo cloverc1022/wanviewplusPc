@@ -21,9 +21,9 @@ import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
 import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
-import net.ajcloud.wansviewplusw.support.utils.P2pInterface;
 import net.ajcloud.wansviewplusw.support.utils.WLog;
 import net.ajcloud.wansviewplusw.support.utils.play.PoliceHelper;
+import org.tcprelay.Tcprelay;
 import uk.co.caprica.vlcj.component.DirectMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.direct.BufferFormat;
 import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
@@ -67,22 +67,23 @@ public class MainController implements BaseController, PoliceHelper.PoliceContro
     @FXML
     private BorderPane playPane;
     @FXML
-    private SplitPane listSplit;
     private RequestApiUnit requestApiUnit;
     private ObservableList<Camera> mInfos = FXCollections.observableArrayList();
     private PoliceHelper policeHelper;
     private String deviceId;
     private String localUrl;
     private String relay_server_ip;
+    private boolean isP2p = false;
+    private int p2pNum;
     private int port = 10001;
     private static final String TAG = "MainController";
+    private Tcprelay tcprelay;
 
     class P2pTask extends Thread {
         @Override
         public void run() {
             WLog.w(TAG, "p2p-----process:relayconnect");
-//            int p2pNum = P2pInterface.instanceDll.SE_SetServInfo(deviceId, DeviceCache.getInstance().get(deviceId).getStunServers(), relay_server_ip, port);
-            int p2pNum = 0;
+            p2pNum = tcprelay.relayconnect(deviceId, DeviceCache.getInstance().get(deviceId).getStunServers(), relay_server_ip, port);
 //            WLog.w(TAG, "p2p----- status:" + p2pNum);
 //
             if (p2pNum > 0) {
@@ -109,6 +110,12 @@ public class MainController implements BaseController, PoliceHelper.PoliceContro
 
     @FXML
     public void handleMouseClick(MouseEvent mouseEvent) {
+        if (mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+            if (isP2p) {
+                tcprelay.relaydisconnect(p2pNum);
+            }
+            mediaPlayerComponent.getMediaPlayer().stop();
+        }
         this.deviceId = deviceList.getSelectionModel().getSelectedItem().deviceId;
         Camera camera = DeviceCache.getInstance().get(deviceId);
         if (camera != null) {
@@ -121,6 +128,7 @@ public class MainController implements BaseController, PoliceHelper.PoliceContro
      * 初始化
      */
     public void init() {
+        tcprelay = new Tcprelay();
         policeHelper = new PoliceHelper(this);
         mediaPlayerComponent = new CanvasPlayerComponent();
         videoSourceRatioProperty = new SimpleFloatProperty(0.4f);
@@ -236,6 +244,9 @@ public class MainController implements BaseController, PoliceHelper.PoliceContro
     }
 
     public void stop() {
+        if (isP2p) {
+            tcprelay.relaydisconnect(p2pNum);
+        }
         mediaPlayerComponent.getMediaPlayer().stop();
         mediaPlayerComponent.getMediaPlayer().release();
     }
@@ -247,12 +258,15 @@ public class MainController implements BaseController, PoliceHelper.PoliceContro
 
     @Override
     public void onPlay(int playMethod, String url, int mVideoHeight, int mVideoWidth) {
+        isP2p = false;
         mediaPlayerComponent.getMediaPlayer().playMedia(url);
     }
 
     @Override
     public void onP2pPlay(String relayServer, String url) {
         this.localUrl = url;
+        p2pNum = 0;
+        isP2p = true;
         this.relay_server_ip = relayServer;
         new P2pTask().start();
     }

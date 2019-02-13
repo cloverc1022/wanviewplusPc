@@ -19,7 +19,7 @@ import net.ajcloud.wansviewplusw.main.MainController;
 import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
 import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
 import net.ajcloud.wansviewplusw.support.http.bean.start.AppStartUpBean;
-import net.ajcloud.wansviewplusw.support.utils.P2pInterface;
+import org.tcprelay.Tcprelay;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
@@ -29,8 +29,12 @@ import java.util.logging.Logger;
 
 public class Base extends Application implements LoginController.OnLoginListener {
 
-    private final double MINIMUM_WINDOW_WIDTH = 1280;
-    private final double MINIMUM_WINDOW_HEIGHT = 800;
+    private final double LOGIN_WIDTH = 320;
+    private final double LOGIN_HEIGHT = 360;
+    private final double MAIN_WIDTH = 960;
+    private final double MAIN_HEIGHT = 540;
+    private final double DEFAULT_WIDTH = 960;
+    private final double DEFAULT_HEIGHT = 540;
     private static final String NATIVE_LIBRARY_SEARCH_PATH = "lib/dll";
     private Stage stage;
     private RequestApiUnit requestApiUnit;
@@ -49,8 +53,8 @@ public class Base extends Application implements LoginController.OnLoginListener
         });
         stage.setTitle("WansviewPlus");
         stage.getIcons().add(new Image("image/ic_launcher.png"));
-        stage.setMinWidth(MINIMUM_WINDOW_WIDTH);
-        stage.setMinHeight(MINIMUM_WINDOW_HEIGHT);
+        stage.setMinWidth(LOGIN_WIDTH);
+        stage.setMinHeight(LOGIN_HEIGHT);
         go2Login();
         stage.show();
 
@@ -62,6 +66,7 @@ public class Base extends Application implements LoginController.OnLoginListener
         super.stop();
         if (main != null)
             main.stop();
+        new Tcprelay().relaydeinit();
     }
 
     public static void main(String[] args) {
@@ -77,7 +82,7 @@ public class Base extends Application implements LoginController.OnLoginListener
     }
 
     private void startUp() {
-        P2pInterface.instanceDll.relayinit();
+        new Tcprelay().relayinit();
         requestApiUnit.appStartup(new HttpCommonListener<AppStartUpBean>() {
             @Override
             public void onSuccess(AppStartUpBean bean) {
@@ -93,8 +98,17 @@ public class Base extends Application implements LoginController.OnLoginListener
 
     private void go2Login() {
         try {
-            LoginController login = (LoginController) replaceSceneContent("/fxml/login.fxml");
+            FXMLLoader loader = new FXMLLoader();
+            InputStream in = Base.class.getResourceAsStream("/fxml/login.fxml");
+            loader.setBuilderFactory(new JavaFXBuilderFactory());
+            loader.setLocation(Base.class.getResource("/fxml/login.fxml"));
+            Pane page = loader.load(in);
+            LoginController login = loader.getController();
             login.setOnLoginListener(this);
+            in.close();
+            Scene scene = new Scene(page, LOGIN_WIDTH, LOGIN_HEIGHT);
+            stage.setScene(scene);
+            stage.sizeToScene();
         } catch (Exception ex) {
             Logger.getLogger(Base.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -106,15 +120,11 @@ public class Base extends Application implements LoginController.OnLoginListener
             InputStream in = Base.class.getResourceAsStream("/fxml/main.fxml");
             loader.setBuilderFactory(new JavaFXBuilderFactory());
             loader.setLocation(Base.class.getResource("/fxml/main.fxml"));
-            Pane page;
-            try {
-                page = loader.load(in);
-                main = loader.getController();
-                main.init();
-            } finally {
-                in.close();
-            }
-            Scene scene = new Scene(page, MINIMUM_WINDOW_WIDTH, MINIMUM_WINDOW_HEIGHT);
+            Pane page = loader.load(in);
+            main = loader.getController();
+            main.init();
+            in.close();
+            Scene scene = new Scene(page, MAIN_WIDTH, MAIN_HEIGHT);
             stage.setScene(scene);
             stage.sizeToScene();
         } catch (Exception ex) {
@@ -136,7 +146,7 @@ public class Base extends Application implements LoginController.OnLoginListener
         } finally {
             in.close();
         }
-        Scene scene = new Scene(page, MINIMUM_WINDOW_WIDTH, MINIMUM_WINDOW_HEIGHT);
+        Scene scene = new Scene(page, DEFAULT_WIDTH, DEFAULT_HEIGHT);
         stage.setScene(scene);
         stage.sizeToScene();
         return loader.getController();

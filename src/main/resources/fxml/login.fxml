@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Text?>
 <?import java.net.URL?>
 
-<GridPane alignment="center" hgap="10" prefHeight="300.0" prefWidth="400.0" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.ajcloud.wansviewplusw.login.LoginController">
+<GridPane alignment="center" hgap="10" prefHeight="360.0" prefWidth="320.0" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.ajcloud.wansviewplusw.login.LoginController">
     <padding>
         <Insets bottom="25" left="25" right="25" top="25" />
     </padding>
