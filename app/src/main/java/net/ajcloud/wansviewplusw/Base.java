@@ -106,6 +106,7 @@ public class Base extends Application implements LoginController.OnLoginListener
             loader.setLocation(Base.class.getResource("/fxml/login.fxml"));
             Pane page = loader.load(in);
             LoginController login = loader.getController();
+            login.init();
             login.setOnLoginListener(this);
             in.close();
             Scene scene = new Scene(page, LOGIN_WIDTH, LOGIN_HEIGHT);

@@ -2,13 +2,13 @@ package net.ajcloud.wansviewplusw.login;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.validation.RequiredFieldValidator;
+import de.jensd.fx.glyphs.GlyphsBuilder;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
 import net.ajcloud.wansviewplusw.BaseController;
 import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
 import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
@@ -21,6 +21,8 @@ public class LoginController implements BaseController {
     public JFXPasswordField tf_password;
     private RequestApiUnit requestApiUnit;
     private OnLoginListener onLoginListener;
+    private RequiredFieldValidator email_validator;
+    private RequiredFieldValidator password_validator;
 
     public interface OnLoginListener {
         void onLoginSuccess();
@@ -32,14 +34,37 @@ public class LoginController implements BaseController {
         this.onLoginListener = onLoginListener;
     }
 
-    public void handleSubmitButtonAction(ActionEvent event) {
+    public void init() {
+//        email_validator = new RequiredFieldValidator();
+//        email_validator.setMessage("Can not be empty");
+//        email_validator.setIcon(GlyphsBuilder.create(FontAwesomeIconView.class)
+//                .glyph(FontAwesomeIcon.WARNING)
+//                .style("-fx-text-fill:#FF5252;-fx-font-size:10;")
+//                .styleClass("error")
+//                .build());
+//        tf_name.getValidators().add(email_validator);
+//
+//        password_validator = new RequiredFieldValidator();
+//        password_validator.setMessage("Can not be empty");
+//        password_validator.setIcon(GlyphsBuilder.create(FontAwesomeIconView.class)
+//                .glyph(FontAwesomeIcon.WARNING)
+//                .style("-fx-text-fill:#FF5252;-fx-font-size:10;")
+//                .styleClass("error")
+//                .build());
+//        tf_password.getValidators().add(password_validator);
+    }
+
+    @FXML
+    private void handleSubmitButtonAction(ActionEvent event) {
         if (requestApiUnit == null) {
             requestApiUnit = new RequestApiUnit();
         }
-        if (StringUtil.isNullOrEmpty(tf_name.getText()) ||
-                StringUtil.isNullOrEmpty(tf_password.getText())) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION, "账号或密码不能为空", ButtonType.OK);
-            alert.showAndWait();
+        if (StringUtil.isNullOrEmpty(tf_name.getText())) {
+//            tf_name.validate();
+            return;
+        }
+        if (StringUtil.isNullOrEmpty(tf_password.getText())) {
+//            tf_password.validate();
             return;
         }
         requestApiUnit.signin(tf_name.getText(), tf_password.getText(), new HttpCommonListener<SigninBean>() {

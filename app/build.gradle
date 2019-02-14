@@ -11,10 +11,6 @@ jfx {
     appName = 'WansviewPlus'
 }
 
-dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-}
-
 group 'app'
 version '1.0'
 
@@ -25,7 +21,6 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
     compile 'com.jfoenix:jfoenix:8.0.8' // Java 8
     compile 'io.datafx:datafx:8.0.1'
     compile 'io.datafx:flow:8.0.1'
