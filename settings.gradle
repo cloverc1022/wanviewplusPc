@@ -1,0 +1,4 @@
+rootProject.name = 'wansview-win'
+include 'app'
+include 'wansview'
+
