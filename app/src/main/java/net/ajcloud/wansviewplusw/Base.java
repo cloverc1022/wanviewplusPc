@@ -29,8 +29,8 @@ import java.util.logging.Logger;
 
 public class Base extends Application implements LoginController.OnLoginListener {
 
-    private final double LOGIN_WIDTH = 320;
-    private final double LOGIN_HEIGHT = 360;
+    private final double LOGIN_WIDTH = 640;
+    private final double LOGIN_HEIGHT = 720;
     private final double MAIN_WIDTH = 960;
     private final double MAIN_HEIGHT = 540;
     private final double DEFAULT_WIDTH = 960;

@@ -1,40 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Text?>
-<?import java.net.URL?>
-
-<GridPane alignment="center" hgap="10" maxHeight="720.0" maxWidth="640.0" minHeight="720.0" minWidth="640.0" prefHeight="720.0" prefWidth="640.0" vgap="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.ajcloud.wansviewplusw.login.LoginController">
-    <stylesheets>
-        <URL value="@../css/login.css" />
-    </stylesheets>
-   <children>
-       <Text id="textTittle" text="Welcome" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
-       <Label text="User Name:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-       <TextField fx:id="tf_name" text="wansview.test@outlook.com" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-       <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-       <PasswordField fx:id="tf_password" text="wansviewtest123" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-       <HBox alignment="bottom_right" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="4">
-          <children>
-              <Button onAction="#handleSubmitButtonAction" text="Sign In" />
-          </children>
-       </HBox>
-   </children>
-   <columnConstraints>
-      <ColumnConstraints />
-      <ColumnConstraints />
-   </columnConstraints>
-   <rowConstraints>
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-      <RowConstraints />
-   </rowConstraints>
-</GridPane>
+<AnchorPane fx:controller="net.ajcloud.wansviewplusw.login.LoginController" maxHeight="720.0" maxWidth="640.0"
+            minHeight="720.0" minWidth="640.0" prefHeight="720.0" prefWidth="640.0"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            style="-fx-background-color:#FFFFFF;">
+    <children>
+        <ImageView fitHeight="96.0" fitWidth="96.0" layoutX="272.0" layoutY="60.0"
+                   pickOnBounds="true"
+                   preserveRatio="true" AnchorPane.leftAnchor="272.0" AnchorPane.topAnchor="32.0">
+            <image>
+                <Image url="@/image/ic_logo.png"/>
+            </image>
+        </ImageView>
+        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="114.0" layoutY="152.0" text="Welcome to Wansview"
+               textAlignment="CENTER" wrapText="true" AnchorPane.leftAnchor="114.0"
+               AnchorPane.rightAnchor="113.0" AnchorPane.topAnchor="160.0"
+               style="-fx-text-fill:#223138;-fx-background-color:#FFFFFFFF;-fx-font-size:36;">
+        </Label>
+        <JFXTextField fx:id="tf_name" focusColor="#0078ff" labelFloat="true" layoutX="173.0" layoutY="286.0"
+                      maxHeight="64.0"
+                      minHeight="64.0" prefHeight="64.0" promptText="Email" unFocusColor="#acbec6"
+                      AnchorPane.leftAnchor="64.0" AnchorPane.rightAnchor="64.0" AnchorPane.topAnchor="255.0"
+                      style="-fx-text-fill:#223239;-fx-background-color:#FFFFFFFF;-fx-font-size:28px;">
+        </JFXTextField>
+        <JFXPasswordField fx:id="tf_password" focusColor="#0078ff" labelFloat="true" layoutX="174.0" layoutY="449.0"
+                          maxHeight="64.0"
+                          minHeight="64.0" prefHeight="64.0" promptText="Password" unFocusColor="#acbec6"
+                          AnchorPane.leftAnchor="64.0" AnchorPane.rightAnchor="64.0" AnchorPane.topAnchor="398.0"
+                          style="-fx-text-fill:#223239;-fx-background-color:#FFFFFFFF;-fx-font-size:28px;"/>
+        <JFXButton text="Sign in" buttonType="RAISED" layoutX="266.0" layoutY="579.0" maxHeight="80.0" minHeight="80.0"
+                   prefHeight="80.0" textFill="WHITE"
+                   AnchorPane.bottomAnchor="74.0" AnchorPane.leftAnchor="64.0" AnchorPane.rightAnchor="64.0"
+                   onMouseClicked="#handleSubmitButtonAction"
+                   style="-fx-text-fill:WHITE;-fx-background-color:#0078ff;-fx-font-size:32px;">
+        </JFXButton>
+    </children>
+</AnchorPane>

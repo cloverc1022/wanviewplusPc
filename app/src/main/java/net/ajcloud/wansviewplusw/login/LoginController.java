@@ -1,5 +1,7 @@
 package net.ajcloud.wansviewplusw.login;
 
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,8 +16,9 @@ import net.ajcloud.wansviewplusw.support.http.bean.SigninBean;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 
 public class LoginController implements BaseController {
-    public TextField tf_name;
-    public PasswordField tf_password;
+
+    public JFXTextField tf_name;
+    public JFXPasswordField tf_password;
     private RequestApiUnit requestApiUnit;
     private OnLoginListener onLoginListener;
 
