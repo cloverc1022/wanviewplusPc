@@ -7,12 +7,15 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import net.ajcloud.wansviewplusw.login.LoginController;
 import net.ajcloud.wansviewplusw.main.MainController;
@@ -29,8 +32,8 @@ import java.util.logging.Logger;
 
 public class Base extends Application implements LoginController.OnLoginListener {
 
-    private final double LOGIN_WIDTH = 640;
-    private final double LOGIN_HEIGHT = 720;
+    private final double LOGIN_WIDTH = 320;
+    private final double LOGIN_HEIGHT = 360;
     private final double MAIN_WIDTH = 960;
     private final double MAIN_HEIGHT = 540;
     private final double DEFAULT_WIDTH = 960;
@@ -51,10 +54,9 @@ public class Base extends Application implements LoginController.OnLoginListener
                 System.exit(0);
             }
         });
-        stage.setTitle("WansviewPlus");
-        stage.getIcons().add(new Image("image/ic_launcher.png"));
-        stage.setMinWidth(LOGIN_WIDTH);
-        stage.setMinHeight(LOGIN_HEIGHT);
+//        stage.setTitle("WansviewPlus");
+//        stage.getIcons().add(new Image("image/ic_launcher.png"));
+        stage.initStyle(StageStyle.UTILITY);
         go2Login();
         stage.show();
 
