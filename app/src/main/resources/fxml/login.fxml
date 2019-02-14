@@ -27,13 +27,13 @@
         <JFXTextField fx:id="tf_name" focusColor="#0078ff" labelFloat="true" layoutX="173.0" layoutY="286.0"
                       maxHeight="64.0"
                       minHeight="64.0" prefHeight="64.0" promptText="Email" unFocusColor="#acbec6"
-                      AnchorPane.leftAnchor="64.0" AnchorPane.rightAnchor="64.0" AnchorPane.topAnchor="255.0"
+                      AnchorPane.leftAnchor="64.0" AnchorPane.rightAnchor="64.0" AnchorPane.topAnchor="275.0"
                       style="-fx-text-fill:#223239;-fx-background-color:#FFFFFFFF;-fx-font-size:28px;">
         </JFXTextField>
         <JFXPasswordField fx:id="tf_password" focusColor="#0078ff" labelFloat="true" layoutX="174.0" layoutY="449.0"
                           maxHeight="64.0"
                           minHeight="64.0" prefHeight="64.0" promptText="Password" unFocusColor="#acbec6"
-                          AnchorPane.leftAnchor="64.0" AnchorPane.rightAnchor="64.0" AnchorPane.topAnchor="398.0"
+                          AnchorPane.leftAnchor="64.0" AnchorPane.rightAnchor="64.0" AnchorPane.topAnchor="418.0"
                           style="-fx-text-fill:#223239;-fx-background-color:#FFFFFFFF;-fx-font-size:28px;"/>
         <JFXButton text="Sign in" buttonType="RAISED" layoutX="266.0" layoutY="579.0" maxHeight="80.0" minHeight="80.0"
                    prefHeight="80.0" textFill="WHITE"

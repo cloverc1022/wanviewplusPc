@@ -109,6 +109,7 @@ public class Base extends Application implements LoginController.OnLoginListener
             Scene scene = new Scene(page, LOGIN_WIDTH, LOGIN_HEIGHT);
             stage.setScene(scene);
             stage.sizeToScene();
+            stage.setResizable(false);
         } catch (Exception ex) {
             Logger.getLogger(Base.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -127,6 +128,7 @@ public class Base extends Application implements LoginController.OnLoginListener
             Scene scene = new Scene(page, MAIN_WIDTH, MAIN_HEIGHT);
             stage.setScene(scene);
             stage.sizeToScene();
+            stage.setResizable(true);
         } catch (Exception ex) {
             Logger.getLogger(Base.class.getName()).log(Level.SEVERE, null, ex);
         }
