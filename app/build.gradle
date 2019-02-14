@@ -24,7 +24,4 @@ dependencies {
     compile 'com.jfoenix:jfoenix:8.0.8' // Java 8
     compile 'io.datafx:datafx:8.0.1'
     compile 'io.datafx:flow:8.0.1'
-
-    // FontAwesome (Bintray)
-    compile 'de.jensd:fontawesomefx-fontawesome:4.7.0-5'
 }
