@@ -1,39 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<AnchorPane minHeight="540.0" minWidth="960.0" prefHeight="540.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/8"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.ajcloud.wansviewplusw.main.MainController">
+<StackPane fx:id="root" minHeight="540.0" minWidth="960.0" prefHeight="540.0" prefWidth="960.0"
+           style="-fx-background-color:#FFFFFF;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="net.ajcloud.wansviewplusw.main.MainController">
     <children>
-        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0"
-              prefWidth="960.0">
-            <children>
-                <VBox layoutX="144.0" layoutY="86.0" prefWidth="72.0">
+        <!-- Header -->
+        <BorderPane>
+            <left>
+                <VBox alignment="TOP_CENTER" minWidth="72.0" prefWidth="72.0" spacing="24.0"
+                      BorderPane.alignment="TOP_CENTER">
                     <children>
-                        <Button layoutX="144.0" layoutY="86.0" mnemonicParsing="false" text="Button"/>
-                        <Button layoutX="144.0" layoutY="157.0" mnemonicParsing="false" text="Button"/>
-                        <Button layoutX="144.0" layoutY="222.0" mnemonicParsing="false" text="Button"/>
-                    </children>
-                </VBox>
-                <ListView fx:id="deviceList" layoutX="299.0" layoutY="70.0" prefWidth="220.0" onMouseClicked="#handleMouseClick"/>
-                <VBox layoutX="621.0" layoutY="100.0" prefWidth="668.0">
-                    <children>
-                        <Label layoutX="690.0" layoutY="100.0" prefHeight="32.0" prefWidth="668.0" text="Label"/>
-                        <BorderPane fx:id="playPane" layoutX="621.0" layoutY="158.0" prefHeight="324.0" prefWidth="668.0"/>
-                        <HBox layoutX="621.0" layoutY="385.0" prefHeight="40.0" prefWidth="668.0">
+                        <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                            <VBox.margin>
+                                <Insets top="18.0"/>
+                            </VBox.margin>
+                            <image>
+                                <Image url="@/image/ic_user.png"/>
+                            </image>
+                        </ImageView>
+                        <VBox alignment="CENTER" minWidth="72.0" prefWidth="72.0">
                             <children>
-                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true"/>
-                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true"/>
-                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true"/>
-                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true"/>
-                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true"/>
+                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/image/ic_device_color.png"/>
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-text-fill:#2979ff;-fx-font-size:8;" text="Camera"/>
                             </children>
-                        </HBox>
-                        <BorderPane layoutX="651.0" layoutY="440.0" prefHeight="144.0" prefWidth="668.0"/>
+                        </VBox>
+                        <VBox alignment="CENTER" minWidth="72.0" prefWidth="72.0">
+                            <children>
+                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/image/ic_quad_screen_mid.png"/>
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-text-fill:#95a5ad;-fx-font-size:8;" text="Quad screen"/>
+                            </children>
+                        </VBox>
+                        <VBox alignment="CENTER" minWidth="72.0" prefWidth="72.0">
+                            <children>
+                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/image/ic_nine_screen_mid.png"/>
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-text-fill:#95a5ad;-fx-font-size:8;" text="Nine-screen"/>
+                            </children>
+                        </VBox>
                     </children>
                 </VBox>
-            </children>
-        </HBox>
+            </left>
+
+            <!-- Content Area -->
+            <center>
+            </center>
+        </BorderPane>
     </children>
-</AnchorPane>
+</StackPane>

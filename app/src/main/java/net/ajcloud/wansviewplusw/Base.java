@@ -33,7 +33,6 @@ public class Base extends Application implements LoginController.OnLoginListener
     private final double DEFAULT_HEIGHT = 540;
     private static final String NATIVE_LIBRARY_SEARCH_PATH = "app/libs/dll";
     private Stage stage;
-    private RequestApiUnit requestApiUnit;
     MainController main;
 
 
@@ -48,16 +47,16 @@ public class Base extends Application implements LoginController.OnLoginListener
             }
         });
         stage.initStyle(StageStyle.UTILITY);
-        go2Login();
+//        go2Login();
+        go2Main();
         stage.show();
-        new Tcprelay().relayinit();
     }
 
     @Override
     public void stop() throws Exception {
         super.stop();
         if (main != null)
-            main.stop();
+//            main.stop();
         new Tcprelay().relaydeinit();
     }
 
@@ -68,7 +67,7 @@ public class Base extends Application implements LoginController.OnLoginListener
     @Override
     public void init() throws Exception {
         super.init();
-        requestApiUnit = new RequestApiUnit();
+        new Tcprelay().relayinit();
         NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), NATIVE_LIBRARY_SEARCH_PATH);
         Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
     }
@@ -101,7 +100,7 @@ public class Base extends Application implements LoginController.OnLoginListener
             loader.setLocation(Base.class.getResource("/fxml/main.fxml"));
             Pane page = loader.load(in);
             main = loader.getController();
-            main.init();
+//            main.init();
             in.close();
             Scene scene = new Scene(page, MAIN_WIDTH, MAIN_HEIGHT);
             stage.setScene(scene);
