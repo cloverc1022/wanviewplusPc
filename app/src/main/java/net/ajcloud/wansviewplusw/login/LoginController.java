@@ -3,9 +3,6 @@ package net.ajcloud.wansviewplusw.login;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
-import de.jensd.fx.glyphs.GlyphsBuilder;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
-import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,6 +10,7 @@ import net.ajcloud.wansviewplusw.BaseController;
 import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
 import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
 import net.ajcloud.wansviewplusw.support.http.bean.SigninBean;
+import net.ajcloud.wansviewplusw.support.http.bean.start.AppStartUpBean;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 
 public class LoginController implements BaseController {
@@ -26,8 +24,6 @@ public class LoginController implements BaseController {
 
     public interface OnLoginListener {
         void onLoginSuccess();
-
-        void onLoginError();
     }
 
     public void setOnLoginListener(OnLoginListener onLoginListener) {
@@ -67,34 +63,56 @@ public class LoginController implements BaseController {
 //            tf_password.validate();
             return;
         }
-        requestApiUnit.signin(tf_name.getText(), tf_password.getText(), new HttpCommonListener<SigninBean>() {
+        requestApiUnit.appStartup(new HttpCommonListener<AppStartUpBean>() {
             @Override
-            public void onSuccess(SigninBean bean) {
-                Platform.runLater(new Runnable() {
+            public void onSuccess(AppStartUpBean bean) {
+                requestApiUnit.signin(tf_name.getText(), tf_password.getText(), new HttpCommonListener<SigninBean>() {
                     @Override
-                    public void run() {
-                        if (onLoginListener != null) {
-                            onLoginListener.onLoginSuccess();
-                        }
+                    public void onSuccess(SigninBean bean) {
+                        Platform.runLater(new Runnable() {
+                            @Override
+                            public void run() {
+                                if (onLoginListener != null) {
+                                    onLoginListener.onLoginSuccess();
+                                }
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onFail(int code, String msg) {
+                        showErrorAlert(msg);
                     }
                 });
             }
 
             @Override
             public void onFail(int code, String msg) {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (onLoginListener != null) {
-                            onLoginListener.onLoginError();
-                        }
-                    }
-                });
+                showErrorAlert(msg);
             }
         });
     }
 
     @FXML
     private void initialize() {
+    }
+
+    private void showErrorAlert(String string) {
+//        Platform.runLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                JFXAlert alert = new JFXAlert((Stage) tf_name.getScene().getWindow());
+//                alert.initModality(Modality.WINDOW_MODAL);
+//                alert.setOverlayClose(false);
+//                JFXDialogLayout layout = new JFXDialogLayout();
+//                layout.setBody(new Label(string));
+//                JFXButton closeButton = new JFXButton("OK");
+//                closeButton.getStyleClass().add("dialog-accept");
+//                closeButton.setOnAction(event -> alert.hideWithAnimation());
+//                layout.setActions(closeButton);
+//                alert.setContent(layout);
+//                alert.show();
+//            }
+//        });
     }
 }

@@ -151,7 +151,7 @@ public class RequestApiUnit {
 
             @Override
             public void onFail(int code, String msg) {
-
+                listener.onFail(-1, msg);
             }
         });
     }

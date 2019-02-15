@@ -7,21 +7,14 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
-import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import net.ajcloud.wansviewplusw.login.LoginController;
 import net.ajcloud.wansviewplusw.main.MainController;
-import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
 import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
-import net.ajcloud.wansviewplusw.support.http.bean.start.AppStartUpBean;
 import org.tcprelay.Tcprelay;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
@@ -54,13 +47,10 @@ public class Base extends Application implements LoginController.OnLoginListener
                 System.exit(0);
             }
         });
-//        stage.setTitle("WansviewPlus");
-//        stage.getIcons().add(new Image("image/ic_launcher.png"));
         stage.initStyle(StageStyle.UTILITY);
         go2Login();
         stage.show();
-
-        startUp();
+        new Tcprelay().relayinit();
     }
 
     @Override
@@ -81,21 +71,6 @@ public class Base extends Application implements LoginController.OnLoginListener
         requestApiUnit = new RequestApiUnit();
         NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), NATIVE_LIBRARY_SEARCH_PATH);
         Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
-    }
-
-    private void startUp() {
-        new Tcprelay().relayinit();
-        requestApiUnit.appStartup(new HttpCommonListener<AppStartUpBean>() {
-            @Override
-            public void onSuccess(AppStartUpBean bean) {
-
-            }
-
-            @Override
-            public void onFail(int code, String msg) {
-
-            }
-        });
     }
 
     private void go2Login() {
@@ -137,35 +112,8 @@ public class Base extends Application implements LoginController.OnLoginListener
         }
     }
 
-    /**
-     * 切换界面
-     */
-    private BaseController replaceSceneContent(String fxml) throws Exception {
-        FXMLLoader loader = new FXMLLoader();
-        InputStream in = Base.class.getResourceAsStream(fxml);
-        loader.setBuilderFactory(new JavaFXBuilderFactory());
-        loader.setLocation(Base.class.getResource(fxml));
-        Pane page;
-        try {
-            page = loader.load(in);
-        } finally {
-            in.close();
-        }
-        Scene scene = new Scene(page, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-        stage.setScene(scene);
-        stage.sizeToScene();
-        return loader.getController();
-    }
-
     @Override
     public void onLoginSuccess() {
         go2Main();
     }
-
-    @Override
-    public void onLoginError() {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, "账号或密码错误", ButtonType.OK);
-        alert.showAndWait();
-    }
-
 }
