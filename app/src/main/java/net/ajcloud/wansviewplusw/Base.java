@@ -33,8 +33,6 @@ public class Base extends Application implements LoginController.OnLoginListener
     private final double DEFAULT_HEIGHT = 540;
     private static final String NATIVE_LIBRARY_SEARCH_PATH = "app/libs/dll";
     private Stage stage;
-    MainController main;
-
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -46,17 +44,13 @@ public class Base extends Application implements LoginController.OnLoginListener
                 System.exit(0);
             }
         });
-        stage.initStyle(StageStyle.UTILITY);
 //        go2Login();
         go2Main();
-        stage.show();
     }
 
     @Override
     public void stop() throws Exception {
         super.stop();
-        if (main != null)
-//            main.stop();
         new Tcprelay().relaydeinit();
     }
 
@@ -87,6 +81,8 @@ public class Base extends Application implements LoginController.OnLoginListener
             stage.setScene(scene);
             stage.sizeToScene();
             stage.setResizable(false);
+            stage.initStyle(StageStyle.UTILITY);
+            stage.show();
         } catch (Exception ex) {
             Logger.getLogger(Base.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -99,13 +95,13 @@ public class Base extends Application implements LoginController.OnLoginListener
             loader.setBuilderFactory(new JavaFXBuilderFactory());
             loader.setLocation(Base.class.getResource("/fxml/main.fxml"));
             Pane page = loader.load(in);
-            main = loader.getController();
-//            main.init();
             in.close();
             Scene scene = new Scene(page, MAIN_WIDTH, MAIN_HEIGHT);
             stage.setScene(scene);
             stage.sizeToScene();
             stage.setResizable(true);
+            stage.initStyle(StageStyle.DECORATED);
+            stage.show();
         } catch (Exception ex) {
             Logger.getLogger(Base.class.getName()).log(Level.SEVERE, null, ex);
         }
