@@ -1,4 +1,4 @@
-package net.ajcloud.wansviewplusw.play;
+package net.ajcloud.wansviewplusw.camera;
 
 import com.sun.jna.Memory;
 import javafx.application.Platform;
@@ -99,7 +99,7 @@ public class PlayQController implements BaseController, PoliceHelper.PoliceContr
                         url.append("/live");
                         url.append(token);
 
-                        WLog.w("p2p_debug", "------p2p-play-----" + url.toString());
+                        WLog.w("p2p_debug", "------p2p-camera-----" + url.toString());
                         mediaPlayerComponent.getMediaPlayer().playMedia(url.toString());
                     }
                 });

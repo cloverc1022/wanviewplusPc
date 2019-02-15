@@ -8,7 +8,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane fx:id="root" minHeight="588.0" minWidth="960.0" prefHeight="588.0" prefWidth="960.0" style="-fx-background-color:#FFFFFF;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="root" minHeight="580.0" minWidth="960.0" prefHeight="580.0" prefWidth="960.0" style="-fx-background-color:#FFFFFF;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <!-- Header -->
         <BorderPane>
@@ -59,10 +59,11 @@
 
             <!-- Content Area -->
             <center>
+                <StackPane fx:id="content" />
             </center>
-         <StackPane.margin>
-            <Insets top="48.0" />
-         </StackPane.margin>
+            <StackPane.margin>
+                <Insets top="40.0" />
+            </StackPane.margin>
         </BorderPane>
     </children>
 </StackPane>

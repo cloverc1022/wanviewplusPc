@@ -1,4 +1,4 @@
-package net.ajcloud.wansviewplusw.play;
+package net.ajcloud.wansviewplusw.camera;
 
 import javafx.scene.control.ListCell;
 import net.ajcloud.wansviewplusw.support.device.Camera;

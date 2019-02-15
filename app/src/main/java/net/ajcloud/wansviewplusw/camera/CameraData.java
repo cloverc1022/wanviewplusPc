@@ -1,4 +1,4 @@
-package net.ajcloud.wansviewplusw.play;
+package net.ajcloud.wansviewplusw.camera;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
