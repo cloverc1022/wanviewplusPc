@@ -1,0 +1,13 @@
+*/build/*
+.git/*
+.idea
+.out
+*.prefs
+*.swp
+/result.txt
+*.log
+.gradle
+gradle
+build
+*.iml
+/build.gradle
