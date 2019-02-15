@@ -1,9 +1,15 @@
 package net.ajcloud.wansviewplusw;
 
+import com.jfoenix.svg.SVGGlyph;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
+import io.datafx.controller.flow.Flow;
+import io.datafx.controller.flow.container.DefaultFlowContainer;
+import io.datafx.controller.flow.context.FXMLViewFlowContext;
+import io.datafx.controller.flow.context.ViewFlowContext;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
@@ -13,8 +19,8 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import net.ajcloud.wansviewplusw.login.LoginController;
+import net.ajcloud.wansviewplusw.main.JFXDecorator;
 import net.ajcloud.wansviewplusw.main.MainController;
-import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
 import org.tcprelay.Tcprelay;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
@@ -33,6 +39,9 @@ public class Base extends Application implements LoginController.OnLoginListener
     private final double DEFAULT_HEIGHT = 540;
     private static final String NATIVE_LIBRARY_SEARCH_PATH = "app/libs/dll";
     private Stage stage;
+
+    @FXMLViewFlowContext
+    private ViewFlowContext flowContext;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -90,17 +99,21 @@ public class Base extends Application implements LoginController.OnLoginListener
 
     private void go2Main() {
         try {
-            FXMLLoader loader = new FXMLLoader();
-            InputStream in = Base.class.getResourceAsStream("/fxml/main.fxml");
-            loader.setBuilderFactory(new JavaFXBuilderFactory());
-            loader.setLocation(Base.class.getResource("/fxml/main.fxml"));
-            Pane page = loader.load(in);
-            in.close();
-            Scene scene = new Scene(page, MAIN_WIDTH, MAIN_HEIGHT);
+            Flow flow = new Flow(MainController.class);
+            DefaultFlowContainer container = new DefaultFlowContainer();
+            flowContext = new ViewFlowContext();
+            flowContext.register("Stage", stage);
+            flow.createHandler(flowContext).start(container);
+
+            JFXDecorator decorator = new JFXDecorator(stage, container.getView(),false,true,true);
+            decorator.setGraphic(new SVGGlyph(""));
+
+            Scene scene = new Scene(decorator, MAIN_WIDTH, MAIN_HEIGHT);
+            final ObservableList<String> stylesheets = scene.getStylesheets();
+            stylesheets.addAll(Base.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
+                    Base.class.getResource("/css/jfoenix-design.css").toExternalForm(),
+                    Base.class.getResource("/css/main.css").toExternalForm());
             stage.setScene(scene);
-            stage.sizeToScene();
-            stage.setResizable(true);
-            stage.initStyle(StageStyle.DECORATED);
             stage.show();
         } catch (Exception ex) {
             Logger.getLogger(Base.class.getName()).log(Level.SEVERE, null, ex);
