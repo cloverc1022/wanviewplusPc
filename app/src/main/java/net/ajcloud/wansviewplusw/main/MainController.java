@@ -14,7 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import net.ajcloud.wansviewplusw.BaseController;
 import net.ajcloud.wansviewplusw.nine.NineController;
-import net.ajcloud.wansviewplusw.camera.TmpController;
+import net.ajcloud.wansviewplusw.camera.CameraController;
 import net.ajcloud.wansviewplusw.quad.QuadController;
 
 import javax.annotation.PostConstruct;
@@ -47,9 +47,9 @@ public class MainController implements BaseController {
         vb_quad.setOnMouseClicked(e -> replace(vb_quad.getId()));
         vb_nine.setOnMouseClicked(e -> replace(vb_nine.getId()));
 
-        Flow innerFlow = new Flow(TmpController.class);
+        Flow innerFlow = new Flow(CameraController.class);
         flowHandler = innerFlow.createHandler(context);
-        bindNodeToController(vb_device, TmpController.class, innerFlow, flowHandler);
+        bindNodeToController(vb_device, CameraController.class, innerFlow, flowHandler);
         bindNodeToController(vb_quad, QuadController.class, innerFlow, flowHandler);
         bindNodeToController(vb_nine, NineController.class, innerFlow, flowHandler);
 
