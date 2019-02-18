@@ -13,14 +13,17 @@
     <children>
         <ImageView fx:id="icon" fitHeight="48.0" fitWidth="48.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0">
         </ImageView>
-        <VBox alignment="CENTER_RIGHT" layoutX="302.0" layoutY="82.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="64.0" minWidth="140.0" prefHeight="64.0" prefWidth="140.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="56.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <VBox alignment="CENTER_LEFT" layoutX="302.0" layoutY="82.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="64.0" minWidth="140.0" prefHeight="64.0" prefWidth="140.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="56.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <Label fx:id="deviceName" alignment="BOTTOM_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="32.0" minWidth="140.0" prefHeight="32.0" prefWidth="140.0" style="-fx-text-fill:#263238;-fx-font-size:12;-fx-font-style: bold" text="Name">
                     <VBox.margin>
-                        <Insets left="12.0" />
+                        <Insets />
                     </VBox.margin>
+               <padding>
+                  <Insets left="12.0" />
+               </padding>
                 </Label>
-                <Label fx:id="status" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="16.0" minWidth="44.0" prefHeight="16.0" prefWidth="44.0" style="-fx-text-fill:White;-fx-font-size:7" text="Connecting" />
+                <Label fx:id="status" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="16.0" minWidth="44.0" prefHeight="16.0" prefWidth="44.0" style="-fx-text-fill:White;-fx-font-size:7;-fx-background-color: #2979ff;" text="Connecting" />
             </children>
         </VBox>
     </children>
