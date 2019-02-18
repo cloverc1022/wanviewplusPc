@@ -19,7 +19,7 @@ public class CameraData {
     @FXML
     private Label deviceName;
     @FXML
-    private Label deviceId;
+    private Label status;
 
     public CameraData() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/item_device_list.fxml"));
@@ -41,7 +41,6 @@ public class CameraData {
         Image image = new Image(imagePath);
         icon.setImage(image);
         deviceName.setText(camera.aliasName);
-        deviceId.setText(camera.deviceId);
     }
 
     public Pane getPane() {

@@ -1,9 +1,10 @@
 package net.ajcloud.wansviewplusw.camera;
 
+import com.jfoenix.controls.JFXListCell;
 import javafx.scene.control.ListCell;
 import net.ajcloud.wansviewplusw.support.device.Camera;
 
-public class DeviceListCell extends ListCell<Camera> {
+public class DeviceListCell extends JFXListCell<Camera> {
 
     @Override
     protected void updateItem(Camera item, boolean empty) {

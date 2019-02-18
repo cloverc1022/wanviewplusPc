@@ -38,14 +38,15 @@ public class Base extends Application implements LoginController.OnLoginListener
     private final double DEFAULT_WIDTH = 960;
     private final double DEFAULT_HEIGHT = 540;
     private static final String NATIVE_LIBRARY_SEARCH_PATH = "app/libs/dll";
-    private Stage stage;
+    private Stage mainStage;
+    private Stage loginStage;
 
     @FXMLViewFlowContext
     private ViewFlowContext flowContext;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        stage = primaryStage;
+        loginStage = primaryStage;
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent event) {
@@ -53,8 +54,8 @@ public class Base extends Application implements LoginController.OnLoginListener
                 System.exit(0);
             }
         });
-//        go2Login();
-        go2Main();
+        go2Login();
+//        go2Main();
     }
 
     @Override
@@ -87,11 +88,11 @@ public class Base extends Application implements LoginController.OnLoginListener
             login.setOnLoginListener(this);
             in.close();
             Scene scene = new Scene(page, LOGIN_WIDTH, LOGIN_HEIGHT);
-            stage.setScene(scene);
-            stage.sizeToScene();
-            stage.setResizable(false);
-            stage.initStyle(StageStyle.UTILITY);
-            stage.show();
+            loginStage.setScene(scene);
+            loginStage.sizeToScene();
+            loginStage.setResizable(false);
+            loginStage.initStyle(StageStyle.UTILITY);
+            loginStage.show();
         } catch (Exception ex) {
             Logger.getLogger(Base.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -99,13 +100,15 @@ public class Base extends Application implements LoginController.OnLoginListener
 
     private void go2Main() {
         try {
+            mainStage = new Stage(StageStyle.DECORATED);
+
             Flow flow = new Flow(MainController.class);
             DefaultFlowContainer container = new DefaultFlowContainer();
             flowContext = new ViewFlowContext();
-            flowContext.register("Stage", stage);
+            flowContext.register("Stage", mainStage);
             flow.createHandler(flowContext).start(container);
 
-            JFXDecorator decorator = new JFXDecorator(stage, container.getView(),false,true,true);
+            JFXDecorator decorator = new JFXDecorator(mainStage, container.getView(), false, true, true);
             decorator.setGraphic(new SVGGlyph(""));
 
             Scene scene = new Scene(decorator, MAIN_WIDTH, MAIN_HEIGHT);
@@ -113,8 +116,9 @@ public class Base extends Application implements LoginController.OnLoginListener
             stylesheets.addAll(Base.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
                     Base.class.getResource("/css/jfoenix-design.css").toExternalForm(),
                     Base.class.getResource("/css/main.css").toExternalForm());
-            stage.setScene(scene);
-            stage.show();
+            mainStage.setScene(scene);
+            mainStage.show();
+            loginStage.hide();
         } catch (Exception ex) {
             Logger.getLogger(Base.class.getName()).log(Level.SEVERE, null, ex);
         }
