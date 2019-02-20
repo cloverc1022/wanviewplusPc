@@ -2,80 +2,65 @@
     -fx-font-family: "Roboto";
 }
 
-/*******************************************************************************
-*                                                                              *
-* JFX Decorator                                                                *
-*                                                                              *
-*******************************************************************************/
-
-.jfx-decorator {
-    -fx-decorator-color: #FFFFFF;
-}
-
-.jfx-decorator .jfx-decorator-buttons-container {
-    -fx-background-color: -fx-decorator-color;
-}
-
-.jfx-decorator .resize-border {
-    -fx-border-color: -fx-decorator-color;
-    -fx-border-width: 0;
-}
-
-.jfx-decorator .jfx-decorator-title-container .jfx-decorator-text {
-    -fx-fill: #263238;
-    -fx-font-size: 16;
-}
-
-/*左上角图标*/
-.jfx-decorator .jfx-decorator-title-container .jfx-svg-glyph {
-    /*-fx-shape: "M512 682c-128.024-99.309-255.626-199.040-384-298l384-298 384 298c-128.375 98.958-255.974 198.693-384 298zM512 792l314-246 70 54-384 298-384-298 70-54z";*/
-    /*-jfx-size: 15;*/
-    /*-fx-background-color: #263238;*/
-}
-
-.custom-jfx-list {
+.jfx-list-view {
     -jfx-vertical-gap: 16px;
     -fx-background-color: #F7FAFA;
     -jfx-expanded: true;
 }
 
+.jfx-list-cell {
+    -fx-background-color: WHITE;
+    -fx-padding: 0 0 0 0;
+}
+
+.custom-jfx-list .jfx-list-cell .jfx-rippler {
+    -jfx-rippler-fill: #5264AE;
+}
+
 /* The main scrollbar **track** CSS class  */
 .custom-jfx-list .scroll-bar:horizontal .track,
 .custom-jfx-list .scroll-bar:vertical .track {
-    -fx-background-color: transparent;
-    -fx-border-color: transparent;
-    -fx-background-radius: 0em;
-    -fx-border-radius: 2em;
+    -fx-pref-width: 0;
 }
 
 /* The increment and decrement button CSS class of scrollbar */
 .custom-jfx-list .scroll-bar:horizontal .increment-button,
 .custom-jfx-list .scroll-bar:horizontal .decrement-button {
-    -fx-background-color: transparent;
-    -fx-background-radius: 0em;
-    -fx-padding: 0 0 10 0;
+    -fx-pref-width: 0;
 }
 
 /* The increment and decrement button CSS class of scrollbar */
 
 .custom-jfx-list .scroll-bar:vertical .increment-button,
 .custom-jfx-list .scroll-bar:vertical .decrement-button {
-    -fx-background-color: transparent;
-    -fx-background-radius: 0em;
-    -fx-padding: 0 10 0 0;
+    -fx-pref-width: 0;
 
 }
 
 .custom-jfx-list .scroll-bar .increment-arrow,
 .custom-jfx-list .scroll-bar .decrement-arrow {
-    -fx-shape: " ";
-    -fx-padding: 0;
+    -fx-pref-width: 0;
 }
 
 /* The main scrollbar **thumb** CSS class which we drag every time (movable) */
 .custom-jfx-list .scroll-bar:horizontal .thumb,
 .custom-jfx-list .scroll-bar:vertical .thumb {
-    -fx-background-color: derive(black, 90%);
-    -fx-background-insets: 2, 0, 0;
-    -fx-background-radius: 2em;
+    -fx-pref-width: 0;
+}
+
+.devices_item_pane {
+    -fx-border-radius: 2 2 2 2;
+    -fx-background-color: White
+}
+
+.devices_item_deviceName {
+    -fx-text-fill: #263238;
+    -fx-font-size: 12;
+    -fx-font-style: bold
+}
+
+.devices_item_status {
+    -fx-text-fill: White;
+    -fx-font-size: 7;
+    -fx-background-color: #2979ff;
 }

@@ -41,6 +41,7 @@ public class CameraController {
             @Override
             public void onSuccess(List<Camera> bean) {
                 if (bean != null) {
+                    label_num.setText(bean.size() + " devices");
                     mInfos.setAll(bean);
                     lv_devices.setItems(mInfos);
                     lv_devices.setCellFactory(new Callback<ListView<Camera>, ListCell<Camera>>() {

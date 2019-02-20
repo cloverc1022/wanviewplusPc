@@ -1,30 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
+
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-
-<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="64.0" minWidth="196.0" prefHeight="64.0" prefWidth="196.0" style="-fx-border-radius: 2 2 2 2 ;-fx-background-color: White" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane fx:id="pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <ImageView fx:id="icon" fitHeight="48.0" fitWidth="48.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="8.0" AnchorPane.topAnchor="8.0">
-        </ImageView>
-        <VBox alignment="CENTER_LEFT" layoutX="302.0" layoutY="82.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="64.0" minWidth="140.0" prefHeight="64.0" prefWidth="140.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="56.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <HBox alignment="CENTER_LEFT">
             <children>
-                <Label fx:id="deviceName" alignment="BOTTOM_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="32.0" minWidth="140.0" prefHeight="32.0" prefWidth="140.0" style="-fx-text-fill:#263238;-fx-font-size:12;-fx-font-style: bold" text="Name">
-                    <VBox.margin>
-                        <Insets />
-                    </VBox.margin>
-               <padding>
-                  <Insets left="12.0" />
-               </padding>
-                </Label>
-                <Label fx:id="status" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="16.0" minWidth="44.0" prefHeight="16.0" prefWidth="44.0" style="-fx-text-fill:White;-fx-font-size:7;-fx-background-color: #2979ff;" text="Connecting" />
+                <ImageView fx:id="icon" fitHeight="48.0" fitWidth="48.0" layoutX="32.0" layoutY="50.0"
+                           pickOnBounds="true" preserveRatio="true">
+                    <HBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0"/>
+                    </HBox.margin>
+                </ImageView>
+                <VBox alignment="CENTER_RIGHT" layoutX="384.0" layoutY="100.0">
+                    <children>
+                        <Label fx:id="deviceName" maxWidth="120.0" minWidth="120.0" prefWidth="120.0"
+                               styleClass="devices_item_deviceName" text="Name">
+                            <VBox.margin>
+                                <Insets/>
+                            </VBox.margin>
+                        </Label>
+                        <Label fx:id="status" styleClass="devices_item_status" text="Connecting" alignment="CENTER"/>
+                    </children>
+                    <HBox.margin>
+                        <Insets right="12.0"/>
+                    </HBox.margin>
+                </VBox>
             </children>
-        </VBox>
+        </HBox>
     </children>
 </AnchorPane>

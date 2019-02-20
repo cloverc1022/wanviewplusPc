@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
@@ -101,17 +102,13 @@ public class Base extends Application implements LoginController.OnLoginListener
     private void go2Main() {
         try {
             mainStage = new Stage(StageStyle.DECORATED);
-
             Flow flow = new Flow(MainController.class);
             DefaultFlowContainer container = new DefaultFlowContainer();
             flowContext = new ViewFlowContext();
             flowContext.register("Stage", mainStage);
             flow.createHandler(flowContext).start(container);
 
-            JFXDecorator decorator = new JFXDecorator(mainStage, container.getView(), false, true, true);
-            decorator.setGraphic(new SVGGlyph(""));
-
-            Scene scene = new Scene(decorator, MAIN_WIDTH, MAIN_HEIGHT);
+            Scene scene = new Scene(container.getView(), MAIN_WIDTH, MAIN_HEIGHT);
             final ObservableList<String> stylesheets = scene.getStylesheets();
             stylesheets.addAll(Base.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
                     Base.class.getResource("/css/jfoenix-design.css").toExternalForm(),
