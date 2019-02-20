@@ -6,10 +6,6 @@ import net.ajcloud.wansviewplusw.support.device.Camera;
 
 public class DeviceListCell extends JFXListCell<Camera> {
 
-    public DeviceListCell() {
-        super();
-    }
-
     @Override
     protected void updateItem(Camera item, boolean empty) {
         super.updateItem(item, empty);

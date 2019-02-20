@@ -13,7 +13,7 @@
                 <VBox alignment="TOP_CENTER" layoutX="163.0" layoutY="54.0">
                     <children>
                         <Label fx:id="label_num" layoutX="228.0" layoutY="91.0" minHeight="32.0" minWidth="220.0"
-                               style="-fx-text-fill:#263238;-fx-font-size:10;" text="n devices">
+                               style="-fx-text-fill:#263238;-fx-font-size:10;-fx-font-weight: bold;" text="n devices">
                             <padding>
                                 <Insets left="10.0"/>
                             </padding>

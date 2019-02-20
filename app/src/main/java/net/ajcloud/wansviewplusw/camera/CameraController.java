@@ -16,7 +16,7 @@ import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
 import javax.annotation.PostConstruct;
 import java.util.List;
 
-@ViewController(value = "/fxml/camera.fxml", title = "Tmp")
+@ViewController(value = "/fxml/camera.fxml", title = "Camera")
 public class CameraController {
 
     @FXML

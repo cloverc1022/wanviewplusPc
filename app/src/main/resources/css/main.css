@@ -9,12 +9,15 @@
 }
 
 .jfx-list-cell {
+    -fx-pref-width: 196px;
     -fx-background-color: WHITE;
     -fx-padding: 0 0 0 0;
+    -fx-border-radius: 2px;
+    -fx-background-radius: 2px;
 }
 
 .custom-jfx-list .jfx-list-cell .jfx-rippler {
-    -jfx-rippler-fill: #5264AE;
+    -jfx-rippler-fill: #82B1FF;
 }
 
 /* The main scrollbar **track** CSS class  */
@@ -55,12 +58,15 @@
 
 .devices_item_deviceName {
     -fx-text-fill: #263238;
-    -fx-font-size: 12;
-    -fx-font-style: bold
+    -fx-font-size: 12px;
+    -fx-font-weight: bold
 }
 
 .devices_item_status {
     -fx-text-fill: White;
-    -fx-font-size: 7;
+    -fx-font-size: 7px;
+    -fx-font-weight: bold;
     -fx-background-color: #2979ff;
+    -fx-border-radius: 2px;
+    -fx-background-radius: 2px;
 }
