@@ -70,3 +70,39 @@
     -fx-border-radius: 2px;
     -fx-background-radius: 2px;
 }
+
+.play_pane {
+    -fx-background-color: Black;
+}
+
+.jfx_button_voice, .jfx_button_screenshot, .jfx_button_play, .jfx_button_record, .jfx_button_refresh {
+    -fx-pref-width: 24px;
+    -fx-pref-height: 24px;
+    -fx-min-width: 24px;
+    -fx-min-height: 24px;
+    -fx-background-size: 24px;
+}
+
+.jfx_button_voice .jfx-rippler, .jfx_button_screenshot .jfx-rippler, .jfx_button_play .jfx-rippler, .jfx_button_record .jfx-rippler, .jfx_button_refresh .jfx-rippler {
+    -jfx-rippler-fill: #82B1FF;
+}
+
+.jfx_button_voice {
+    -fx-background-image: url('/image/ic_speaker_on_dark.png');
+}
+
+.jfx_button_screenshot {
+    -fx-background-image: url('/image/ic_screenshots_dark.png');
+}
+
+.jfx_button_play {
+    -fx-background-image: url('/image/ic_play_dark.png');
+}
+
+.jfx_button_record {
+    -fx-background-image: url('/image/ic_record_dark.png');
+}
+
+.jfx_button_refresh {
+    -fx-background-image: url('/image/ic_refresh.png');
+}
