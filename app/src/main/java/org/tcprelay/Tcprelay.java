@@ -4,9 +4,9 @@ import java.io.File;
 
 public class Tcprelay {
     static {
-        System.loadLibrary("app/libs/dll/SE_P2PSDK");
-        System.loadLibrary("app/libs/dll/pthreadVC2");
-        System.loadLibrary("app/libs/dll/TestJni");
+        System.loadLibrary("app/lib/dll/SE_P2PSDK");
+        System.loadLibrary("app/lib/dll/pthreadVC2");
+        System.loadLibrary("app/lib/dll/TestJni");
     }
 
     public native void relayinit();
