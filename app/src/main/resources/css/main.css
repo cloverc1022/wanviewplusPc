@@ -106,3 +106,12 @@
 .jfx_button_refresh {
     -fx-background-image: url('/image/ic_refresh.png');
 }
+
+.spinner_loading{
+    -jfx-radius: 20;
+}
+
+.spinner_loading .arc {
+    -fx-stroke-width: 5.0;
+    -fx-stroke: #2979ff;
+}

@@ -40,6 +40,7 @@
                                         <Insets bottom="46.0" top="46.0"/>
                                     </StackPane.margin>
                                 </BorderPane>
+                                <JFXSpinner fx:id="loading" styleClass="spinner_loading" startingAngle="-40"/>
                             </children>
                         </StackPane>
                         <HBox alignment="CENTER" minHeight="40.0" minWidth="668.0" prefHeight="40.0" prefWidth="668.0"

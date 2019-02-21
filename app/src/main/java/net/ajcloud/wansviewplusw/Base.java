@@ -1,6 +1,5 @@
 package net.ajcloud.wansviewplusw;
 
-import com.jfoenix.svg.SVGGlyph;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
 import io.datafx.controller.flow.Flow;
@@ -15,12 +14,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import net.ajcloud.wansviewplusw.login.LoginController;
-import net.ajcloud.wansviewplusw.main.JFXDecorator;
 import net.ajcloud.wansviewplusw.main.MainController;
 import org.tcprelay.Tcprelay;
 import uk.co.caprica.vlcj.binding.LibVlc;
@@ -93,6 +90,10 @@ public class Base extends Application implements LoginController.OnLoginListener
             loginStage.sizeToScene();
             loginStage.setResizable(false);
             loginStage.initStyle(StageStyle.UTILITY);
+            loginStage.setOnCloseRequest(e -> {
+                e.consume();
+                close();
+            });
             loginStage.show();
         } catch (Exception ex) {
             Logger.getLogger(Base.class.getName()).log(Level.SEVERE, null, ex);
@@ -114,6 +115,10 @@ public class Base extends Application implements LoginController.OnLoginListener
                     Base.class.getResource("/css/jfoenix-design.css").toExternalForm(),
                     Base.class.getResource("/css/main.css").toExternalForm());
             mainStage.setScene(scene);
+            mainStage.setOnCloseRequest(e -> {
+                e.consume();
+                close();
+            });
             mainStage.show();
             loginStage.hide();
         } catch (Exception ex) {
@@ -124,5 +129,12 @@ public class Base extends Application implements LoginController.OnLoginListener
     @Override
     public void onLoginSuccess() {
         go2Main();
+    }
+
+    private void close() {
+        if (mainStage != null)
+            mainStage.close();
+        if (loginStage != null)
+            loginStage.close();
     }
 }
