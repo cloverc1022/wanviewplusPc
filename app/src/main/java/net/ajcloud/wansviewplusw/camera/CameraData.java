@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
@@ -33,7 +34,8 @@ public class CameraData {
             throw new RuntimeException(e);
         }
         Camera camera = DeviceCache.getInstance().get(deviceId);
-        status.textProperty().bind(camera.refreshStatusProperty());
+        status.textProperty().bind(camera.deviceStatusProperty());
+        status.backgroundProperty().bind(camera.deviceStatusBgProperty());
     }
 
     public void setInfo(Camera camera) {

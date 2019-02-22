@@ -1,7 +1,12 @@
 package net.ajcloud.wansviewplusw.support.device;
 
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.paint.Color;
 import net.ajcloud.wansviewplusw.support.http.bean.*;
 import net.ajcloud.wansviewplusw.support.http.bean.device.ConDeviceBean;
 import net.ajcloud.wansviewplusw.support.http.bean.device.DeviceGeneralsBean;
@@ -28,7 +33,6 @@ public class Camera implements Serializable {
     public String fwVersion;
     public String newFwVersion;
     public long onlineModified;
-    public int onlineStatus;     // 离线 - 1, 在线 - 2, 升级中 - 4
     public String remoteAddr;
     public long tunnelSyncTime;
     public String vendorCode;
@@ -59,7 +63,6 @@ public class Camera implements Serializable {
     public OnvifConfigBean onvifConfig;
     public LocalAccountConfig localAccountConfig;
 
-    private StringProperty refreshStatus = new SimpleStringProperty();  //刷新状态   0：正在刷新    1：成功    2：失败
     public String sortStr;  //用于排序
     private String gatewayUrl;
     private String tunnelUrl;
@@ -71,6 +74,11 @@ public class Camera implements Serializable {
     private String devEmcUrl;
     private String devGatewayUrl;
     private String stunServers;
+    private int onlineStatus;     // 离线 - 1, 在线 - 2, 升级中 - 4
+    private int refreshStatus;  //刷新状态   0：正在刷新    1：成功    2：失败
+
+    private StringProperty deviceStatus = new SimpleStringProperty("Connecting");
+    private ObjectProperty<Background> deviceStatusBg = new SimpleObjectProperty<>(new Background(new BackgroundFill(Color.rgb(149, 165, 174), null, null)));
 
     public Camera() {
 
@@ -134,19 +142,62 @@ public class Camera implements Serializable {
         }
     }
 
-    public String getRefreshStatus() {
-        return refreshStatus.get();
+    public int getOnlineStatus() {
+        return onlineStatus;
     }
 
-    public StringProperty refreshStatusProperty() {
+    public void setOnlineStatus(int onlineStatus) {
+        this.onlineStatus = onlineStatus;
+        refreshDeviceStatus();
+    }
+
+    public int getRefreshStatus() {
         return refreshStatus;
     }
 
     public void setRefreshStatus(int refreshStatus) {
-        //0：正在刷新    1：成功    2：失败
-        if (refreshStatus == 0) {
-            this.refreshStatus.set("Connecting");
+        this.refreshStatus = refreshStatus;
+        refreshDeviceStatus();
+    }
+
+    private void refreshDeviceStatus() {
+        if (refreshStatus == 1) {
+            if (onlineStatus == 1) {
+                setDeviceStatus("Offline");
+                setDeviceStatusBg(new Background(new BackgroundFill(Color.rgb(97, 114, 122), null, null)));
+            } else if (onlineStatus == 2) {
+                setDeviceStatus("Online");
+                setDeviceStatusBg(new Background(new BackgroundFill(Color.rgb(41, 121, 255), null, null)));
+            }
+        } else {
+            setDeviceStatus("Connecting");
+            setDeviceStatusBg(new Background(new BackgroundFill(Color.rgb(149, 165, 174), null, null)));
         }
+    }
+
+    public String getDeviceStatus() {
+        return deviceStatus.get();
+    }
+
+    public StringProperty deviceStatusProperty() {
+        return deviceStatus;
+    }
+
+    public void setDeviceStatus(String deviceStatus) {
+
+        this.deviceStatus.set(deviceStatus);
+    }
+
+    public Background getDeviceStatusBg() {
+        return deviceStatusBg.get();
+    }
+
+    public ObjectProperty<Background> deviceStatusBgProperty() {
+        return deviceStatusBg;
+    }
+
+    public void setDeviceStatusBg(Background deviceStatusBg) {
+        this.deviceStatusBg.set(deviceStatusBg);
     }
 
     public String getGatewayUrl() {

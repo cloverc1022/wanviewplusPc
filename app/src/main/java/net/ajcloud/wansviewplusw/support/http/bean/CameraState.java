@@ -14,7 +14,7 @@ public class CameraState {
     public boolean enable;
     public int state;     //0：暂停 1：播放
     public int onlineStatus;     // 离线 - 1, 在线 - 2, 升级中 - 4
-    public String refreshStatus;  //刷新状态   0：正在刷新    1：成功    2：失败
+    public int refreshStatus;  //刷新状态   0：正在刷新    1：成功    2：失败
 
     public CameraState(int id) {
         enable = false;
@@ -26,7 +26,7 @@ public class CameraState {
         this.state = 1;
         this.deviceId = camera.deviceId;
         this.name = DeviceInfoDictionary.getNameByDevice(camera);
-        this.onlineStatus = camera.onlineStatus;
+        this.onlineStatus = camera.getOnlineStatus();
         this.refreshStatus = camera.getRefreshStatus();
     }
 
@@ -36,6 +36,6 @@ public class CameraState {
         this.deviceId = null;
         this.name = null;
         this.onlineStatus = 0;
-        this.refreshStatus = "0";
+        this.refreshStatus = 0;
     }
 }

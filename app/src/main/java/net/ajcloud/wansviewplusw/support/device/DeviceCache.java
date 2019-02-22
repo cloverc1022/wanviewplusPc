@@ -122,7 +122,7 @@ public class DeviceCache {
         cameraOrigin.nightMode = camera.nightMode;
         cameraOrigin.orientationValue = camera.orientationValue;
         cameraOrigin.onlineModified = camera.onlineModified;
-        cameraOrigin.onlineStatus = camera.onlineStatus;
+        cameraOrigin.setOnlineStatus(camera.getOnlineStatus());
         cameraOrigin.tunnelSyncTime = camera.tunnelSyncTime;
         cameraOrigin.deviceId = camera.deviceId;
         cameraOrigin.deviceMode = camera.deviceMode;
