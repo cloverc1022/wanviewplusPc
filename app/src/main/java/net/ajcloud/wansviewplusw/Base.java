@@ -3,6 +3,7 @@ package net.ajcloud.wansviewplusw;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
 import io.datafx.controller.flow.Flow;
+import io.datafx.controller.flow.FlowHandler;
 import io.datafx.controller.flow.container.DefaultFlowContainer;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
@@ -17,6 +18,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+import net.ajcloud.wansviewplusw.camera.CameraController;
 import net.ajcloud.wansviewplusw.login.LoginController;
 import net.ajcloud.wansviewplusw.main.MainController;
 import org.tcprelay.Tcprelay;
@@ -132,8 +134,19 @@ public class Base extends Application implements LoginController.OnLoginListener
     }
 
     private void close() {
-        if (mainStage != null)
+        if (mainStage != null) {
+            FlowHandler flowHandler = (FlowHandler) flowContext.getRegisteredObject("ContentFlowHandler");
+            Class<?> controller = flowHandler.getCurrentViewControllerClass();
+            if (controller != null) {
+                try {
+                    CameraController cameraController = (CameraController) controller.newInstance();
+                    cameraController.stop();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
             mainStage.close();
+        }
         if (loginStage != null)
             loginStage.close();
     }

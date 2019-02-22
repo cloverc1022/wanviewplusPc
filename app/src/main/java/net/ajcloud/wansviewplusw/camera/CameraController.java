@@ -5,6 +5,8 @@ import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXSpinner;
 import com.sun.jna.Memory;
 import io.datafx.controller.ViewController;
+import io.datafx.controller.flow.context.FXMLViewFlowContext;
+import io.datafx.controller.flow.context.ViewFlowContext;
 import javafx.application.Platform;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.SimpleFloatProperty;
@@ -41,11 +43,14 @@ import uk.co.caprica.vlcj.player.direct.format.RV32BufferFormat;
 import javax.annotation.PostConstruct;
 import java.nio.ByteBuffer;
 import java.util.List;
+import java.util.Objects;
 
 @ViewController(value = "/fxml/camera.fxml", title = "Camera")
 public class CameraController implements PoliceHelper.PoliceControlListener {
 
     private static final String TAG = "CameraController";
+    @FXMLViewFlowContext
+    private ViewFlowContext context;
     @FXML
     private Label label_num;
     @FXML
@@ -69,21 +74,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     @FXML
     private JFXListView<Camera> lv_devices;
     private ImageView imageView;
-    /**
-     * Set this to <code>true</code> to resize the display to the dimensions of the
-     * video, otherwise it will use {@link #WIDTH} and {@link #HEIGHT}.
-     */
-    private static final boolean useSourceSize = false;
 
-    /**
-     * Target width, unless {@link #useSourceSize} is set.
-     */
-    private static final int WIDTH = 668;
-
-    /**
-     * Target height, unless {@link #useSourceSize} is set.
-     */
-    private static final int HEIGHT = 376;
     private DirectMediaPlayerComponent mediaPlayerComponent;
     private WritableImage writableImage;
     private WritablePixelFormat<ByteBuffer> pixelFormat;
@@ -104,6 +95,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
      */
     @PostConstruct
     public void init() throws Exception {
+        Objects.requireNonNull(context, "context");
         //init play
         loading.setVisible(false);
         tcprelay = new Tcprelay();
@@ -122,12 +114,30 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                 return new DeviceListCell();
             }
         });
+        initListener();
+        initData();
+    }
+
+    private void initListener() {
+        btn_voice.setOnMouseClicked((v) -> {
+        });
+        btn_screenshot.setOnMouseClicked((v) -> {
+        });
+        btn_play.setOnMouseClicked((v) -> {
+        });
+        btn_record.setOnMouseClicked((v) -> {
+        });
+        btn_refresh.setOnMouseClicked((v) -> {
+        });
         lv_devices.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
                 handleMouseClick(event);
             }
         });
+    }
+
+    private void initData() {
         if (requestApiUnit == null) {
             requestApiUnit = new RequestApiUnit();
         }
@@ -153,9 +163,9 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         });
     }
 
-    public void handleMouseClick(MouseEvent mouseEvent) {
+    private void handleMouseClick(MouseEvent mouseEvent) {
         if (mediaPlayerComponent.getMediaPlayer().isPlaying()) {
-            if (!StringUtil.isNullOrEmpty(deviceId)&&StringUtil.equals(deviceId,lv_devices.getSelectionModel().getSelectedItem().deviceId)){
+            if (!StringUtil.isNullOrEmpty(deviceId) && StringUtil.equals(deviceId, lv_devices.getSelectionModel().getSelectedItem().deviceId)) {
                 return;
             }
             if (isP2p) {

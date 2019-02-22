@@ -5,8 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
@@ -22,7 +22,10 @@ public class CameraData {
     private Label deviceName;
     @FXML
     private Label status;
+
     private String deviceId;
+
+    private boolean isSelect = false;
 
     public CameraData(String deviceId) {
         this.deviceId = deviceId;
@@ -52,5 +55,18 @@ public class CameraData {
 
     public Pane getPane() {
         return pane;
+    }
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
+        if (select) {
+            deviceName.setTextFill(Color.rgb(41, 121, 255));
+        } else {
+            deviceName.setTextFill(Color.rgb(38, 50, 56));
+        }
     }
 }

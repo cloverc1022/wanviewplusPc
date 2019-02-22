@@ -1,6 +1,5 @@
 package net.ajcloud.wansviewplusw.main;
 
-import com.jfoenix.controls.JFXButton;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.flow.Flow;
 import io.datafx.controller.flow.FlowHandler;
@@ -9,7 +8,6 @@ import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -19,9 +17,11 @@ import net.ajcloud.wansviewplusw.nine.NineController;
 import net.ajcloud.wansviewplusw.quad.QuadController;
 
 import javax.annotation.PostConstruct;
+import java.util.Objects;
 
 @ViewController(value = "/fxml/main.fxml", title = "Main")
 public class MainController implements BaseController {
+
     @FXMLViewFlowContext
     private ViewFlowContext context;
     @FXML
@@ -42,6 +42,7 @@ public class MainController implements BaseController {
      */
     @PostConstruct
     public void init() throws Exception {
+        Objects.requireNonNull(context, "context");
         iv_user.setOnMouseClicked(e -> {
         });
         vb_device.setOnMouseClicked(e -> replace(vb_device.getId()));
@@ -50,9 +51,9 @@ public class MainController implements BaseController {
 
         Flow innerFlow = new Flow(CameraController.class);
         flowHandler = innerFlow.createHandler(context);
-        bindNodeToController(vb_device, CameraController.class, innerFlow, flowHandler);
-        bindNodeToController(vb_quad, QuadController.class, innerFlow, flowHandler);
-        bindNodeToController(vb_nine, NineController.class, innerFlow, flowHandler);
+        bindNodeToController(vb_device.getId(), CameraController.class, innerFlow, flowHandler);
+        bindNodeToController(vb_quad.getId(), QuadController.class, innerFlow, flowHandler);
+        bindNodeToController(vb_nine.getId(), NineController.class, innerFlow, flowHandler);
 
         context.register("ContentFlowHandler", flowHandler);
         context.register("ContentFlow", innerFlow);
@@ -72,7 +73,7 @@ public class MainController implements BaseController {
         }).start();
     }
 
-    private void bindNodeToController(Node node, Class<?> controllerClass, Flow flow, FlowHandler flowHandler) {
-        flow.withGlobalLink(node.getId(), controllerClass);
+    private void bindNodeToController(String tag, Class<?> controllerClass, Flow flow, FlowHandler flowHandler) {
+        flow.withGlobalLink(tag, controllerClass);
     }
 }
