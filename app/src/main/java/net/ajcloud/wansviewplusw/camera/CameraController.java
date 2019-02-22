@@ -116,6 +116,12 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         //init device list
         lv_devices.depthProperty().set(1);
         lv_devices.setExpanded(true);
+        lv_devices.setCellFactory(new Callback<ListView<Camera>, ListCell<Camera>>() {
+            @Override
+            public ListCell<Camera> call(ListView<Camera> param) {
+                return new DeviceListCell();
+            }
+        });
         lv_devices.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -135,12 +141,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                             label_num.setText(bean.size() + " devices");
                             mInfos.setAll(bean);
                             lv_devices.setItems(mInfos);
-                            lv_devices.setCellFactory(new Callback<ListView<Camera>, ListCell<Camera>>() {
-                                @Override
-                                public ListCell<Camera> call(ListView<Camera> param) {
-                                    return new DeviceListCell();
-                                }
-                            });
                         }
                     }
                 });

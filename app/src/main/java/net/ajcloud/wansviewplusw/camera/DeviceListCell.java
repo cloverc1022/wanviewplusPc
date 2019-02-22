@@ -10,7 +10,7 @@ public class DeviceListCell extends JFXListCell<Camera> {
     protected void updateItem(Camera item, boolean empty) {
         super.updateItem(item, empty);
         if (item != null) {
-            CameraData cameraData = new CameraData();
+            CameraData cameraData = new CameraData(item.deviceId);
             cameraData.setInfo(item);
             setGraphic(cameraData.getPane());
         }

@@ -1,5 +1,7 @@
 package net.ajcloud.wansviewplusw.support.device;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import net.ajcloud.wansviewplusw.support.http.bean.*;
 import net.ajcloud.wansviewplusw.support.http.bean.device.ConDeviceBean;
 import net.ajcloud.wansviewplusw.support.http.bean.device.DeviceGeneralsBean;
@@ -57,7 +59,7 @@ public class Camera implements Serializable {
     public OnvifConfigBean onvifConfig;
     public LocalAccountConfig localAccountConfig;
 
-    public int refreshStatus;  //刷新状态   0：正在刷新    1：成功    2：失败
+    private StringProperty refreshStatus = new SimpleStringProperty();  //刷新状态   0：正在刷新    1：成功    2：失败
     public String sortStr;  //用于排序
     private String gatewayUrl;
     private String tunnelUrl;
@@ -129,6 +131,21 @@ public class Camera implements Serializable {
             tfcardConfig = bean.tfcardConfig;
             onvifConfig = bean.onvifConfig;
             localAccountConfig = bean.localAccountConfig;
+        }
+    }
+
+    public String getRefreshStatus() {
+        return refreshStatus.get();
+    }
+
+    public StringProperty refreshStatusProperty() {
+        return refreshStatus;
+    }
+
+    public void setRefreshStatus(int refreshStatus) {
+        //0：正在刷新    1：成功    2：失败
+        if (refreshStatus == 0) {
+            this.refreshStatus.set("Connecting");
         }
     }
 

@@ -27,5 +27,7 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'lib')
     compile 'com.jfoenix:jfoenix:8.0.8' // Java 8
     compile 'io.datafx:datafx:8.0.1'
+    compile "io.datafx:core:8.0.1"
     compile 'io.datafx:flow:8.0.1'
+    compile 'org.greenrobot:eventbus:3.1.1'
 }

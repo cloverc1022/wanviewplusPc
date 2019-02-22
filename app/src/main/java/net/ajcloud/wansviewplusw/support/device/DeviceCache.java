@@ -41,7 +41,7 @@ public class DeviceCache {
         Camera cameraOrigin = hashTable.get(camera.deviceId);
         if (cameraOrigin == null) {
             hashTable.put(camera.deviceId, camera);
-            camera.refreshStatus = 0;
+            camera.setRefreshStatus(0);
 //            if (camera.aliasName != null) {
 //                camera.sortStr = Trans2PinYin.trans2PinYin(DeviceInfoDictionary.getNameByDevice(camera).trim()).toLowerCase();
 //            }
@@ -116,7 +116,7 @@ public class DeviceCache {
             }
         }
         //获取信息成功
-        cameraOrigin.refreshStatus = 1;
+        cameraOrigin.setRefreshStatus(1);
         cameraOrigin.whiteBalance = camera.whiteBalance;
         cameraOrigin.freqValue = camera.freqValue;
         cameraOrigin.nightMode = camera.nightMode;

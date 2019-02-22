@@ -2,6 +2,7 @@ package net.ajcloud.wansviewplusw.support.http;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import javafx.application.Platform;
 import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.http.Interceptor.CommonInterceptor;
@@ -269,7 +270,9 @@ public class RequestApiUnit {
                         DevicesInfosBean bean = responseBean.result;
                         for (DevicesInfosBean.DeviceInfoBean item : bean.infos
                                 ) {
-                            DeviceCache.getInstance().add(item.info);
+                            Platform.runLater(() -> {
+                                DeviceCache.getInstance().add(item.info);
+                            });
                         }
                     }
                     listener.onSuccess(responseBean.result);

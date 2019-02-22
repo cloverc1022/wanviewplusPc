@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import net.ajcloud.wansviewplusw.support.device.Camera;
+import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 
 import java.io.IOException;
@@ -20,8 +21,10 @@ public class CameraData {
     private Label deviceName;
     @FXML
     private Label status;
+    private String deviceId;
 
-    public CameraData() {
+    public CameraData(String deviceId) {
+        this.deviceId = deviceId;
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/item_device_list.fxml"));
         fxmlLoader.setController(this);
         try {
@@ -29,6 +32,8 @@ public class CameraData {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        Camera camera = DeviceCache.getInstance().get(deviceId);
+        status.textProperty().bind(camera.refreshStatusProperty());
     }
 
     public void setInfo(Camera camera) {
