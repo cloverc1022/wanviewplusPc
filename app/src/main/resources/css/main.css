@@ -80,7 +80,10 @@
     -fx-pref-height: 24px;
     -fx-min-width: 24px;
     -fx-min-height: 24px;
-    -fx-background-size: 24px;
+    /*-fx-background-radius: 12;*/
+    /*-fx-border-radius: 12;*/
+    -fx-background-size: 24 auto;
+    -fx-background-position: center center;
 }
 
 .jfx_button_voice .jfx-rippler, .jfx_button_screenshot .jfx-rippler, .jfx_button_play .jfx-rippler, .jfx_button_record .jfx-rippler, .jfx_button_refresh .jfx-rippler {
