@@ -285,6 +285,11 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     }
 
     private void handleMouseClick(MouseEvent mouseEvent) {
+        if (lv_devices == null || lv_devices.getSelectionModel() == null ||
+                lv_devices.getSelectionModel().getSelectedItem() == null ||
+                StringUtil.isNullOrEmpty(lv_devices.getSelectionModel().getSelectedItem().deviceId)) {
+            return;
+        }
         this.deviceId = lv_devices.getSelectionModel().getSelectedItem().deviceId;
         initView();
         if (mediaPlayerComponent.getMediaPlayer().isPlaying()) {
