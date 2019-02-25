@@ -2,7 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <VBox style="-fx-background-color:#CFD8DC " spacing="1.0" xmlns="http://javafx.com/javafx/8"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.ajcloud.wansviewplusw.main.AccountPopController">
@@ -13,13 +13,16 @@
               prefHeight="40.0" prefWidth="208.0">
             <children>
                 <ImageView
-                        style="-fx-background-image:url('/image/ic_me_mid.png');-fx-background-size: 24 auto;-fx-background-position: center center;"
                         fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                     <HBox.margin>
                         <Insets left="12.0"/>
                     </HBox.margin>
+                    <image>
+                        <Image url="@/image/ic_me_mid.png"/>
+                    </image>
                 </ImageView>
-                <Label fx:id="label_name" style="-fx-text-fill:#263238;-fx-font-size:11;" minHeight="40.0" minWidth="172.0"
+                <Label fx:id="label_name" style="-fx-text-fill:#263238;-fx-font-size:11;" minHeight="40.0"
+                       minWidth="172.0"
                        prefHeight="40.0" prefWidth="172.0" text="Account">
                     <padding>
                         <Insets left="8.0"/>
@@ -33,11 +36,13 @@
               prefHeight="40.0" prefWidth="208.0">
             <children>
                 <ImageView
-                        style="-fx-background-image:url('/image/ic_sign_out.png');-fx-background-size: 24 auto;-fx-background-position: center center;"
                         fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                     <HBox.margin>
                         <Insets left="12.0"/>
                     </HBox.margin>
+                    <image>
+                        <Image url="@/image/ic_sign_out.png"/>
+                    </image>
                 </ImageView>
                 <Label style="-fx-text-fill:#263238;-fx-font-size:11;" minHeight="40.0" minWidth="140.0"
                        prefHeight="40.0" prefWidth="140.0" text="Log out">
@@ -46,8 +51,11 @@
                     </padding>
                 </Label>
                 <ImageView
-                        style="-fx-background-image:url('/image/ic_direction_right_light.png');-fx-background-size: 24 auto;-fx-background-position: center center;"
-                        fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true"/>
+                        fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@/image/ic_direction_right_light.png"/>
+                    </image>
+                </ImageView>
             </children>
         </HBox>
     </children>

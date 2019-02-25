@@ -12,7 +12,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
@@ -24,7 +23,6 @@ import net.ajcloud.wansviewplusw.quad.QuadController;
 import net.ajcloud.wansviewplusw.support.utils.WLog;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Objects;
 
@@ -110,6 +108,6 @@ public class MainController implements BaseController {
                 e.printStackTrace();
             }
         }
-        accountPop.show(vb_user, JFXPopup.PopupVPosition.BOTTOM, JFXPopup.PopupHPosition.LEFT);
+        accountPop.show(vb_user, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 72, 0);
     }
 }
