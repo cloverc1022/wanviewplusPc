@@ -406,6 +406,48 @@ public class RequestApiUnit {
     }
 
     /**
+     * 云台控制
+     *
+     * @param action: 0 - 停止, 1 - 向左, 2- 向右, 3 - 向上, 4 - 向下,
+     *                5 - 复位(初始位置), 6 - 左右巡航,
+     *                7 - 上下巡航, 8 - 向左滑动, 9 - 向右滑动, 10 - 向上滑动, 11-向下滑动
+     */
+    public void setPtz(String deviceId, int action, final HttpCommonListener<Object> listener) {
+        Camera camera = DeviceCache.getInstance().get(deviceId);
+        if (camera == null) {
+            listener.onFail(-1, "param empty");
+            return;
+        }
+
+        JsonObject dataJson = new JsonObject();
+        dataJson.addProperty("action", action);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(camera.getGatewayUrl() + "/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient.build())
+                .build();
+        IRequest startup = retrofit.create(IRequest.class);
+        Call<ResponseBean<Object>> getDeviceInfo = startup.setPtz(ApiConstant.getReqBody(dataJson, deviceId));
+        getDeviceInfo.enqueue(new Callback<ResponseBean<Object>>() {
+            @Override
+            public void onResponse(Call<ResponseBean<Object>> call, Response<ResponseBean<Object>> response) {
+                ResponseBean responseBean = response.body();
+                if (responseBean.isSuccess()) {
+                    listener.onSuccess(responseBean.result);
+                } else {
+                    listener.onFail(responseBean.getResultCode(), responseBean.message);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBean<Object>> call, Throwable throwable) {
+                listener.onFail(-1, throwable.getMessage());
+            }
+        });
+    }
+
+    /**
      * 登陆成功后的操作
      */
     private void saveAccount(String mail, String password, SigninBean bean) {

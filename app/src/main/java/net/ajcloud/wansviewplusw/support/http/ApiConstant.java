@@ -183,13 +183,11 @@ public class ApiConstant {
      */
     public static JsonObject getReqBody(JsonObject data, String deviceId) {
         try {
-            //data
-            data.addProperty("appVendorCode", appVendorCode);
-
             //meta
             JsonObject metaJson = new JsonObject();
             metaJson.addProperty("locale", "en");
             metaJson.addProperty("localtz", "480");
+            metaJson.addProperty("appVendorCode", appVendorCode);
             if (!StringUtil.isNullOrEmpty(deviceId)) {
                 metaJson.addProperty("deviceId", deviceId);
             }

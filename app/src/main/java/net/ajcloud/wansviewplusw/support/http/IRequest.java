@@ -33,4 +33,14 @@ public interface IRequest {
 
     @POST("{url}")
     Call<ResponseBean<LanProbeBean>> doLanProbe(@Path("url") String url, @Body JsonObject body);
+
+    /**
+     * 云台控制
+     * <p>
+     * action: 0 - 停止, 1 - 向左, 2- 向右, 3 - 向上, 4 - 向下,
+     * 5 - 复位(初始位置), 6 - 左右巡航,
+     * 7 - 上下巡航, 8 - 向左滑动, 9 - 向右滑动, 10 - 向上滑动, 11-向下滑动
+     */
+    @POST("v1/ptz-control")
+    Call<ResponseBean<Object>> setPtz(@Body JsonObject body);
 }

@@ -107,11 +107,81 @@
     -fx-background-image: url('/image/ic_refresh.png');
 }
 
-.spinner_loading{
+.spinner_loading {
     -jfx-radius: 20;
 }
 
 .spinner_loading .arc {
     -fx-stroke-width: 5.0;
     -fx-stroke: #2979ff;
+}
+
+.top_button, .right_button, .bottom_button, .left_button {
+    -fx-background-color: White;
+    -fx-background-radius: 14;
+    -fx-border-radius: 14;
+    -fx-background-size: 24 auto;
+    -fx-background-position: center center;
+}
+
+.top_button {
+    -fx-background-image: url('/image/ic_direction_up_light.png');
+}
+
+.top_button:pressed {
+    -fx-background-image: url('/image/ic_direction_up_color.png');
+}
+
+.right_button {
+    -fx-background-image: url('/image/ic_direction_right_light.png');
+}
+
+.right_button:pressed {
+    -fx-background-image: url('/image/ic_direction_right_color.png');
+}
+
+.bottom_button {
+    -fx-background-image: url('/image/ic_direction_down_light.png');
+}
+
+.bottom_button:pressed {
+    -fx-background-image: url('/image/ic_direction_down_color.png');
+}
+
+.left_button {
+    -fx-background-image: url('/image/ic_direction_left_light.png');
+}
+
+.left_button:pressed {
+    -fx-background-image: url('/image/ic_direction_left_color.png');
+}
+
+.direction_pane {
+    -fx-background-image: url('/image/ic_direction_bg.png');
+    -fx-background-size: 120 auto;
+    -fx-background-position: center center;
+}
+
+.direction_pane_top {
+    -fx-background-image: url('/image/ic_direction_top_bg.png');
+    -fx-background-size: 120 auto;
+    -fx-background-position: center center;
+}
+
+.direction_pane_right {
+    -fx-background-image: url('/image/ic_direction_right_bg.png');
+    -fx-background-size: 120 auto;
+    -fx-background-position: center center;
+}
+
+.direction_pane_bottom {
+    -fx-background-image: url('/image/ic_direction_down_bg.png');
+    -fx-background-size: 120 auto;
+    -fx-background-position: center center;
+}
+
+.direction_pane_left {
+    -fx-background-image: url('/image/ic_direction_left_bg.png');
+    -fx-background-size: 120 auto;
+    -fx-background-position: center center;
 }

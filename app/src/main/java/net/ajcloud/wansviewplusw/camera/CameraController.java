@@ -7,6 +7,7 @@ import com.sun.jna.Memory;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
+import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.SimpleFloatProperty;
@@ -15,12 +16,14 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Screen;
 import javafx.util.Callback;
 import net.ajcloud.wansviewplusw.support.device.Camera;
@@ -73,6 +76,17 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private JFXSpinner loading;
     @FXML
     private JFXListView<Camera> lv_devices;
+    @FXML
+    private GridPane gp_control;
+    @FXML
+    private Button btn_top;
+    @FXML
+    private Button btn_right;
+    @FXML
+    private Button btn_bottom;
+    @FXML
+    private Button btn_left;
+
     private ImageView imageView;
 
     private DirectMediaPlayerComponent mediaPlayerComponent;
@@ -82,6 +96,10 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private RequestApiUnit requestApiUnit;
     private ObservableList<Camera> mInfos = FXCollections.observableArrayList();
     private PoliceHelper policeHelper;
+    private ExecuteTimer executeTimer_top;
+    private ExecuteTimer executeTimer_right;
+    private ExecuteTimer executeTimer_bottom;
+    private ExecuteTimer executeTimer_left;
     private String deviceId;
     private String localUrl;
     private String relay_server_ip;
@@ -119,16 +137,110 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     }
 
     private void initListener() {
+        //function
         btn_voice.setOnMouseClicked((v) -> {
+            if (!cando()) {
+                return;
+            }
         });
         btn_screenshot.setOnMouseClicked((v) -> {
+            if (!cando()) {
+                return;
+            }
         });
         btn_play.setOnMouseClicked((v) -> {
+            if (!cando()) {
+                return;
+            }
         });
         btn_record.setOnMouseClicked((v) -> {
+            if (!cando()) {
+                return;
+            }
         });
         btn_refresh.setOnMouseClicked((v) -> {
+            if (!cando()) {
+                return;
+            }
         });
+        //direction
+        btn_top.addEventFilter(MouseEvent.ANY, event -> {
+            if (!cando()) {
+                return;
+            }
+            if (executeTimer_top == null) {
+                executeTimer_top = new ExecuteTimer(btn_top);
+            }
+            if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
+                gp_control.getStyleClass().setAll("direction_pane_top");
+                executeTimer_top.start();
+            } else {
+                gp_control.getStyleClass().setAll("direction_pane");
+                executeTimer_top.stop();
+            }
+        });
+        btn_right.addEventFilter(MouseEvent.ANY, event -> {
+            if (!cando()) {
+                return;
+            }
+            if (executeTimer_right == null) {
+                executeTimer_right = new ExecuteTimer(btn_right);
+            }
+            if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
+                gp_control.getStyleClass().setAll("direction_pane_right");
+                executeTimer_right.start();
+            } else {
+                gp_control.getStyleClass().setAll("direction_pane");
+                executeTimer_right.stop();
+            }
+        });
+        btn_bottom.addEventFilter(MouseEvent.ANY, event -> {
+            if (!cando()) {
+                return;
+            }
+            if (executeTimer_bottom == null) {
+                executeTimer_bottom = new ExecuteTimer(btn_bottom);
+            }
+            if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
+                gp_control.getStyleClass().setAll("direction_pane_bottom");
+                executeTimer_bottom.start();
+            } else {
+                gp_control.getStyleClass().setAll("direction_pane");
+                executeTimer_bottom.stop();
+            }
+        });
+        btn_left.addEventFilter(MouseEvent.ANY, event -> {
+            if (!cando()) {
+                return;
+            }
+            if (executeTimer_left == null) {
+                executeTimer_left = new ExecuteTimer(btn_left);
+            }
+            if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
+                gp_control.getStyleClass().setAll("direction_pane_left");
+                executeTimer_left.start();
+            } else {
+                gp_control.getStyleClass().setAll("direction_pane");
+                executeTimer_left.stop();
+            }
+        });
+        btn_top.setOnAction(event -> {
+            if (executeTimer_top != null && executeTimer_top.isActive)
+                setPtz(10);
+        });
+        btn_right.setOnAction(event -> {
+            if (executeTimer_right != null && executeTimer_right.isActive)
+                setPtz(9);
+        });
+        btn_bottom.setOnAction(event -> {
+            if (executeTimer_bottom != null && executeTimer_bottom.isActive)
+                setPtz(11);
+        });
+        btn_left.setOnAction(event -> {
+            if (executeTimer_left != null && executeTimer_left.isActive)
+                setPtz(8);
+        });
+
         lv_devices.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -163,7 +275,18 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         });
     }
 
+    private void initView() {
+        Camera camera = DeviceCache.getInstance().get(deviceId);
+        if (camera.hasPtz()) {
+            gp_control.setVisible(true);
+        } else {
+            gp_control.setVisible(false);
+        }
+    }
+
     private void handleMouseClick(MouseEvent mouseEvent) {
+        this.deviceId = lv_devices.getSelectionModel().getSelectedItem().deviceId;
+        initView();
         if (mediaPlayerComponent.getMediaPlayer().isPlaying()) {
             if (!StringUtil.isNullOrEmpty(deviceId) && StringUtil.equals(deviceId, lv_devices.getSelectionModel().getSelectedItem().deviceId)) {
                 return;
@@ -173,14 +296,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             }
             mediaPlayerComponent.getMediaPlayer().stop();
         }
-        this.deviceId = lv_devices.getSelectionModel().getSelectedItem().deviceId;
-        Camera camera = DeviceCache.getInstance().get(deviceId);
-        if (camera != null) {
-            loading.setVisible(true);
-            label_name.setText(camera.aliasName);
-            policeHelper.setCamera(camera);
-            policeHelper.getUrlAndPlay();
-        }
+        play();
     }
 
     @Override
@@ -203,12 +319,24 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         new P2pTask().start();
     }
 
+    public void play() {
+        Camera camera = DeviceCache.getInstance().get(deviceId);
+        if (camera != null && camera.isOnline()) {
+            loading.setVisible(true);
+            label_name.setText(camera.aliasName);
+            policeHelper.setCamera(camera);
+            policeHelper.getUrlAndPlay();
+        }
+    }
+
     public void stop() {
         if (isP2p) {
             tcprelay.relaydisconnect(p2pNum);
         }
-        mediaPlayerComponent.getMediaPlayer().stop();
-        mediaPlayerComponent.getMediaPlayer().release();
+        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
+            mediaPlayerComponent.getMediaPlayer().stop();
+            mediaPlayerComponent.getMediaPlayer().release();
+        }
     }
 
     private void initializeImageView() {
@@ -247,6 +375,25 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                 imageView.setX(0);
             }
         });
+    }
+
+    private void setPtz(int action) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                requestApiUnit.setPtz(deviceId, action, new HttpCommonListener<Object>() {
+                    @Override
+                    public void onSuccess(Object bean) {
+
+                    }
+
+                    @Override
+                    public void onFail(int code, String msg) {
+
+                    }
+                });
+            }
+        }).start();
     }
 
     private class CanvasPlayerComponent extends DirectMediaPlayerComponent {
@@ -316,6 +463,49 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                     }
                 });
             }
+        }
+    }
+
+    class ExecuteTimer extends AnimationTimer {
+        private long lastUpdate = 0L;
+        private Button mbtn;
+        private boolean isActive;
+
+        public ExecuteTimer(Button button) {
+            this.mbtn = button;
+        }
+
+        @Override
+        public void handle(long now) {
+            if ((now - this.lastUpdate) > 500 * 1000000) {
+                if (mbtn.isPressed()) {
+                    mbtn.fire();
+                    this.lastUpdate = now;
+                }
+            }
+        }
+
+        @Override
+        public void start() {
+            isActive = true;
+            super.start();
+        }
+
+        @Override
+        public void stop() {
+            isActive = false;
+            super.stop();
+        }
+    }
+
+    private boolean cando() {
+        Camera camera = DeviceCache.getInstance().get(deviceId);
+        if (mediaPlayerComponent == null || mediaPlayerComponent.getMediaPlayer() == null ||
+                !mediaPlayerComponent.getMediaPlayer().isPlaying() ||
+                !camera.isOnline()) {
+            return false;
+        } else {
+            return true;
         }
     }
 
