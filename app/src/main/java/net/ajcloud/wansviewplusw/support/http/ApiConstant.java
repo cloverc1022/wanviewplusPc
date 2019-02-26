@@ -5,6 +5,8 @@ import com.google.gson.JsonObject;
 import net.ajcloud.wansviewplusw.support.http.bean.start.AppConfigBean;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 
+import java.io.File;
+
 /**
  * Created by mamengchao on 2018/05/21.
  */

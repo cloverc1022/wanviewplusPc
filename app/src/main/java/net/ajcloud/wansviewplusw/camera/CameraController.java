@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -30,6 +31,7 @@ import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
 import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
+import net.ajcloud.wansviewplusw.support.utils.FileUtil;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 import net.ajcloud.wansviewplusw.support.utils.WLog;
 import net.ajcloud.wansviewplusw.support.utils.play.PoliceHelper;
@@ -44,6 +46,7 @@ import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.format.RV32BufferFormat;
 
 import javax.annotation.PostConstruct;
+import java.io.File;
 import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.Objects;
@@ -282,6 +285,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         } else {
             gp_control.setVisible(false);
         }
+
+        setPlayBg();
     }
 
     private void handleMouseClick(MouseEvent mouseEvent) {
@@ -514,6 +519,15 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
     }
 
+    private void setPlayBg() {
+        File file = new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg");
+        if (file != null) {
+            Image image = new Image(file.toURI().toString(), 668, 468, false, false);
+            iv_bg.setImage(image);
+            iv_bg.setEffect(new GaussianBlur());
+        }
+    }
+
     private final MediaPlayerEventListener mMediaPlayerListener = new MediaPlayerEventListener() {
         @Override
         public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t libvlc_media_t, String s) {
@@ -598,6 +612,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         @Override
         public void videoOutput(MediaPlayer mediaPlayer, int i) {
             loading.setVisible(false);
+            mediaPlayer.saveSnapshot(new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg"));
+            setPlayBg();
         }
 
         @Override
