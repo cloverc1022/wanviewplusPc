@@ -46,12 +46,15 @@ public class MainController implements BaseController {
 
     private JFXPopup accountPop;
 
+    private MainListener listener;
+
     /**
      * 初始化
      */
     @PostConstruct
     public void init() throws Exception {
         Objects.requireNonNull(context, "context");
+        listener = (MainListener) context.getRegisteredObject("MainListener");
         vb_user.setOnMouseClicked(e -> {
             showAccountPop();
         });
@@ -102,12 +105,21 @@ public class MainController implements BaseController {
                     @Override
                     public void handle(MouseEvent event) {
                         WLog.w("test", "aaaa");
+                        if (listener != null) {
+                            WLog.w("test", "bbb");
+                            listener.onLogout();
+                        }
                     }
                 });
+                in.close();
             } catch (Exception e) {
                 e.printStackTrace();
             }
         }
         accountPop.show(vb_user, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 72, 0);
+    }
+
+    public interface MainListener {
+        void onLogout();
     }
 }

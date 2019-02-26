@@ -109,7 +109,9 @@ public class Base extends Application implements LoginController.OnLoginListener
             DefaultFlowContainer container = new DefaultFlowContainer();
             flowContext = new ViewFlowContext();
             flowContext.register("Stage", mainStage);
+            flowContext.register("MainListener", listener);
             flow.createHandler(flowContext).start(container);
+
 
             Scene scene = new Scene(container.getView(), MAIN_WIDTH, MAIN_HEIGHT);
             final ObservableList<String> stylesheets = scene.getStylesheets();
@@ -149,5 +151,17 @@ public class Base extends Application implements LoginController.OnLoginListener
         }
         if (loginStage != null)
             loginStage.close();
+
+        Platform.exit();
+        System.exit(0);
     }
+
+
+    private MainController.MainListener listener = new MainController.MainListener() {
+        @Override
+        public void onLogout() {
+            mainStage.close();
+            loginStage.show();
+        }
+    };
 }
