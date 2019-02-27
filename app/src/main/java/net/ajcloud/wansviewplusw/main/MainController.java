@@ -65,8 +65,8 @@ public class MainController implements BaseController {
         Flow innerFlow = new Flow(CameraController.class);
         flowHandler = innerFlow.createHandler(context);
         bindNodeToController(vb_device.getId(), CameraController.class, innerFlow, flowHandler);
-        bindNodeToController(vb_quad.getId(), QuadController.class, innerFlow, flowHandler);
-        bindNodeToController(vb_nine.getId(), NineController.class, innerFlow, flowHandler);
+//        bindNodeToController(vb_quad.getId(), QuadController.class, innerFlow, flowHandler);
+//        bindNodeToController(vb_nine.getId(), NineController.class, innerFlow, flowHandler);
 
         context.register("ContentFlowHandler", flowHandler);
         context.register("ContentFlow", innerFlow);
