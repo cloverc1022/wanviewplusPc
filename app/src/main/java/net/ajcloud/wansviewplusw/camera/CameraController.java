@@ -30,12 +30,9 @@ import javafx.scene.control.ListView;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.TextAlignment;
+import javafx.scene.layout.*;
 import javafx.stage.Screen;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.Duration;
 import net.ajcloud.wansviewplusw.support.device.Camera;
@@ -74,6 +71,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private static final String TAG = "CameraController";
     @FXMLViewFlowContext
     private ViewFlowContext context;
+    @FXML
+    private AnchorPane root;
     @FXML
     private Label label_num;
     @FXML
@@ -210,6 +209,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             showQualityPop();
         });
         btn_fullscreen.setOnMouseClicked((v) -> {
+            Stage stage = (Stage) root.getScene().getWindow();
+            stage.setMaximized(true);
         });
         //direction
         btn_top.addEventFilter(MouseEvent.ANY, event -> {
