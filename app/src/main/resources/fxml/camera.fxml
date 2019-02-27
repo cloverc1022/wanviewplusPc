@@ -90,7 +90,7 @@
                                 </GridPane>
                                 <JFXSpinner fx:id="loading" layoutX="309.0" layoutY="209.0" startingAngle="-40"
                                             styleClass="spinner_loading"/>
-                                <HBox fx:id="box_play" style="-fx-background-color: transparent" alignment="CENTER_LEFT"
+                                <HBox fx:id="box_play" visible="false" style="-fx-background-color: transparent" alignment="CENTER_LEFT"
                                       AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="0.0"
                                       AnchorPane.rightAnchor="0.0">
                                     <children>

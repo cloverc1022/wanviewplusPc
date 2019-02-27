@@ -174,8 +174,7 @@ public class PoliceHelper /*implements ResponseListener*/ {
     //获取播放地址，token
     private void getLiveSec(int reqType) {
         WLog.w("p2p_debug", "------p2p-server-req------");
-        int quality = 5;
-        deviceApiUnit.getLiveSrcToken(camera.deviceId, reqType, quality, new HttpCommonListener<LiveSrcBean>() {
+        deviceApiUnit.getLiveSrcToken(camera.deviceId, reqType, camera.getCurrentQuality(), new HttpCommonListener<LiveSrcBean>() {
             @Override
             public void onSuccess(LiveSrcBean bean) {
                 WLog.w("p2p_debug", "------p2p-server-rev------");

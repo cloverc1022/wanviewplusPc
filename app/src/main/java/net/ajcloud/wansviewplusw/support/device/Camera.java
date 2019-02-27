@@ -15,6 +15,7 @@ import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 import java.io.*;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 
 /**
  * Created by mamengchao on 2018/06/07.
@@ -76,6 +77,7 @@ public class Camera implements Serializable {
     private String stunServers;
     private int onlineStatus;     // 离线 - 1, 在线 - 2, 升级中 - 4
     private int refreshStatus;  //刷新状态   0：正在刷新    1：成功    2：失败
+    private int currentQuality = -1;
 
     private StringProperty deviceStatus = new SimpleStringProperty("Connecting");
     private ObjectProperty<Background> deviceStatusBg = new SimpleObjectProperty<>(new Background(new BackgroundFill(Color.rgb(149, 165, 174), null, null)));
@@ -391,5 +393,27 @@ public class Camera implements Serializable {
         } else {
             return false;
         }
+    }
+
+    public int getCurrentQuality() {
+        if (currentQuality == -1) {
+            try {
+                int defaultQuality = 1;
+                LinkedHashMap<String, Integer> qualities = capability.getVideoQualities();
+                for (int quality : qualities.values()) {
+                    if (quality > defaultQuality) {
+                        defaultQuality = quality;
+                    }
+                }
+                currentQuality = defaultQuality;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return currentQuality;
+    }
+
+    public void setCurrentQuality(int currentQuality) {
+        this.currentQuality = currentQuality;
     }
 }

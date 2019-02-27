@@ -12,7 +12,6 @@ import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
 import net.ajcloud.wansviewplusw.support.http.bean.SigninBean;
 import net.ajcloud.wansviewplusw.support.http.bean.start.AppStartUpBean;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
-import net.ajcloud.wansviewplusw.support.utils.WLog;
 
 public class LoginController implements BaseController {
 
@@ -64,18 +63,28 @@ public class LoginController implements BaseController {
 //            tf_password.validate();
             return;
         }
-        requestApiUnit.appStartup(new HttpCommonListener<AppStartUpBean>() {
+        new Thread(new Runnable() {
             @Override
-            public void onSuccess(AppStartUpBean bean) {
-                requestApiUnit.signin(tf_name.getText(), tf_password.getText(), new HttpCommonListener<SigninBean>() {
+            public void run() {
+                requestApiUnit.appStartup(new HttpCommonListener<AppStartUpBean>() {
                     @Override
-                    public void onSuccess(SigninBean bean) {
-                        Platform.runLater(new Runnable() {
+                    public void onSuccess(AppStartUpBean bean) {
+                        requestApiUnit.signin(tf_name.getText(), tf_password.getText(), new HttpCommonListener<SigninBean>() {
                             @Override
-                            public void run() {
-                                if (onLoginListener != null) {
-                                    onLoginListener.onLoginSuccess();
-                                }
+                            public void onSuccess(SigninBean bean) {
+                                Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (onLoginListener != null) {
+                                            onLoginListener.onLoginSuccess();
+                                        }
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void onFail(int code, String msg) {
+                                showErrorAlert(msg);
                             }
                         });
                     }
@@ -86,12 +95,7 @@ public class LoginController implements BaseController {
                     }
                 });
             }
-
-            @Override
-            public void onFail(int code, String msg) {
-                showErrorAlert(msg);
-            }
-        });
+        }).start();
     }
 
     @FXML

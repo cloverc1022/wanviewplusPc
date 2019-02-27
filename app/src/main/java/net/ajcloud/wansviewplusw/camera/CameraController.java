@@ -2,6 +2,7 @@ package net.ajcloud.wansviewplusw.camera;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXPopup;
 import com.jfoenix.controls.JFXSpinner;
 import com.sun.jna.Memory;
 import io.datafx.controller.ViewController;
@@ -10,11 +11,17 @@ import io.datafx.controller.flow.context.ViewFlowContext;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.beans.property.FloatProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.ScheduledService;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,8 +32,12 @@ import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Screen;
 import javafx.util.Callback;
+import javafx.util.Duration;
 import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
@@ -36,6 +47,7 @@ import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 import net.ajcloud.wansviewplusw.support.utils.WLog;
 import net.ajcloud.wansviewplusw.support.utils.play.PoliceHelper;
 import org.tcprelay.Tcprelay;
+import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.component.DirectMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.MediaPlayer;
@@ -48,8 +60,11 @@ import uk.co.caprica.vlcj.player.direct.format.RV32BufferFormat;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.nio.ByteBuffer;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static uk.co.caprica.vlcj.binding.internal.libvlc_state_t.libvlc_Playing;
 
@@ -91,6 +106,14 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private Button btn_bottom;
     @FXML
     private Button btn_left;
+    @FXML
+    private HBox box_play;
+    @FXML
+    private JFXButton btn_quality;
+    @FXML
+    private Label label_speed;
+    @FXML
+    private JFXButton btn_fullscreen;
 
     private ImageView imageView;
 
@@ -114,6 +137,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private Tcprelay tcprelay;
     //control
     private boolean isMute = false;
+
+    private TimerService timerService = new TimerService();
 
     /**
      * 初始化
@@ -139,6 +164,25 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                 return new DeviceListCell();
             }
         });
+
+        AtomicInteger count = new AtomicInteger(0);
+        timerService.setCount(count.get());
+        timerService.setPeriod(Duration.seconds(1));
+        timerService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+
+            @Override
+            public void handle(WorkerStateEvent t) {
+                count.set((int) t.getSource().getValue());
+                if (!canDo()) {
+                    return;
+                }
+                libvlc_media_stats_t p_stats = mediaPlayerComponent.getMediaPlayer().getMediaStatistics();
+                double bitrate = p_stats.f_demux_bitrate * 1000;/*KBps*/
+                if (bitrate < 0)
+                    bitrate = 0.3;
+                label_speed.setText((bitrate < 1024 ? ((int) bitrate + "K/s") : String.format("%.1fM/s", bitrate / 1024)));
+            }
+        });
         initListener();
         initData();
     }
@@ -161,6 +205,11 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         });
         btn_refresh.setOnMouseClicked((v) -> {
             restart();
+        });
+        btn_quality.setOnMouseClicked((v) -> {
+            showQualityPop();
+        });
+        btn_fullscreen.setOnMouseClicked((v) -> {
         });
         //direction
         btn_top.addEventFilter(MouseEvent.ANY, event -> {
@@ -289,6 +338,14 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
         //播放背景
         setPlayBg();
+        //底部操作栏
+        box_play.setVisible(true);
+        //频繁刷新操作
+        if (timerService.isRunning()) {
+            timerService.restart();
+        } else {
+            timerService.start();
+        }
     }
 
     private void handleMouseClick(MouseEvent mouseEvent) {
@@ -632,6 +689,51 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         play();
     }
 
+    private void showQualityPop() {
+        try {
+            VBox vBox = new VBox();
+            vBox.setSpacing(8.0);
+            vBox.setAlignment(Pos.CENTER);
+
+            if (StringUtil.isNullOrEmpty(deviceId)) {
+                return;
+            }
+            Camera camera = DeviceCache.getInstance().get(deviceId);
+            if (camera == null || camera.capability == null) {
+                return;
+            }
+
+            LinkedHashMap<String, Integer> qualities = camera.capability.getVideoQualities();
+            if (qualities == null) {
+                return;
+            }
+            List<String> tmp = new ArrayList<>(qualities.keySet());
+            for (int i = 0; i < tmp.size(); i++) {
+                if (camera.getCurrentQuality() == qualities.get(tmp.get(i))) {
+                } else {
+                    int finalI = i;
+                    Label quality = new Label();
+                    quality.setText(tmp.get(i));
+                    quality.getStyleClass().setAll("pop_btn_quality");
+                    quality.setOnMouseClicked(new EventHandler<MouseEvent>() {
+                        @Override
+                        public void handle(MouseEvent event) {
+                            btn_quality.setText(tmp.get(finalI));
+                            Camera camera = DeviceCache.getInstance().get(deviceId);
+                            camera.setCurrentQuality(qualities.get(tmp.get(finalI)));
+                            restart();
+                        }
+                    });
+                    vBox.getChildren().add(quality);
+                }
+            }
+            JFXPopup qualityPop = new JFXPopup(vBox);
+            qualityPop.show(btn_quality, JFXPopup.PopupVPosition.BOTTOM, JFXPopup.PopupHPosition.LEFT, 0, -28);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private final MediaPlayerEventListener mMediaPlayerListener = new MediaPlayerEventListener() {
         @Override
         public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t libvlc_media_t, String s) {
@@ -911,4 +1013,30 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 //            WLog.d(TAG, "PlayerState:" + OldEvent);
 //        }
     };
+
+    private static class TimerService extends ScheduledService<Integer> {
+        private IntegerProperty count = new SimpleIntegerProperty();
+
+        public final void setCount(Integer value) {
+            count.set(value);
+        }
+
+        public final Integer getCount() {
+            return count.get();
+        }
+
+        public final IntegerProperty countProperty() {
+            return count;
+        }
+
+        protected Task<Integer> createTask() {
+            return new Task<Integer>() {
+                protected Integer call() {
+                    //Adds 1 to the count
+                    count.set(getCount() + 1);
+                    return getCount();
+                }
+            };
+        }
+    }
 }

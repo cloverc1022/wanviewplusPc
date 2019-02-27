@@ -252,3 +252,20 @@
     -fx-background-position: center center;
     -fx-background-image: url('/image/ic_full_screen_white.png');
 }
+
+.jfx-popup-container {
+    -fx-background-color: transparent;
+}
+
+.pop_btn_quality {
+    -fx-min-height: 20;
+    -fx-pref-height: 20;
+    -fx-pref-width: 48;
+    -fx-min-width: 48;
+    -fx-padding: 0, 0, 0, 0;
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-font-size: 12;
+}
