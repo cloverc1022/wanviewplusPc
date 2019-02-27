@@ -4,13 +4,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<StackPane fx:id="root" minWidth="960.0" prefWidth="960.0" style="-fx-background-color:#FFFFFF;"
-           xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="root" minHeight="540.0" minWidth="960.0" prefHeight="540.0" prefWidth="960.0"
+           style="-fx-background-color:#FFFFFF;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <BorderPane minHeight="540.0" prefHeight="540.0">
-            <left>
-                <VBox alignment="TOP_CENTER" minWidth="72.0" prefWidth="72.0" spacing="24.0"
-                      BorderPane.alignment="TOP_CENTER">
+        <HBox>
+            <children>
+                <VBox alignment="TOP_CENTER" minWidth="72.0" prefWidth="72.0" spacing="24.0" HBox.hgrow="NEVER">
                     <children>
                         <VBox fx:id="vb_user" alignment="CENTER" minWidth="72.0" prefWidth="72.0">
                             <children>
@@ -59,15 +58,8 @@
                         </VBox>
                     </children>
                 </VBox>
-            </left>
-
-            <!-- Content Area -->
-            <center>
-                <StackPane fx:id="content"/>
-            </center>
-            <StackPane.margin>
-                <Insets/>
-            </StackPane.margin>
-        </BorderPane>
+                <StackPane fx:id="content" HBox.hgrow="ALWAYS"/>
+            </children>
+        </HBox>
     </children>
 </StackPane>
