@@ -104,9 +104,7 @@ public class MainController implements BaseController {
                 accountPopController.setOnLogoutListener(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        WLog.w("test", "aaaa");
                         if (listener != null) {
-                            WLog.w("test", "bbb");
                             listener.onLogout();
                         }
                     }

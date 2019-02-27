@@ -51,6 +51,8 @@ import java.nio.ByteBuffer;
 import java.util.List;
 import java.util.Objects;
 
+import static uk.co.caprica.vlcj.binding.internal.libvlc_state_t.libvlc_Playing;
+
 @ViewController(value = "/fxml/camera.fxml", title = "Camera")
 public class CameraController implements PoliceHelper.PoliceControlListener {
 
@@ -110,6 +112,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private int p2pNum;
     private int port = 10001;
     private Tcprelay tcprelay;
+    //control
+    private boolean isMute = false;
 
     /**
      * 初始化
@@ -142,33 +146,25 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private void initListener() {
         //function
         btn_voice.setOnMouseClicked((v) -> {
-            if (!cando()) {
-                return;
-            }
+            setMute();
         });
         btn_screenshot.setOnMouseClicked((v) -> {
-            if (!cando()) {
-                return;
-            }
+            takeSnapshot();
         });
         btn_play.setOnMouseClicked((v) -> {
-            if (!cando()) {
-                return;
-            }
+            startOrPause();
         });
         btn_record.setOnMouseClicked((v) -> {
-            if (!cando()) {
+            if (!canDo()) {
                 return;
             }
         });
         btn_refresh.setOnMouseClicked((v) -> {
-            if (!cando()) {
-                return;
-            }
+            restart();
         });
         //direction
         btn_top.addEventFilter(MouseEvent.ANY, event -> {
-            if (!cando()) {
+            if (!canDo()) {
                 return;
             }
             if (executeTimer_top == null) {
@@ -183,7 +179,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             }
         });
         btn_right.addEventFilter(MouseEvent.ANY, event -> {
-            if (!cando()) {
+            if (!canDo()) {
                 return;
             }
             if (executeTimer_right == null) {
@@ -198,7 +194,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             }
         });
         btn_bottom.addEventFilter(MouseEvent.ANY, event -> {
-            if (!cando()) {
+            if (!canDo()) {
                 return;
             }
             if (executeTimer_bottom == null) {
@@ -213,7 +209,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             }
         });
         btn_left.addEventFilter(MouseEvent.ANY, event -> {
-            if (!cando()) {
+            if (!canDo()) {
                 return;
             }
             if (executeTimer_left == null) {
@@ -279,6 +275,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     }
 
     private void initView() {
+        //云台
         Camera camera = DeviceCache.getInstance().get(deviceId);
         if (camera.hasPtz()) {
             gp_control.setVisible(true);
@@ -286,6 +283,11 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             gp_control.setVisible(false);
         }
 
+        //播放按钮
+        btn_play.getStyleClass().remove("jfx_button_play");
+        btn_play.getStyleClass().add("jfx_button_pause");
+
+        //播放背景
         setPlayBg();
     }
 
@@ -508,10 +510,13 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
     }
 
-    private boolean cando() {
+    private boolean canDo() {
+        if (StringUtil.isNullOrEmpty(deviceId)) {
+            return false;
+        }
         Camera camera = DeviceCache.getInstance().get(deviceId);
-        if (mediaPlayerComponent == null || mediaPlayerComponent.getMediaPlayer() == null ||
-                !mediaPlayerComponent.getMediaPlayer().isPlaying() ||
+        if (camera == null || mediaPlayerComponent == null || mediaPlayerComponent.getMediaPlayer() == null ||
+                mediaPlayerComponent.getMediaPlayer().getMediaPlayerState() != libvlc_Playing ||
                 !camera.isOnline()) {
             return false;
         } else {
@@ -519,6 +524,9 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
     }
 
+    /**
+     * 设置直播界面背景
+     */
     private void setPlayBg() {
         File file = new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg");
         if (file != null) {
@@ -526,6 +534,102 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             iv_bg.setImage(image);
             iv_bg.setEffect(new GaussianBlur());
         }
+    }
+
+    /**
+     * 截图
+     */
+    private void takeSnapshot() {
+        if (!canDo()) {
+            return;
+        }
+        mediaPlayerComponent.getMediaPlayer().saveSnapshot(new File(FileUtil.getImagePath(deviceId) + File.separator + System.currentTimeMillis() + ".jpg"));
+    }
+
+    /**
+     * 静音
+     */
+    private void setMute() {
+        if (!canDo()) {
+            return;
+        }
+        isMute = !isMute;
+        if (isMute) {
+            btn_voice.getStyleClass().remove("jfx_button_voice");
+            btn_voice.getStyleClass().add("jfx_button_voice_mute");
+        } else {
+            btn_voice.getStyleClass().remove("jfx_button_voice_mute");
+            btn_voice.getStyleClass().add("jfx_button_voice");
+        }
+        mediaPlayerComponent.getMediaPlayer().mute(isMute);
+    }
+
+    /**
+     * 开始/暂停
+     */
+    private void startOrPause() {
+        if (StringUtil.isNullOrEmpty(deviceId)) {
+            return;
+        }
+        if (mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+            btn_play.getStyleClass().remove("jfx_button_pause");
+            btn_play.getStyleClass().add("jfx_button_play");
+            mediaPlayerComponent.getMediaPlayer().pause();
+        } else {
+            btn_play.getStyleClass().remove("jfx_button_play");
+            btn_play.getStyleClass().add("jfx_button_pause");
+            mediaPlayerComponent.getMediaPlayer().start();
+        }
+    }
+
+    /**
+     * 开始
+     */
+    private void start() {
+        if (!canDo()) {
+            return;
+        }
+        if (!mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+            btn_play.getStyleClass().remove("jfx_button_play");
+            btn_play.getStyleClass().add("jfx_button_pause");
+            mediaPlayerComponent.getMediaPlayer().start();
+        }
+    }
+
+    /**
+     * 暂停
+     */
+    private void pause() {
+        if (!canDo()) {
+            return;
+        }
+        if (mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+            btn_play.getStyleClass().remove("jfx_button_pause");
+            btn_play.getStyleClass().add("jfx_button_play");
+            mediaPlayerComponent.getMediaPlayer().pause();
+        }
+    }
+
+    /**
+     * 录像
+     */
+    private void recording() {
+        if (!canDo()) {
+            return;
+        }
+        File directory = new File(FileUtil.getVideoPath(deviceId));
+//        if (mediaPlayerComponent.getMediaPlayer().)
+    }
+
+    /**
+     * 重新播放
+     */
+    private void restart() {
+        if (!canDo()) {
+            return;
+        }
+        stop();
+        play();
     }
 
     private final MediaPlayerEventListener mMediaPlayerListener = new MediaPlayerEventListener() {

@@ -6,8 +6,16 @@ public class FileUtil {
     //filePath
     public static String FILE_PATH = System.getProperty("user.dir");
 
-    public String getImagePath(String account) {
-        String path = FILE_PATH + File.separator + "locales" + File.separator + account + File.separator + "image";
+    public static String getImagePath(String deviceId) {
+        String path = FILE_PATH + File.separator + "locales" + File.separator + "image" + File.separator + deviceId;
+        File directory = new File(path);
+        if (!directory.exists())
+            directory.mkdirs();
+        return path;
+    }
+
+    public static String getVideoPath(String deviceId) {
+        String path = FILE_PATH + File.separator + "locales" + File.separator + "video" + File.separator + deviceId;
         File directory = new File(path);
         if (!directory.exists())
             directory.mkdirs();
