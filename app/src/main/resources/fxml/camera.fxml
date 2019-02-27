@@ -29,17 +29,16 @@
                 <VBox layoutX="525.0" layoutY="203.0" minHeight="540.0" minWidth="668.0">
                     <children>
                         <Label fx:id="label_name" minHeight="32.0" minWidth="668.0" prefHeight="32.0" prefWidth="668.0"
-                               style="-fx-text-fill:#263238;-fx-font-size:12;-fx-font-weight: bold;" text="Label"/>
+                               style="-fx-text-fill:#263238;-fx-font-size:12;-fx-font-weight: bold;" text="Name"/>
                         <AnchorPane minHeight="468.0" minWidth="668.0" prefHeight="468.0" prefWidth="668.0">
                             <children>
                                 <ImageView fx:id="iv_bg" fitHeight="468.0" fitWidth="668.0" pickOnBounds="true"
                                            preserveRatio="true"/>
                                 <BorderPane fx:id="playPane" layoutY="46.0" minHeight="376.0" minWidth="668.0"
                                             prefHeight="376.0" prefWidth="668.0" styleClass="play_pane"/>
-                                <GridPane styleClass="direction_pane" visible="false" fx:id="gp_control"
-                                          alignment="CENTER" layoutX="524.0" layoutY="16.0"
-                                          minHeight="120.0"
-                                          minWidth="120.0" prefHeight="120.0" prefWidth="120.0">
+                                <GridPane fx:id="gp_control" alignment="CENTER" layoutX="524.0" layoutY="16.0"
+                                          minHeight="120.0" minWidth="120.0" prefHeight="120.0" prefWidth="120.0"
+                                          styleClass="direction_pane" visible="false">
                                     <columnConstraints>
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                                         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
@@ -51,41 +50,38 @@
                                         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                                     </rowConstraints>
                                     <children>
-                                        <Button styleClass="top_button" fx:id="btn_top" alignment="CENTER"
-                                                minHeight="28.0" minWidth="28.0"
-                                                mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0" text="Button"
-                                                GridPane.columnIndex="1" GridPane.halignment="CENTER"
-                                                GridPane.rowIndex="0" GridPane.valignment="TOP">
+                                        <Button fx:id="btn_top" alignment="CENTER" minHeight="28.0" minWidth="28.0"
+                                                mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0"
+                                                styleClass="top_button" text="Button" GridPane.columnIndex="1"
+                                                GridPane.halignment="CENTER" GridPane.rowIndex="0"
+                                                GridPane.valignment="TOP">
                                             <GridPane.margin>
                                                 <Insets top="8.0"/>
                                             </GridPane.margin>
                                         </Button>
-                                        <Button styleClass="right_button" fx:id="btn_right" minHeight="28.0"
-                                                minWidth="28.0"
-                                                mnemonicParsing="false"
-                                                prefHeight="28.0" prefWidth="28.0" text="Button"
-                                                GridPane.columnIndex="2" GridPane.halignment="RIGHT"
-                                                GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                        <Button fx:id="btn_right" minHeight="28.0" minWidth="28.0"
+                                                mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0"
+                                                styleClass="right_button" text="Button" GridPane.columnIndex="2"
+                                                GridPane.halignment="RIGHT" GridPane.rowIndex="1"
+                                                GridPane.valignment="CENTER">
                                             <GridPane.margin>
                                                 <Insets right="8.0"/>
                                             </GridPane.margin>
                                         </Button>
-                                        <Button styleClass="bottom_button" fx:id="btn_bottom" minHeight="28.0"
-                                                minWidth="28.0"
-                                                mnemonicParsing="false"
-                                                prefHeight="28.0" prefWidth="28.0" text="Button"
-                                                GridPane.columnIndex="1" GridPane.halignment="CENTER"
-                                                GridPane.rowIndex="2" GridPane.valignment="BOTTOM">
+                                        <Button fx:id="btn_bottom" minHeight="28.0" minWidth="28.0"
+                                                mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0"
+                                                styleClass="bottom_button" text="Button" GridPane.columnIndex="1"
+                                                GridPane.halignment="CENTER" GridPane.rowIndex="2"
+                                                GridPane.valignment="BOTTOM">
                                             <GridPane.margin>
                                                 <Insets bottom="8.0"/>
                                             </GridPane.margin>
                                         </Button>
-                                        <Button styleClass="left_button" fx:id="btn_left" minHeight="28.0"
-                                                minWidth="28.0"
-                                                mnemonicParsing="false"
-                                                prefHeight="28.0" prefWidth="28.0" text="Button"
-                                                GridPane.columnIndex="0" GridPane.halignment="LEFT"
-                                                GridPane.rowIndex="1" GridPane.valignment="CENTER">
+                                        <Button fx:id="btn_left" minHeight="28.0" minWidth="28.0"
+                                                mnemonicParsing="false" prefHeight="28.0" prefWidth="28.0"
+                                                styleClass="left_button" text="Button" GridPane.columnIndex="0"
+                                                GridPane.halignment="LEFT" GridPane.rowIndex="1"
+                                                GridPane.valignment="CENTER">
                                             <GridPane.margin>
                                                 <Insets left="8.0"/>
                                             </GridPane.margin>
@@ -94,6 +90,38 @@
                                 </GridPane>
                                 <JFXSpinner fx:id="loading" layoutX="309.0" layoutY="209.0" startingAngle="-40"
                                             styleClass="spinner_loading"/>
+                                <HBox fx:id="box_play" style="-fx-background-color: transparent" alignment="CENTER_LEFT"
+                                      AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="0.0"
+                                      AnchorPane.rightAnchor="0.0">
+                                    <children>
+                                        <JFXButton fx:id="btn_quality" styleClass="btn_quality" layoutX="-625.0"
+                                                   layoutY="-392.0"
+                                                   alignment="CENTER"
+                                                   minHeight="20.0" minWidth="48.0"
+                                                   prefHeight="20.0" prefWidth="48.0"
+                                                   text="FHD">
+                                            <HBox.margin>
+                                                <Insets left="24.0"/>
+                                            </HBox.margin>
+                                        </JFXButton>
+                                        <Label fx:id="label_speed" alignment="CENTER_RIGHT" layoutX="-404.0"
+                                               layoutY="-384.0"
+                                               style="-fx-text-fill:white;-fx-font-size:12;"
+                                               minWidth="548.0" prefWidth="548.0">
+                                            <padding>
+                                                <Insets right="24.0"/>
+                                            </padding>
+                                        </Label>
+                                        <JFXButton fx:id="btn_fullscreen" styleClass="btn_fullscreen" layoutX="-279.0"
+                                                   layoutY="-392.0"
+                                                   minHeight="24.0" minWidth="24.0"
+                                                   prefHeight="24.0" prefWidth="24.0">
+                                            <HBox.margin>
+                                                <Insets right="24.0"/>
+                                            </HBox.margin>
+                                        </JFXButton>
+                                    </children>
+                                </HBox>
                             </children>
                         </AnchorPane>
                         <HBox alignment="CENTER" minHeight="40.0" minWidth="668.0" prefHeight="40.0" prefWidth="668.0"

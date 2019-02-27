@@ -237,3 +237,18 @@
     -fx-background-size: 120 auto;
     -fx-background-position: center center;
 }
+
+.btn_quality {
+    -fx-background-color: rgba(255, 255, 255, 0.4);
+    -fx-background-radius: 2;
+    -fx-border-radius: 2;
+    -fx-text-fill: #263238;
+    -fx-font-size: 12;
+}
+
+.btn_fullscreen {
+    -fx-background-color: transparent;
+    -fx-background-size: 24 auto;
+    -fx-background-position: center center;
+    -fx-background-image: url('/image/ic_full_screen_white.png');
+}
