@@ -105,6 +105,8 @@ public class Base extends Application implements LoginController.OnLoginListener
     private void go2Main() {
         try {
             mainStage = new Stage(StageStyle.DECORATED);
+            mainStage.setMinWidth(980.0);
+            mainStage.setMinHeight(580.0);
             Flow flow = new Flow(MainController.class);
             DefaultFlowContainer container = new DefaultFlowContainer();
             flowContext = new ViewFlowContext();
