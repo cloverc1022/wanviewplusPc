@@ -34,7 +34,7 @@
                     </VBox.margin>
                 </Label>
                 <JFXTextField fx:id="tf_name" focusColor="#0078ff" labelFloat="true" layoutX="86.0" layoutY="143.0"
-                              maxHeight="32.0" minHeight="32.0" prefHeight="64.0" promptText="Email"    text="sharper.shen@qq.com"
+                              maxHeight="32.0" minHeight="32.0" prefHeight="64.0" promptText="Email"    text="pkkuikui@163.com"
                               style="-fx-text-fill:#223239;-fx-background-color:#FFFFFFFF;-fx-font-size:14;"
                               unFocusColor="#acbec6" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0"
                               AnchorPane.topAnchor="187.0">
@@ -44,7 +44,7 @@
                 </JFXTextField>
                 <JFXPasswordField fx:id="tf_password" focusColor="#0078ff" labelFloat="true" layoutX="87.0"
                                   layoutY="224.0" maxHeight="32.0" minHeight="32.0" prefHeight="32.0"
-                                  promptText="Password" text="12qwaszx"
+                                  promptText="Password" text="Aj124578"
                                   style="-fx-text-fill:#223239;-fx-background-color:#FFFFFFFF;-fx-font-size:14;"
                                   unFocusColor="#acbec6" AnchorPane.leftAnchor="32.0" AnchorPane.rightAnchor="32.0"
                                   AnchorPane.topAnchor="209.0">
