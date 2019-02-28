@@ -114,6 +114,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     @FXML
     private JFXButton btn_fullscreen;
 
+    private JFXPopup qualityPop;
+
     private ImageView imageView;
 
     private DirectMediaPlayerComponent mediaPlayerComponent;
@@ -206,7 +208,11 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             restart();
         });
         btn_quality.setOnMouseClicked((v) -> {
-            showQualityPop();
+            if (qualityPop!=null&&qualityPop.isShowing()){
+                qualityPop.hide();
+            }else {
+                showQualityPop();
+            }
         });
         btn_fullscreen.setOnMouseClicked((v) -> {
             Stage stage = (Stage) root.getScene().getWindow();
@@ -405,6 +411,15 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
         if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
             mediaPlayerComponent.getMediaPlayer().stop();
+        }
+    }
+
+    public void destory() {
+        if (isP2p) {
+            tcprelay.relaydisconnect(p2pNum);
+        }
+        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
+            mediaPlayerComponent.getMediaPlayer().stop();
             mediaPlayerComponent.getMediaPlayer().release();
         }
     }
@@ -483,10 +498,12 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
         @Override
         public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat) {
-            if (writableImage == null) {
+            if (writableImage == null || mediaPlayer == null) {
+                WLog.w("play", "111");
                 return;
             }
             Platform.runLater(() -> {
+                WLog.w("play", "222");
                 Memory nativeBuffer = mediaPlayer.lock()[0];
                 try {
                     ByteBuffer byteBuffer = nativeBuffer.getByteBuffer(0, nativeBuffer.size());
@@ -693,6 +710,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
     private void showQualityPop() {
         try {
+            qualityPop = new JFXPopup();
+            qualityPop.setAutoHide(false);
             VBox vBox = new VBox();
             vBox.setSpacing(8.0);
             vBox.setAlignment(Pos.CENTER);
@@ -720,6 +739,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                     quality.setOnMouseClicked(new EventHandler<MouseEvent>() {
                         @Override
                         public void handle(MouseEvent event) {
+                            qualityPop.hide();
                             btn_quality.setText(tmp.get(finalI));
                             Camera camera = DeviceCache.getInstance().get(deviceId);
                             camera.setCurrentQuality(qualities.get(tmp.get(finalI)));
@@ -729,7 +749,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                     vBox.getChildren().add(quality);
                 }
             }
-            JFXPopup qualityPop = new JFXPopup(vBox);
+            qualityPop.setPopupContent(vBox);
             qualityPop.show(btn_quality, JFXPopup.PopupVPosition.BOTTOM, JFXPopup.PopupHPosition.LEFT, 0, -28);
         } catch (Exception e) {
             e.printStackTrace();
