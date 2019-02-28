@@ -78,7 +78,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     @FXML
     private Label label_name;
     @FXML
-    private ImageView iv_bg;
+    private StackPane playBg;
     @FXML
     private BorderPane playPane;
     @FXML
@@ -588,9 +588,10 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private void setPlayBg() {
         File file = new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg");
         if (file != null) {
-            Image image = new Image(file.toURI().toString(), 668, 468, false, false);
-            iv_bg.setImage(image);
-            iv_bg.setEffect(new GaussianBlur());
+            Image image = new Image(file.toURI().toString());
+            playBg.setBackground(new Background(new BackgroundImage(image, null, null, BackgroundPosition.CENTER,
+                    new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true))));
+            playBg.setEffect(new GaussianBlur());
         }
     }
 

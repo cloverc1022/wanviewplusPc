@@ -71,8 +71,12 @@
     -fx-background-radius: 2px;
 }
 
+.play_bg {
+    -fx-background-size: cover;
+}
+
 .play_pane {
-    -fx-background-color: Black;
+    -fx-background-color: transparent;
 }
 
 .jfx_button_voice .jfx-rippler, .jfx_button_screenshot .jfx-rippler, .jfx_button_play .jfx-rippler, .jfx_button_record .jfx-rippler, .jfx_button_refresh .jfx-rippler, .jfx_button_voice_mute .jfx-rippler, .jfx_button_pause .jfx-rippler {
