@@ -4,6 +4,8 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import net.ajcloud.wansviewplusw.BaseController;
@@ -12,6 +14,7 @@ import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
 import net.ajcloud.wansviewplusw.support.http.bean.SigninBean;
 import net.ajcloud.wansviewplusw.support.http.bean.start.AppStartUpBean;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
+import net.ajcloud.wansviewplusw.support.utils.WLog;
 
 public class LoginController implements BaseController {
 
@@ -31,23 +34,24 @@ public class LoginController implements BaseController {
     }
 
     public void init() {
-//        email_validator = new RequiredFieldValidator();
-//        email_validator.setMessage("Can not be empty");
-//        email_validator.setIcon(GlyphsBuilder.create(FontAwesomeIconView.class)
-//                .glyph(FontAwesomeIcon.WARNING)
-//                .style("-fx-text-fill:#FF5252;-fx-font-size:10;")
-//                .styleClass("error")
-//                .build());
-//        tf_name.getValidators().add(email_validator);
-//
-//        password_validator = new RequiredFieldValidator();
-//        password_validator.setMessage("Can not be empty");
-//        password_validator.setIcon(GlyphsBuilder.create(FontAwesomeIconView.class)
-//                .glyph(FontAwesomeIcon.WARNING)
-//                .style("-fx-text-fill:#FF5252;-fx-font-size:10;")
-//                .styleClass("error")
-//                .build());
-//        tf_password.getValidators().add(password_validator);
+        email_validator = new RequiredFieldValidator();
+        tf_name.getValidators().add(email_validator);
+        tf_name.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (StringUtil.equals(email_validator.getMessage(), "Can not be empty") &&
+                    email_validator.isVisible() &&
+                    tf_name.getText() != null && tf_name.getText().length() > 0) {
+                tf_name.resetValidation();
+            }
+        });
+        password_validator = new RequiredFieldValidator();
+        tf_password.getValidators().add(password_validator);
+        tf_password.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (StringUtil.equals(password_validator.getMessage(), "Can not be empty") &&
+                    password_validator.isVisible() &&
+                    tf_password.getText() != null && tf_password.getText().length() > 0) {
+                tf_password.resetValidation();
+            }
+        });
     }
 
     @FXML
@@ -56,11 +60,13 @@ public class LoginController implements BaseController {
             requestApiUnit = new RequestApiUnit();
         }
         if (StringUtil.isNullOrEmpty(tf_name.getText())) {
-//            tf_name.validate();
+            email_validator.setMessage("Can not be empty");
+            tf_name.validate();
             return;
         }
         if (StringUtil.isNullOrEmpty(tf_password.getText())) {
-//            tf_password.validate();
+            password_validator.setMessage("Can not be empty");
+            tf_password.validate();
             return;
         }
         new Thread(new Runnable() {
@@ -72,26 +78,26 @@ public class LoginController implements BaseController {
                         requestApiUnit.signin(tf_name.getText(), tf_password.getText(), new HttpCommonListener<SigninBean>() {
                             @Override
                             public void onSuccess(SigninBean bean) {
-                                Platform.runLater(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (onLoginListener != null) {
-                                            onLoginListener.onLoginSuccess();
-                                        }
+                                Platform.runLater(() -> {
+                                    if (onLoginListener != null) {
+                                        onLoginListener.onLoginSuccess();
                                     }
                                 });
                             }
 
                             @Override
                             public void onFail(int code, String msg) {
-                                showErrorAlert(msg);
+                                Platform.runLater(() -> {
+                                    tf_name.resetValidation();
+                                    password_validator.setMessage(msg);
+                                    tf_password.validate();
+                                });
                             }
                         });
                     }
 
                     @Override
                     public void onFail(int code, String msg) {
-                        showErrorAlert(msg);
                     }
                 });
             }
@@ -100,24 +106,5 @@ public class LoginController implements BaseController {
 
     @FXML
     private void initialize() {
-    }
-
-    private void showErrorAlert(String string) {
-//        Platform.runLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                JFXAlert alert = new JFXAlert((Stage) tf_name.getScene().getWindow());
-//                alert.initModality(Modality.WINDOW_MODAL);
-//                alert.setOverlayClose(false);
-//                JFXDialogLayout layout = new JFXDialogLayout();
-//                layout.setBody(new Label(string));
-//                JFXButton closeButton = new JFXButton("OK");
-//                closeButton.getStyleClass().add("dialog-accept");
-//                closeButton.setOnAction(event -> alert.hideWithAnimation());
-//                layout.setActions(closeButton);
-//                alert.setContent(layout);
-//                alert.show();
-//            }
-//        });
     }
 }
