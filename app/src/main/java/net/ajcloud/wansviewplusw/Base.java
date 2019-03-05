@@ -14,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -105,6 +106,7 @@ public class Base extends Application implements LoginController.OnLoginListener
     private void go2Main() {
         try {
             mainStage = new Stage(StageStyle.DECORATED);
+            mainStage.getIcons().add(new Image("/image/ic_launcher.png"));
             mainStage.setMinWidth(980.0);
             mainStage.setMinHeight(580.0);
             Flow flow = new Flow(MainController.class);

@@ -90,8 +90,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     @FXML
     private JFXButton btn_record;
     @FXML
-    private JFXButton btn_refresh;
-    @FXML
     private JFXSpinner loading;
     @FXML
     private JFXListView<Camera> lv_devices;
@@ -208,9 +206,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             if (!canDo()) {
                 return;
             }
-        });
-        btn_refresh.setOnMouseClicked((v) -> {
-            restart();
         });
         btn_quality.setOnMouseClicked((v) -> {
             if (qualityPop != null && qualityPop.isShowing()) {
