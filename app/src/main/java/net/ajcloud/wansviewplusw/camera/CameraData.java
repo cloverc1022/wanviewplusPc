@@ -9,15 +9,16 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
-import net.ajcloud.wansviewplusw.support.utils.StringUtil;
+import net.ajcloud.wansviewplusw.support.utils.FileUtil;
 
+import java.io.File;
 import java.io.IOException;
 
 public class CameraData {
     @FXML
     private Pane pane;
     @FXML
-    private ImageView icon;
+    private ImageView iv_thumbnail;
     @FXML
     private Label deviceName;
     @FXML
@@ -42,15 +43,14 @@ public class CameraData {
     }
 
     public void setInfo(Camera camera) {
-        String imagePath = "image/ic_launcher.png";
-        if (StringUtil.equals(camera.deviceMode.toUpperCase(), "K3C")) {
-            imagePath = "image/ic_model_k3.png";
-        } else if (StringUtil.equals(camera.deviceMode.toUpperCase(), "Q3S")) {
-            imagePath = "image/ic_model_q3.png";
-        }
-        Image image = new Image(imagePath);
-        icon.setImage(image);
         deviceName.setText(camera.aliasName);
+        File thumbnail = new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg");
+        if (thumbnail.exists()) {
+            Image image = new Image(thumbnail.toURI().toString(), 196, 88, false, true, false);
+            iv_thumbnail.setImage(image);
+        } else {
+
+        }
     }
 
     public Pane getPane() {

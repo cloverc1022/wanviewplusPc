@@ -4,29 +4,32 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<AnchorPane fx:id="pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane styleClass="devices_item_pane" fx:id="pane" minHeight="116.0" minWidth="196.0" prefHeight="116.0"
+           prefWidth="196.0"
+           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+           AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
-        <HBox alignment="CENTER_LEFT">
+        <VBox alignment="TOP_RIGHT">
             <children>
-                <ImageView fx:id="icon" fitHeight="48.0" fitWidth="48.0" layoutX="32.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-                    <HBox.margin>
-                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                    </HBox.margin>
-                </ImageView>
-                <VBox alignment="TOP_RIGHT" layoutX="384.0" layoutY="100.0">
+                <StackPane minHeight="88.0" minWidth="196.0" prefHeight="88.0" prefWidth="196.0">
                     <children>
-                        <Label fx:id="deviceName" minHeight="32.0" minWidth="120.0" prefHeight="32.0" prefWidth="120.0" styleClass="devices_item_deviceName" text="Name">
-                            <VBox.margin>
-                                <Insets />
-                            </VBox.margin>
-                        </Label>
-                        <Label fx:id="status" alignment="CENTER" minHeight="16.0" minWidth="44.0" prefHeight="16.0" prefWidth="44.0" styleClass="devices_item_status" text="Connecting" />
+                        <ImageView fx:id="iv_thumbnail" pickOnBounds="true" preserveRatio="true"/>
+                        <AnchorPane>
+                            <children>
+                                <Label fx:id="status" alignment="CENTER" minHeight="16.0" minWidth="44.0"
+                                       prefHeight="16.0" prefWidth="44.0" styleClass="devices_item_status"
+                                       text="Connecting" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="8.0"/>
+                            </children>
+                        </AnchorPane>
                     </children>
-                    <HBox.margin>
-                        <Insets right="12.0" />
-                    </HBox.margin>
-                </VBox>
+                </StackPane>
+                <Label fx:id="deviceName" minHeight="28.0" minWidth="196.0" prefWidth="196.0"
+                       styleClass="devices_item_deviceName" text="Name" VBox.vgrow="ALWAYS">
+                    <padding>
+                        <Insets left="16.0" right="16.0"/>
+                    </padding>
+                </Label>
             </children>
-        </HBox>
+        </VBox>
     </children>
-</AnchorPane>
+</StackPane>

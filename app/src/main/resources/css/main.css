@@ -3,7 +3,7 @@
 }
 
 .jfx-list-view {
-    -jfx-vertical-gap: 16px;
+    -jfx-vertical-gap: 12px;
     -fx-background-color: #F7FAFA;
     -jfx-expanded: true;
 }
