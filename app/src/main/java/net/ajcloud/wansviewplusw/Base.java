@@ -22,11 +22,16 @@ import javafx.stage.WindowEvent;
 import net.ajcloud.wansviewplusw.camera.CameraController;
 import net.ajcloud.wansviewplusw.login.LoginController;
 import net.ajcloud.wansviewplusw.main.MainController;
+import net.ajcloud.wansviewplusw.support.entity.LocalInfo;
 import org.tcprelay.Tcprelay;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 
 import java.io.InputStream;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Formatter;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -75,6 +80,7 @@ public class Base extends Application implements LoginController.OnLoginListener
         new Tcprelay().relayinit();
         NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), NATIVE_LIBRARY_SEARCH_PATH);
         Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
+        getLocalInfo();
     }
 
     private void go2Login() {
@@ -158,6 +164,27 @@ public class Base extends Application implements LoginController.OnLoginListener
 
         Platform.exit();
         System.exit(0);
+    }
+
+    private void getLocalInfo() {
+        try {
+            InetAddress address = InetAddress.getLocalHost();
+            NetworkInterface ni = NetworkInterface.getByInetAddress(address);
+            //ni.getInetAddresses().nextElement().getAddress();
+            byte[] mac = ni.getHardwareAddress();
+            String sIP = address.getHostAddress();
+            String sMAC = "";
+            Formatter formatter = new Formatter();
+            for (int i = 0; i < mac.length; i++) {
+                sMAC = formatter.format(Locale.getDefault(), "%02X%s", mac[i],
+                        (i < mac.length - 1) ? "-" : "").toString();
+
+            }
+            LocalInfo.getInstance().deviceName = address.getHostName(); //获取本机计算机名称
+            LocalInfo.getInstance().deviceId = address.getHostName() + sIP.toLowerCase() + sMAC.toLowerCase();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 

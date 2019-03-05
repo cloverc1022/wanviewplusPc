@@ -29,4 +29,65 @@ public class FileUtil {
             directory.mkdirs();
         return path;
     }
+
+    public static int getRealImageNum(String oid) {
+        File directory = new File(getRealtimeImagePath(oid));
+        if (directory.exists()) {
+            File[] files = directory.listFiles();
+            return files.length;
+        } else {
+            return 0;
+        }
+    }
+
+    /**
+     * 重置
+     */
+    public static void resetRealTimeImage(String dir) {
+        try {
+            File directory = new File(getRealtimeImagePath(dir));
+            File file = new File(getRealtimeImagePath(dir) + "/realtime_picture.jpg");
+            boolean flag = true;
+            // 删除文件夹中的所有文件包括子目录
+            File[] files = directory.listFiles();
+            for (File tmpFile : files) {
+                // 删除子文件
+                if (tmpFile.isFile()) {
+                    if (file.getName().equals(tmpFile.getName()))
+                        continue;
+                    flag = tmpFile.delete();
+                    if (!flag)
+                        break;
+                }
+            }
+            if (!flag) {
+                WLog.w("重置目录失败！");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void renameImage(String oid) {
+        File directory = new File(getRealtimeImagePath(oid));
+        File[] files;
+        File file = new File(getRealtimeImagePath(oid) + "/realtime_picture.jpg");
+        files = directory.listFiles();
+        //数据异常则先重置目录
+        if (file.exists() && files.length == 2) {
+            boolean flag = file.delete();
+            if (flag) {
+                files = directory.listFiles();
+            }
+        }
+        if (files.length <= 0) {
+            return;
+        }
+        for (File f : files) {
+            if (f.isFile()) { // 判断是否为文件夹
+                f.renameTo(new File(getRealtimeImagePath(oid) + "/realtime_picture.jpg"));
+                return;
+            }
+        }
+    }
 }

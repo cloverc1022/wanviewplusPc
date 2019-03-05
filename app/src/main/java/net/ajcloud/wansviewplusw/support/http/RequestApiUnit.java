@@ -2,17 +2,24 @@ package net.ajcloud.wansviewplusw.support.http;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import javafx.application.Platform;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
 import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
+import net.ajcloud.wansviewplusw.support.entity.LocalInfo;
+import net.ajcloud.wansviewplusw.support.eventbus.EventBus;
+import net.ajcloud.wansviewplusw.support.eventbus.event.DeviceRefreshEvent;
 import net.ajcloud.wansviewplusw.support.http.Interceptor.CommonInterceptor;
 import net.ajcloud.wansviewplusw.support.http.Interceptor.HttpLoggingInterceptor;
 import net.ajcloud.wansviewplusw.support.http.Interceptor.OkSignatureInterceptor;
 import net.ajcloud.wansviewplusw.support.http.bean.*;
 import net.ajcloud.wansviewplusw.support.http.bean.device.DeviceListBean;
 import net.ajcloud.wansviewplusw.support.http.bean.start.AppStartUpBean;
+import net.ajcloud.wansviewplusw.support.http.converters.FileConverterFactory;
 import net.ajcloud.wansviewplusw.support.http.converters.GsonConverterFactory;
 import net.ajcloud.wansviewplusw.support.utils.CipherUtil;
+import net.ajcloud.wansviewplusw.support.utils.FileUtil;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
@@ -20,19 +27,21 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 import java.util.logging.Level;
 
 public class RequestApiUnit {
 
-    private String deviceName = "windows_pc";
-    private String deviceId = "1234567890";
+    private LocalInfo localInfo;
     OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
 
     public RequestApiUnit() {
+        localInfo = LocalInfo.getInstance();
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor("Retrofit");
         loggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY);
         loggingInterceptor.setColorLevel(Level.INFO);
@@ -76,8 +85,8 @@ public class RequestApiUnit {
         final JsonObject dataJson = new JsonObject();
         dataJson.addProperty("username", username);
         dataJson.addProperty("action", action);
-        dataJson.addProperty("agentName", deviceName);
-        dataJson.addProperty("agentToken", deviceId);
+        dataJson.addProperty("agentName", localInfo.deviceName);
+        dataJson.addProperty("agentToken", localInfo.deviceId);
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiConstant.BASE_UAC_URL)
@@ -115,8 +124,8 @@ public class RequestApiUnit {
                     dataJson.addProperty("username", mail);
                     dataJson.addProperty("password", encodePassword);
                     dataJson.addProperty("nonce", new String(Base64.getEncoder().encode(nonce), "UTF-8"));
-                    dataJson.addProperty("agentName", deviceName);
-                    dataJson.addProperty("agentToken", deviceId);
+                    dataJson.addProperty("agentName", localInfo.deviceName);
+                    dataJson.addProperty("agentToken", localInfo.deviceId);
                     dataJson.addProperty("osName", "android");
                     dataJson.addProperty("grantType", "password");
                     dataJson.addProperty("scope", "all");
@@ -270,9 +279,7 @@ public class RequestApiUnit {
                         DevicesInfosBean bean = responseBean.result;
                         for (DevicesInfosBean.DeviceInfoBean item : bean.infos
                                 ) {
-                            Platform.runLater(() -> {
-                                DeviceCache.getInstance().add(item.info);
-                            });
+                            DeviceCache.getInstance().add(item.info);
                         }
                     }
                     listener.onSuccess(responseBean.result);
@@ -383,7 +390,8 @@ public class RequestApiUnit {
                                     for (int i = 0; i < bean.infos.size(); i++) {
                                         if (!StringUtil.isNullOrEmpty(bean.infos.get(i).did)) {
                                             //刷新单条camera信息
-//                                            EventBus.getDefault().post(new DeviceRefreshEvent(bean.infos.get(i).did));
+                                            DeviceRefreshEvent event = new DeviceRefreshEvent(bean.infos.get(i).did);
+                                            EventBus.getInstance().post(event);
                                         }
                                     }
                                 }
@@ -442,6 +450,113 @@ public class RequestApiUnit {
 
             @Override
             public void onFailure(Call<ResponseBean<Object>> call, Throwable throwable) {
+                listener.onFail(-1, throwable.getMessage());
+            }
+        });
+    }
+
+    /**
+     * 快照
+     */
+    public void doSnapshot(String deviceId, final HttpCommonListener<Object> listener) {
+        Camera camera = DeviceCache.getInstance().get(deviceId);
+        if (camera == null) {
+            listener.onFail(-1, "param empty");
+            return;
+        }
+
+        JsonObject dataJson = new JsonObject();
+        dataJson.addProperty("deviceId", deviceId);
+        dataJson.addProperty("agentName", LocalInfo.getInstance().deviceName);
+        dataJson.addProperty("deviceId", LocalInfo.getInstance().deviceId);
+
+        camera.hasSnapShot = true;
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(camera.getGatewayUrl() + "/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient.build())
+                .build();
+        IRequest startup = retrofit.create(IRequest.class);
+        Call<ResponseBean<Object>> doSnapshot = startup.doSnapshot(ApiConstant.getReqBody(dataJson, deviceId));
+        doSnapshot.enqueue(new Callback<ResponseBean<Object>>() {
+            @Override
+            public void onResponse(Call<ResponseBean<Object>> call, Response<ResponseBean<Object>> response) {
+                ResponseBean responseBean = response.body();
+                if (responseBean.isSuccess()) {
+                    Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), ae -> {
+                        getDeviceInfo(camera.getGatewayUrl(), Arrays.asList(deviceId), false, new HttpCommonListener<DevicesInfosBean>() {
+                            @Override
+                            public void onSuccess(DevicesInfosBean bean) {
+                                if (bean.infos != null && bean.infos.size() > 0 &&
+                                        bean.infos.get(0).info != null &&
+                                        bean.infos.get(0).info.base != null) {
+                                    if (StringUtil.isNullOrEmpty(bean.infos.get(0).info.base.snapshotUrl)) {
+                                        listener.onFail(-1, "error");
+                                    } else {
+                                        new Thread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                download(deviceId, bean.infos.get(0).info.base.snapshotUrl, FileUtil.getRealtimeImagePath(deviceId) + File.separator + "tmp.jpg", new HttpCommonListener<File>() {
+                                                    @Override
+                                                    public void onSuccess(File bean) {
+                                                        listener.onSuccess(bean);
+                                                    }
+
+                                                    @Override
+                                                    public void onFail(int code, String msg) {
+                                                        listener.onFail(code, msg);
+                                                    }
+                                                });
+                                            }
+                                        }).start();
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onFail(int code, String msg) {
+                                listener.onFail(code, msg);
+                            }
+                        });
+                    }));
+                    timeline.setCycleCount(1);
+                    timeline.play();
+                } else {
+                    listener.onFail(responseBean.getResultCode(), responseBean.message);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBean<Object>> call, Throwable throwable) {
+                listener.onFail(-1, throwable.getMessage());
+            }
+        });
+    }
+
+    /**
+     * 下载
+     */
+    public void download(String deviceId, String url, String filePath, final HttpCommonListener<File> listener) {
+        String[] urls = url.split("file/");
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(urls[0])
+                .addConverterFactory(FileConverterFactory.create(filePath))
+                .client(okHttpClient.build())
+                .build();
+        IRequest irequest = retrofit.create(IRequest.class);
+        Call<File> download = irequest.downloadFile("file/" + urls[1]);
+        download.enqueue(new Callback<File>() {
+            @Override
+            public void onResponse(Call<File> call, Response<File> response) {
+                File file = response.body();
+                if (file != null && file.exists()) {
+                    FileUtil.renameImage(deviceId);
+                    listener.onSuccess(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<File> call, Throwable throwable) {
                 listener.onFail(-1, throwable.getMessage());
             }
         });

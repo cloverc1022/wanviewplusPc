@@ -5,9 +5,9 @@ import net.ajcloud.wansviewplusw.support.http.bean.*;
 import net.ajcloud.wansviewplusw.support.http.bean.device.DeviceListBean;
 import net.ajcloud.wansviewplusw.support.http.bean.start.AppStartUpBean;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.POST;
-import retrofit2.http.Path;
+import retrofit2.http.*;
+
+import java.io.File;
 
 public interface IRequest {
     @POST("/api/v1/app-startup")
@@ -43,4 +43,13 @@ public interface IRequest {
      */
     @POST("v1/ptz-control")
     Call<ResponseBean<Object>> setPtz(@Body JsonObject body);
+
+    /**
+     * 快照
+     */
+    @POST("v1/snapshot")
+    Call<ResponseBean<Object>> doSnapshot(@Body JsonObject body);
+
+    @GET
+    Call<File> downloadFile(@Url String url);
 }

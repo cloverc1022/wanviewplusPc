@@ -43,6 +43,7 @@ repositories {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'lib')
     implementation("com.squareup.okhttp3:okhttp:3.13.1")
+    implementation "io.reactivex.rxjava2:rxjava:2.2.7"
 //    compile 'com.jfoenix:jfoenix:8.0.8' // Java 8
 //    compile 'io.datafx:datafx:8.0.1'
 //    compile "io.datafx:core:8.0.1"

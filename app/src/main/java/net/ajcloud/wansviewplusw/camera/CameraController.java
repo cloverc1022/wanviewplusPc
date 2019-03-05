@@ -8,6 +8,7 @@ import com.sun.jna.Memory;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
+import io.reactivex.functions.Consumer;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.beans.property.FloatProperty;
@@ -37,6 +38,9 @@ import javafx.util.Callback;
 import javafx.util.Duration;
 import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
+import net.ajcloud.wansviewplusw.support.eventbus.*;
+import net.ajcloud.wansviewplusw.support.eventbus.event.DeviceRefreshEvent;
+import net.ajcloud.wansviewplusw.support.eventbus.event.SnapshotEvent;
 import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
 import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
 import net.ajcloud.wansviewplusw.support.utils.FileUtil;
@@ -295,6 +299,15 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             if (executeTimer_left != null && executeTimer_left.isActive)
                 setPtz(8);
         });
+        EventBus.getInstance().register(new Consumer<Event>() {
+            @Override
+            public void accept(Event event) throws Exception {
+                if (event.getType() == EventType.DEVICE_REFRESH) {
+                    DeviceRefreshEvent deviceRefreshEvent = (DeviceRefreshEvent) event;
+                    doSnapShot(deviceRefreshEvent.getDeviceId());
+                }
+            }
+        });
     }
 
     private void initData() {
@@ -365,6 +378,34 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
         this.deviceId = camera.deviceId;
         play();
+    }
+
+    private void doSnapShot(String deviceId) {
+        Camera camera = DeviceCache.getInstance().get(deviceId);
+        if (camera == null ||
+                !camera.isOnline() ||
+                (camera.isShare() && !camera.isVaild())) {
+            return;
+        }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if (FileUtil.getRealImageNum(camera.deviceId) > 2) {
+                    FileUtil.resetRealTimeImage(camera.deviceId);
+                }
+                requestApiUnit.doSnapshot(camera.deviceId, new HttpCommonListener<Object>() {
+                    @Override
+                    public void onSuccess(Object bean) {
+                        EventBus.getInstance().post(new SnapshotEvent());
+                    }
+
+                    @Override
+                    public void onFail(int code, String msg) {
+
+                    }
+                });
+            }
+        }).start();
     }
 
     @Override
@@ -491,7 +532,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         @Override
         public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat) {
             if (writableImage == null || mediaPlayer == null) {
-                WLog.w("play", "111");
                 return;
             }
             Platform.runLater(() -> {
@@ -603,7 +643,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private void setPlayBg(String deviceId) {
         File file = new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg");
         if (file.exists()) {
-            Image image = new Image(file.toURI().toString(),0, 0, false, true, false);
+            Image image = new Image(file.toURI().toString(), 0, 0, false, true, false);
             playBg.setBackground(new Background(new BackgroundImage(image, null, null, BackgroundPosition.CENTER,
                     new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true))));
             playBg.setEffect(new GaussianBlur());
@@ -951,9 +991,9 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
 
 //        @Override
-//        public void onEvent(MediaPlayer.Event event) {
+//        public void onEvent(MediaPlayer.Event eventbus) {
 //
-//            switch (event.type) {
+//            switch (eventbus.event) {
 //                case MediaPlayer.Event.Stopped:
 //                    WLog.i(TAG, "Stopped");
 //                    if (NewVideoView.this.mOnChangeListener != null) {
@@ -980,7 +1020,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 //                case MediaPlayer.Event.TimeChanged:
 ////                    WLog.d(TAG, "TimeChanged");
 //                    if (NewVideoView.this.mOnChangeListener != null) {
-//                        NewVideoView.this.mOnChangeListener.onTimeChange(event.getTimeChanged());
+//                        NewVideoView.this.mOnChangeListener.onTimeChange(eventbus.getTimeChanged());
 //                    }
 //                    break;
 //                case MediaPlayer.Event.PositionChanged:
@@ -994,9 +1034,9 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 //                    if (NewVideoView.this.mOnChangeListener != null) {
 //                        if (isVideoOut) {
 //                            if (OldEvent == Media.State.Playing) {
-//                                NewVideoView.this.mOnChangeListener.onFirstBufferChanged(event.getBufferingChanged());
+//                                NewVideoView.this.mOnChangeListener.onFirstBufferChanged(eventbus.getBufferingChanged());
 //                            } else {
-//                                NewVideoView.this.mOnChangeListener.onBufferChanged(event.getBufferingChanged());
+//                                NewVideoView.this.mOnChangeListener.onBufferChanged(eventbus.getBufferingChanged());
 //                            }
 //                        }
 //                    }
