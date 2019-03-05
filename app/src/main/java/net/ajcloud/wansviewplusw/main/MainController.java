@@ -18,9 +18,7 @@ import javafx.scene.layout.VBox;
 import net.ajcloud.wansviewplusw.Base;
 import net.ajcloud.wansviewplusw.BaseController;
 import net.ajcloud.wansviewplusw.camera.CameraController;
-import net.ajcloud.wansviewplusw.nine.NineController;
-import net.ajcloud.wansviewplusw.quad.QuadController;
-import net.ajcloud.wansviewplusw.support.utils.WLog;
+import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 
 import javax.annotation.PostConstruct;
 import java.io.InputStream;
@@ -100,7 +98,7 @@ public class MainController implements BaseController {
                 accountPop = new JFXPopup(loader.load(in));
 
                 AccountPopController accountPopController = loader.getController();
-                accountPopController.initView("aaa");
+                accountPopController.initView(DeviceCache.getInstance().getSigninBean().mail);
                 accountPopController.setOnLogoutListener(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {

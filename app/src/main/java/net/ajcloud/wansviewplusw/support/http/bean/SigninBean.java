@@ -5,6 +5,7 @@ package net.ajcloud.wansviewplusw.support.http.bean;
  * 登录bean
  */
 public class SigninBean {
+    public String mail;
     public String accessToken;
     public String refreshToken;
     public String scope;     //请求范围

@@ -45,11 +45,11 @@ public class OkSignatureInterceptor implements Interceptor {
                         signBody.append(CipherUtil.getSha256(reqBody));
                         signBody.append("\n");
 
-                        String signToken = DeviceCache.getInstance().signinBean.signToken;
+                        String signToken = DeviceCache.getInstance().getSigninBean().signToken;
                         String stringToSign = "HMAC-SHA256" + "\n" + timeStamp + "\n" + CipherUtil.getSha256(signBody.toString());
                         String signature = CipherUtil.getClondApiSign(signToken, stringToSign);
                         Request newRequest = chain.request().newBuilder()
-                                .header("Authorization", "Bearer" + " " + DeviceCache.getInstance().signinBean.accessToken)
+                                .header("Authorization", "Bearer" + " " + DeviceCache.getInstance().getSigninBean().accessToken)
                                 .header("X-UAC-Signature", "UAC1-HMAC-SHA256" + ";" + timeStamp + ";" + signature)
                                 .build();
                         return chain.proceed(newRequest);

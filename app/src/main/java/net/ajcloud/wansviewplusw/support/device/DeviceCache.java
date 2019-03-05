@@ -16,7 +16,7 @@ import java.util.*;
 public class DeviceCache {
 
 
-    public SigninBean signinBean;
+    private SigninBean signinBean;
 
     private Map<String, Camera> hashTable = Collections.synchronizedMap(new LinkedHashMap<>());
 
@@ -257,5 +257,13 @@ public class DeviceCache {
             deviceIds.add(camera.deviceId);
             deviceUrlTable.put(camera.getGatewayUrl(), deviceIds);
         }
+    }
+
+    public SigninBean getSigninBean() {
+        return signinBean;
+    }
+
+    public void setSigninBean(SigninBean signinBean) {
+        this.signinBean = signinBean;
     }
 }

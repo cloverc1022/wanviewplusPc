@@ -453,7 +453,8 @@ public class RequestApiUnit {
     private void saveAccount(String mail, String password, SigninBean bean) {
         if (!((StringUtil.isNullOrEmpty(mail) || StringUtil.isNullOrEmpty(password)))) {
             //存储账号信息 TODO
-            DeviceCache.getInstance().signinBean = bean;
+            bean.mail = mail;
+            DeviceCache.getInstance().setSigninBean(bean);
         }
     }
 }
