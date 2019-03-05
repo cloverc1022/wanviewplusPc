@@ -713,7 +713,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private void showQualityPop() {
         try {
             qualityPop = new JFXPopup();
-            qualityPop.setAutoHide(false);
             VBox vBox = new VBox();
             vBox.setSpacing(8.0);
             vBox.setAlignment(Pos.CENTER);
