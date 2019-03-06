@@ -10,6 +10,8 @@ import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
 import io.reactivex.functions.Consumer;
 import javafx.animation.AnimationTimer;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
@@ -83,6 +85,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private Label label_num;
     @FXML
     private Label label_name;
+    @FXML
+    private StackPane play_content;
     @FXML
     private StackPane playBg;
     @FXML
@@ -301,6 +305,12 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             if (executeTimer_left != null && executeTimer_left.isActive)
                 setPtz(8);
         });
+        play_content.setOnMouseEntered(event -> {
+            showControlPane(true);
+        });
+        play_content.setOnMouseExited(event -> {
+            showControlPane(false);
+        });
         EventBus.getInstance().register(new Consumer<Event>() {
             @Override
             public void accept(Event event) throws Exception {
@@ -339,14 +349,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     }
 
     private void initView(String deviceId) {
-        //云台
-        Camera camera = DeviceCache.getInstance().get(deviceId);
-        if (camera.hasPtz()) {
-            gp_control.setVisible(true);
-        } else {
-            gp_control.setVisible(false);
-        }
-
         //播放按钮
         btn_play.getStyleClass().remove("jfx_button_pause");
         btn_play.getStyleClass().remove("jfx_button_play");
@@ -545,7 +547,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                 return;
             }
             Platform.runLater(() -> {
-                WLog.w("play", "222");
                 Memory[] nativeBufferArray = mediaPlayer.lock();
                 if (nativeBufferArray == null || nativeBufferArray.length == 0) {
                     mediaPlayer.unlock();
@@ -577,8 +578,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         public void run() {
             WLog.w(TAG, "p2p-----process:relayconnect");
             p2pNum = tcprelay.relayconnect(deviceId, DeviceCache.getInstance().get(deviceId).getStunServers(), relay_server_ip, port);
-//            WLog.w(TAG, "p2p----- status:" + p2pNum);
-//
+            WLog.w(TAG, "p2p----- status:" + p2pNum);
             if (p2pNum > 0) {
                 Platform.runLater(new Runnable() {
                     @Override
@@ -1110,6 +1110,29 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                     return getCount();
                 }
             };
+        }
+    }
+
+    private Timeline controlTimeline = new Timeline(new KeyFrame(Duration.seconds(3), ae -> {
+        gp_control.setVisible(false);
+    }));
+
+    private void showControlPane(boolean isShow) {
+        if (!StringUtil.isNullOrEmpty(deviceId)) {
+            Camera camera = DeviceCache.getInstance().get(deviceId);
+            if (camera != null && camera.hasPtz()) {
+                if (isShow) {
+                    if (!gp_control.isVisible()) {
+                        gp_control.setVisible(true);
+                    }
+                    controlTimeline.stop();
+                } else {
+                    if (gp_control.isVisible()) {
+                        controlTimeline.setCycleCount(1);
+                        controlTimeline.play();
+                    }
+                }
+            }
         }
     }
 }

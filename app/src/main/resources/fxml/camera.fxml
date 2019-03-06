@@ -36,7 +36,7 @@
                                        prefWidth="668.0"
                                        style="-fx-text-fill:#263238;-fx-font-size:12;-fx-font-weight: bold;" text="Name"
                                        VBox.vgrow="NEVER"/>
-                                <StackPane VBox.vgrow="ALWAYS" style="-fx-background-color: black">
+                                <StackPane fx:id="play_content" VBox.vgrow="ALWAYS" style="-fx-background-color: black">
                                     <children>
                                         <AnchorPane>
                                             <children>
