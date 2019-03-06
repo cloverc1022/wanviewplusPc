@@ -38,7 +38,9 @@ import javafx.util.Callback;
 import javafx.util.Duration;
 import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
-import net.ajcloud.wansviewplusw.support.eventbus.*;
+import net.ajcloud.wansviewplusw.support.eventbus.Event;
+import net.ajcloud.wansviewplusw.support.eventbus.EventBus;
+import net.ajcloud.wansviewplusw.support.eventbus.EventType;
 import net.ajcloud.wansviewplusw.support.eventbus.event.DeviceRefreshEvent;
 import net.ajcloud.wansviewplusw.support.eventbus.event.SnapshotEvent;
 import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
@@ -365,6 +367,14 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private void handleMouseClick(Camera camera) {
         if (camera == null) {
             return;
+        }
+        for (Camera c :
+                DeviceCache.getInstance().getAllDevices()) {
+            if (StringUtil.equals(c.deviceId, camera.deviceId)) {
+                c.setSelected(true);
+            } else {
+                c.setSelected(false);
+            }
         }
         initView(camera.deviceId);
         if (mediaPlayerComponent.getMediaPlayer().isPlaying()) {

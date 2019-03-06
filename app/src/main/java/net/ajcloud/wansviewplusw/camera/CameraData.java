@@ -1,7 +1,6 @@
 package net.ajcloud.wansviewplusw.camera;
 
 import io.reactivex.functions.Consumer;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -16,7 +15,6 @@ import net.ajcloud.wansviewplusw.support.eventbus.EventBus;
 import net.ajcloud.wansviewplusw.support.eventbus.EventType;
 import net.ajcloud.wansviewplusw.support.utils.FileUtil;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
-import net.ajcloud.wansviewplusw.support.utils.WLog;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,6 +45,7 @@ public class CameraData {
         Camera camera = DeviceCache.getInstance().get(deviceId);
         status.textProperty().bind(camera.deviceStatusProperty());
         status.backgroundProperty().bind(camera.deviceStatusBgProperty());
+        deviceName.textFillProperty().bind(camera.deviceNameBgProperty());
         EventBus.getInstance().register(new Consumer<Event>() {
             @Override
             public void accept(Event event) throws Exception {

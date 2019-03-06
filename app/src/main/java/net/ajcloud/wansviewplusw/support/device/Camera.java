@@ -1,5 +1,6 @@
 package net.ajcloud.wansviewplusw.support.device;
 
+import javafx.application.Platform;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -7,6 +8,7 @@ import javafx.beans.property.StringProperty;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import net.ajcloud.wansviewplusw.support.http.bean.*;
 import net.ajcloud.wansviewplusw.support.http.bean.device.ConDeviceBean;
 import net.ajcloud.wansviewplusw.support.http.bean.device.DeviceGeneralsBean;
@@ -78,6 +80,8 @@ public class Camera implements Serializable {
     private int onlineStatus;     // 离线 - 1, 在线 - 2, 升级中 - 4
     private int refreshStatus;  //刷新状态   0：正在刷新    1：成功    2：失败
     private int currentQuality = -1;
+    private boolean isSelected = false;
+    private ObjectProperty<Paint> deviceNameBg = new SimpleObjectProperty<>(Color.rgb(38, 50, 56));
 
     private StringProperty deviceStatus = new SimpleStringProperty("Connecting");
     private ObjectProperty<Background> deviceStatusBg = new SimpleObjectProperty<>(new Background(new BackgroundFill(Color.rgb(149, 165, 174), null, null)));
@@ -144,6 +148,33 @@ public class Camera implements Serializable {
         }
     }
 
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+        if (isSelected) {
+            setDeviceNameBg(Color.rgb(41, 121, 255, 1));
+        } else {
+            setDeviceNameBg(Color.rgb(38, 50, 56, 1));
+        }
+    }
+
+    public Paint getDeviceNameBg() {
+        return deviceNameBg.get();
+    }
+
+    public ObjectProperty<Paint> deviceNameBgProperty() {
+        return deviceNameBg;
+    }
+
+    public void setDeviceNameBg(Paint paint) {
+        Platform.runLater(() -> {
+            this.deviceNameBg.set(paint);
+        });
+    }
+
     public int getOnlineStatus() {
         return onlineStatus;
     }
@@ -163,18 +194,20 @@ public class Camera implements Serializable {
     }
 
     private void refreshDeviceStatus() {
-        if (refreshStatus == 1) {
-            if (onlineStatus == 1) {
-                setDeviceStatus("Offline");
-                setDeviceStatusBg(new Background(new BackgroundFill(Color.rgb(97, 114, 122), null, null)));
-            } else if (onlineStatus == 2) {
-                setDeviceStatus("Online");
-                setDeviceStatusBg(new Background(new BackgroundFill(Color.rgb(41, 121, 255), null, null)));
+        Platform.runLater(() -> {
+            if (refreshStatus == 1) {
+                if (onlineStatus == 1) {
+                    setDeviceStatus("Offline");
+                    setDeviceStatusBg(new Background(new BackgroundFill(Color.rgb(97, 114, 122), null, null)));
+                } else if (onlineStatus == 2) {
+                    setDeviceStatus("Online");
+                    setDeviceStatusBg(new Background(new BackgroundFill(Color.rgb(41, 121, 255), null, null)));
+                }
+            } else {
+                setDeviceStatus("Connecting");
+                setDeviceStatusBg(new Background(new BackgroundFill(Color.rgb(149, 165, 174), null, null)));
             }
-        } else {
-            setDeviceStatus("Connecting");
-            setDeviceStatusBg(new Background(new BackgroundFill(Color.rgb(149, 165, 174), null, null)));
-        }
+        });
     }
 
     public String getDeviceStatus() {
@@ -186,7 +219,6 @@ public class Camera implements Serializable {
     }
 
     public void setDeviceStatus(String deviceStatus) {
-
         this.deviceStatus.set(deviceStatus);
     }
 
