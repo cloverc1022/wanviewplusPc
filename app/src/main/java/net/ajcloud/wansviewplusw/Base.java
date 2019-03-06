@@ -22,7 +22,11 @@ import javafx.stage.WindowEvent;
 import net.ajcloud.wansviewplusw.camera.CameraController;
 import net.ajcloud.wansviewplusw.login.LoginController;
 import net.ajcloud.wansviewplusw.main.MainController;
+import net.ajcloud.wansviewplusw.support.customview.LoadingManager;
+import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.entity.LocalInfo;
+import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
+import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
 import org.tcprelay.Tcprelay;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
@@ -152,10 +156,9 @@ public class Base extends Application implements LoginController.OnLoginListener
     private void close() {
         if (mainStage != null) {
             FlowHandler flowHandler = (FlowHandler) flowContext.getRegisteredObject("ContentFlowHandler");
-            Class<?> controller = flowHandler.getCurrentViewControllerClass();
-            if (controller != null) {
+            CameraController cameraController = (CameraController) flowHandler.getCurrentView().getViewContext().getController();
+            if (cameraController != null) {
                 try {
-                    CameraController cameraController = (CameraController) controller.newInstance();
                     cameraController.stop();
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -191,12 +194,35 @@ public class Base extends Application implements LoginController.OnLoginListener
         }
     }
 
-
     private MainController.MainListener listener = new MainController.MainListener() {
         @Override
         public void onLogout() {
-            mainStage.close();
-            loginStage.show();
+            LoadingManager.getLoadingManager().showDefaultLoading(mainStage);
+            new RequestApiUnit().signout(new HttpCommonListener<Object>() {
+                @Override
+                public void onSuccess(Object bean) {
+                    Platform.runLater(() -> {
+                        LoadingManager.getLoadingManager().hideDefaultLoading();
+                        FlowHandler flowHandler = (FlowHandler) flowContext.getRegisteredObject("ContentFlowHandler");
+                        CameraController cameraController = (CameraController) flowHandler.getCurrentView().getViewContext().getController();
+                        if (cameraController != null) {
+                            try {
+                                cameraController.stop();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        DeviceCache.getInstance().logout();
+                        mainStage.close();
+                        loginStage.show();
+                    });
+                }
+
+                @Override
+                public void onFail(int code, String msg) {
+                    LoadingManager.getLoadingManager().hideDefaultLoading();
+                }
+            });
         }
     };
 }

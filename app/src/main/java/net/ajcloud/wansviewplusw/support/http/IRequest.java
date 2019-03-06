@@ -19,6 +19,9 @@ public interface IRequest {
     @POST("signin")
     Call<ResponseBean<SigninBean>> signin(@Body JsonObject body);
 
+    @POST("signout")
+    Call<ResponseBean<Object>> signout(@Body JsonObject body);
+
     @POST("device-list")
     Call<ResponseBean<DeviceListBean>> getDeviceList(@Body JsonObject body);
 

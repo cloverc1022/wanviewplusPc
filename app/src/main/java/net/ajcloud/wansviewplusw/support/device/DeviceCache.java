@@ -266,4 +266,10 @@ public class DeviceCache {
     public void setSigninBean(SigninBean signinBean) {
         this.signinBean = signinBean;
     }
+
+    public void logout() {
+        clear();
+        clearUrl();
+        setSigninBean(new SigninBean());
+    }
 }

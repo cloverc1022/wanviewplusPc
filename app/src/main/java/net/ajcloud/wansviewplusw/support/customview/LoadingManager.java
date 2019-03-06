@@ -46,7 +46,7 @@ public class LoadingManager {
             if (!defaultLoading.isShowing()) {
                 return;
             }
-            defaultLoading.hideWithAnimation();
+            defaultLoading.hide();
         }
     }
 }

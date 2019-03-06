@@ -166,6 +166,38 @@ public class RequestApiUnit {
         });
     }
 
+    public void signout(final HttpCommonListener<Object> listener) {
+        JsonObject dataJson = new JsonObject();
+        dataJson.addProperty("agentName", localInfo.deviceName);
+        dataJson.addProperty("agentToken", localInfo.deviceId);
+        dataJson.addProperty("osName", "windows");
+        dataJson.addProperty("refreshToken", DeviceCache.getInstance().getSigninBean().refreshToken);
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ApiConstant.BASE_UAC_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient.build())
+                .build();
+        IRequest startup = retrofit.create(IRequest.class);
+        Call<ResponseBean<Object>> signout = startup.signout(ApiConstant.getReqBody(dataJson, null));
+        signout.enqueue(new Callback<ResponseBean<Object>>() {
+            @Override
+            public void onResponse(Call<ResponseBean<Object>> call, Response<ResponseBean<Object>> response) {
+                ResponseBean responseBean = response.body();
+                if (responseBean.isSuccess()) {
+                    DeviceCache.getInstance().logout();
+                    listener.onSuccess(responseBean);
+                } else {
+                    listener.onFail(responseBean.getResultCode(), responseBean.message);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBean<Object>> call, Throwable throwable) {
+                listener.onFail(-1, throwable.getMessage());
+            }
+        });
+    }
+
     public void getDeviceList(final HttpCommonListener<List<Camera>> listener) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(ApiConstant.BASE_UAC_V2_URL)
