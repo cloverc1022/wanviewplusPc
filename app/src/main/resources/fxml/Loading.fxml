@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import com.jfoenix.controls.JFXSpinner?>
+<?import javafx.scene.layout.*?>
+<AnchorPane styleClass="loading_content" minHeight="112.0" minWidth="112.0" prefHeight="112.0" prefWidth="112.0"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <JFXSpinner styleClass="default_loading" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="32.0"
+                    AnchorPane.rightAnchor="32.0" AnchorPane.topAnchor="32.0"/>
+    </children>
+</AnchorPane>

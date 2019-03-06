@@ -95,6 +95,10 @@ public class Base extends Application implements LoginController.OnLoginListener
             login.setOnLoginListener(this);
             in.close();
             Scene scene = new Scene(page, LOGIN_WIDTH, LOGIN_HEIGHT);
+            final ObservableList<String> stylesheets = scene.getStylesheets();
+            stylesheets.addAll(Base.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
+                    Base.class.getResource("/css/jfoenix-design.css").toExternalForm(),
+                    Base.class.getResource("/css/main.css").toExternalForm());
             loginStage.setScene(scene);
             loginStage.sizeToScene();
             loginStage.setResizable(false);

@@ -4,17 +4,16 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.stage.Stage;
 import net.ajcloud.wansviewplusw.BaseController;
+import net.ajcloud.wansviewplusw.support.customview.LoadingManager;
 import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
 import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
 import net.ajcloud.wansviewplusw.support.http.bean.SigninBean;
 import net.ajcloud.wansviewplusw.support.http.bean.start.AppStartUpBean;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
-import net.ajcloud.wansviewplusw.support.utils.WLog;
 
 public class LoginController implements BaseController {
 
@@ -69,6 +68,7 @@ public class LoginController implements BaseController {
             tf_password.validate();
             return;
         }
+        LoadingManager.getLoadingManager().showDefaultLoading((Stage) tf_name.getScene().getWindow());
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -80,6 +80,7 @@ public class LoginController implements BaseController {
                             public void onSuccess(SigninBean bean) {
                                 Platform.runLater(() -> {
                                     if (onLoginListener != null) {
+                                        LoadingManager.getLoadingManager().hideDefaultLoading();
                                         onLoginListener.onLoginSuccess();
                                     }
                                 });
@@ -88,6 +89,7 @@ public class LoginController implements BaseController {
                             @Override
                             public void onFail(int code, String msg) {
                                 Platform.runLater(() -> {
+                                    LoadingManager.getLoadingManager().hideDefaultLoading();
                                     tf_name.resetValidation();
                                     password_validator.setMessage(msg);
                                     tf_password.validate();
@@ -98,6 +100,9 @@ public class LoginController implements BaseController {
 
                     @Override
                     public void onFail(int code, String msg) {
+                        Platform.runLater(() -> {
+                            LoadingManager.getLoadingManager().hideDefaultLoading();
+                        });
                     }
                 });
             }
