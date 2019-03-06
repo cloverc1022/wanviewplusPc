@@ -266,8 +266,11 @@
 
 .loading_content {
     -fx-background-color: white;
-    -fx-background-radius: 4;
-    -fx-border-radius: 4;
+    -fx-background-radius: 4px;
+    -fx-border-color: white;
+    -fx-border-width: 4px;
+    -fx-border-radius: 4px;
+    -fx-padding: 4px;
 }
 
 .jfx-alert-overlay{

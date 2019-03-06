@@ -55,6 +55,7 @@ import org.tcprelay.Tcprelay;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.component.DirectMediaPlayerComponent;
+import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.direct.BufferFormat;
@@ -199,6 +200,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         });
         initListener();
         initData();
+
+        btn_record.setDisable(true);
     }
 
     private void initListener() {
