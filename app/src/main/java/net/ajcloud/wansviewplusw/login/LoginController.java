@@ -17,7 +17,9 @@ import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 
 public class LoginController implements BaseController {
 
+    @FXML
     public JFXTextField tf_name;
+    @FXML
     public JFXPasswordField tf_password;
     private RequestApiUnit requestApiUnit;
     private OnLoginListener onLoginListener;
@@ -91,6 +93,7 @@ public class LoginController implements BaseController {
                                 Platform.runLater(() -> {
                                     LoadingManager.getLoadingManager().hideDefaultLoading();
                                     tf_name.resetValidation();
+                                    tf_password.clear();
                                     password_validator.setMessage(msg);
                                     tf_password.validate();
                                 });
