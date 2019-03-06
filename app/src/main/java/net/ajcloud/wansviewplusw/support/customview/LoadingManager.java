@@ -42,9 +42,11 @@ public class LoadingManager {
     }
 
     public void hideDefaultLoading() {
-        if (defaultLoading != null && !defaultLoading.isShowing()) {
-            return;
+        if (defaultLoading != null) {
+            if (!defaultLoading.isShowing()) {
+                return;
+            }
+            defaultLoading.hideWithAnimation();
         }
-        defaultLoading.hideWithAnimation();
     }
 }
