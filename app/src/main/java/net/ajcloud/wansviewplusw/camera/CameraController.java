@@ -97,6 +97,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     @FXML
     private JFXButton btn_screenshot_full;
     @FXML
+    private ImageView image_screenshot_full;
+    @FXML
     private JFXButton btn_play;
     @FXML
     private JFXButton btn_play_full;
@@ -106,6 +108,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private JFXButton btn_record;
     @FXML
     private JFXButton btn_record_full;
+    @FXML
+    private ImageView image_record_full;
     @FXML
     private JFXSpinner loading;
     @FXML
@@ -222,9 +226,15 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         initData();
 
         btn_record.setDisable(true);
+        btn_record_full.setDisable(true);
+        image_record_full.setDisable(true);
     }
 
     private void initListener() {
+        btn_play_full.onMouseClickedProperty().bindBidirectional(image_play_full.onMouseClickedProperty());
+        btn_screenshot_full.onMouseClickedProperty().bindBidirectional(image_screenshot_full.onMouseClickedProperty());
+        btn_record_full.onMouseClickedProperty().bindBidirectional(image_record_full.onMouseClickedProperty());
+        btn_voice_full.onMouseClickedProperty().bindBidirectional(image_voice_full.onMouseClickedProperty());
         //function
         btn_voice.setOnMouseClicked((v) -> {
             setMute();

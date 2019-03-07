@@ -157,7 +157,7 @@
                                                                                    minHeight="48.0" minWidth="48.0"
                                                                                    prefHeight="48.0" prefWidth="48.0"
                                                                                    styleClass="jfx_button_screenshot_full"/>
-                                                                        <ImageView fitHeight="24.0" fitWidth="24.0"
+                                                                        <ImageView fx:id="image_screenshot_full" fitHeight="24.0" fitWidth="24.0"
                                                                                    pickOnBounds="true"
                                                                                    preserveRatio="true"
                                                                                    AnchorPane.bottomAnchor="12.0"
@@ -174,7 +174,7 @@
                                                                                    minHeight="48.0" minWidth="48.0"
                                                                                    prefHeight="48.0" prefWidth="48.0"
                                                                                    styleClass="jfx_button_record_full"/>
-                                                                        <ImageView  fitHeight="24.0" fitWidth="24.0"
+                                                                        <ImageView  fx:id="image_record_full" fitHeight="24.0" fitWidth="24.0"
                                                                                    pickOnBounds="true"
                                                                                    preserveRatio="true"
                                                                                    styleClass="image_record_full"

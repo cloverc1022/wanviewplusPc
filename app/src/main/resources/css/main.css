@@ -190,10 +190,18 @@
 
 .image_voice_full {
     -fx-image: url('/image/ic_speaker_on_dark.png');
+    -fx-background-color: rgba(255, 255, 255, 0.6);
+    /*设置圆角*/
+    -fx-background-radius: 24;
+    -fx-border-radius: 24;
 }
 
 .image_voice_full_mute {
     -fx-image: url('/image/ic_speaker_off_dark.png');
+    -fx-background-color: rgba(255, 255, 255, 0.6);
+    /*设置圆角*/
+    -fx-background-radius: 24;
+    -fx-border-radius: 24;
 }
 
 .spinner_loading {
