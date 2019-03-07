@@ -48,9 +48,6 @@
                                                            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                                     <children>
                                                         <BorderPane fx:id="playPane" styleClass="play_pane">
-                                                            <StackPane.margin>
-                                                                <Insets bottom="46.0" top="46.0"/>
-                                                            </StackPane.margin>
                                                         </BorderPane>
                                                     </children>
                                                 </StackPane>

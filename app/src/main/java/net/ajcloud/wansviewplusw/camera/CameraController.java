@@ -445,6 +445,9 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
     private void onVideoPlay(String url) {
         if (!StringUtil.isNullOrEmpty(url)) {
+            btn_play.getStyleClass().remove("jfx_button_pause");
+            btn_play.getStyleClass().remove("jfx_button_play");
+            btn_play.getStyleClass().add("jfx_button_pause");
             startOrCancelTimer(true);
             mediaPlayerComponent.getMediaPlayer().playMedia(url);
         }
@@ -453,6 +456,9 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     public void play() {
         Camera camera = DeviceCache.getInstance().get(deviceId);
         if (camera != null && camera.isOnline()) {
+            btn_play.getStyleClass().remove("jfx_button_pause");
+            btn_play.getStyleClass().remove("jfx_button_play");
+            btn_play.getStyleClass().add("jfx_button_pause");
             loading.setVisible(true);
             label_name.setText(camera.aliasName);
             policeHelper.setCamera(camera);
