@@ -172,6 +172,30 @@
     -fx-background-position: center center;
 }
 
+.image_play_full {
+    -fx-image: url('/image/ic_play_dark.png');
+}
+
+.image_pause_full {
+    -fx-image: url('/image/ic_stop_dark.png');
+}
+
+.image_screenshot_full {
+    -fx-image: url('/image/ic_screenshots_dark.png');
+}
+
+.image_record_full {
+    -fx-image: url('/image/ic_record_dark.png');
+}
+
+.image_voice_full {
+    -fx-image: url('/image/ic_speaker_on_dark.png');
+}
+
+.image_voice_full_mute {
+    -fx-image: url('/image/ic_speaker_off_dark.png');
+}
+
 .spinner_loading {
     -jfx-radius: 20;
 }
