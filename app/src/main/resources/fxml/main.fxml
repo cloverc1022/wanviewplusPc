@@ -9,7 +9,7 @@
     <children>
         <HBox>
             <children>
-                <VBox alignment="TOP_CENTER" minWidth="72.0" prefWidth="72.0" spacing="24.0" HBox.hgrow="NEVER">
+                <VBox fx:id="content_left" alignment="TOP_CENTER" minWidth="72.0" prefWidth="72.0" spacing="24.0" HBox.hgrow="NEVER">
                     <children>
                         <VBox fx:id="vb_user" alignment="CENTER" minWidth="72.0" prefWidth="72.0">
                             <children>

@@ -30,6 +30,8 @@ public class MainController implements BaseController {
     @FXMLViewFlowContext
     private ViewFlowContext context;
     @FXML
+    private VBox content_left;
+    @FXML
     private VBox vb_user;
     @FXML
     private VBox vb_device;
@@ -113,6 +115,14 @@ public class MainController implements BaseController {
             }
         }
         accountPop.show(vb_user, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 72, 0);
+    }
+
+    /**
+     * 全屏
+     */
+    public void fullscreen(boolean isFullscreen) {
+        content_left.setVisible(!isFullscreen);
+        content_left.setManaged(!isFullscreen);
     }
 
     public interface MainListener {

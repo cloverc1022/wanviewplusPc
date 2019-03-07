@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -50,7 +51,7 @@ public class Base extends Application implements LoginController.OnLoginListener
     private static final String NATIVE_LIBRARY_SEARCH_PATH = "app/lib/dll";
     private Stage mainStage;
     private Stage loginStage;
-
+    private FlowHandler mainFlowHandler;
     @FXMLViewFlowContext
     private ViewFlowContext flowContext;
 
@@ -127,8 +128,10 @@ public class Base extends Application implements LoginController.OnLoginListener
             DefaultFlowContainer container = new DefaultFlowContainer();
             flowContext = new ViewFlowContext();
             flowContext.register("Stage", mainStage);
-            flowContext.register("MainListener", listener);
-            flow.createHandler(flowContext).start(container);
+            flowContext.register("MainListener", mainListener);
+            flowContext.register("FullscreenListener", fullscreenListener);
+            mainFlowHandler = flow.createHandler(flowContext);
+            mainFlowHandler.start(container);
 
 
             Scene scene = new Scene(container.getView(), MAIN_WIDTH, MAIN_HEIGHT);
@@ -141,6 +144,7 @@ public class Base extends Application implements LoginController.OnLoginListener
                 e.consume();
                 close();
             });
+            mainStage.addEventHandler(KeyEvent.KEY_PRESSED, event -> fullScreen(false));
             mainStage.show();
             loginStage.hide();
         } catch (Exception ex) {
@@ -194,7 +198,7 @@ public class Base extends Application implements LoginController.OnLoginListener
         }
     }
 
-    private MainController.MainListener listener = new MainController.MainListener() {
+    private MainController.MainListener mainListener = new MainController.MainListener() {
         @Override
         public void onLogout() {
             LoadingManager.getLoadingManager().showDefaultLoading(mainStage);
@@ -225,4 +229,23 @@ public class Base extends Application implements LoginController.OnLoginListener
             });
         }
     };
+
+    private CameraController.FullscreenListener fullscreenListener = this::fullScreen;
+
+    private void fullScreen(boolean isFullscreen) {
+        try {
+            mainStage.setFullScreen(isFullscreen);
+            FlowHandler flowHandler = (FlowHandler) flowContext.getRegisteredObject("ContentFlowHandler");
+            CameraController cameraController = (CameraController) flowHandler.getCurrentView().getViewContext().getController();
+            MainController mainController = (MainController) mainFlowHandler.getCurrentView().getViewContext().getController();
+            if (cameraController != null) {
+                cameraController.fullscreen(isFullscreen);
+            }
+            if (mainController != null) {
+                mainController.fullscreen(isFullscreen);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

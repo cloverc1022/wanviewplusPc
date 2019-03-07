@@ -12,7 +12,7 @@
             <children>
                 <HBox minHeight="540.0" minWidth="888.0">
                     <children>
-                        <VBox alignment="TOP_CENTER" layoutX="163.0" layoutY="54.0" HBox.hgrow="NEVER">
+                        <VBox fx:id="content_left" alignment="TOP_CENTER" layoutX="163.0" layoutY="54.0" HBox.hgrow="NEVER">
                             <children>
                                 <Label fx:id="label_num" layoutX="228.0" layoutY="91.0" minHeight="32.0"
                                        minWidth="220.0" prefHeight="32.0" prefWidth="220.0"
@@ -159,7 +159,7 @@
                                         </AnchorPane>
                                     </children>
                                 </StackPane>
-                                <AnchorPane minHeight="40.0" minWidth="668.0" prefHeight="40.0" prefWidth="668.0">
+                                <AnchorPane fx:id="content_bottom" minHeight="40.0" minWidth="668.0" prefHeight="40.0" prefWidth="668.0">
                                     <children>
                                         <JFXButton fx:id="btn_play" minHeight="24.0" minWidth="24.0" prefHeight="24.0"
                                                    prefWidth="24.0" styleClass="jfx_button_play"

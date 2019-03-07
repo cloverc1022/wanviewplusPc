@@ -116,6 +116,10 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private Label label_speed;
     @FXML
     private JFXButton btn_fullscreen;
+    @FXML
+    private VBox content_left;
+    @FXML
+    private AnchorPane content_bottom;
 
     private JFXPopup qualityPop;
 
@@ -132,6 +136,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private ExecuteTimer executeTimer_right;
     private ExecuteTimer executeTimer_bottom;
     private ExecuteTimer executeTimer_left;
+    private FullscreenListener fullscreenListener;
     private String deviceId;
     private String localUrl;
     private String relay_server_ip;
@@ -156,6 +161,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     @PostConstruct
     public void init() throws Exception {
         Objects.requireNonNull(context, "context");
+        fullscreenListener = (FullscreenListener) context.getRegisteredObject("FullscreenListener");
         //init play
         loading.setVisible(false);
         tcprelay = new Tcprelay();
@@ -228,8 +234,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             }
         });
         btn_fullscreen.setOnMouseClicked((v) -> {
-            Stage stage = (Stage) root.getScene().getWindow();
-            stage.setMaximized(true);
+            fullscreenListener.fullscreen(true);
         });
         //direction
         btn_top.addEventFilter(MouseEvent.ANY, event -> {
@@ -1196,5 +1201,22 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                 }
             }
         }
+    }
+
+
+    /**
+     * 全屏
+     */
+    public void fullscreen(boolean isFullscreen) {
+        content_left.setVisible(!isFullscreen);
+        content_left.setManaged(!isFullscreen);
+        content_bottom.setVisible(!isFullscreen);
+        content_bottom.setManaged(!isFullscreen);
+        label_name.setVisible(!isFullscreen);
+        label_name.setManaged(!isFullscreen);
+    }
+
+    public interface FullscreenListener {
+        void fullscreen(boolean isFullScreen);
     }
 }
