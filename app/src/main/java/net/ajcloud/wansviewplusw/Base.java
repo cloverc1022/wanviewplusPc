@@ -15,6 +15,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -144,8 +145,9 @@ public class Base extends Application implements LoginController.OnLoginListener
                 close();
             });
             mainStage.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
-                if (mainStage.isFullScreen())
+                if (event.getCode() == KeyCode.ESCAPE) {
                     fullScreen(false);
+                }
             });
             mainStage.show();
             loginStage.hide();

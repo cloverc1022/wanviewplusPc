@@ -89,11 +89,19 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     @FXML
     private JFXButton btn_voice;
     @FXML
+    private JFXButton btn_voice_full;
+    @FXML
     private JFXButton btn_screenshot;
+    @FXML
+    private JFXButton btn_screenshot_full;
     @FXML
     private JFXButton btn_play;
     @FXML
+    private JFXButton btn_play_full;
+    @FXML
     private JFXButton btn_record;
+    @FXML
+    private JFXButton btn_record_full;
     @FXML
     private JFXSpinner loading;
     @FXML
@@ -109,7 +117,9 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     @FXML
     private Button btn_left;
     @FXML
-    private HBox box_play;
+    private HBox control_play_control;
+    @FXML
+    private HBox control_play_control_full;
     @FXML
     private JFXButton btn_quality;
     @FXML
@@ -234,7 +244,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             }
         });
         btn_fullscreen.setOnMouseClicked((v) -> {
-            fullscreenListener.fullscreen(true);
+            fullscreenListener.fullscreen(!((Stage) btn_fullscreen.getScene().getWindow()).isFullScreen());
         });
         //direction
         btn_top.addEventFilter(MouseEvent.ANY, event -> {
@@ -365,7 +375,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         //播放背景
         setPlayBg(deviceId);
         //底部操作栏
-        box_play.setVisible(true);
+        control_play_control.setVisible(true);
         //频繁刷新操作
         if (timerService.isRunning()) {
             timerService.restart();
@@ -724,15 +734,13 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         if (StringUtil.isNullOrEmpty(deviceId)) {
             return;
         }
+        btn_play.getStyleClass().remove("jfx_button_pause");
+        btn_play.getStyleClass().remove("jfx_button_play");
         if (mediaPlayerComponent.getMediaPlayer().isPlaying()) {
-            btn_play.getStyleClass().remove("jfx_button_pause");
-            btn_play.getStyleClass().remove("jfx_button_play");
             btn_play.getStyleClass().add("jfx_button_play");
             mediaPlayerComponent.getMediaPlayer().pause();
             startOrCancelTimer(false);
         } else {
-            btn_play.getStyleClass().remove("jfx_button_pause");
-            btn_play.getStyleClass().remove("jfx_button_play");
             btn_play.getStyleClass().add("jfx_button_pause");
             mediaPlayerComponent.getMediaPlayer().start();
             startOrCancelTimer(true);
@@ -1208,6 +1216,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
      * 全屏
      */
     public void fullscreen(boolean isFullscreen) {
+        control_play_control_full.setVisible(isFullscreen);
         content_left.setVisible(!isFullscreen);
         content_left.setManaged(!isFullscreen);
         content_bottom.setVisible(!isFullscreen);

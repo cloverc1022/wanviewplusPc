@@ -79,8 +79,27 @@
     -fx-background-color: transparent;
 }
 
-.jfx_button_voice .jfx-rippler, .jfx_button_screenshot .jfx-rippler, .jfx_button_play .jfx-rippler, .jfx_button_record .jfx-rippler, .jfx_button_voice_mute .jfx-rippler, .jfx_button_pause .jfx-rippler {
+.jfx_button_play .jfx-rippler,
+.jfx_button_play_full .jfx-rippler,
+.jfx_button_pause .jfx-rippler,
+.jfx_button_screenshot .jfx-rippler,
+.jfx_button_screenshot_full .jfx-rippler,
+.jfx_button_record .jfx-rippler,
+.jfx_button_record_full .jfx-rippler,
+.jfx_button_voice .jfx-rippler,
+.jfx_button_voice_full .jfx-rippler,
+.jfx_button_voice_mute .jfx-rippler {
     -jfx-rippler-fill: #82B1FF;
+}
+
+.jfx_button_play_full,
+.jfx_button_screenshot_full,
+.jfx_button_record_full,
+.jfx_button_voice_full {
+    -fx-background-color: rgba(255, 255, 255, 0.6);
+    /*设置圆角*/
+    -fx-background-radius: 24;
+    -fx-border-radius: 24;
 }
 
 .jfx_button_voice {
