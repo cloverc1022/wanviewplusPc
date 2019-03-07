@@ -133,7 +133,6 @@ public class Base extends Application implements LoginController.OnLoginListener
             mainFlowHandler = flow.createHandler(flowContext);
             mainFlowHandler.start(container);
 
-
             Scene scene = new Scene(container.getView(), MAIN_WIDTH, MAIN_HEIGHT);
             final ObservableList<String> stylesheets = scene.getStylesheets();
             stylesheets.addAll(Base.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
@@ -144,7 +143,10 @@ public class Base extends Application implements LoginController.OnLoginListener
                 e.consume();
                 close();
             });
-            mainStage.addEventHandler(KeyEvent.KEY_PRESSED, event -> fullScreen(false));
+            mainStage.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+                if (mainStage.isFullScreen())
+                    fullScreen(false);
+            });
             mainStage.show();
             loginStage.hide();
         } catch (Exception ex) {
