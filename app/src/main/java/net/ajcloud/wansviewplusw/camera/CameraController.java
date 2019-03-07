@@ -1,9 +1,6 @@
 package net.ajcloud.wansviewplusw.camera;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXPopup;
-import com.jfoenix.controls.JFXSpinner;
+import com.jfoenix.controls.*;
 import com.sun.jna.Memory;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
@@ -34,6 +31,7 @@ import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -55,7 +53,6 @@ import org.tcprelay.Tcprelay;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.component.DirectMediaPlayerComponent;
-import uk.co.caprica.vlcj.component.EmbeddedMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import uk.co.caprica.vlcj.player.direct.BufferFormat;
@@ -66,10 +63,7 @@ import uk.co.caprica.vlcj.player.direct.format.RV32BufferFormat;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.nio.ByteBuffer;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static uk.co.caprica.vlcj.binding.internal.libvlc_state_t.libvlc_Playing;
@@ -149,6 +143,12 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private boolean isMute = false;
 
     private TimerService timerService = new TimerService();
+
+    /**
+     * 定时，限制播放时长
+     */
+    private static final long PLAY_TIME = 5 * 60 * 1000;
+    private Timer playTimer = new Timer();
 
     /**
      * 初始化
@@ -431,7 +431,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     @Override
     public void onPlay(int playMethod, String url, int mVideoHeight, int mVideoWidth) {
         isP2p = false;
-        mediaPlayerComponent.getMediaPlayer().playMedia(url);
+        onVideoPlay(url);
     }
 
     @Override
@@ -441,6 +441,13 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         isP2p = true;
         this.relay_server_ip = relayServer;
         new P2pTask().start();
+    }
+
+    private void onVideoPlay(String url) {
+        if (!StringUtil.isNullOrEmpty(url)) {
+            startOrCancelTimer(true);
+            mediaPlayerComponent.getMediaPlayer().playMedia(url);
+        }
     }
 
     public void play() {
@@ -458,7 +465,11 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             tcprelay.relaydisconnect(p2pNum);
         }
         if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
+            btn_play.getStyleClass().remove("jfx_button_pause");
+            btn_play.getStyleClass().remove("jfx_button_play");
+            btn_play.getStyleClass().add("jfx_button_play");
             mediaPlayerComponent.getMediaPlayer().stop();
+            startOrCancelTimer(false);
         }
     }
 
@@ -467,8 +478,12 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             tcprelay.relaydisconnect(p2pNum);
         }
         if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
+            btn_play.getStyleClass().remove("jfx_button_pause");
+            btn_play.getStyleClass().remove("jfx_button_play");
+            btn_play.getStyleClass().add("jfx_button_play");
             mediaPlayerComponent.getMediaPlayer().stop();
             mediaPlayerComponent.getMediaPlayer().release();
+            startOrCancelTimer(false);
         }
     }
 
@@ -597,7 +612,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                         url.append(token);
 
                         WLog.w("p2p_debug", "------p2p-camera-----" + url.toString());
-                        mediaPlayerComponent.getMediaPlayer().playMedia(url.toString());
+                        onVideoPlay(url.toString());
                     }
                 });
             }
@@ -703,11 +718,13 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             btn_play.getStyleClass().remove("jfx_button_play");
             btn_play.getStyleClass().add("jfx_button_play");
             mediaPlayerComponent.getMediaPlayer().pause();
+            startOrCancelTimer(false);
         } else {
             btn_play.getStyleClass().remove("jfx_button_pause");
             btn_play.getStyleClass().remove("jfx_button_play");
             btn_play.getStyleClass().add("jfx_button_pause");
             mediaPlayerComponent.getMediaPlayer().start();
+            startOrCancelTimer(true);
         }
     }
 
@@ -715,7 +732,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
      * 开始
      */
     private void start() {
-        if (!canDo()) {
+        if (StringUtil.isNullOrEmpty(deviceId)) {
             return;
         }
         if (!mediaPlayerComponent.getMediaPlayer().isPlaying()) {
@@ -723,6 +740,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             btn_play.getStyleClass().remove("jfx_button_play");
             btn_play.getStyleClass().add("jfx_button_pause");
             mediaPlayerComponent.getMediaPlayer().start();
+            startOrCancelTimer(true);
         }
     }
 
@@ -730,7 +748,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
      * 暂停
      */
     private void pause() {
-        if (!canDo()) {
+        if (StringUtil.isNullOrEmpty(deviceId)) {
             return;
         }
         if (mediaPlayerComponent.getMediaPlayer().isPlaying()) {
@@ -738,6 +756,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             btn_play.getStyleClass().remove("jfx_button_play");
             btn_play.getStyleClass().add("jfx_button_play");
             mediaPlayerComponent.getMediaPlayer().pause();
+            startOrCancelTimer(false);
         }
     }
 
@@ -761,6 +780,22 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
         stop();
         play();
+    }
+
+    private void startOrCancelTimer(boolean isStart) {
+        playTimer.cancel();
+        if (isStart) {
+            playTimer = new Timer();
+            playTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    Platform.runLater(() -> {
+                        showContinueDialog();
+                        stop();
+                    });
+                }
+            }, PLAY_TIME);
+        }
     }
 
     private void showQualityPop() {
@@ -808,6 +843,24 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void showContinueDialog() {
+        JFXAlert alert = new JFXAlert((Stage) root.getScene().getWindow());
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.setOverlayClose(false);
+        JFXDialogLayout layout = new JFXDialogLayout();
+        layout.setHeading(new Label("Tips"));
+        layout.setBody(new Label("If you want to continue watching the live stream, click Continue."));
+        JFXButton closeButton = new JFXButton("continue");
+        closeButton.getStyleClass().add("dialog-accept");
+        closeButton.setOnAction(event -> {
+            alert.hideWithAnimation();
+            start();
+        });
+        layout.setActions(closeButton);
+        alert.setContent(layout);
+        alert.show();
     }
 
     private final MediaPlayerEventListener mMediaPlayerListener = new MediaPlayerEventListener() {

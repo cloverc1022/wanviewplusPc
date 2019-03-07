@@ -273,7 +273,7 @@
     -fx-padding: 4px;
 }
 
-.jfx-alert-overlay{
+.jfx-alert-overlay {
     -fx-background-color: #00000033;
     -fx-padding: 0;
 }
@@ -285,4 +285,11 @@
 .default_loading .arc {
     -fx-stroke-width: 5.0;
     -fx-stroke: #2979ff;
+}
+
+.dialog-accept {
+    -fx-text-fill: white;
+    -fx-background-color: #2979ff;
+    -fx-font-weight: BOLD;
+    -fx-padding: 0.7em 0.8em;
 }
