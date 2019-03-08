@@ -433,7 +433,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                 return;
             }
             if (isP2p) {
-                tcprelay.relaydisconnect(p2pNum);
+                new Thread(() -> tcprelay.relaydisconnect(p2pNum)).start();
             }
             mediaPlayerComponent.getMediaPlayer().stop();
         }
@@ -520,7 +520,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
     public void stop() {
         if (isP2p) {
-            tcprelay.relaydisconnect(p2pNum);
+            new Thread(() -> tcprelay.relaydisconnect(p2pNum)).start();
         }
         if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
             btn_play.getStyleClass().remove("jfx_button_pause");
@@ -536,7 +536,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
     public void destory() {
         if (isP2p) {
-            tcprelay.relaydisconnect(p2pNum);
+            new Thread(() -> tcprelay.relaydisconnect(p2pNum)).start();
         }
         if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
             btn_play.getStyleClass().remove("jfx_button_pause");
