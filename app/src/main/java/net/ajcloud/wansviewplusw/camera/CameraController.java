@@ -1280,6 +1280,14 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         content_bottom.setManaged(!isFullscreen);
         label_name.setVisible(!isFullscreen);
         label_name.setManaged(!isFullscreen);
+
+        btn_fullscreen.getStyleClass().remove("btn_smallscreen");
+        btn_fullscreen.getStyleClass().remove("btn_fullscreen");
+        if (isFullscreen) {
+            btn_fullscreen.getStyleClass().add("btn_smallscreen");
+        } else {
+            btn_fullscreen.getStyleClass().add("btn_fullscreen");
+        }
     }
 
     public interface FullscreenListener {

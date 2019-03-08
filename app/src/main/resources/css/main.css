@@ -298,6 +298,13 @@
     -fx-background-image: url('/image/ic_full_screen_white.png');
 }
 
+.btn_smallscreen {
+    -fx-background-color: transparent;
+    -fx-background-size: 24 auto;
+    -fx-background-position: center center;
+    -fx-background-image: url('/image/ic_small_screen_white.png');
+}
+
 .jfx-popup-container {
     -fx-background-color: transparent;
 }
