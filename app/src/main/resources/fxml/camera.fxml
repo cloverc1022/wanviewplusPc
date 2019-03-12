@@ -19,7 +19,7 @@
                                 <Label fx:id="label_num" layoutX="228.0" layoutY="91.0" minHeight="32.0"
                                        minWidth="220.0" prefHeight="32.0" prefWidth="220.0"
                                        style="-fx-text-fill:#263238;-fx-font-size:10;-fx-font-weight: bold;"
-                                       text="n devices" VBox.vgrow="NEVER">
+                                       VBox.vgrow="NEVER">
                                     <padding>
                                         <Insets left="10.0"/>
                                     </padding>
@@ -36,7 +36,7 @@
                             <children>
                                 <Label fx:id="label_name" minHeight="32.0" minWidth="668.0" prefHeight="32.0"
                                        prefWidth="668.0"
-                                       style="-fx-text-fill:#263238;-fx-font-size:12;-fx-font-weight: bold;" text="Name"
+                                       style="-fx-text-fill:#263238;-fx-font-size:12;-fx-font-weight: bold;"
                                        VBox.vgrow="NEVER"/>
                                 <StackPane fx:id="play_content" minWidth="668.0" prefWidth="668.0"
                                            style="-fx-background-color: black" VBox.vgrow="ALWAYS">
