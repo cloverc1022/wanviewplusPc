@@ -2,8 +2,6 @@ package net.ajcloud.wansviewplusw.support.device;
 
 import javafx.application.Platform;
 import javafx.beans.property.*;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import net.ajcloud.wansviewplusw.support.http.bean.*;
@@ -82,7 +80,7 @@ public class Camera implements Serializable {
     private BooleanProperty playingBg = new SimpleBooleanProperty(false);
 
     private StringProperty deviceStatus = new SimpleStringProperty("Connecting");
-    private ObjectProperty<Background> deviceStatusBg = new SimpleObjectProperty<>(new Background(new BackgroundFill(Color.rgb(149, 165, 174), null, null)));
+    private StringProperty deviceStatusCss = new SimpleStringProperty("devices_item_status");
 
     public Camera() {
 
@@ -210,14 +208,29 @@ public class Camera implements Serializable {
             if (refreshStatus == 1) {
                 if (onlineStatus == 1) {
                     setDeviceStatus("Offline");
-                    setDeviceStatusBg(new Background(new BackgroundFill(Color.rgb(97, 114, 122), null, null)));
+                    setDeviceStatusCss("-fx-text-fill: White;\n" +
+                            "    -fx-font-size: 7px;\n" +
+                            "    -fx-font-weight: bold;\n" +
+                            "    -fx-background-color: #95A5AD;\n" +
+                            "    -fx-border-radius: 2px;\n" +
+                            "    -fx-background-radius: 2px;");
                 } else if (onlineStatus == 2) {
                     setDeviceStatus("Online");
-                    setDeviceStatusBg(new Background(new BackgroundFill(Color.rgb(41, 121, 255), null, null)));
+                    setDeviceStatusCss("-fx-text-fill: White;\n" +
+                            "    -fx-font-size: 7px;\n" +
+                            "    -fx-font-weight: bold;\n" +
+                            "    -fx-background-color: #2979FF;\n" +
+                            "    -fx-border-radius: 2px;\n" +
+                            "    -fx-background-radius: 2px;");
                 }
             } else {
                 setDeviceStatus("Connecting");
-                setDeviceStatusBg(new Background(new BackgroundFill(Color.rgb(149, 165, 174), null, null)));
+                setDeviceStatusCss("-fx-text-fill: White;\n" +
+                        "    -fx-font-size: 7px;\n" +
+                        "    -fx-font-weight: bold;\n" +
+                        "    -fx-background-color: #95A5AD;\n" +
+                        "    -fx-border-radius: 2px;\n" +
+                        "    -fx-background-radius: 2px;");
             }
         });
     }
@@ -234,16 +247,16 @@ public class Camera implements Serializable {
         this.deviceStatus.set(deviceStatus);
     }
 
-    public Background getDeviceStatusBg() {
-        return deviceStatusBg.get();
+    public String getDeviceStatusCss() {
+        return deviceStatusCss.get();
     }
 
-    public ObjectProperty<Background> deviceStatusBgProperty() {
-        return deviceStatusBg;
+    public StringProperty deviceStatusCssProperty() {
+        return deviceStatusCss;
     }
 
-    public void setDeviceStatusBg(Background deviceStatusBg) {
-        this.deviceStatusBg.set(deviceStatusBg);
+    public void setDeviceStatusCss(String deviceStatusCss) {
+        this.deviceStatusCss.set(deviceStatusCss);
     }
 
     public String getGatewayUrl() {

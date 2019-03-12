@@ -66,6 +66,15 @@
     -fx-text-fill: White;
     -fx-font-size: 7px;
     -fx-font-weight: bold;
+    -fx-background-color: #2979FF;
+    -fx-border-radius: 2px;
+    -fx-background-radius: 2px;
+}
+
+.devices_item_status_gray {
+    -fx-text-fill: White;
+    -fx-font-size: 7px;
+    -fx-font-weight: bold;
     -fx-background-color: #95A5AD;
     -fx-border-radius: 2px;
     -fx-background-radius: 2px;

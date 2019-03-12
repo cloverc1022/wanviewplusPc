@@ -47,7 +47,7 @@ public class CameraData {
         }
         Camera camera = DeviceCache.getInstance().get(deviceId);
         status.textProperty().bind(camera.deviceStatusProperty());
-        status.backgroundProperty().bind(camera.deviceStatusBgProperty());
+        status.styleProperty().bind(camera.deviceStatusCssProperty());
         playing_bg.visibleProperty().bind(camera.playingBgProperty());
         deviceName.textFillProperty().bind(camera.deviceNameBgProperty());
         EventBus.getInstance().register(new Consumer<Event>() {
