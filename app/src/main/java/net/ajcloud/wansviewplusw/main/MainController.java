@@ -19,6 +19,7 @@ import net.ajcloud.wansviewplusw.Base;
 import net.ajcloud.wansviewplusw.BaseController;
 import net.ajcloud.wansviewplusw.camera.CameraController;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
+import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 
 import javax.annotation.PostConstruct;
 import java.io.InputStream;
@@ -48,6 +49,8 @@ public class MainController implements BaseController {
 
     private MainListener listener;
 
+    private String currentItem;
+
     /**
      * 初始化
      */
@@ -62,6 +65,7 @@ public class MainController implements BaseController {
         vb_quad.setOnMouseClicked(e -> replace(vb_quad.getId()));
         vb_nine.setOnMouseClicked(e -> replace(vb_nine.getId()));
 
+        currentItem = vb_device.getId();
         Flow innerFlow = new Flow(CameraController.class);
         flowHandler = innerFlow.createHandler(context);
         bindNodeToController(vb_device.getId(), CameraController.class, innerFlow, flowHandler);
@@ -75,15 +79,18 @@ public class MainController implements BaseController {
     }
 
     private void replace(final String id) {
-        new Thread(() -> {
-            Platform.runLater(() -> {
-                try {
-                    flowHandler.handle(id);
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            });
-        }).start();
+        if (!StringUtil.equals(currentItem, id)) {
+            new Thread(() -> {
+                Platform.runLater(() -> {
+                    try {
+                        flowHandler.handle(id);
+                        currentItem = id;
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
+                });
+            }).start();
+        }
     }
 
     private void bindNodeToController(String tag, Class<?> controllerClass, Flow flow, FlowHandler flowHandler) {

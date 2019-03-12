@@ -2,18 +2,30 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<StackPane styleClass="devices_item_pane" fx:id="pane" minHeight="116.0" minWidth="196.0" prefHeight="116.0"
-           prefWidth="196.0"
-           AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-           AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="pane" minHeight="116.0" minWidth="196.0" prefHeight="116.0" prefWidth="196.0"
+           styleClass="devices_item_pane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8"
+           xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox alignment="TOP_RIGHT">
             <children>
                 <StackPane minHeight="88.0" minWidth="196.0" prefHeight="88.0" prefWidth="196.0">
                     <children>
                         <ImageView fx:id="iv_thumbnail" pickOnBounds="true" preserveRatio="true"/>
+                        <AnchorPane fx:id="playing_bg" style="-fx-background-color: rgba(38,50,56,0.3)">
+                            <children>
+                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true"
+                                           AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="86.0"
+                                           AnchorPane.rightAnchor="86.0" AnchorPane.topAnchor="32.0">
+                                    <image>
+                                        <Image url="@/image/playing.gif"/>
+                                    </image>
+                                </ImageView>
+                            </children>
+                        </AnchorPane>
                         <AnchorPane>
                             <children>
                                 <Label fx:id="status" alignment="CENTER" minHeight="16.0" minWidth="44.0"

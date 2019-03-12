@@ -1,10 +1,7 @@
 package net.ajcloud.wansviewplusw.support.device;
 
 import javafx.application.Platform;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.paint.Color;
@@ -82,6 +79,7 @@ public class Camera implements Serializable {
     private int currentQuality = -1;
     private boolean isSelected = false;
     private ObjectProperty<Paint> deviceNameBg = new SimpleObjectProperty<>(Color.rgb(38, 50, 56));
+    private BooleanProperty playingBg = new SimpleBooleanProperty(false);
 
     private StringProperty deviceStatus = new SimpleStringProperty("Connecting");
     private ObjectProperty<Background> deviceStatusBg = new SimpleObjectProperty<>(new Background(new BackgroundFill(Color.rgb(149, 165, 174), null, null)));
@@ -156,8 +154,10 @@ public class Camera implements Serializable {
         isSelected = selected;
         if (isSelected) {
             setDeviceNameBg(Color.rgb(41, 121, 255, 1));
+            setPlayingBg(true);
         } else {
             setDeviceNameBg(Color.rgb(38, 50, 56, 1));
+            setPlayingBg(false);
         }
     }
 
@@ -173,6 +173,18 @@ public class Camera implements Serializable {
         Platform.runLater(() -> {
             this.deviceNameBg.set(paint);
         });
+    }
+
+    public boolean isPlayingBg() {
+        return playingBg.get();
+    }
+
+    public BooleanProperty playingBgProperty() {
+        return playingBg;
+    }
+
+    public void setPlayingBg(boolean playingBg) {
+        this.playingBg.set(playingBg);
     }
 
     public int getOnlineStatus() {

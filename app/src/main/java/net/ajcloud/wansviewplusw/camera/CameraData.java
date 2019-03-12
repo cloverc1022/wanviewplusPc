@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import net.ajcloud.wansviewplusw.support.device.Camera;
@@ -22,6 +23,8 @@ import java.io.IOException;
 public class CameraData {
     @FXML
     private Pane pane;
+    @FXML
+    private AnchorPane playing_bg;
     @FXML
     private ImageView iv_thumbnail;
     @FXML
@@ -45,6 +48,7 @@ public class CameraData {
         Camera camera = DeviceCache.getInstance().get(deviceId);
         status.textProperty().bind(camera.deviceStatusProperty());
         status.backgroundProperty().bind(camera.deviceStatusBgProperty());
+        playing_bg.visibleProperty().bind(camera.playingBgProperty());
         deviceName.textFillProperty().bind(camera.deviceNameBgProperty());
         EventBus.getInstance().register(new Consumer<Event>() {
             @Override
