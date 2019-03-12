@@ -1,6 +1,9 @@
 package net.ajcloud.wansviewplusw.camera;
 
-import com.jfoenix.controls.*;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXPopup;
+import com.jfoenix.controls.JFXSpinner;
 import com.sun.jna.Memory;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
@@ -31,7 +34,6 @@ import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -144,6 +146,14 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private VBox content_left;
     @FXML
     private AnchorPane content_bottom;
+    @FXML
+    private HBox content_tips;
+    @FXML
+    private Label label_stop;
+    @FXML
+    private Label label_time;
+    @FXML
+    private Label label_continue;
 
     private JFXPopup qualityPop;
 
@@ -279,6 +289,16 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         });
         btn_fullscreen.setOnMouseClicked((v) -> {
             fullscreenListener.fullscreen(!((Stage) btn_fullscreen.getScene().getWindow()).isFullScreen());
+        });
+        label_continue.setOnMouseClicked((v) -> {
+            if (playTimer.isCounting()) {
+                startOrCancelTimer(true);
+            } else {
+                start();
+            }
+            content_tips.setVisible(false);
+            label_stop.setVisible(true);
+            label_stop.setManaged(true);
         });
         //direction
         btn_top.addEventFilter(MouseEvent.ANY, event -> {
@@ -743,7 +763,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         if (file.exists()) {
             Image image = new Image(file.toURI().toString(), 0, 0, false, true, false);
             playBg.setBackground(new Background(new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
-                    new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, false))));
+                    new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true))));
             playBg.setEffect(new GaussianBlur(60));
         }
     }
@@ -870,12 +890,19 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             playTimer.CountDown(PLAY_TIME, new CountDownTimer.OnTimerListener() {
                 @Override
                 public void onTick(int second) {
-                    WLog.w("playTimer","time:" + second);
+                    if (second > 10) {
+                        content_tips.setVisible(true);
+                        label_time.setText((PLAY_TIME / 1000 - second) + "s");
+                    }
                 }
 
                 @Override
                 public void onFinish() {
-                    WLog.w("playTimer","onFinish");
+                    WLog.w("playTimer", "onFinish");
+                    stop();
+                    label_time.setText("Have stopped");
+                    label_stop.setVisible(false);
+                    label_stop.setManaged(false);
                 }
             });
         }
@@ -926,24 +953,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
-    private void showContinueDialog() {
-        JFXAlert alert = new JFXAlert((Stage) root.getScene().getWindow());
-        alert.initModality(Modality.APPLICATION_MODAL);
-        alert.setOverlayClose(false);
-        JFXDialogLayout layout = new JFXDialogLayout();
-        layout.setHeading(new Label("Tips"));
-        layout.setBody(new Label("If you want to continue watching the live stream, click Continue."));
-        JFXButton closeButton = new JFXButton("continue");
-        closeButton.getStyleClass().add("dialog-accept");
-        closeButton.setOnAction(event -> {
-            alert.hideWithAnimation();
-            start();
-        });
-        layout.setActions(closeButton);
-        alert.setContent(layout);
-        alert.show();
     }
 
     private final MediaPlayerEventListener mMediaPlayerListener = new MediaPlayerEventListener() {
@@ -1281,6 +1290,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
      */
     public void fullscreen(boolean isFullscreen) {
         control_play_control_full.setVisible(isFullscreen);
+        control_play_control_full.setManaged(isFullscreen);
         content_left.setVisible(!isFullscreen);
         content_left.setManaged(!isFullscreen);
         content_bottom.setVisible(!isFullscreen);

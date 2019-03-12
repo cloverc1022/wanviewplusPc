@@ -1,5 +1,7 @@
 package net.ajcloud.wansviewplusw.support.timer;
 
+import javafx.application.Platform;
+
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -8,9 +10,11 @@ public class CountDownTimer {
 
     private Timer timer;
     //走时
-    int seconds = 0;
+    private int seconds = 0;
+    private boolean isCounting = false;
 
     public void CountDown(long milliseconds, OnTimerListener onTimerListener) {
+        isCounting = true;
         //开始时间
         long start = System.currentTimeMillis();
         //结束时间
@@ -19,25 +23,30 @@ public class CountDownTimer {
         timer = new Timer();
         timer.schedule(new TimerTask() {
             public void run() {
-                onTimerListener.onTick(++seconds);
+                Platform.runLater(() -> onTimerListener.onTick(++seconds));
             }
         }, 0, 1000);
         //计时结束时候，停止全部timer计时计划任务
         timer.schedule(new TimerTask() {
             public void run() {
                 seconds = 0;
-                onTimerListener.onFinish();
                 timer.cancel();
+                isCounting = false;
+                Platform.runLater(onTimerListener::onFinish);
             }
-
         }, new Date(end));
     }
 
     public void cancel() {
         seconds = 0;
         if (timer != null) {
+            isCounting = false;
             timer.cancel();
         }
+    }
+
+    public boolean isCounting() {
+        return isCounting;
     }
 
     public interface OnTimerListener {
