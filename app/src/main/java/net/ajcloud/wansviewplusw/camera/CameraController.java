@@ -26,10 +26,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
@@ -154,6 +151,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private Label label_time;
     @FXML
     private Label label_continue;
+    @FXML
+    private ImageView iv_tips;
 
     private JFXPopup qualityPop;
 
@@ -238,6 +237,10 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                 label_speed.setText((bitrate < 1024 ? ((int) bitrate + "K/s") : String.format("%.1fM/s", bitrate / 1024)));
             }
         });
+
+        Tooltip tooltip = new Tooltip("Through the Internet, it allow to \nview live video for up to 10 minutes \neach time. \nClick \"Continue\" to continue viewing.");
+        tooltip.getStyleClass().add("tips");
+        Tooltip.install(iv_tips, tooltip);
         initListener();
         initData();
 

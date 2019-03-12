@@ -360,3 +360,8 @@
     -fx-font-weight: BOLD;
     -fx-padding: 0.7em 0.8em;
 }
+
+.tips {
+    -fx-text-fill: #263238;
+    -fx-background-color: #FFFFFF;
+}
