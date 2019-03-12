@@ -889,6 +889,9 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
     private void startOrCancelTimer(boolean isStart) {
         playTimer.cancel();
+        content_tips.setVisible(false);
+        label_stop.setVisible(true);
+        label_stop.setManaged(true);
         if (isStart) {
             playTimer.CountDown(PLAY_TIME, new CountDownTimer.OnTimerListener() {
                 @Override
