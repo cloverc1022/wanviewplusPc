@@ -9,9 +9,10 @@
     <children>
         <HBox>
             <children>
-                <VBox fx:id="content_left" alignment="TOP_CENTER" minWidth="72.0" prefWidth="72.0" spacing="24.0" HBox.hgrow="NEVER">
+                <VBox fx:id="content_left" alignment="TOP_CENTER" minWidth="72.0" prefWidth="72.0" spacing="24.0"
+                      HBox.hgrow="NEVER">
                     <children>
-                        <VBox fx:id="vb_user" alignment="CENTER" minWidth="72.0" prefWidth="72.0">
+                        <VBox fx:id="vb_user" alignment="CENTER" minWidth="72.0" prefWidth="72.0" VBox.vgrow="NEVER">
                             <children>
                                 <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                                     <VBox.margin>
@@ -26,7 +27,7 @@
                                 <Insets top="18.0"/>
                             </VBox.margin>
                         </VBox>
-                        <VBox fx:id="vb_device" alignment="CENTER" minWidth="72.0" prefWidth="72.0">
+                        <VBox fx:id="vb_device" alignment="CENTER" minWidth="72.0" prefWidth="72.0" VBox.vgrow="NEVER">
                             <children>
                                 <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -36,7 +37,7 @@
                                 <Label style="-fx-text-fill:#2979ff;-fx-font-size:8;" text="Camera"/>
                             </children>
                         </VBox>
-                        <VBox fx:id="vb_quad" alignment="CENTER" minWidth="72.0" prefWidth="72.0">
+                        <VBox fx:id="vb_quad" alignment="CENTER" minWidth="72.0" prefWidth="72.0" VBox.vgrow="NEVER">
                             <children>
                                 <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -46,7 +47,7 @@
                                 <Label style="-fx-text-fill:#95a5ad;-fx-font-size:8;" text="Quad screen"/>
                             </children>
                         </VBox>
-                        <VBox fx:id="vb_nine" alignment="CENTER" minWidth="72.0" prefWidth="72.0">
+                        <VBox fx:id="vb_nine" alignment="CENTER" minWidth="72.0" prefWidth="72.0" VBox.vgrow="NEVER">
                             <children>
                                 <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -54,6 +55,17 @@
                                     </image>
                                 </ImageView>
                                 <Label style="-fx-text-fill:#95a5ad;-fx-font-size:8;" text="Nine-screen"/>
+                            </children>
+                        </VBox>
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent"/>
+                        <VBox fx:id="vb_local" alignment="CENTER" minWidth="72.0" prefWidth="72.0" VBox.vgrow="ALWAYS">
+                            <children>
+                                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                    <image>
+                                        <Image url="@/image/ic_file_mid.png"/>
+                                    </image>
+                                </ImageView>
+                                <Label style="-fx-text-fill:#95a5ad;-fx-font-size:8;" text="Local file"/>
                             </children>
                         </VBox>
                     </children>

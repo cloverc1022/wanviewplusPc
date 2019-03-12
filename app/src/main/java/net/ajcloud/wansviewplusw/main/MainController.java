@@ -19,9 +19,12 @@ import net.ajcloud.wansviewplusw.Base;
 import net.ajcloud.wansviewplusw.BaseController;
 import net.ajcloud.wansviewplusw.camera.CameraController;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
+import net.ajcloud.wansviewplusw.support.utils.FileUtil;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 
 import javax.annotation.PostConstruct;
+import java.awt.*;
+import java.io.File;
 import java.io.InputStream;
 import java.util.Objects;
 
@@ -40,6 +43,8 @@ public class MainController implements BaseController {
     private VBox vb_quad;
     @FXML
     private VBox vb_nine;
+    @FXML
+    private VBox vb_local;
     @FXML
     private StackPane content;
 
@@ -64,6 +69,14 @@ public class MainController implements BaseController {
         vb_device.setOnMouseClicked(e -> replace(vb_device.getId()));
         vb_quad.setOnMouseClicked(e -> replace(vb_quad.getId()));
         vb_nine.setOnMouseClicked(e -> replace(vb_nine.getId()));
+        vb_local.setOnMouseClicked(e -> new Thread(() -> {
+            try {
+                if (Desktop.isDesktopSupported())
+                    Desktop.getDesktop().open(new File(FileUtil.getRootPath()));
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }).start());
 
         currentItem = vb_device.getId();
         Flow innerFlow = new Flow(CameraController.class);
