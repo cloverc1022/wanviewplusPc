@@ -63,6 +63,7 @@ import uk.co.caprica.vlcj.player.direct.format.RV32BufferFormat;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.nio.ByteBuffer;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -72,6 +73,7 @@ import static uk.co.caprica.vlcj.binding.internal.libvlc_state_t.libvlc_Playing;
 public class CameraController implements PoliceHelper.PoliceControlListener {
 
     private static final String TAG = "CameraController";
+    private SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
     @FXMLViewFlowContext
     private ViewFlowContext context;
     @FXML
@@ -749,7 +751,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         if (!canDo()) {
             return;
         }
-        mediaPlayerComponent.getMediaPlayer().saveSnapshot(new File(FileUtil.getImagePath(deviceId) + File.separator + System.currentTimeMillis() + ".jpg"));
+        mediaPlayerComponent.getMediaPlayer().saveSnapshot(new File(FileUtil.getImagePath(DeviceCache.getInstance().getSigninBean().mail) + File.separator + sDateFormat.format(System.currentTimeMillis()) + ".jpg"));
     }
 
     /**
@@ -843,7 +845,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         if (!canDo()) {
             return;
         }
-        File directory = new File(FileUtil.getVideoPath(deviceId));
+        File directory = new File(FileUtil.getVideoPath(DeviceCache.getInstance().getSigninBean().mail));
 //        if (mediaPlayerComponent.getMediaPlayer().)
     }
 
