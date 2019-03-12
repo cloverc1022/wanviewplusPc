@@ -45,6 +45,7 @@ import net.ajcloud.wansviewplusw.support.eventbus.event.DeviceRefreshEvent;
 import net.ajcloud.wansviewplusw.support.eventbus.event.SnapshotEvent;
 import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
 import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
+import net.ajcloud.wansviewplusw.support.timer.CountDownTimer;
 import net.ajcloud.wansviewplusw.support.utils.FileUtil;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 import net.ajcloud.wansviewplusw.support.utils.WLog;
@@ -64,7 +65,10 @@ import javax.annotation.PostConstruct;
 import java.io.File;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static uk.co.caprica.vlcj.binding.internal.libvlc_state_t.libvlc_Playing;
@@ -172,8 +176,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     /**
      * 定时，限制播放时长
      */
-    private static final long PLAY_TIME = 5 * 60 * 1000;
-    private Timer playTimer = new Timer();
+    private static final long PLAY_TIME = 10 * 60 * 1000;
+    private CountDownTimer playTimer = new CountDownTimer();
 
     /**
      * 初始化
@@ -863,16 +867,17 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private void startOrCancelTimer(boolean isStart) {
         playTimer.cancel();
         if (isStart) {
-            playTimer = new Timer();
-            playTimer.schedule(new TimerTask() {
+            playTimer.CountDown(PLAY_TIME, new CountDownTimer.OnTimerListener() {
                 @Override
-                public void run() {
-                    Platform.runLater(() -> {
-                        showContinueDialog();
-                        stop();
-                    });
+                public void onTick(int second) {
+                    WLog.w("playTimer","time:" + second);
                 }
-            }, PLAY_TIME);
+
+                @Override
+                public void onFinish() {
+                    WLog.w("playTimer","onFinish");
+                }
+            });
         }
     }
 
