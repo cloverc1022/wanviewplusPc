@@ -764,10 +764,10 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private void setPlayBg(String deviceId) {
         File file = new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg");
         if (file.exists()) {
-            Image image = new Image(file.toURI().toString(), 0, 0, false, true, false);
+            Image image = new Image(file.toURI().toString(), 1920, 1080, false, false, false);
             playBg.setBackground(new Background(new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                     new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true))));
-            playBg.setEffect(new GaussianBlur(60));
+            playBg.setEffect(new GaussianBlur(50));
         }
     }
 
