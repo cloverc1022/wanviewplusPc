@@ -53,9 +53,9 @@
                         <Insets left="32.0" right="32.0" top="40.0"/>
                     </VBox.margin>
                 </JFXPasswordField>
-                <JFXButton buttonType="RAISED" layoutX="133.0" layoutY="289.0" maxHeight="-Infinity"
+                <JFXButton fx:id="btn_login" buttonType="RAISED" layoutX="133.0" layoutY="289.0" maxHeight="-Infinity"
                            maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-                           onAction="#handleSubmitButtonAction" prefHeight="40.0" prefWidth="256.0"
+                           prefHeight="40.0" prefWidth="256.0"
                            style="-fx-text-fill:WHITE;-fx-background-color:#0078ff;-fx-font-size:16;" text="Sign in"
                            textFill="WHITE" AnchorPane.bottomAnchor="37.0" AnchorPane.leftAnchor="32.0"
                            AnchorPane.rightAnchor="40.0">

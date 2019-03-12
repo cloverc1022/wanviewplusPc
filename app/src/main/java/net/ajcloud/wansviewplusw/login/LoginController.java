@@ -1,11 +1,12 @@
 package net.ajcloud.wansviewplusw.login;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import net.ajcloud.wansviewplusw.BaseController;
 import net.ajcloud.wansviewplusw.support.customview.LoadingManager;
@@ -21,6 +22,8 @@ public class LoginController implements BaseController {
     public JFXTextField tf_name;
     @FXML
     public JFXPasswordField tf_password;
+    @FXML
+    public JFXButton btn_login;
     private RequestApiUnit requestApiUnit;
     private OnLoginListener onLoginListener;
     private RequiredFieldValidator email_validator;
@@ -53,10 +56,18 @@ public class LoginController implements BaseController {
                 tf_password.resetValidation();
             }
         });
+        tf_name.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.ENTER))
+                handleSubmitButtonAction();
+        });
+        tf_password.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.ENTER))
+                handleSubmitButtonAction();
+        });
+        btn_login.setOnMouseClicked(event -> handleSubmitButtonAction());
     }
 
-    @FXML
-    private void handleSubmitButtonAction(ActionEvent event) {
+    private void handleSubmitButtonAction() {
         if (requestApiUnit == null) {
             requestApiUnit = new RequestApiUnit();
         }
