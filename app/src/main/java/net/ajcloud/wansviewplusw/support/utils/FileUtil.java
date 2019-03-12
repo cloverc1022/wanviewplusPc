@@ -4,10 +4,10 @@ import java.io.File;
 
 public class FileUtil {
     //filePath
-    public static String FILE_PATH = System.getProperty("user.dir");
+    public static String FILE_PATH = System.getProperty("user.home");
 
     public static String getImagePath(String account) {
-        String path = FILE_PATH + File.separator + "locales" + File.separator + "image" + File.separator + account;
+        String path = FILE_PATH + File.separator + "WansviewCloud" + File.separator + "image" + File.separator + account;
         File directory = new File(path);
         if (!directory.exists())
             directory.mkdirs();
@@ -15,7 +15,7 @@ public class FileUtil {
     }
 
     public static String getVideoPath(String account) {
-        String path = FILE_PATH + File.separator + "locales" + File.separator + "video" + File.separator + account;
+        String path = FILE_PATH + File.separator + "WansviewCloud" + File.separator + "video" + File.separator + account;
         File directory = new File(path);
         if (!directory.exists())
             directory.mkdirs();
@@ -23,7 +23,7 @@ public class FileUtil {
     }
 
     public static String getRealtimeImagePath(String deviceId) {
-        String path = FILE_PATH + File.separator + "locales" + File.separator + "RealtimeImage" + File.separator + deviceId;
+        String path = FILE_PATH + File.separator + "WansviewCloud" + File.separator + "RealtimeImage" + File.separator + deviceId;
         File directory = new File(path);
         if (!directory.exists())
             directory.mkdirs();
