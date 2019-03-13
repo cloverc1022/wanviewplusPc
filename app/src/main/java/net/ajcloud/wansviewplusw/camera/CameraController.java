@@ -10,8 +10,6 @@ import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
 import io.reactivex.functions.Consumer;
 import javafx.animation.AnimationTimer;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
@@ -1276,10 +1274,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
     }
 
-    private Timeline controlTimeline = new Timeline(new KeyFrame(Duration.seconds(3), ae -> {
-        gp_control.setVisible(false);
-    }));
-
     private void showControlPane(boolean isShow) {
         if (!StringUtil.isNullOrEmpty(deviceId)) {
             Camera camera = DeviceCache.getInstance().get(deviceId);
@@ -1288,11 +1282,9 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                     if (!gp_control.isVisible()) {
                         gp_control.setVisible(true);
                     }
-                    controlTimeline.stop();
                 } else {
                     if (gp_control.isVisible()) {
-                        controlTimeline.setCycleCount(1);
-                        controlTimeline.play();
+                        gp_control.setVisible(false);
                     }
                 }
             }
