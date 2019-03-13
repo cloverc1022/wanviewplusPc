@@ -358,7 +358,22 @@
     -fx-text-fill: white;
     -fx-background-color: #2979ff;
     -fx-font-weight: BOLD;
-    -fx-padding: 0.7em 0.8em;
+    -fx-border-color: #2979ff;
+    -fx-background-radius: 2px;
+    -fx-border-width: 2px;
+    -fx-border-radius: 2px;
+    -fx-padding: 2px;
+}
+
+.dialog-cancel {
+    -fx-text-fill: #2979ff;
+    -fx-background-color: white;
+    -fx-font-weight: BOLD;
+    -fx-background-radius: 2px;
+    -fx-border-color: #2979ff;
+    -fx-border-width: 2px;
+    -fx-border-radius: 2px;
+    -fx-padding: 2px;
 }
 
 .tips {

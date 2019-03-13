@@ -37,7 +37,7 @@
                                 <Label style="-fx-text-fill:#2979ff;-fx-font-size:8;" text="Camera"/>
                             </children>
                         </VBox>
-                        <VBox fx:id="vb_quad" alignment="CENTER" minWidth="72.0" prefWidth="72.0" VBox.vgrow="NEVER">
+                        <VBox fx:id="vb_quad" alignment="CENTER" minWidth="72.0" prefWidth="72.0" VBox.vgrow="NEVER" visible="false">
                             <children>
                                 <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -47,7 +47,7 @@
                                 <Label style="-fx-text-fill:#95a5ad;-fx-font-size:8;" text="Quad screen"/>
                             </children>
                         </VBox>
-                        <VBox fx:id="vb_nine" alignment="CENTER" minWidth="72.0" prefWidth="72.0" VBox.vgrow="NEVER">
+                        <VBox fx:id="vb_nine" alignment="CENTER" minWidth="72.0" prefWidth="72.0" VBox.vgrow="NEVER" visible="false">
                             <children>
                                 <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                     <image>

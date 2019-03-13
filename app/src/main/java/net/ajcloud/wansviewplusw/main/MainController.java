@@ -1,5 +1,8 @@
 package net.ajcloud.wansviewplusw.main;
 
+import com.jfoenix.controls.JFXAlert;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXPopup;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.flow.Flow;
@@ -13,8 +16,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import net.ajcloud.wansviewplusw.Base;
 import net.ajcloud.wansviewplusw.BaseController;
 import net.ajcloud.wansviewplusw.camera.CameraController;
@@ -124,9 +130,8 @@ public class MainController implements BaseController {
                 accountPopController.setOnLogoutListener(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
-                        if (listener != null) {
-                            listener.onLogout();
-                        }
+                        accountPop.hide();
+                        showLogoutDialog();
                     }
                 });
                 in.close();
@@ -147,5 +152,39 @@ public class MainController implements BaseController {
 
     public interface MainListener {
         void onLogout();
+    }
+
+    private void showLogoutDialog() {
+        JFXAlert alert = new JFXAlert((Stage) vb_user.getScene().getWindow());
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.setOverlayClose(false);
+        JFXDialogLayout layout = new JFXDialogLayout();
+        layout.setHeading(new javafx.scene.control.Label("Sign out?"));
+        JFXButton closeButton = new JFXButton("Ok");
+        closeButton.setMinWidth(100);
+        closeButton.setMaxWidth(100);
+        closeButton.setPrefWidth(100);
+        closeButton.getStyleClass().add("dialog-accept");
+        closeButton.setOnAction(event -> {
+            alert.hideWithAnimation();
+            if (listener != null) {
+                listener.onLogout();
+            }
+        });
+        JFXButton cancelButton = new JFXButton("Cancel");
+        cancelButton.setMinWidth(100);
+        cancelButton.setMaxWidth(100);
+        cancelButton.setPrefWidth(100);
+        cancelButton.getStyleClass().add("dialog-cancel");
+        cancelButton.setOnAction(event -> {
+            alert.hideWithAnimation();
+        });
+        HBox hBox = new HBox();
+        hBox.setSpacing(10);
+        hBox.getChildren().add(closeButton);
+        hBox.getChildren().add(cancelButton);
+        layout.setActions(hBox);
+        alert.setContent(layout);
+        alert.show();
     }
 }
