@@ -60,12 +60,12 @@ public class PoliceHelper /*implements ResponseListener*/ {
                 playPolices.offer(PlayMethod.UPNP);
         }
         if (camera.livePolicy.p2p == 1) {
-            if (!playPolices.contains(PlayMethod.P2P_RELAY))
-                playPolices.offer(PlayMethod.P2P_RELAY);
+            if (!playPolices.contains(PlayMethod.P2P))
+                playPolices.offer(PlayMethod.P2P);
         }
         if (camera.livePolicy.relay == 1) {
-            if (!playPolices.contains(PlayMethod.P2P_RELAY))
-                playPolices.offer(PlayMethod.P2P_RELAY);
+            if (!playPolices.contains(PlayMethod.RELAY))
+                playPolices.offer(PlayMethod.RELAY);
         }
     }
 
@@ -119,8 +119,8 @@ public class PoliceHelper /*implements ResponseListener*/ {
             } else if (police == PlayMethod.UPNP) {
                 playedRequestType = PlayMethod.UPNP;
                 getLiveSec(2);
-            } else if (police == PlayMethod.P2P_RELAY) {
-                playedRequestType = PlayMethod.P2P_RELAY;
+            } else if (police == PlayMethod.P2P || police == PlayMethod.RELAY) {
+                playedRequestType = PlayMethod.P2P;
                 getLiveSec(3);
             } else {
                 isRequestToken = false;

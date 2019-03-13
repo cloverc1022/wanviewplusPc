@@ -48,6 +48,7 @@ import net.ajcloud.wansviewplusw.support.timer.CountDownTimer;
 import net.ajcloud.wansviewplusw.support.utils.FileUtil;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 import net.ajcloud.wansviewplusw.support.utils.WLog;
+import net.ajcloud.wansviewplusw.support.utils.play.PlayMethod;
 import net.ajcloud.wansviewplusw.support.utils.play.PoliceHelper;
 import org.tcprelay.Tcprelay;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
@@ -174,6 +175,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private String localUrl;
     private String relay_server_ip;
     private boolean isP2p = false;
+    private int play_method;
     private int p2pNum;
     private int port = 10001;
     private Tcprelay tcprelay;
@@ -506,6 +508,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     @Override
     public void onPlay(int playMethod, String url, int mVideoHeight, int mVideoWidth) {
         isP2p = false;
+        play_method = playMethod;
         onVideoPlay(url);
     }
 
@@ -689,6 +692,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         public void run() {
             WLog.w(TAG, "p2p-----process:relayconnect");
             p2pNum = tcprelay.relayconnect(deviceId, DeviceCache.getInstance().get(deviceId).getStunServers(), relay_server_ip, port);
+            play_method = tcprelay.getConnectType() == 0 ? PlayMethod.P2P : PlayMethod.RELAY;
+            WLog.w(TAG, "p2p----- method:" + play_method);
             WLog.w(TAG, "p2p----- status:" + p2pNum);
             if (p2pNum > 0) {
                 Platform.runLater(new Runnable() {
@@ -888,6 +893,9 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     }
 
     private void startOrCancelTimer(boolean isStart) {
+        if (play_method != PlayMethod.RELAY) {
+            return;
+        }
         playTimer.cancel();
         content_tips.setVisible(false);
         label_stop.setVisible(true);
@@ -896,7 +904,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             playTimer.CountDown(PLAY_TIME, new CountDownTimer.OnTimerListener() {
                 @Override
                 public void onTick(int second) {
-                    if (second > 10) {
+                    if ((PLAY_TIME / 1000 - second) <= 20) {
                         content_tips.setVisible(true);
                         label_time.setText((PLAY_TIME / 1000 - second) + "s");
                     }
