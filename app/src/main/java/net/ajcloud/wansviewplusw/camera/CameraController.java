@@ -1055,6 +1055,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             loading.setVisible(false);
             mediaPlayer.saveSnapshot(new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg"));
             setPlayBg(deviceId);
+            EventBus.getInstance().post(new SnapshotEvent());
         }
 
         @Override
