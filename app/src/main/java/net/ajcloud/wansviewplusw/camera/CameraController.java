@@ -10,6 +10,9 @@ import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
 import io.reactivex.functions.Consumer;
 import javafx.animation.AnimationTimer;
+import javafx.animation.ParallelTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.IntegerProperty;
@@ -262,10 +265,10 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             setMute();
         });
         btn_screenshot.setOnMouseClicked((v) -> {
-            takeSnapshot();
+            takeSnapshot(true);
         });
         btn_screenshot_full.setOnMouseClicked((v) -> {
-            takeSnapshot();
+            takeSnapshot(true);
         });
         btn_play.setOnMouseClicked((v) -> {
             startOrPause();
@@ -777,11 +780,39 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     /**
      * 截图
      */
-    private void takeSnapshot() {
+    private void takeSnapshot(boolean showAnim) {
         if (!canDo()) {
             return;
         }
-        mediaPlayerComponent.getMediaPlayer().saveSnapshot(new File(FileUtil.getImagePath(DeviceCache.getInstance().getSigninBean().mail) + File.separator + sDateFormat.format(System.currentTimeMillis()) + ".jpg"));
+        String fileName = FileUtil.getImagePath(DeviceCache.getInstance().getSigninBean().mail) + File.separator + sDateFormat.format(System.currentTimeMillis()) + ".jpg";
+        File file = new File(fileName);
+        mediaPlayerComponent.getMediaPlayer().saveSnapshot(file);
+
+        ImageView imageView = new ImageView();
+        imageView.setImage(new Image(file.toURI().toString()));
+        imageView.setFitWidth(playPane.getWidth());
+        imageView.setFitHeight(playPane.getHeight());
+        play_content.getChildren().add(imageView);
+
+        TranslateTransition translateTransition = new TranslateTransition(Duration.millis(800), imageView);
+        translateTransition.setFromX(0);
+        translateTransition.setToX(-(imageView.getFitWidth() / 2 + 250));
+        translateTransition.setFromY(0);
+        translateTransition.setToY(imageView.getFitHeight() / 2);
+        translateTransition.setCycleCount(1);
+        translateTransition.setAutoReverse(false);
+        WLog.w("anim_test" + imageView.getFitHeight() + "\t" + imageView.getFitWidth());
+
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(800), imageView);
+        scaleTransition.setToX(0);
+        scaleTransition.setToY(0);
+        scaleTransition.setCycleCount(1);
+        scaleTransition.setAutoReverse(false);
+
+        ParallelTransition parallelTransition = new ParallelTransition(translateTransition, scaleTransition);
+        parallelTransition.setCycleCount(1);
+        parallelTransition.setOnFinished(event -> play_content.getChildren().remove(imageView));
+        parallelTransition.play();
     }
 
     /**
