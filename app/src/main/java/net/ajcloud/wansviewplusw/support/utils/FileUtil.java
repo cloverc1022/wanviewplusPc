@@ -6,8 +6,8 @@ public class FileUtil {
     //filePath
     public static String FILE_PATH = System.getProperty("user.home");
 
-    public static String getRootPath() {
-        String path = FILE_PATH + File.separator + "WansviewCloud";
+    public static String getRootImagePath() {
+        String path = FILE_PATH + File.separator + "WansviewCloud" + File.separator + "image";
         File directory = new File(path);
         if (!directory.exists())
             directory.mkdirs();

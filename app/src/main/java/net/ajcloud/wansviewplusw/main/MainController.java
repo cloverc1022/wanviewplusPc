@@ -78,7 +78,7 @@ public class MainController implements BaseController {
         vb_local.setOnMouseClicked(e -> new Thread(() -> {
             try {
                 if (Desktop.isDesktopSupported())
-                    Desktop.getDesktop().open(new File(FileUtil.getRootPath()));
+                    Desktop.getDesktop().open(new File(FileUtil.getRootImagePath()));
             } catch (Exception e1) {
                 e1.printStackTrace();
             }

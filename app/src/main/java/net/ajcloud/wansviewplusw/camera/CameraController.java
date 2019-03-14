@@ -277,14 +277,10 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             startOrPause();
         });
         btn_record.setOnMouseClicked((v) -> {
-            if (!canDo()) {
-                return;
-            }
+            recording();
         });
         btn_record_full.setOnMouseClicked((v) -> {
-            if (!canDo()) {
-                return;
-            }
+            recording();
         });
         btn_quality.setOnMouseClicked((v) -> {
             if (qualityPop != null && qualityPop.isShowing()) {
@@ -906,8 +902,11 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         if (!canDo()) {
             return;
         }
-        File directory = new File(FileUtil.getVideoPath(DeviceCache.getInstance().getSigninBean().mail));
-//        if (mediaPlayerComponent.getMediaPlayer().)
+        if (mediaPlayerComponent.getMediaPlayer().isRecording()) {
+            mediaPlayerComponent.getMediaPlayer().stopRecord();
+        } else {
+            mediaPlayerComponent.getMediaPlayer().startRecord(FileUtil.getVideoPath(DeviceCache.getInstance().getSigninBean().mail));
+        }
     }
 
     /**
@@ -1138,6 +1137,11 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
 
         @Override
+        public void mediaPlayerReady(MediaPlayer mediaPlayer) {
+
+        }
+
+        @Override
         public void mediaMetaChanged(MediaPlayer mediaPlayer, int i) {
 
         }
@@ -1154,6 +1158,11 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
         @Override
         public void mediaParsedChanged(MediaPlayer mediaPlayer, int i) {
+
+        }
+
+        @Override
+        public void mediaParsedStatus(MediaPlayer mediaPlayer, int newStatus) {
 
         }
 
