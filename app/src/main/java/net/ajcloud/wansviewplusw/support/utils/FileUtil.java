@@ -14,6 +14,14 @@ public class FileUtil {
         return path;
     }
 
+    public static String getTmpPath() {
+        String path = FILE_PATH + File.separator + "WansviewCloud" + File.separator + "tmp";
+        File directory = new File(path);
+        if (!directory.exists())
+            directory.mkdirs();
+        return path;
+    }
+
     public static String getImagePath(String account) {
         String path = FILE_PATH + File.separator + "WansviewCloud" + File.separator + "image" + File.separator + account;
         File directory = new File(path);

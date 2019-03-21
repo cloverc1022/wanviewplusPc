@@ -247,9 +247,9 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         initListener();
         initData();
 
-        btn_record.setDisable(true);
-        btn_record_full.setDisable(true);
-        image_record_full.setDisable(true);
+//        btn_record.setDisable(true);
+//        btn_record_full.setDisable(true);
+//        image_record_full.setDisable(true);
     }
 
     private void initListener() {
@@ -265,10 +265,10 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             setMute();
         });
         btn_screenshot.setOnMouseClicked((v) -> {
-            takeSnapshot(true);
+            takeSnapshot(FileUtil.getImagePath(DeviceCache.getInstance().getSigninBean().mail), true);
         });
         btn_screenshot_full.setOnMouseClicked((v) -> {
-            takeSnapshot(true);
+            takeSnapshot(FileUtil.getImagePath(DeviceCache.getInstance().getSigninBean().mail), true);
         });
         btn_play.setOnMouseClicked((v) -> {
             startOrPause();
@@ -776,11 +776,11 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     /**
      * 截图
      */
-    private void takeSnapshot(boolean showAnim) {
+    private void takeSnapshot(String path, boolean showAnim) {
         if (!canDo()) {
             return;
         }
-        String fileName = FileUtil.getImagePath(DeviceCache.getInstance().getSigninBean().mail) + File.separator + sDateFormat.format(System.currentTimeMillis()) + ".jpg";
+        String fileName = path + File.separator + sDateFormat.format(System.currentTimeMillis()) + ".jpg";
         File file = new File(fileName);
         mediaPlayerComponent.getMediaPlayer().saveSnapshot(file);
 
@@ -903,8 +903,11 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             return;
         }
         if (mediaPlayerComponent.getMediaPlayer().isRecording()) {
+            WLog.w(TAG, "stopRecord");
             mediaPlayerComponent.getMediaPlayer().stopRecord();
+            takeSnapshot(FileUtil.getTmpPath(), true);
         } else {
+            WLog.w(TAG, "startRecord");
             mediaPlayerComponent.getMediaPlayer().startRecord(FileUtil.getVideoPath(DeviceCache.getInstance().getSigninBean().mail));
         }
     }

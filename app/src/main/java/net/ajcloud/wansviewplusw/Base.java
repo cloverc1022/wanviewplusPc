@@ -49,7 +49,7 @@ public class Base extends Application implements LoginController.OnLoginListener
     private final double MAIN_HEIGHT = 540;
     private final double DEFAULT_WIDTH = 960;
     private final double DEFAULT_HEIGHT = 540;
-    private static final String NATIVE_LIBRARY_SEARCH_PATH = "vlc-2.2.4";
+    private static final String NATIVE_LIBRARY_SEARCH_PATH = "vlc-3.0.6";
     private Stage mainStage;
     private Stage loginStage;
     private FlowHandler mainFlowHandler;
