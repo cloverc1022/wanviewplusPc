@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox spacing="1.0" style="-fx-background-color:#CFD8DC " xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.ajcloud.wansviewplusw.main.LocalFilePopController">
+    <children>
+        <HBox fx:id="h_video" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="40.0" minWidth="92.0" prefHeight="40.0" prefWidth="92.0" style="-fx-background-color:White">
+            <children>
+                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                    <HBox.margin>
+                        <Insets left="12.0" />
+                    </HBox.margin>
+                    <image>
+                        <Image url="@/image/ic_album_vedio.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="label_name" minHeight="40.0" minWidth="56.0" prefHeight="40.0" prefWidth="56.0" style="-fx-text-fill:#263238;-fx-font-size:11;" text="Video" HBox.hgrow="ALWAYS">
+                    <padding>
+                        <Insets left="8.0" />
+                    </padding>
+                </Label>
+            </children>
+        </HBox>
+        <HBox fx:id="h_photo" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="40.0" minWidth="92.0" prefHeight="40.0" prefWidth="92.0" style="-fx-background-color:White">
+            <children>
+                <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                    <HBox.margin>
+                        <Insets left="12.0" />
+                    </HBox.margin>
+                    <image>
+                        <Image url="@/image/ic_album_photo.png" />
+                    </image>
+                </ImageView>
+                <Label minHeight="40.0" minWidth="56.0" prefHeight="40.0" prefWidth="56.0" style="-fx-text-fill:#263238;-fx-font-size:11;" text="Photo" HBox.hgrow="ALWAYS">
+                    <padding>
+                        <Insets left="8.0" right="8.0" />
+                    </padding>
+                </Label>
+            </children>
+        </HBox>
+    </children>
+</VBox>

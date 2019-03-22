@@ -14,6 +14,14 @@ public class FileUtil {
         return path;
     }
 
+    public static String getRootVideoPath() {
+        String path = FILE_PATH + File.separator + "WansviewCloud" + File.separator + "video";
+        File directory = new File(path);
+        if (!directory.exists())
+            directory.mkdirs();
+        return path;
+    }
+
     public static String getTmpPath() {
         String path = FILE_PATH + File.separator + "WansviewCloud" + File.separator + "tmp";
         File directory = new File(path);

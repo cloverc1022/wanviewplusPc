@@ -57,6 +57,7 @@ public class MainController implements BaseController {
     private FlowHandler flowHandler;
 
     private JFXPopup accountPop;
+    private JFXPopup localPop;
 
     private MainListener listener;
 
@@ -75,14 +76,7 @@ public class MainController implements BaseController {
         vb_device.setOnMouseClicked(e -> replace(vb_device.getId()));
         vb_quad.setOnMouseClicked(e -> replace(vb_quad.getId()));
         vb_nine.setOnMouseClicked(e -> replace(vb_nine.getId()));
-        vb_local.setOnMouseClicked(e -> new Thread(() -> {
-            try {
-                if (Desktop.isDesktopSupported())
-                    Desktop.getDesktop().open(new File(FileUtil.getRootImagePath()));
-            } catch (Exception e1) {
-                e1.printStackTrace();
-            }
-        }).start());
+        vb_local.setOnMouseClicked(e -> showLocalFilePop());
 
         currentItem = vb_device.getId();
         Flow innerFlow = new Flow(CameraController.class);
@@ -140,6 +134,45 @@ public class MainController implements BaseController {
             }
         }
         accountPop.show(vb_user, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 72, 0);
+    }
+
+    private void showLocalFilePop() {
+        if (localPop == null) {
+            try {
+                FXMLLoader loader = new FXMLLoader();
+                InputStream in = Base.class.getResourceAsStream("/fxml/pop_local_file.fxml");
+                loader.setBuilderFactory(new JavaFXBuilderFactory());
+                loader.setLocation(Base.class.getResource("/fxml/pop_local_file.fxml"));
+                localPop = new JFXPopup(loader.load(in));
+
+                LocalFilePopController localFilePopController = loader.getController();
+                localFilePopController.setOnClick(event -> {
+                    localPop.hide();
+                    new Thread(() -> {
+                        try {
+                            if (Desktop.isDesktopSupported())
+                                Desktop.getDesktop().open(new File(FileUtil.getRootVideoPath()));
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                        }
+                    }).start();
+                }, event -> {
+                    localPop.hide();
+                    new Thread(() -> {
+                        try {
+                            if (Desktop.isDesktopSupported())
+                                Desktop.getDesktop().open(new File(FileUtil.getRootImagePath()));
+                        } catch (Exception e1) {
+                            e1.printStackTrace();
+                        }
+                    }).start();
+                });
+                in.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        localPop.show(vb_local, JFXPopup.PopupVPosition.BOTTOM, JFXPopup.PopupHPosition.LEFT, 72, 0);
     }
 
     /**
