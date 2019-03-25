@@ -1384,10 +1384,12 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                 if (isShow) {
                     if (!gp_control.isVisible()) {
                         gp_control.setVisible(true);
+                        gp_control.setManaged(true);
                     }
                 } else {
                     if (gp_control.isVisible()) {
                         gp_control.setVisible(false);
+                        gp_control.setManaged(false);
                     }
                 }
             }
