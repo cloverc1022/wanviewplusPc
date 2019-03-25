@@ -15,15 +15,20 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import net.ajcloud.wansviewplusw.Base;
 import net.ajcloud.wansviewplusw.BaseController;
 import net.ajcloud.wansviewplusw.camera.CameraController;
+import net.ajcloud.wansviewplusw.support.customview.popup.AccountPopController;
+import net.ajcloud.wansviewplusw.support.customview.popup.LocalFilePopController;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.utils.FileUtil;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
@@ -70,6 +75,11 @@ public class MainController implements BaseController {
     public void init() throws Exception {
         Objects.requireNonNull(context, "context");
         listener = (MainListener) context.getRegisteredObject("MainListener");
+        //init menu
+        DropShadow dropShadow = new DropShadow(BlurType.GAUSSIAN, Color.rgb(0, 0, 0, 0.26), 10, 0.12, -1, 2);
+        content_left.setEffect(dropShadow);
+        content_left.setStyle("-fx-background-color: white");
+        //init listener
         vb_user.setOnMouseClicked(e -> {
             showAccountPop();
         });

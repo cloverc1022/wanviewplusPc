@@ -4,13 +4,13 @@
 
 .jfx-list-view {
     -jfx-vertical-gap: 12px;
-    -fx-background-color: #F7FAFA;
+    -fx-background-color: transparent;
     -jfx-expanded: true;
 }
 
 .jfx-list-cell {
     -fx-pref-width: 196px;
-    -fx-background-color: WHITE;
+    -fx-background-color: white;
     -fx-padding: 0 0 0 0;
     -fx-border-radius: 2px;
     -fx-background-radius: 2px;

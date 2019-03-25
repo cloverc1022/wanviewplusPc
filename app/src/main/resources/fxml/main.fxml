@@ -1,81 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-
-<StackPane fx:id="root" minHeight="540.0" minWidth="960.0" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color:#FFFFFF;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="root" minHeight="540.0" minWidth="960.0" prefHeight="540.0" prefWidth="960.0"
+           style="-fx-background-color:#FFFFFF;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <HBox>
             <children>
-                <VBox fx:id="content_left" alignment="TOP_CENTER" minWidth="72.0" prefWidth="72.0" spacing="24.0" HBox.hgrow="NEVER">
+                <VBox fx:id="content_left" alignment="TOP_CENTER" minWidth="72.0" prefWidth="72.0" spacing="24.0"
+                      HBox.hgrow="NEVER">
                     <children>
                         <VBox fx:id="vb_user" alignment="CENTER" minWidth="72.0" prefWidth="72.0" VBox.vgrow="NEVER">
                             <children>
                                 <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                                     <VBox.margin>
-                                        <Insets />
+                                        <Insets/>
                                     </VBox.margin>
                                     <image>
-                                        <Image url="@/image/ic_user.png" />
+                                        <Image url="@/image/ic_user.png"/>
                                     </image>
                                 </ImageView>
                             </children>
                             <VBox.margin>
-                                <Insets top="18.0" />
+                                <Insets top="18.0"/>
                             </VBox.margin>
                         </VBox>
                         <VBox fx:id="vb_device" alignment="CENTER" minWidth="72.0" prefWidth="72.0" VBox.vgrow="NEVER">
                             <children>
                                 <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@/image/ic_device_color.png" />
+                                        <Image url="@/image/ic_device_color.png"/>
                                     </image>
                                 </ImageView>
-                                <Label style="-fx-text-fill:#2979ff;-fx-font-size:8;" text="Camera" />
+                                <Label style="-fx-text-fill:#2979ff;-fx-font-size:8;" text="Camera"/>
                             </children>
                         </VBox>
-                        <VBox fx:id="vb_quad" alignment="CENTER" minWidth="72.0" prefWidth="72.0" visible="false" VBox.vgrow="NEVER">
+                        <VBox fx:id="vb_quad" alignment="CENTER" minWidth="72.0" prefWidth="72.0" visible="false"
+                              VBox.vgrow="NEVER">
                             <children>
                                 <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@/image/ic_quad_screen_mid.png" />
+                                        <Image url="@/image/ic_quad_screen_mid.png"/>
                                     </image>
                                 </ImageView>
-                                <Label style="-fx-text-fill:#95a5ad;-fx-font-size:8;" text="Quad screen" />
+                                <Label style="-fx-text-fill:#95a5ad;-fx-font-size:8;" text="Quad screen"/>
                             </children>
                         </VBox>
-                        <VBox fx:id="vb_nine" alignment="CENTER" minWidth="72.0" prefWidth="72.0" visible="false" VBox.vgrow="NEVER">
+                        <VBox fx:id="vb_nine" alignment="CENTER" minWidth="72.0" prefWidth="72.0" visible="false"
+                              VBox.vgrow="NEVER">
                             <children>
                                 <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@/image/ic_nine_screen_mid.png" />
+                                        <Image url="@/image/ic_nine_screen_mid.png"/>
                                     </image>
                                 </ImageView>
-                                <Label style="-fx-text-fill:#95a5ad;-fx-font-size:8;" text="Nine-screen" />
+                                <Label style="-fx-text-fill:#95a5ad;-fx-font-size:8;" text="Nine-screen"/>
                             </children>
                         </VBox>
-                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent" VBox.vgrow="ALWAYS" />
+                        <Pane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: transparent"
+                              VBox.vgrow="ALWAYS"/>
                         <VBox fx:id="vb_local" alignment="CENTER" minWidth="72.0" prefWidth="72.0" VBox.vgrow="NEVER">
                             <children>
                                 <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@/image/ic_file_mid.png" />
+                                        <Image url="@/image/ic_file_mid.png"/>
                                     </image>
                                 </ImageView>
-                                <Label style="-fx-text-fill:#95a5ad;-fx-font-size:8;" text="Local file" />
+                                <Label style="-fx-text-fill:#95a5ad;-fx-font-size:8;" text="Local file"/>
                             </children>
-                     <VBox.margin>
-                        <Insets bottom="12.0" />
-                     </VBox.margin>
+                            <VBox.margin>
+                                <Insets bottom="12.0"/>
+                            </VBox.margin>
                         </VBox>
                     </children>
                 </VBox>
-                <StackPane fx:id="content" HBox.hgrow="ALWAYS" />
+                <StackPane fx:id="content" HBox.hgrow="ALWAYS"/>
             </children>
         </HBox>
     </children>

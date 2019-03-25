@@ -1,4 +1,4 @@
-package net.ajcloud.wansviewplusw.main;
+package net.ajcloud.wansviewplusw.support.customview.popup;
 
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;

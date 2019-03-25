@@ -6,7 +6,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<VBox spacing="1.0" style="-fx-background-color:#CFD8DC " xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.ajcloud.wansviewplusw.main.LocalFilePopController">
+<VBox spacing="1.0" style="-fx-background-color:#CFD8DC " xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.ajcloud.wansviewplusw.support.customview.popup.LocalFilePopController">
     <children>
         <HBox fx:id="h_video" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="40.0" minWidth="92.0" prefHeight="40.0" prefWidth="92.0" style="-fx-background-color:White">
             <children>

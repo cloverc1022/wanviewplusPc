@@ -27,14 +27,18 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.Tooltip;
+import javafx.scene.effect.BlurType;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import javafx.util.Duration;
 import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
@@ -83,6 +87,14 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private ViewFlowContext context;
     @FXML
     private AnchorPane root;
+    @FXML
+    private HBox content_list;
+    @FXML
+    private StackPane content_list_empty;
+    @FXML
+    private VBox content_play;
+    @FXML
+    private StackPane content_play_empty;
     @FXML
     private Label label_num;
     @FXML
@@ -210,16 +222,18 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         //init device list
         lv_devices.depthProperty().set(1);
         lv_devices.setExpanded(true);
-        lv_devices.setCellFactory(new Callback<ListView<Camera>, ListCell<Camera>>() {
-
-            @Override
-            public ListCell<Camera> call(ListView<Camera> param) {
-                DeviceListCell deviceListCell = new DeviceListCell();
-                deviceListCell.setOnMouseClicked((v) -> {
-                    handleMouseClick(deviceListCell.getItem());
-                });
-                return deviceListCell;
-            }
+        lv_devices.setCellFactory(param -> {
+            DeviceListCell deviceListCell = new DeviceListCell();
+            deviceListCell.setOnMouseClicked((v) -> {
+                if (!content_play.isVisible()) {
+                    content_play.setVisible(true);
+                    content_play.setManaged(true);
+                    content_play_empty.setVisible(false);
+                    content_play_empty.setManaged(false);
+                }
+                handleMouseClick(deviceListCell.getItem());
+            });
+            return deviceListCell;
         });
 
         AtomicInteger count = new AtomicInteger(0);
@@ -406,10 +420,20 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
-                        if (bean != null) {
+                        if (bean != null && bean.size() > 0) {
+                            content_list.setVisible(true);
+                            content_list.setManaged(true);
+                            content_list_empty.setVisible(false);
+                            content_list_empty.setManaged(false);
+
                             label_num.setText(bean.size() + " devices");
                             mInfos.setAll(bean);
                             lv_devices.setItems(mInfos);
+                        } else {
+                            content_list_empty.setVisible(true);
+                            content_list_empty.setManaged(true);
+                            content_list.setVisible(false);
+                            content_list.setManaged(false);
                         }
                     }
                 });
@@ -1339,6 +1363,14 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
      * 全屏
      */
     public void fullscreen(boolean isFullscreen) {
+        content_list.setVisible(true);
+        content_list.setManaged(true);
+        content_list_empty.setVisible(false);
+        content_list_empty.setManaged(false);
+        content_play.setVisible(true);
+        content_play.setManaged(true);
+        content_play_empty.setVisible(false);
+        content_play_empty.setManaged(false);
         control_play_control_full.setVisible(isFullscreen);
         control_play_control_full.setManaged(isFullscreen);
         content_left.setVisible(!isFullscreen);

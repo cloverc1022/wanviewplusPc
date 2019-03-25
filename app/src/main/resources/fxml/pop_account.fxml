@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import com.jfoenix.controls.JFXRippler?>
 <VBox style="-fx-background-color:#CFD8DC " spacing="1.0" xmlns="http://javafx.com/javafx/8"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.ajcloud.wansviewplusw.main.AccountPopController">
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="net.ajcloud.wansviewplusw.support.customview.popup.AccountPopController">
     <children>
         <HBox fx:id="account" style="-fx-background-color:White" alignment="CENTER_LEFT" maxHeight="-Infinity"
               maxWidth="-Infinity"

@@ -55,6 +55,7 @@ public class Base extends Application implements LoginController.OnLoginListener
     private FlowHandler mainFlowHandler;
     @FXMLViewFlowContext
     private ViewFlowContext flowContext;
+    private boolean isFullscreen = false;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -123,6 +124,7 @@ public class Base extends Application implements LoginController.OnLoginListener
         try {
             mainStage = new Stage(StageStyle.DECORATED);
             mainStage.getIcons().add(new Image("/image/ic_launcher.png"));
+            mainStage.setTitle("WansviewCloud");
             mainStage.setMinWidth(980.0);
             mainStage.setMinHeight(580.0);
             Flow flow = new Flow(MainController.class);
@@ -145,7 +147,7 @@ public class Base extends Application implements LoginController.OnLoginListener
                 close();
             });
             mainStage.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
-                if (event.getCode() == KeyCode.ESCAPE) {
+                if (event.getCode() == KeyCode.ESCAPE && isFullscreen) {
                     fullScreen(false);
                 }
             });
@@ -238,6 +240,7 @@ public class Base extends Application implements LoginController.OnLoginListener
 
     private void fullScreen(boolean isFullscreen) {
         try {
+            this.isFullscreen = isFullscreen;
             mainStage.setFullScreen(isFullscreen);
             FlowHandler flowHandler = (FlowHandler) flowContext.getRegisteredObject("ContentFlowHandler");
             CameraController cameraController = (CameraController) flowHandler.getCurrentView().getViewContext().getController();
