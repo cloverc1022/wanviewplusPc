@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <StackPane fx:id="root" minHeight="540.0" minWidth="960.0" prefHeight="540.0" prefWidth="960.0"

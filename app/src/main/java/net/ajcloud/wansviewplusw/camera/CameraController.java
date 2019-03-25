@@ -30,13 +30,11 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-import javafx.scene.effect.BlurType;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -50,6 +48,7 @@ import net.ajcloud.wansviewplusw.support.eventbus.event.SnapshotEvent;
 import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
 import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
 import net.ajcloud.wansviewplusw.support.timer.CountDownTimer;
+import net.ajcloud.wansviewplusw.support.utils.DateUtils;
 import net.ajcloud.wansviewplusw.support.utils.FileUtil;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 import net.ajcloud.wansviewplusw.support.utils.WLog;
@@ -70,10 +69,7 @@ import javax.annotation.PostConstruct;
 import java.io.File;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static uk.co.caprica.vlcj.binding.internal.libvlc_state_t.libvlc_Playing;
@@ -167,6 +163,12 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private Label label_continue;
     @FXML
     private ImageView iv_tips;
+    @FXML
+    private HBox content_record_tips;
+    @FXML
+    private Circle circle_record_tips;
+    @FXML
+    private Label label_record_tips;
 
     private JFXPopup qualityPop;
 
@@ -184,6 +186,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private ExecuteTimer executeTimer_bottom;
     private ExecuteTimer executeTimer_left;
     private FullscreenListener fullscreenListener;
+    private Timer recordTimer;
     private String deviceId;
     private String localUrl;
     private String relay_server_ip;
@@ -260,10 +263,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         Tooltip.install(iv_tips, tooltip);
         initListener();
         initData();
-
-//        btn_record.setDisable(true);
-//        btn_record_full.setDisable(true);
-//        image_record_full.setDisable(true);
     }
 
     private void initListener() {
@@ -928,11 +927,48 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
         if (mediaPlayerComponent.getMediaPlayer().isRecording()) {
             WLog.w(TAG, "stopRecord");
+            recordingAnim(false);
             mediaPlayerComponent.getMediaPlayer().stopRecord();
             takeSnapshot(FileUtil.getTmpPath(), true);
         } else {
             WLog.w(TAG, "startRecord");
+            recordingAnim(true);
             mediaPlayerComponent.getMediaPlayer().startRecord(FileUtil.getVideoPath(DeviceCache.getInstance().getSigninBean().mail));
+        }
+    }
+
+    private long time = 0;
+
+    /**
+     * 录像动画
+     */
+    private void recordingAnim(boolean isRecord) {
+        if (isRecord) {
+            content_record_tips.setVisible(true);
+            content_record_tips.setManaged(true);
+            label_record_tips.setText("00:00:00");
+            if (recordTimer == null) {
+                recordTimer = new Timer();
+            } else {
+                recordTimer.cancel();
+            }
+            time = 0;
+            recordTimer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    Platform.runLater(() -> {
+                        label_record_tips.setText(DateUtils.timeFormat(time++));
+                    });
+                }
+            }, 0, 1000);
+        } else {
+            content_record_tips.setVisible(false);
+            content_record_tips.setManaged(false);
+            label_record_tips.setText("00:00:00");
+            if (recordTimer != null) {
+                recordTimer.cancel();
+                recordTimer = null;
+            }
         }
     }
 

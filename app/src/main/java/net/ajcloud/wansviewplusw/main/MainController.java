@@ -161,7 +161,7 @@ public class MainController implements BaseController {
                     new Thread(() -> {
                         try {
                             if (Desktop.isDesktopSupported())
-                                Desktop.getDesktop().open(new File(FileUtil.getRootVideoPath()));
+                                Desktop.getDesktop().open(new File(FileUtil.getVideoPath(DeviceCache.getInstance().getSigninBean().mail)));
                         } catch (Exception e1) {
                             e1.printStackTrace();
                         }
@@ -171,7 +171,7 @@ public class MainController implements BaseController {
                     new Thread(() -> {
                         try {
                             if (Desktop.isDesktopSupported())
-                                Desktop.getDesktop().open(new File(FileUtil.getRootImagePath()));
+                                Desktop.getDesktop().open(new File(FileUtil.getImagePath(DeviceCache.getInstance().getSigninBean().mail)));
                         } catch (Exception e1) {
                             e1.printStackTrace();
                         }
