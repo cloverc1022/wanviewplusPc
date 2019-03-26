@@ -458,6 +458,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         setPlayBg(deviceId);
         //底部操作栏
         control_play_control.setVisible(true);
+        //清晰度
+        btn_quality.setText("FHD");
         //频繁刷新操作
         if (timerService.isRunning()) {
             timerService.restart();
