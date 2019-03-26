@@ -20,5 +20,5 @@ Cflags: -I${includedir} -I${pkgincludedir}/plugins \
 	-D_THREAD_SAFE
 Libs: -L${libdir} -lvlccore
 Libs.private:  \
-	-L/home/mamengchao/vlc/vlc-3.0/contrib/i686-w64-mingw32/lib -lintl -L/home/mamengchao/vlc/vlc-3.0/contrib/i686-w64-mingw32/lib -liconv -L/home/mamengchao/vlc/vlc-3.0/contrib/i686-w64-mingw32/lib -liconv \
+	 -L/home/mamengchao/vlc/vlc-3.0/contrib/i686-w64-mingw32/lib -liconv \
 	-lws2_32  -lm
