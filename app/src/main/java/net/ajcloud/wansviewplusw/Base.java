@@ -118,7 +118,7 @@ public class Base extends Application implements LoginController.OnLoginListener
             loginStage.show();
         } catch (Exception ex) {
             Logger.getLogger(Base.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
+        } finally {
             System.gc();
         }
     }
@@ -171,7 +171,7 @@ public class Base extends Application implements LoginController.OnLoginListener
             loginStage.hide();
         } catch (Exception ex) {
             Logger.getLogger(Base.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
+        } finally {
             System.gc();
         }
     }
@@ -182,21 +182,10 @@ public class Base extends Application implements LoginController.OnLoginListener
     }
 
     private void close() {
-        if (mainStage != null) {
-            FlowHandler flowHandler = (FlowHandler) flowContext.getRegisteredObject("ContentFlowHandler");
-            CameraController cameraController = (CameraController) flowHandler.getCurrentView().getViewContext().getController();
-            if (cameraController != null) {
-                try {
-                    cameraController.stop();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
+        if (mainStage != null)
             mainStage.close();
-        }
         if (loginStage != null)
             loginStage.close();
-
         Platform.exit();
         System.exit(0);
     }
