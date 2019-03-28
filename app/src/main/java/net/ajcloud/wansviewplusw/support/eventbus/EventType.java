@@ -2,5 +2,6 @@ package net.ajcloud.wansviewplusw.support.eventbus;
 
 public enum EventType {
     DEVICE_REFRESH,
-    SNAPSHOT
+    SNAPSHOT,
+    MAIN_STAGE_CLOSE
 }

@@ -1,6 +1,5 @@
 package net.ajcloud.wansviewplusw.camera;
 
-import io.reactivex.functions.Consumer;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
@@ -11,7 +10,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
-import net.ajcloud.wansviewplusw.support.eventbus.Event;
 import net.ajcloud.wansviewplusw.support.eventbus.EventBus;
 import net.ajcloud.wansviewplusw.support.eventbus.EventType;
 import net.ajcloud.wansviewplusw.support.utils.FileUtil;
@@ -50,12 +48,17 @@ public class CameraData {
         status.styleProperty().bind(camera.deviceStatusCssProperty());
         playing_bg.visibleProperty().bind(camera.playingBgProperty());
         deviceName.textFillProperty().bind(camera.deviceNameBgProperty());
-        EventBus.getInstance().register(new Consumer<Event>() {
-            @Override
-            public void accept(Event event) throws Exception {
-                if (event.getType() == EventType.SNAPSHOT) {
-                    setInfo(camera);
-                }
+        EventBus.getInstance().register(event -> {
+            if (event.getType() == EventType.SNAPSHOT) {
+                setInfo(camera);
+            }
+        });
+        EventBus.getInstance().register(event -> {
+            if (event.getType() == EventType.MAIN_STAGE_CLOSE) {
+                status.textProperty().unbind();
+                status.styleProperty().unbind();
+                playing_bg.visibleProperty().unbind();
+                deviceName.textFillProperty().unbind();
             }
         });
     }

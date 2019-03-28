@@ -85,6 +85,7 @@ public class Base extends Application implements LoginController.OnLoginListener
     public void init() throws Exception {
         super.init();
         new Tcprelay().relayinit();
+        flowContext = new ViewFlowContext();
         NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), NATIVE_LIBRARY_SEARCH_PATH);
         Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
         getLocalInfo();
@@ -122,35 +123,48 @@ public class Base extends Application implements LoginController.OnLoginListener
 
     private void go2Main() {
         try {
-            mainStage = new Stage(StageStyle.DECORATED);
-            mainStage.getIcons().add(new Image("/image/ic_launcher.png"));
-            mainStage.setTitle("WansviewCloud");
-            mainStage.setMinWidth(980.0);
-            mainStage.setMinHeight(580.0);
-            Flow flow = new Flow(MainController.class);
-            DefaultFlowContainer container = new DefaultFlowContainer();
-            flowContext = new ViewFlowContext();
-            flowContext.register("Stage", mainStage);
-            flowContext.register("MainListener", mainListener);
-            flowContext.register("FullscreenListener", fullscreenListener);
-            mainFlowHandler = flow.createHandler(flowContext);
-            mainFlowHandler.start(container);
+            if (mainStage == null) {
+                mainStage = new Stage(StageStyle.DECORATED);
+                mainStage.getIcons().add(new Image("/image/ic_launcher.png"));
+                mainStage.setTitle("WansviewCloud");
+                mainStage.setMinWidth(980.0);
+                mainStage.setMinHeight(580.0);
+                flowContext.register("Stage", mainStage);
+                flowContext.register("MainListener", mainListener);
+                flowContext.register("FullscreenListener", fullscreenListener);
 
-            Scene scene = new Scene(container.getView(), MAIN_WIDTH, MAIN_HEIGHT);
-            final ObservableList<String> stylesheets = scene.getStylesheets();
-            stylesheets.addAll(Base.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
-                    Base.class.getResource("/css/jfoenix-design.css").toExternalForm(),
-                    Base.class.getResource("/css/main.css").toExternalForm());
-            mainStage.setScene(scene);
-            mainStage.setOnCloseRequest(e -> {
-                e.consume();
-                close();
-            });
-            mainStage.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
-                if (event.getCode() == KeyCode.ESCAPE && isFullscreen) {
-                    fullScreen(false);
-                }
-            });
+                Flow flow = new Flow(MainController.class);
+                DefaultFlowContainer container = new DefaultFlowContainer();
+                mainFlowHandler = flow.createHandler(flowContext);
+                mainFlowHandler.start(container);
+                Scene scene = new Scene(container.getView(), MAIN_WIDTH, MAIN_HEIGHT);
+                final ObservableList<String> stylesheets = scene.getStylesheets();
+                stylesheets.addAll(Base.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
+                        Base.class.getResource("/css/jfoenix-design.css").toExternalForm(),
+                        Base.class.getResource("/css/main.css").toExternalForm());
+                mainStage.setScene(scene);
+                mainStage.setOnCloseRequest(e -> {
+                    e.consume();
+                    close();
+                });
+                mainStage.addEventHandler(KeyEvent.KEY_PRESSED, event -> {
+                    if (event.getCode() == KeyCode.ESCAPE && isFullscreen) {
+                        fullScreen(false);
+                    }
+                });
+            } else {
+                mainStage.setScene(null);
+                Flow flow = new Flow(MainController.class);
+                DefaultFlowContainer container = new DefaultFlowContainer();
+                mainFlowHandler = flow.createHandler(flowContext);
+                mainFlowHandler.start(container);
+                Scene scene = new Scene(container.getView(), MAIN_WIDTH, MAIN_HEIGHT);
+                final ObservableList<String> stylesheets = scene.getStylesheets();
+                stylesheets.addAll(Base.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
+                        Base.class.getResource("/css/jfoenix-design.css").toExternalForm(),
+                        Base.class.getResource("/css/main.css").toExternalForm());
+                mainStage.setScene(scene);
+            }
             mainStage.show();
             loginStage.hide();
         } catch (Exception ex) {
@@ -212,17 +226,17 @@ public class Base extends Application implements LoginController.OnLoginListener
                 @Override
                 public void onSuccess(Object bean) {
                     Platform.runLater(() -> {
-                        LoadingManager.getLoadingManager().hideDefaultLoading();
                         FlowHandler flowHandler = (FlowHandler) flowContext.getRegisteredObject("ContentFlowHandler");
                         CameraController cameraController = (CameraController) flowHandler.getCurrentView().getViewContext().getController();
                         if (cameraController != null) {
                             try {
-                                cameraController.stop();
+                                cameraController.destroy();
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
                         DeviceCache.getInstance().logout();
+                        LoadingManager.getLoadingManager().hideDefaultLoading();
                         mainStage.close();
                         loginStage.show();
                     });

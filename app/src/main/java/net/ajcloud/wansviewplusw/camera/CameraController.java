@@ -8,7 +8,6 @@ import com.sun.jna.Memory;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
-import io.reactivex.functions.Consumer;
 import javafx.animation.AnimationTimer;
 import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
@@ -40,7 +39,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
-import net.ajcloud.wansviewplusw.support.eventbus.Event;
 import net.ajcloud.wansviewplusw.support.eventbus.EventBus;
 import net.ajcloud.wansviewplusw.support.eventbus.EventType;
 import net.ajcloud.wansviewplusw.support.eventbus.event.DeviceRefreshEvent;
@@ -398,13 +396,10 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         play_content.setOnMouseExited(event -> {
             showControlPane(false);
         });
-        EventBus.getInstance().register(new Consumer<Event>() {
-            @Override
-            public void accept(Event event) throws Exception {
-                if (event.getType() == EventType.DEVICE_REFRESH) {
-                    DeviceRefreshEvent deviceRefreshEvent = (DeviceRefreshEvent) event;
-                    doSnapShot(deviceRefreshEvent.getDeviceId());
-                }
+        EventBus.getInstance().register(event -> {
+            if (event.getType() == EventType.DEVICE_REFRESH) {
+                DeviceRefreshEvent deviceRefreshEvent = (DeviceRefreshEvent) event;
+                doSnapShot(deviceRefreshEvent.getDeviceId());
             }
         });
     }
@@ -460,6 +455,17 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         control_play_control.setVisible(true);
         //清晰度
         btn_quality.setText("FHD");
+        Camera camera = DeviceCache.getInstance().get(deviceId);
+        if (camera != null && camera.capability != null && camera.capability.getVideoQualities() != null) {
+            for (Map.Entry<String, Integer> entry : camera.capability.getVideoQualities().entrySet()) {
+                String key = entry.getKey();
+                int value = entry.getValue();
+                if (camera.getCurrentQuality() == value) {
+                    btn_quality.setText(key);
+                    break;
+                }
+            }
+        }
         //频繁刷新操作
         if (timerService.isRunning()) {
             timerService.restart();
@@ -588,7 +594,12 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
     }
 
-    public void destory() {
+    public void destroy() {
+        EventBus.getInstance().post(new SnapshotEvent());
+        btn_play_full.onMouseClickedProperty().unbindBidirectional(image_play_full.onMouseClickedProperty());
+        btn_screenshot_full.onMouseClickedProperty().unbindBidirectional(image_screenshot_full.onMouseClickedProperty());
+        btn_record_full.onMouseClickedProperty().unbindBidirectional(image_record_full.onMouseClickedProperty());
+        btn_voice_full.onMouseClickedProperty().unbindBidirectional(image_voice_full.onMouseClickedProperty());
         if (isP2p) {
             new Thread(() -> tcprelay.relaydisconnect(p2pNum)).start();
         }
