@@ -317,66 +317,10 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             label_stop.setManaged(true);
         });
         //direction
-        btn_top.addEventFilter(MouseEvent.ANY, event -> {
-            if (!canDo()) {
-                return;
-            }
-            if (executeTimer_top == null) {
-                executeTimer_top = new ExecuteTimer(btn_top);
-            }
-            if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
-                gp_control.getStyleClass().setAll("direction_pane_top");
-                executeTimer_top.start();
-            } else {
-                gp_control.getStyleClass().setAll("direction_pane");
-                executeTimer_top.stop();
-            }
-        });
-        btn_right.addEventFilter(MouseEvent.ANY, event -> {
-            if (!canDo()) {
-                return;
-            }
-            if (executeTimer_right == null) {
-                executeTimer_right = new ExecuteTimer(btn_right);
-            }
-            if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
-                gp_control.getStyleClass().setAll("direction_pane_right");
-                executeTimer_right.start();
-            } else {
-                gp_control.getStyleClass().setAll("direction_pane");
-                executeTimer_right.stop();
-            }
-        });
-        btn_bottom.addEventFilter(MouseEvent.ANY, event -> {
-            if (!canDo()) {
-                return;
-            }
-            if (executeTimer_bottom == null) {
-                executeTimer_bottom = new ExecuteTimer(btn_bottom);
-            }
-            if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
-                gp_control.getStyleClass().setAll("direction_pane_bottom");
-                executeTimer_bottom.start();
-            } else {
-                gp_control.getStyleClass().setAll("direction_pane");
-                executeTimer_bottom.stop();
-            }
-        });
-        btn_left.addEventFilter(MouseEvent.ANY, event -> {
-            if (!canDo()) {
-                return;
-            }
-            if (executeTimer_left == null) {
-                executeTimer_left = new ExecuteTimer(btn_left);
-            }
-            if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
-                gp_control.getStyleClass().setAll("direction_pane_left");
-                executeTimer_left.start();
-            } else {
-                gp_control.getStyleClass().setAll("direction_pane");
-                executeTimer_left.stop();
-            }
-        });
+        btn_top.addEventFilter(MouseEvent.ANY, topEventHandler);
+        btn_right.addEventFilter(MouseEvent.ANY, rightEventHandler);
+        btn_bottom.addEventFilter(MouseEvent.ANY, bottomEventHandler);
+        btn_left.addEventFilter(MouseEvent.ANY, leftEventHandler);
         btn_top.setOnAction(event -> {
             if (executeTimer_top != null && executeTimer_top.isActive)
                 setPtz(10);
@@ -491,16 +435,30 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
         initView(camera.deviceId);
         if (mediaPlayerComponent.getMediaPlayer().isPlaying()) {
-            if (!StringUtil.isNullOrEmpty(deviceId) && StringUtil.equals(deviceId, camera.deviceId)) {
-                return;
-            }
-            if (isP2p) {
-                new Thread(() -> tcprelay.relaydisconnect(p2pNum)).start();
-            }
-            mediaPlayerComponent.getMediaPlayer().stop();
+            new Thread(() -> {
+                try {
+                    if (!StringUtil.isNullOrEmpty(deviceId) && StringUtil.equals(deviceId, camera.deviceId)) {
+                        return;
+                    }
+                    mediaPlayerComponent.getMediaPlayer().saveSnapshot(new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg"));
+                    Thread.sleep(100);
+                    Platform.runLater(() -> {
+                        EventBus.getInstance().post(new SnapshotEvent());
+                        if (isP2p) {
+                            new Thread(() -> tcprelay.relaydisconnect(p2pNum)).start();
+                        }
+                        mediaPlayerComponent.getMediaPlayer().stop();
+                        deviceId = camera.deviceId;
+                        play();
+                    });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }).start();
+        } else {
+            deviceId = camera.deviceId;
+            play();
         }
-        this.deviceId = camera.deviceId;
-        play();
     }
 
     private void doSnapShot(String deviceId) {
@@ -607,16 +565,34 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             new Thread(() -> tcprelay.relaydisconnect(p2pNum)).start();
         }
         if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
-            btn_play.getStyleClass().remove("jfx_button_pause");
-            btn_play.getStyleClass().remove("jfx_button_play");
-            btn_play.getStyleClass().add("jfx_button_play");
-            image_play_full.getStyleClass().remove("image_play_full");
-            image_play_full.getStyleClass().remove("image_pause_full");
-            image_play_full.getStyleClass().add("image_play_full");
             mediaPlayerComponent.getMediaPlayer().stop();
             mediaPlayerComponent.getMediaPlayer().release();
             startOrCancelTimer(false);
+            timerService.cancel();
         }
+        writableImage.cancel();
+        fullscreenListener = null;
+        btn_voice.setOnMouseClicked(null);
+        btn_voice_full.setOnMouseClicked(null);
+        btn_screenshot.setOnMouseClicked(null);
+        btn_screenshot_full.setOnMouseClicked(null);
+        btn_play.setOnMouseClicked(null);
+        btn_play_full.setOnMouseClicked(null);
+        btn_record.setOnMouseClicked(null);
+        btn_record_full.setOnMouseClicked(null);
+        btn_quality.setOnMouseClicked(null);
+        btn_fullscreen.setOnMouseClicked(null);
+        label_continue.setOnMouseClicked(null);
+        play_content.setOnMouseEntered(null);
+        play_content.setOnMouseExited(null);
+        btn_top.removeEventFilter(MouseEvent.ANY, topEventHandler);
+        btn_right.removeEventFilter(MouseEvent.ANY, rightEventHandler);
+        btn_bottom.removeEventFilter(MouseEvent.ANY, bottomEventHandler);
+        btn_left.removeEventFilter(MouseEvent.ANY, leftEventHandler);
+        btn_top.setOnAction(null);
+        btn_right.setOnAction(null);
+        btn_bottom.setOnAction(null);
+        btn_left.setOnAction(null);
     }
 
     private void initializeImageView() {
@@ -1144,17 +1120,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
         @Override
         public void videoOutput(MediaPlayer mediaPlayer, int i) {
-            new Timer().schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    Platform.runLater(() -> {
-                        loading.setVisible(false);
-                        mediaPlayer.saveSnapshot(new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg"));
-                        setPlayBg(deviceId);
-                        EventBus.getInstance().post(new SnapshotEvent());
-                    });
-                }
-            }, 1000);
+            loading.setVisible(false);
         }
 
         @Override
@@ -1433,4 +1399,80 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     public interface FullscreenListener {
         void fullscreen(boolean isFullScreen);
     }
+
+    private EventHandler<MouseEvent> topEventHandler = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            if (!canDo()) {
+                return;
+            }
+            if (executeTimer_top == null) {
+                executeTimer_top = new ExecuteTimer(btn_top);
+            }
+            if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
+                gp_control.getStyleClass().setAll("direction_pane_top");
+                executeTimer_top.start();
+            } else {
+                gp_control.getStyleClass().setAll("direction_pane");
+                executeTimer_top.stop();
+            }
+        }
+    };
+
+    private EventHandler<MouseEvent> bottomEventHandler = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            if (!canDo()) {
+                return;
+            }
+            if (executeTimer_bottom == null) {
+                executeTimer_bottom = new ExecuteTimer(btn_bottom);
+            }
+            if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
+                gp_control.getStyleClass().setAll("direction_pane_bottom");
+                executeTimer_bottom.start();
+            } else {
+                gp_control.getStyleClass().setAll("direction_pane");
+                executeTimer_bottom.stop();
+            }
+        }
+    };
+
+    private EventHandler<MouseEvent> leftEventHandler = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            if (!canDo()) {
+                return;
+            }
+            if (executeTimer_left == null) {
+                executeTimer_left = new ExecuteTimer(btn_left);
+            }
+            if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
+                gp_control.getStyleClass().setAll("direction_pane_left");
+                executeTimer_left.start();
+            } else {
+                gp_control.getStyleClass().setAll("direction_pane");
+                executeTimer_left.stop();
+            }
+        }
+    };
+
+    private EventHandler<MouseEvent> rightEventHandler = new EventHandler<MouseEvent>() {
+        @Override
+        public void handle(MouseEvent event) {
+            if (!canDo()) {
+                return;
+            }
+            if (executeTimer_right == null) {
+                executeTimer_right = new ExecuteTimer(btn_right);
+            }
+            if (event.getEventType() == MouseEvent.MOUSE_PRESSED) {
+                gp_control.getStyleClass().setAll("direction_pane_right");
+                executeTimer_right.start();
+            } else {
+                gp_control.getStyleClass().setAll("direction_pane");
+                executeTimer_right.stop();
+            }
+        }
+    };
 }

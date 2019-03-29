@@ -52,6 +52,7 @@ public class Base extends Application implements LoginController.OnLoginListener
     private static final String NATIVE_LIBRARY_SEARCH_PATH = "vlc-3.0.6";
     private Stage mainStage;
     private Stage loginStage;
+    private Scene mainScene;
     private FlowHandler mainFlowHandler;
     @FXMLViewFlowContext
     private ViewFlowContext flowContext;
@@ -139,12 +140,12 @@ public class Base extends Application implements LoginController.OnLoginListener
                 DefaultFlowContainer container = new DefaultFlowContainer();
                 mainFlowHandler = flow.createHandler(flowContext);
                 mainFlowHandler.start(container);
-                Scene scene = new Scene(container.getView(), MAIN_WIDTH, MAIN_HEIGHT);
-                final ObservableList<String> stylesheets = scene.getStylesheets();
+                mainScene = new Scene(container.getView(), MAIN_WIDTH, MAIN_HEIGHT);
+                final ObservableList<String> stylesheets = mainScene.getStylesheets();
                 stylesheets.addAll(Base.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
                         Base.class.getResource("/css/jfoenix-design.css").toExternalForm(),
                         Base.class.getResource("/css/main.css").toExternalForm());
-                mainStage.setScene(scene);
+                mainStage.setScene(mainScene);
                 mainStage.setOnCloseRequest(e -> {
                     e.consume();
                     close();
@@ -155,17 +156,11 @@ public class Base extends Application implements LoginController.OnLoginListener
                     }
                 });
             } else {
-                mainStage.setScene(null);
                 Flow flow = new Flow(MainController.class);
                 DefaultFlowContainer container = new DefaultFlowContainer();
                 mainFlowHandler = flow.createHandler(flowContext);
                 mainFlowHandler.start(container);
-                Scene scene = new Scene(container.getView(), MAIN_WIDTH, MAIN_HEIGHT);
-                final ObservableList<String> stylesheets = scene.getStylesheets();
-                stylesheets.addAll(Base.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
-                        Base.class.getResource("/css/jfoenix-design.css").toExternalForm(),
-                        Base.class.getResource("/css/main.css").toExternalForm());
-                mainStage.setScene(scene);
+                mainScene.setRoot(container.getView());
             }
             mainStage.show();
             loginStage.hide();
@@ -219,6 +214,7 @@ public class Base extends Application implements LoginController.OnLoginListener
                 @Override
                 public void onSuccess(Object bean) {
                     Platform.runLater(() -> {
+                        //清理camera view
                         FlowHandler flowHandler = (FlowHandler) flowContext.getRegisteredObject("ContentFlowHandler");
                         CameraController cameraController = (CameraController) flowHandler.getCurrentView().getViewContext().getController();
                         if (cameraController != null) {
@@ -228,6 +224,14 @@ public class Base extends Application implements LoginController.OnLoginListener
                                 e.printStackTrace();
                             }
                         }
+                        //清理main view
+                        MainController mainController = (MainController) mainFlowHandler.getCurrentView().getViewContext().getController();
+                        if (mainController != null) {
+                            mainController.destroy();
+                        }
+                        //清理base
+                        mainFlowHandler = null;
+                        //清理数据
                         DeviceCache.getInstance().logout();
                         LoadingManager.getLoadingManager().hideDefaultLoading();
                         mainStage.close();

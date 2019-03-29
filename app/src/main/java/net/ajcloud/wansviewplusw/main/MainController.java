@@ -42,6 +42,9 @@ import java.util.Objects;
 @ViewController(value = "/fxml/main.fxml", title = "Main")
 public class MainController implements BaseController {
 
+    private static final String CONTENT_DEVICE = "CONTENT_DEVICE";
+    private static final String CONTENT_QUAD = "CONTENT_QUAD";
+    private static final String CONTENT_NINE = "CONTENT_NINE";
     @FXMLViewFlowContext
     private ViewFlowContext context;
     @FXML
@@ -83,17 +86,17 @@ public class MainController implements BaseController {
         vb_user.setOnMouseClicked(e -> {
             showAccountPop();
         });
-        vb_device.setOnMouseClicked(e -> replace(vb_device.getId()));
-        vb_quad.setOnMouseClicked(e -> replace(vb_quad.getId()));
-        vb_nine.setOnMouseClicked(e -> replace(vb_nine.getId()));
+        vb_device.setOnMouseClicked(e -> replace(CONTENT_DEVICE));
+        vb_quad.setOnMouseClicked(e -> replace(CONTENT_QUAD));
+        vb_nine.setOnMouseClicked(e -> replace(CONTENT_NINE));
         vb_local.setOnMouseClicked(e -> showLocalFilePop());
 
         currentItem = vb_device.getId();
         Flow innerFlow = new Flow(CameraController.class);
         flowHandler = innerFlow.createHandler(context);
-        bindNodeToController(vb_device.getId(), CameraController.class, innerFlow, flowHandler);
-//        bindNodeToController(vb_quad.getId(), QuadController.class, innerFlow, flowHandler);
-//        bindNodeToController(vb_nine.getId(), NineController.class, innerFlow, flowHandler);
+        bindNodeToController(CONTENT_DEVICE, CameraController.class, innerFlow, flowHandler);
+//        bindNodeToController(CONTENT_QUAD, QuadController.class, innerFlow, flowHandler);
+//        bindNodeToController(CONTENT_NINE, NineController.class, innerFlow, flowHandler);
 
         context.register("ContentFlowHandler", flowHandler);
         context.register("ContentFlow", innerFlow);
@@ -229,5 +232,15 @@ public class MainController implements BaseController {
         layout.setActions(hBox);
         alert.setContent(layout);
         alert.show();
+    }
+
+    public void destroy() {
+        vb_user.setOnMouseClicked(null);
+        vb_device.setOnMouseClicked(null);
+        vb_quad.setOnMouseClicked(null);
+        vb_nine.setOnMouseClicked(null);
+        vb_local.setOnMouseClicked(null);
+        content = null;
+        flowHandler = null;
     }
 }
