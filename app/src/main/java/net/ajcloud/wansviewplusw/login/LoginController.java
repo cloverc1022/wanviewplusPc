@@ -14,7 +14,10 @@ import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
 import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
 import net.ajcloud.wansviewplusw.support.http.bean.SigninBean;
 import net.ajcloud.wansviewplusw.support.http.bean.start.AppStartUpBean;
+import net.ajcloud.wansviewplusw.support.utils.PreferencesUtils;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
+
+import java.util.prefs.Preferences;
 
 public class LoginController implements BaseController {
 
@@ -28,6 +31,7 @@ public class LoginController implements BaseController {
     private OnLoginListener onLoginListener;
     private RequiredFieldValidator email_validator;
     private RequiredFieldValidator password_validator;
+    private Preferences preferences;
 
     public interface OnLoginListener {
         void onLoginSuccess();
@@ -38,6 +42,12 @@ public class LoginController implements BaseController {
     }
 
     public void init() {
+        preferences = Preferences.userNodeForPackage(LoginController.class);
+        String lastAccount = preferences.get(PreferencesUtils.P_LAST_ACCOUNT, null);
+        if (!StringUtil.isNullOrEmpty(lastAccount)) {
+            tf_name.setText(lastAccount);
+            Platform.runLater(() -> tf_password.requestFocus());
+        }
         email_validator = new RequiredFieldValidator();
         tf_name.getValidators().add(email_validator);
         tf_name.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -91,6 +101,7 @@ public class LoginController implements BaseController {
                         requestApiUnit.signin(tf_name.getText(), tf_password.getText(), new HttpCommonListener<SigninBean>() {
                             @Override
                             public void onSuccess(SigninBean bean) {
+                                preferences.put(PreferencesUtils.P_LAST_ACCOUNT, bean.mail);
                                 Platform.runLater(() -> {
                                     if (onLoginListener != null) {
                                         LoadingManager.getLoadingManager().hideDefaultLoading();
