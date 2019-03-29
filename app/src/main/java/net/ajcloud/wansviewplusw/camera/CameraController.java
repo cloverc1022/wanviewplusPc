@@ -31,6 +31,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.image.*;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
@@ -226,13 +227,15 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         lv_devices.setCellFactory(param -> {
             DeviceListCell deviceListCell = new DeviceListCell();
             deviceListCell.setOnMouseClicked((v) -> {
-                if (!content_play.isVisible()) {
-                    content_play.setVisible(true);
-                    content_play.setManaged(true);
-                    content_play_empty.setVisible(false);
-                    content_play_empty.setManaged(false);
+                if (v.getButton() == MouseButton.PRIMARY) {
+                    if (!content_play.isVisible()) {
+                        content_play.setVisible(true);
+                        content_play.setManaged(true);
+                        content_play_empty.setVisible(false);
+                        content_play_empty.setManaged(false);
+                    }
+                    handleMouseClick(deviceListCell.getItem());
                 }
-                handleMouseClick(deviceListCell.getItem());
             });
             return deviceListCell;
         });
@@ -1074,102 +1077,92 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     }
 
     private final MediaPlayerEventListener mMediaPlayerListener = new MediaPlayerEventListener() {
+
         @Override
         public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t libvlc_media_t, String s) {
-
         }
 
         @Override
         public void opening(MediaPlayer mediaPlayer) {
-
         }
 
         @Override
         public void buffering(MediaPlayer mediaPlayer, float v) {
-
         }
 
         @Override
         public void playing(MediaPlayer mediaPlayer) {
-
         }
 
         @Override
         public void paused(MediaPlayer mediaPlayer) {
-
         }
 
         @Override
         public void stopped(MediaPlayer mediaPlayer) {
-
         }
 
         @Override
         public void forward(MediaPlayer mediaPlayer) {
-
         }
 
         @Override
         public void backward(MediaPlayer mediaPlayer) {
-
         }
 
         @Override
         public void finished(MediaPlayer mediaPlayer) {
-
         }
 
         @Override
         public void timeChanged(MediaPlayer mediaPlayer, long l) {
-
         }
 
         @Override
         public void positionChanged(MediaPlayer mediaPlayer, float v) {
-
         }
 
         @Override
         public void seekableChanged(MediaPlayer mediaPlayer, int i) {
-
         }
 
         @Override
         public void pausableChanged(MediaPlayer mediaPlayer, int i) {
-
         }
 
         @Override
         public void titleChanged(MediaPlayer mediaPlayer, int i) {
-
         }
 
         @Override
         public void snapshotTaken(MediaPlayer mediaPlayer, String s) {
-
         }
 
         @Override
         public void lengthChanged(MediaPlayer mediaPlayer, long l) {
-
         }
 
         @Override
         public void videoOutput(MediaPlayer mediaPlayer, int i) {
-            loading.setVisible(false);
-            mediaPlayer.saveSnapshot(new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg"));
-            setPlayBg(deviceId);
-            EventBus.getInstance().post(new SnapshotEvent());
+            new Timer().schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    Platform.runLater(() -> {
+                        loading.setVisible(false);
+                        mediaPlayer.saveSnapshot(new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg"));
+                        setPlayBg(deviceId);
+                        EventBus.getInstance().post(new SnapshotEvent());
+                    });
+                }
+            }, 1000);
         }
 
         @Override
         public void scrambledChanged(MediaPlayer mediaPlayer, int i) {
-
         }
 
         @Override
         public void elementaryStreamAdded(MediaPlayer mediaPlayer, int i, int i1) {
-
         }
 
         @Override
@@ -1184,7 +1177,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
         @Override
         public void corked(MediaPlayer mediaPlayer, boolean b) {
-
         }
 
         @Override
@@ -1194,7 +1186,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
         @Override
         public void volumeChanged(MediaPlayer mediaPlayer, float v) {
-
         }
 
         @Override
@@ -1209,7 +1200,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
         @Override
         public void error(MediaPlayer mediaPlayer) {
-
         }
 
         @Override
