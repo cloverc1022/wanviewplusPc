@@ -14,6 +14,8 @@ public class AccountPopController implements BaseController {
     @FXML
     private HBox account;
     @FXML
+    private HBox about;
+    @FXML
     private HBox logout;
 
     public void initView(String name) {
@@ -22,5 +24,9 @@ public class AccountPopController implements BaseController {
 
     public void setOnLogoutListener(EventHandler<? super MouseEvent> value) {
         logout.setOnMouseClicked(value);
+    }
+
+    public void setOnAboutListener(EventHandler<? super MouseEvent> value) {
+        about.setOnMouseClicked(value);
     }
 }

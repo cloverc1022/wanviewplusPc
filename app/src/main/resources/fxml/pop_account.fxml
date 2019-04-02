@@ -31,6 +31,29 @@
                 </Label>
             </children>
         </HBox>
+        <HBox fx:id="about" style="-fx-background-color:White" alignment="CENTER_LEFT" maxHeight="-Infinity"
+              maxWidth="-Infinity"
+              minHeight="40.0" minWidth="208.0"
+              prefHeight="40.0" prefWidth="208.0">
+            <children>
+                <ImageView
+                        fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                    <HBox.margin>
+                        <Insets left="12.0"/>
+                    </HBox.margin>
+                    <image>
+                        <Image url="@/image/ic_about.png"/>
+                    </image>
+                </ImageView>
+                <Label style="-fx-text-fill:#263238;-fx-font-size:11;" minHeight="40.0"
+                       minWidth="172.0"
+                       prefHeight="40.0" prefWidth="172.0" text="About">
+                    <padding>
+                        <Insets left="8.0"/>
+                    </padding>
+                </Label>
+            </children>
+        </HBox>
         <HBox fx:id="logout" style="-fx-background-color:White" alignment="CENTER_LEFT" maxHeight="-Infinity"
               maxWidth="-Infinity"
               minHeight="40.0" minWidth="208.0"

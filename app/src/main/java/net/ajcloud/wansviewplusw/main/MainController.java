@@ -11,19 +11,22 @@ import io.datafx.controller.flow.container.DefaultFlowContainer;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
 import javafx.application.Platform;
-import javafx.event.EventHandler;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
+import javafx.scene.Scene;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import net.ajcloud.wansviewplusw.Base;
 import net.ajcloud.wansviewplusw.BaseController;
 import net.ajcloud.wansviewplusw.camera.CameraController;
@@ -38,6 +41,8 @@ import java.awt.*;
 import java.io.File;
 import java.io.InputStream;
 import java.util.Objects;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @ViewController(value = "/fxml/main.fxml", title = "Main")
 public class MainController implements BaseController {
@@ -61,6 +66,8 @@ public class MainController implements BaseController {
     private VBox vb_local;
     @FXML
     private StackPane content;
+
+    private Stage aboutStage;
 
     private FlowHandler flowHandler;
 
@@ -123,6 +130,36 @@ public class MainController implements BaseController {
         flow.withGlobalLink(tag, controllerClass);
     }
 
+    private void go2About() {
+        try {
+            if (aboutStage == null) {
+                FXMLLoader loader = new FXMLLoader();
+                InputStream in = Base.class.getResourceAsStream("/fxml/about.fxml");
+                loader.setBuilderFactory(new JavaFXBuilderFactory());
+                loader.setLocation(Base.class.getResource("/fxml/about.fxml"));
+                Pane page = loader.load(in);
+                in.close();
+                Scene scene = new Scene(page, 530, 240);
+                final ObservableList<String> stylesheets = scene.getStylesheets();
+                stylesheets.addAll(Base.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
+                        Base.class.getResource("/css/jfoenix-design.css").toExternalForm(),
+                        Base.class.getResource("/css/main.css").toExternalForm());
+                aboutStage = new Stage();
+                aboutStage.setScene(scene);
+                aboutStage.getIcons().add(new Image("/image/ic_launcher.png"));
+                aboutStage.setTitle("WansviewCloud");
+                aboutStage.sizeToScene();
+                aboutStage.setResizable(false);
+                aboutStage.initStyle(StageStyle.DECORATED);
+            }
+            aboutStage.show();
+        } catch (Exception ex) {
+            Logger.getLogger(Base.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            System.gc();
+        }
+    }
+
     private void showAccountPop() {
         if (accountPop == null) {
             try {
@@ -134,13 +171,11 @@ public class MainController implements BaseController {
 
                 AccountPopController accountPopController = loader.getController();
                 accountPopController.initView(DeviceCache.getInstance().getSigninBean().mail);
-                accountPopController.setOnLogoutListener(new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent event) {
-                        accountPop.hide();
-                        showLogoutDialog();
-                    }
+                accountPopController.setOnLogoutListener(event -> {
+                    accountPop.hide();
+                    showLogoutDialog();
                 });
+                accountPopController.setOnAboutListener(event -> go2About());
                 in.close();
             } catch (Exception e) {
                 e.printStackTrace();

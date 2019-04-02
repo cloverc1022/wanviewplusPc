@@ -109,9 +109,11 @@ public class Base extends Application implements LoginController.OnLoginListener
                     Base.class.getResource("/css/jfoenix-design.css").toExternalForm(),
                     Base.class.getResource("/css/main.css").toExternalForm());
             loginStage.setScene(scene);
+            loginStage.getIcons().add(new Image("/image/ic_launcher.png"));
+            loginStage.setTitle("WansviewCloud");
             loginStage.sizeToScene();
             loginStage.setResizable(false);
-            loginStage.initStyle(StageStyle.UTILITY);
+            loginStage.initStyle(StageStyle.DECORATED);
             loginStage.setOnCloseRequest(e -> {
                 e.consume();
                 close();

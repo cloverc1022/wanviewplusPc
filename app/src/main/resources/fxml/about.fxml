@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Line?>
+<AnchorPane maxHeight="240.0" maxWidth="530.0" minHeight="240.0" minWidth="530.0" prefHeight="240.0" prefWidth="530.0"
+            style="-fx-background-repeat:no-repeat; -fx-background-position:center;  -fx-background-size:530px auto;  -fx-background-image: url('/image/ic_about_bg.png');"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="net.ajcloud.wansviewplusw.about.AboutController">
+    <children>
+        <VBox fillWidth="false" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0"
+              AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <Label style="-fx-text-fill:#223239;-fx-font-size:28;-fx-font-weight: bold" text="Wansview Cloud">
+                    <VBox.margin>
+                        <Insets top="38.0"/>
+                    </VBox.margin>
+                </Label>
+                <Label style="-fx-text-fill:#223239;-fx-font-size:14;-fx-font-weight: bold" text="Version 1.0">
+                    <VBox.margin>
+                        <Insets top="15.0"/>
+                    </VBox.margin>
+                </Label>
+                <AnchorPane onMouseClicked="#onContentTerms" fx:id="content_terms" minHeight="32.0" minWidth="272.0"
+                            prefHeight="32.0" prefWidth="272.0" VBox.vgrow="NEVER">
+                    <children>
+                        <Label style="-fx-text-fill:#223239;-fx-font-size:12;" text="Terms of Use"
+                               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true"
+                                   AnchorPane.bottomAnchor="4.0" AnchorPane.rightAnchor="0.0"
+                                   AnchorPane.topAnchor="4.0">
+                            <image>
+                                <Image url="@/image/ic_direction_right_light.png"/>
+                            </image>
+                        </ImageView>
+                        <Line endX="272.0" strokeWidth="0.1" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                              AnchorPane.rightAnchor="0.0"/>
+                    </children>
+                    <VBox.margin>
+                        <Insets top="20.0"/>
+                    </VBox.margin>
+                </AnchorPane>
+                <AnchorPane onMouseClicked="#onContentPolicy" fx:id="content_policy" minHeight="32.0" minWidth="272.0"
+                            prefHeight="32.0" prefWidth="272.0">
+                    <children>
+                        <Label style="-fx-text-fill:#223239;-fx-font-size:12;" text="Privacy Policy"
+                               AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true"
+                                   AnchorPane.bottomAnchor="4.0" AnchorPane.rightAnchor="0.0"
+                                   AnchorPane.topAnchor="4.0">
+                            <image>
+                                <Image url="@/image/ic_direction_right_light.png"/>
+                            </image>
+                        </ImageView>
+                        <Line endX="272.0" strokeWidth="0.1" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                              AnchorPane.rightAnchor="0.0"/>
+                    </children>
+                </AnchorPane>
+                <Label maxWidth="272.0" minWidth="272.0" prefWidth="272.0"
+                       style="-fx-text-fill:#647279;-fx-font-size:10;"
+                       text="©2019 Wansview technology Co.,Ltd. All rights reserved." wrapText="true">
+                    <VBox.margin>
+                        <Insets top="8.0"/>
+                    </VBox.margin>
+                </Label>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
