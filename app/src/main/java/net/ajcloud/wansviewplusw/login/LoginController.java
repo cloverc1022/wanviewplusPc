@@ -15,7 +15,8 @@ import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
 import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
 import net.ajcloud.wansviewplusw.support.http.bean.SigninBean;
 import net.ajcloud.wansviewplusw.support.http.bean.start.AppStartUpBean;
-import net.ajcloud.wansviewplusw.support.utils.PreferencesUtils;
+import net.ajcloud.wansviewplusw.support.utils.CipherUtil;
+import net.ajcloud.wansviewplusw.support.utils.IPreferences;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 
 import java.util.prefs.Preferences;
@@ -46,10 +47,14 @@ public class LoginController implements BaseController {
 
     public void init() {
         preferences = Preferences.userNodeForPackage(LoginController.class);
-        if (preferences.getBoolean(PreferencesUtils.P_REMEMBER_ACCOUNT, false)) {
+//        if (StringUtil.isNullOrEmpty(preferences.get(IPreferences.P_SALT, ""))) {
+//            String salt = CipherUtil.getRandomSalt();
+//            preferences.put(IPreferences.P_SALT, salt);
+//        }
+        if (preferences.getBoolean(IPreferences.P_REMEMBER_ACCOUNT, false)) {
             cb_remember.setSelected(true);
-            tf_name.setText(preferences.get(PreferencesUtils.P_LAST_ACCOUNT, null));
-            tf_password.setText(preferences.get(PreferencesUtils.P_LAST_ACCOUNT_PASSWORD, null));
+            tf_name.setText(preferences.get(IPreferences.P_LAST_ACCOUNT, null));
+//            tf_password.setText(CipherUtil.naclDecodeLocal(preferences.get(IPreferences.P_LAST_ACCOUNT_PASSWORD, null), preferences.get(IPreferences.P_SALT, null)));
         } else {
             cb_remember.setSelected(false);
         }
@@ -107,13 +112,13 @@ public class LoginController implements BaseController {
                             @Override
                             public void onSuccess(SigninBean bean) {
                                 if (cb_remember.isSelected()) {
-                                    preferences.putBoolean(PreferencesUtils.P_REMEMBER_ACCOUNT, true);
-                                    preferences.put(PreferencesUtils.P_LAST_ACCOUNT, bean.mail);
-                                    preferences.put(PreferencesUtils.P_LAST_ACCOUNT_PASSWORD, tf_password.getText());
+                                    preferences.putBoolean(IPreferences.P_REMEMBER_ACCOUNT, true);
+                                    preferences.put(IPreferences.P_LAST_ACCOUNT, bean.mail);
+//                                    preferences.put(IPreferences.P_LAST_ACCOUNT_PASSWORD, CipherUtil.naclEncodeLocal(tf_password.getText(), preferences.get(IPreferences.P_SALT, "")));
                                 } else {
-                                    preferences.putBoolean(PreferencesUtils.P_REMEMBER_ACCOUNT, false);
-                                    preferences.put(PreferencesUtils.P_LAST_ACCOUNT, "");
-                                    preferences.put(PreferencesUtils.P_LAST_ACCOUNT_PASSWORD, "");
+                                    preferences.putBoolean(IPreferences.P_REMEMBER_ACCOUNT, false);
+                                    preferences.put(IPreferences.P_LAST_ACCOUNT, "");
+//                                    preferences.put(IPreferences.P_LAST_ACCOUNT_PASSWORD, "");
                                 }
                                 Platform.runLater(() -> {
                                     if (onLoginListener != null) {
