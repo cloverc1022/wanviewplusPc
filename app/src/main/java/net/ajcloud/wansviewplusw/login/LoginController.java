@@ -1,6 +1,7 @@
 package net.ajcloud.wansviewplusw.login;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
@@ -27,6 +28,8 @@ public class LoginController implements BaseController {
     public JFXPasswordField tf_password;
     @FXML
     public JFXButton btn_login;
+    @FXML
+    public JFXCheckBox cb_remember;
     private RequestApiUnit requestApiUnit;
     private OnLoginListener onLoginListener;
     private RequiredFieldValidator email_validator;
@@ -43,10 +46,12 @@ public class LoginController implements BaseController {
 
     public void init() {
         preferences = Preferences.userNodeForPackage(LoginController.class);
-        String lastAccount = preferences.get(PreferencesUtils.P_LAST_ACCOUNT, null);
-        if (!StringUtil.isNullOrEmpty(lastAccount)) {
-            tf_name.setText(lastAccount);
-            Platform.runLater(() -> tf_password.requestFocus());
+        if (preferences.getBoolean(PreferencesUtils.P_REMEMBER_ACCOUNT, false)) {
+            cb_remember.setSelected(true);
+            tf_name.setText(preferences.get(PreferencesUtils.P_LAST_ACCOUNT, null));
+            tf_password.setText(preferences.get(PreferencesUtils.P_LAST_ACCOUNT_PASSWORD, null));
+        } else {
+            cb_remember.setSelected(false);
         }
         email_validator = new RequiredFieldValidator();
         tf_name.getValidators().add(email_validator);
@@ -101,7 +106,15 @@ public class LoginController implements BaseController {
                         requestApiUnit.signin(tf_name.getText(), tf_password.getText(), new HttpCommonListener<SigninBean>() {
                             @Override
                             public void onSuccess(SigninBean bean) {
-                                preferences.put(PreferencesUtils.P_LAST_ACCOUNT, bean.mail);
+                                if (cb_remember.isSelected()) {
+                                    preferences.putBoolean(PreferencesUtils.P_REMEMBER_ACCOUNT, true);
+                                    preferences.put(PreferencesUtils.P_LAST_ACCOUNT, bean.mail);
+                                    preferences.put(PreferencesUtils.P_LAST_ACCOUNT_PASSWORD, tf_password.getText());
+                                } else {
+                                    preferences.putBoolean(PreferencesUtils.P_REMEMBER_ACCOUNT, false);
+                                    preferences.put(PreferencesUtils.P_LAST_ACCOUNT, "");
+                                    preferences.put(PreferencesUtils.P_LAST_ACCOUNT_PASSWORD, "");
+                                }
                                 Platform.runLater(() -> {
                                     if (onLoginListener != null) {
                                         LoadingManager.getLoadingManager().hideDefaultLoading();
