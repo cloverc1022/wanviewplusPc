@@ -189,6 +189,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private String deviceId;
     private String localUrl;
     private String relay_server_ip;
+    private boolean isFirstPlay = true;
     private boolean isP2p = false;
     private int play_method;
     private int p2pNum;
@@ -285,10 +286,18 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             takeSnapshot(FileUtil.getImagePath(DeviceCache.getInstance().getSigninBean().mail), true);
         });
         btn_play.setOnMouseClicked((v) -> {
-            startOrPause();
+            if (isFirstPlay){
+                play();
+            }else {
+                startOrPause();
+            }
         });
         btn_play_full.setOnMouseClicked((v) -> {
-            startOrPause();
+            if (isFirstPlay){
+                play();
+            }else {
+                startOrPause();
+            }
         });
         btn_record.setOnMouseClicked((v) -> {
             recording();
@@ -533,6 +542,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             image_play_full.getStyleClass().remove("image_pause_full");
             image_play_full.getStyleClass().add("image_pause_full");
             loading.setVisible(true);
+            isFirstPlay = false;
             label_name.setText(camera.aliasName);
             policeHelper.setCamera(camera);
             policeHelper.getUrlAndPlay();
@@ -550,6 +560,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             image_play_full.getStyleClass().remove("image_play_full");
             image_play_full.getStyleClass().remove("image_pause_full");
             image_play_full.getStyleClass().add("image_play_full");
+            isFirstPlay = true;
             mediaPlayerComponent.getMediaPlayer().stop();
             startOrCancelTimer(false);
         }
@@ -565,6 +576,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             new Thread(() -> tcprelay.relaydisconnect(p2pNum)).start();
         }
         if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+            isFirstPlay = true;
             mediaPlayerComponent.getMediaPlayer().stop();
             mediaPlayerComponent.getMediaPlayer().release();
             startOrCancelTimer(false);
@@ -1076,6 +1088,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
         @Override
         public void stopped(MediaPlayer mediaPlayer) {
+            isFirstPlay = true;
         }
 
         @Override
