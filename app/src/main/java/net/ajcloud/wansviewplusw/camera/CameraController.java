@@ -127,6 +127,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     @FXML
     private JFXSpinner loading;
     @FXML
+    private Label loading_text;
+    @FXML
     private JFXListView<Camera> lv_devices;
     @FXML
     private GridPane gp_control;
@@ -214,7 +216,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         Objects.requireNonNull(context, "context");
         fullscreenListener = (FullscreenListener) context.getRegisteredObject("FullscreenListener");
         //init play
-        loading.setVisible(false);
+        showLoading(false);
         tcprelay = new Tcprelay();
         policeHelper = new PoliceHelper(this);
         mediaPlayerComponent = new CanvasPlayerComponent();
@@ -541,7 +543,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             image_play_full.getStyleClass().remove("image_play_full");
             image_play_full.getStyleClass().remove("image_pause_full");
             image_play_full.getStyleClass().add("image_pause_full");
-            loading.setVisible(true);
+            showLoading(true);
             isFirstPlay = false;
             label_name.setText(camera.aliasName);
             policeHelper.setCamera(camera);
@@ -1161,7 +1163,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
         @Override
         public void videoOutput(MediaPlayer mediaPlayer, int i) {
-            loading.setVisible(false);
+            showLoading(false);
         }
 
         @Override
@@ -1516,4 +1518,9 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             }
         }
     };
+
+    private void showLoading(boolean isShow) {
+        loading.setVisible(isShow);
+        loading_text.setVisible(isShow);
+    }
 }

@@ -160,10 +160,10 @@
                                                                 </Button>
                                                             </children>
                                                         </GridPane>
-                                                        <HBox alignment="CENTER" AnchorPane.bottomAnchor="202.0"
-                                                              AnchorPane.leftAnchor="302.0"
-                                                              AnchorPane.rightAnchor="302.0"
-                                                              AnchorPane.topAnchor="202.0">
+                                                        <VBox alignment="CENTER" AnchorPane.bottomAnchor="185.0"
+                                                              AnchorPane.leftAnchor="100.0"
+                                                              AnchorPane.rightAnchor="100.0"
+                                                              AnchorPane.topAnchor="185.0">
                                                             <children>
                                                                 <JFXSpinner fx:id="loading" maxHeight="64.0"
                                                                             maxWidth="64.0" minHeight="64.0"
@@ -171,8 +171,15 @@
                                                                             prefWidth="64.0" startingAngle="-40"
                                                                             styleClass="spinner_loading"
                                                                             HBox.hgrow="NEVER"/>
+                                                                <Label fx:id="loading_text"
+                                                                       text="preparing to play video..."
+                                                                       style="-fx-text-fill:#FFFFFF;-fx-background-color:transparent;-fx-font-size:18;">
+                                                                    <VBox.margin>
+                                                                        <Insets top="8.0"/>
+                                                                    </VBox.margin>
+                                                                </Label>
                                                             </children>
-                                                        </HBox>
+                                                        </VBox>
                                                         <HBox fx:id="control_play_control" alignment="CENTER"
                                                               visible="false" AnchorPane.bottomAnchor="16.0"
                                                               AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">

@@ -55,3 +55,127 @@ po/                - VLC translations.
 share/             - Common Resources files.
 src/               - libvlccore source code.
 test/              - testing system.
+
+
+
+
+
+
+
+
+compile vlc-3.0.6
+===============================
+
+Prepare 3rd party libraries
+===========================
+mkdir -p contrib/win32
+cd contrib/win32
+../bootstrap --host=HOST-TRIPLET
+make fetch
+make
+
+tips:
+config.mak:
+PKGS_DISABLE := dca goom chromaprint schroedinger sdl SDL_image fontconfig kate caca gettext mpcdec gme tremor sidplay2 samplerate faad2 aribb24 aribb25 libmpeg2 mad vncclient vnc srt x265
+PKGS_ENABLE := dvdread dvdnav lua zvbi upnp vorbis harfbuzz iconv mpg123 libarchive soxr nfs microdns fluidlite jpeg libplacebo vpx
+
+
+
+Configuring the build
+===============================
+./bootstrap
+mkdir win32
+cd win32
+export PKG_CONFIG_LIBDIR=$HOME/vlc/contrib/i686-w64-mingw32/lib/pkgconfig   \
+export CFLAGS="-O2" \
+export CXXFLAGS="-O2"
+../configure --host=i686-w64-mingw32 \
+	--disable-nls \
+    --enable-live555 \
+    --disable-realrtsp \
+    --enable-avformat \
+    --enable-swscale \
+    --enable-avcodec \
+    --enable-opus \
+    --enable-opensles \
+    --enable-matroska \
+    --enable-taglib \
+    --enable-dvbpsi \
+    --enable-vlc \
+    --enable-shared \
+    --disable-update-check \
+    --disable-vlm \
+    --disable-dbus \
+    --enable-lua \
+    --disable-vcd \
+    --disable-v4l2 \
+    --enable-dvdread \
+    --enable-dvdnav \
+    --disable-bluray \
+    --disable-linsys \
+    --disable-decklink \
+    --disable-libva \
+    --disable-dv1394 \
+    --enable-mod \
+    --disable-sid \
+    --disable-gme \
+    --disable-tremor \
+    --disable-mad \
+    --enable-mpg123 \
+    --disable-dca \
+    --disable-sdl-image \
+    --enable-zvbi \
+    --disable-fluidsynth \
+    --enable-fluidlite \
+    --disable-jack \
+    --disable-pulse \
+    --disable-alsa \
+    --disable-samplerate \
+    --disable-sdl \
+    --disable-xcb \
+    --disable-qt \
+    --disable-skins2 \
+    --disable-mtp \
+    --disable-notify \
+    --enable-libass \
+    --disable-svg \
+    --disable-udev \
+    --enable-libxml2 \
+    --disable-caca \
+    --disable-goom \
+    --disable-projectm \
+    --enable-sout \
+    --enable-vorbis \
+    --disable-faad \
+    --enable-x264 \
+    --disable-schroedinger \
+    --disable-vncclient \
+    --disable-vnc \
+    --enable-jpeg
+make
+make package-win-common
+
+
+all needed
+==========================
+cd needed/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
