@@ -286,16 +286,16 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             takeSnapshot(FileUtil.getImagePath(DeviceCache.getInstance().getSigninBean().mail), true);
         });
         btn_play.setOnMouseClicked((v) -> {
-            if (isFirstPlay){
+            if (isFirstPlay) {
                 play();
-            }else {
+            } else {
                 startOrPause();
             }
         });
         btn_play_full.setOnMouseClicked((v) -> {
-            if (isFirstPlay){
+            if (isFirstPlay) {
                 play();
-            }else {
+            } else {
                 startOrPause();
             }
         });
@@ -456,7 +456,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                         if (isP2p) {
                             new Thread(() -> tcprelay.relaydisconnect(p2pNum)).start();
                         }
-                        mediaPlayerComponent.getMediaPlayer().stop();
+                        resetPlay();
                         deviceId = camera.deviceId;
                         play();
                     });
@@ -500,7 +500,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
     @Override
     public void onCannotPlay() {
-
+        stopRecord(true);
     }
 
     @Override
@@ -561,7 +561,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             image_play_full.getStyleClass().remove("image_pause_full");
             image_play_full.getStyleClass().add("image_play_full");
             isFirstPlay = true;
-            mediaPlayerComponent.getMediaPlayer().stop();
+            resetPlay();
             startOrCancelTimer(false);
         }
     }
@@ -577,6 +577,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
         if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
             isFirstPlay = true;
+            stopRecord(false);
             mediaPlayerComponent.getMediaPlayer().stop();
             mediaPlayerComponent.getMediaPlayer().release();
             startOrCancelTimer(false);
@@ -874,6 +875,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         if (mediaPlayerComponent.getMediaPlayer().isPlaying()) {
             btn_play.getStyleClass().add("jfx_button_play");
             image_play_full.getStyleClass().add("image_play_full");
+            stopRecord(true);
             mediaPlayerComponent.getMediaPlayer().pause();
             startOrCancelTimer(false);
         } else {
@@ -941,6 +943,29 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
     }
 
+    /**
+     * 录像
+     */
+    private void stopRecord(boolean showAnim) {
+        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isRecording()) {
+            WLog.w(TAG, "stopRecord");
+            recordingAnim(false);
+            mediaPlayerComponent.getMediaPlayer().stopRecord();
+            if (showAnim) {
+                takeSnapshot(FileUtil.getTmpPath(), true);
+            }
+        }
+    }
+
+    private void resetPlay() {
+        Platform.runLater(() -> {
+            stopRecord(true);
+            if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
+                mediaPlayerComponent.getMediaPlayer().stop();
+            }
+        });
+    }
+
     private long time = 0;
 
     /**
@@ -983,6 +1008,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         if (!canDo()) {
             return;
         }
+        stopRecord(true);
         stop();
         play();
     }
@@ -1089,6 +1115,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         @Override
         public void stopped(MediaPlayer mediaPlayer) {
             isFirstPlay = true;
+            stopRecord(true);
         }
 
         @Override
@@ -1101,6 +1128,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
         @Override
         public void finished(MediaPlayer mediaPlayer) {
+            stopRecord(true);
         }
 
         @Override
