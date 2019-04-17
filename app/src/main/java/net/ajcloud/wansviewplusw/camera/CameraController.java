@@ -53,7 +53,7 @@ import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 import net.ajcloud.wansviewplusw.support.utils.WLog;
 import net.ajcloud.wansviewplusw.support.utils.play.PlayMethod;
 import net.ajcloud.wansviewplusw.support.utils.play.PoliceHelper;
-import org.tcprelay.Tcprelay;
+import net.ajcloud.wansviewplusw.support.utils.play.TcprelayHelper;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.component.DirectMediaPlayerComponent;
@@ -189,14 +189,9 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private FullscreenListener fullscreenListener;
     private Timer recordTimer;
     private String deviceId;
-    private String localUrl;
-    private String relay_server_ip;
     private boolean isFirstPlay = true;
     private boolean isP2p = false;
     private int play_method;
-    private int p2pNum;
-    private int port = 10001;
-    private Tcprelay tcprelay;
     //control
     private boolean isMute = false;
 
@@ -217,7 +212,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         fullscreenListener = (FullscreenListener) context.getRegisteredObject("FullscreenListener");
         //init play
         showLoading(false);
-        tcprelay = new Tcprelay();
         policeHelper = new PoliceHelper(this);
         mediaPlayerComponent = new CanvasPlayerComponent();
         mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(mMediaPlayerListener);
@@ -455,9 +449,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                     Thread.sleep(100);
                     Platform.runLater(() -> {
                         EventBus.getInstance().post(new SnapshotEvent());
-                        if (isP2p) {
-                            new Thread(() -> tcprelay.relaydisconnect(p2pNum)).start();
-                        }
                         resetPlay();
                         deviceId = camera.deviceId;
                         play();
@@ -513,12 +504,27 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     }
 
     @Override
-    public void onP2pPlay(String relayServer, String url) {
-        this.localUrl = url;
-        p2pNum = 0;
-        isP2p = true;
-        this.relay_server_ip = relayServer;
-        new P2pTask().start();
+    public void onP2pPlay() {
+        play_method = TcprelayHelper.getInstance().getTcprelay().getConnectType() == 0 ? PlayMethod.P2P : PlayMethod.RELAY;
+        Camera camera = DeviceCache.getInstance().get(deviceId);
+        TcprelayHelper.getInstance().getPlayUrl(deviceId, camera.getCurrentQuality(), new TcprelayHelper.ConnectCallback() {
+            @Override
+            public void onSuccess(String url) {
+                WLog.w("TcprelayHelper", "play-----------onSuccess:" + url);
+                Platform.runLater(() -> onVideoPlay(url));
+            }
+
+            @Override
+            public void onFail() {
+                WLog.w("TcprelayHelper", "play-----------onFail");
+                Platform.runLater(() -> {
+                    //TODO reconnect
+                    stopRecord(false);
+                    if (policeHelper != null)
+                        policeHelper.reset();
+                });
+            }
+        });
     }
 
     private void onVideoPlay(String url) {
@@ -552,9 +558,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     }
 
     public void stop() {
-        if (isP2p) {
-            new Thread(() -> tcprelay.relaydisconnect(p2pNum)).start();
-        }
         if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
             btn_play.getStyleClass().remove("jfx_button_pause");
             btn_play.getStyleClass().remove("jfx_button_play");
@@ -569,14 +572,12 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     }
 
     public void destroy() {
+        TcprelayHelper.getInstance().deinit();
         EventBus.getInstance().post(new SnapshotEvent());
         btn_play_full.onMouseClickedProperty().unbindBidirectional(image_play_full.onMouseClickedProperty());
         btn_screenshot_full.onMouseClickedProperty().unbindBidirectional(image_screenshot_full.onMouseClickedProperty());
         btn_record_full.onMouseClickedProperty().unbindBidirectional(image_record_full.onMouseClickedProperty());
         btn_voice_full.onMouseClickedProperty().unbindBidirectional(image_voice_full.onMouseClickedProperty());
-        if (isP2p) {
-            new Thread(() -> tcprelay.relaydisconnect(p2pNum)).start();
-        }
         if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
             isFirstPlay = true;
             stopRecord(false);
@@ -711,36 +712,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
             Platform.runLater(() -> videoSourceRatioProperty.set((float) sourceHeight / (float) sourceWidth));
             return new RV32BufferFormat((int) visualBounds.getWidth(), (int) visualBounds.getHeight());
-        }
-    }
-
-    class P2pTask extends Thread {
-        @Override
-        public void run() {
-            WLog.w(TAG, "p2p-----process:relayconnect");
-            p2pNum = tcprelay.relayconnect(deviceId, DeviceCache.getInstance().get(deviceId).getStunServers(), relay_server_ip, port);
-            play_method = tcprelay.getConnectType() == 0 ? PlayMethod.P2P : PlayMethod.RELAY;
-            WLog.w(TAG, "p2p----- method:" + play_method);
-            WLog.w(TAG, "p2p----- status:" + p2pNum);
-            if (p2pNum > 0) {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        //更新JavaFX的主线程的代码放在此处
-                        StringBuilder url = new StringBuilder();
-                        String token = localUrl.split("live")[1];
-
-                        url.append("rtsp://");
-                        url.append("127.0.0.1:");
-                        url.append(port);
-                        url.append("/live");
-                        url.append(token);
-
-                        WLog.w("p2p_debug", "------p2p-camera-----" + url.toString());
-                        onVideoPlay(url.toString());
-                    }
-                });
-            }
         }
     }
 
@@ -1520,7 +1491,9 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     };
 
     private void showLoading(boolean isShow) {
-        loading.setVisible(isShow);
-        loading_text.setVisible(isShow);
+        Platform.runLater(() -> {
+            loading.setVisible(isShow);
+            loading_text.setVisible(isShow);
+        });
     }
 }

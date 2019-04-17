@@ -6,6 +6,7 @@ import net.ajcloud.wansviewplusw.support.http.bean.device.ConDeviceBean;
 import net.ajcloud.wansviewplusw.support.http.bean.device.DeviceGeneralsBean;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 import net.ajcloud.wansviewplusw.support.utils.Trans2PinYin;
+import net.ajcloud.wansviewplusw.support.utils.play.TcprelayHelper;
 
 import java.util.*;
 
@@ -102,6 +103,7 @@ public class DeviceCache {
 //                hashTable.put(camera.deviceId, camera);
             } else {
                 mergeDeviceInfo(cameraOrigin, camera);
+                TcprelayHelper.getInstance().init(cameraOrigin);
             }
         }
     }
@@ -164,9 +166,9 @@ public class DeviceCache {
         Hashtable<String, List<String>> tmp = (Hashtable<String, List<String>>) deviceUrlTable.clone();
         outer:
         for (List<String> deviceIds : tmp.values()
-                ) {
+        ) {
             for (String deviceId : deviceIds
-                    ) {
+            ) {
                 if (StringUtil.equals(devID, deviceId)) {
                     deviceIds.remove(deviceId);
                     break outer;
@@ -175,6 +177,7 @@ public class DeviceCache {
         }
         deviceUrlTable.clear();
         deviceUrlTable.putAll(tmp);
+        TcprelayHelper.getInstance().disconnect(devID);
     }
 
     public Camera get(String deviceId) {
@@ -246,7 +249,7 @@ public class DeviceCache {
     public void setDeviceUrlTable(Camera camera) {
         if (deviceUrlTable.containsKey(camera.getGatewayUrl())) {
             for (String deviceId : deviceUrlTable.get(camera.getGatewayUrl())
-                    ) {
+            ) {
                 if (StringUtil.equals(deviceId, camera.deviceId)) {
                     return;
                 }

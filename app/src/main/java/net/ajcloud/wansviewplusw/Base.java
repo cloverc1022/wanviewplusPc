@@ -29,6 +29,8 @@ import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.entity.LocalInfo;
 import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
 import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
+import net.ajcloud.wansviewplusw.support.socket.CheckPortUnit;
+import net.ajcloud.wansviewplusw.support.utils.play.TcprelayHelper;
 import org.tcprelay.Tcprelay;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
@@ -36,7 +38,9 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.util.ArrayList;
 import java.util.Formatter;
+import java.util.List;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -72,12 +76,6 @@ public class Base extends Application implements LoginController.OnLoginListener
 //        go2Main();
     }
 
-    @Override
-    public void stop() throws Exception {
-        super.stop();
-        new Tcprelay().relaydeinit();
-    }
-
     public static void main(String[] args) {
         launch(args);
     }
@@ -85,11 +83,16 @@ public class Base extends Application implements LoginController.OnLoginListener
     @Override
     public void init() throws Exception {
         super.init();
-        new Tcprelay().relayinit();
         flowContext = new ViewFlowContext();
         NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), NATIVE_LIBRARY_SEARCH_PATH);
         Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
         getLocalInfo();
+        new CheckPortUnit().check(new CheckPortUnit.checkPortCallback() {
+            @Override
+            public void result(List<Integer> ports) {
+                TcprelayHelper.getInstance().setPorts(new ArrayList<>(ports));
+            }
+        });
     }
 
     private void go2Login() {

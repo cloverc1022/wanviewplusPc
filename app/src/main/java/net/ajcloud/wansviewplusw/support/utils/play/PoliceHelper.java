@@ -31,7 +31,7 @@ public class PoliceHelper /*implements ResponseListener*/ {
 
         void onPlay(int playMethod, String url, int mVideoHeight, int mVideoWidth);
 
-        void onP2pPlay(String relayServer, String url);
+        void onP2pPlay();
     }
 
     private Camera camera;
@@ -108,24 +108,24 @@ public class PoliceHelper /*implements ResponseListener*/ {
         try {
             int police;
             police = playPolices.peek();
-            if (police == PlayMethod.LAN) {
-                playedRequestType = PlayMethod.LAN;
-                if (StringUtil.equals(camera.remoteAddr, ApiConstant.wanIp)) {
-                    pingLocal();
-                } else {
-                    isRequestToken = false;
-                    tryNextPolicy();
-                }
-            } else if (police == PlayMethod.UPNP) {
-                playedRequestType = PlayMethod.UPNP;
-                getLiveSec(2);
-            } else if (police == PlayMethod.P2P || police == PlayMethod.RELAY) {
+//            if (police == PlayMethod.LAN) {
+//                playedRequestType = PlayMethod.LAN;
+//                if (StringUtil.equals(camera.remoteAddr, ApiConstant.wanIp)) {
+//                    pingLocal();
+//                } else {
+//                    isRequestToken = false;
+//                    tryNextPolicy();
+//                }
+//            } else if (police == PlayMethod.UPNP) {
+//                playedRequestType = PlayMethod.UPNP;
+//                getLiveSec(2);
+//            } else if (police == PlayMethod.P2P || police == PlayMethod.RELAY) {
                 playedRequestType = PlayMethod.P2P;
-                getLiveSec(3);
-            } else {
-                isRequestToken = false;
-                tryNextPolicy();
-            }
+                listener.onP2pPlay();
+//            } else {
+//                isRequestToken = false;
+//                tryNextPolicy();
+//            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -183,8 +183,6 @@ public class PoliceHelper /*implements ResponseListener*/ {
                         listener.onPlay(playedRequestType, bean.stream.localUrl, bean.stream.resHeight, bean.stream.resWidth);
                     } else if (reqType == 2) {
                         listener.onPlay(playedRequestType, bean.stream.wanUrl, bean.stream.resHeight, bean.stream.resWidth);
-                    } else if (reqType == 3) {
-                        listener.onP2pPlay(bean.reqServer, bean.stream.localUrl);
                     }
                 } else {
                     isRequestToken = false;
