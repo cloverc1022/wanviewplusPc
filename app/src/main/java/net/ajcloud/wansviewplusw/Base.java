@@ -87,6 +87,7 @@ public class Base extends Application implements LoginController.OnLoginListener
         NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), NATIVE_LIBRARY_SEARCH_PATH);
         Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
         getLocalInfo();
+        TcprelayHelper.getInstance().getTcprelay().relayinit();
         new CheckPortUnit().check(new CheckPortUnit.checkPortCallback() {
             @Override
             public void result(int port) {

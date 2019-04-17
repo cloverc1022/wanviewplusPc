@@ -380,3 +380,10 @@
     -fx-text-fill: #263238;
     -fx-background-color: #FFFFFF;
 }
+
+.content_reconnect {
+    -fx-background-color: rgba(255, 255, 255, 1);
+    /*设置圆角*/
+    -fx-background-radius: 24;
+    -fx-border-radius: 24;
+}

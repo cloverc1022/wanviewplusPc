@@ -3,7 +3,6 @@ package net.ajcloud.wansviewplusw.camera;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXPopup;
-import com.jfoenix.controls.JFXSpinner;
 import com.sun.jna.Memory;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
@@ -125,9 +124,13 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     @FXML
     private ImageView image_record_full;
     @FXML
-    private JFXSpinner loading;
+    private VBox loading;
     @FXML
-    private Label loading_text;
+    private VBox reconnect;
+    @FXML
+    private ImageView iv_reconnect;
+    @FXML
+    private Label label_reconnect;
     @FXML
     private JFXListView<Camera> lv_devices;
     @FXML
@@ -268,6 +271,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         btn_screenshot_full.onMouseClickedProperty().bindBidirectional(image_screenshot_full.onMouseClickedProperty());
         btn_record_full.onMouseClickedProperty().bindBidirectional(image_record_full.onMouseClickedProperty());
         btn_voice_full.onMouseClickedProperty().bindBidirectional(image_voice_full.onMouseClickedProperty());
+        reconnect.onMouseClickedProperty().bindBidirectional(iv_reconnect.onMouseClickedProperty());
+        reconnect.onMouseClickedProperty().bindBidirectional(label_reconnect.onMouseClickedProperty());
         //function
         btn_voice.setOnMouseClicked((v) -> {
             setMute();
@@ -347,6 +352,12 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         });
         play_content.setOnMouseExited(event -> {
             showControlPane(false);
+        });
+        reconnect.setOnMouseClicked(event -> {
+            reconnect.setVisible(false);
+            reconnect.setManaged(false);
+            TcprelayHelper.getInstance().disconnect(deviceId);
+            play();
         });
         EventBus.getInstance().register(event -> {
             if (event.getType() == EventType.DEVICE_REFRESH) {
@@ -493,7 +504,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
     @Override
     public void onCannotPlay() {
-        stopRecord(true);
+        cannotPlayDo();
     }
 
     @Override
@@ -518,10 +529,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             public void onFail() {
                 WLog.w("TcprelayHelper", "play-----------onFail");
                 Platform.runLater(() -> {
-                    //TODO reconnect
-                    stopRecord(false);
-                    if (policeHelper != null)
-                        policeHelper.reset();
+                    cannotPlayDo();
                 });
             }
         });
@@ -1493,7 +1501,27 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private void showLoading(boolean isShow) {
         Platform.runLater(() -> {
             loading.setVisible(isShow);
-            loading_text.setVisible(isShow);
+            loading.setManaged(isShow);
+            if (isShow) {
+                reconnect.setVisible(false);
+                reconnect.setManaged(false);
+            }
         });
+    }
+
+    private void cannotPlayDo() {
+        btn_play.getStyleClass().remove("jfx_button_pause");
+        btn_play.getStyleClass().remove("jfx_button_play");
+        btn_play.getStyleClass().add("jfx_button_play");
+        image_play_full.getStyleClass().remove("image_play_full");
+        image_play_full.getStyleClass().remove("image_pause_full");
+        image_play_full.getStyleClass().add("image_play_full");
+        isFirstPlay = true;
+        showLoading(false);
+        reconnect.setVisible(true);
+        reconnect.setManaged(true);
+        stopRecord(false);
+        if (policeHelper != null)
+            policeHelper.reset();
     }
 }

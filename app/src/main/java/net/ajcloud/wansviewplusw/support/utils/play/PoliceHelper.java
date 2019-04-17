@@ -108,24 +108,24 @@ public class PoliceHelper /*implements ResponseListener*/ {
         try {
             int police;
             police = playPolices.peek();
-//            if (police == PlayMethod.LAN) {
-//                playedRequestType = PlayMethod.LAN;
-//                if (StringUtil.equals(camera.remoteAddr, ApiConstant.wanIp)) {
-//                    pingLocal();
-//                } else {
-//                    isRequestToken = false;
-//                    tryNextPolicy();
-//                }
-//            } else if (police == PlayMethod.UPNP) {
-//                playedRequestType = PlayMethod.UPNP;
-//                getLiveSec(2);
-//            } else if (police == PlayMethod.P2P || police == PlayMethod.RELAY) {
+            if (police == PlayMethod.LAN) {
+                playedRequestType = PlayMethod.LAN;
+                if (StringUtil.equals(camera.remoteAddr, ApiConstant.wanIp)) {
+                    pingLocal();
+                } else {
+                    isRequestToken = false;
+                    tryNextPolicy();
+                }
+            } else if (police == PlayMethod.UPNP) {
+                playedRequestType = PlayMethod.UPNP;
+                getLiveSec(2);
+            } else if (police == PlayMethod.P2P || police == PlayMethod.RELAY) {
                 playedRequestType = PlayMethod.P2P;
                 listener.onP2pPlay();
-//            } else {
-//                isRequestToken = false;
-//                tryNextPolicy();
-//            }
+            } else {
+                isRequestToken = false;
+                tryNextPolicy();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
