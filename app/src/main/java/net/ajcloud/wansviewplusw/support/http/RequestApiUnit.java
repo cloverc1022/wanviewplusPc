@@ -28,6 +28,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -286,7 +287,7 @@ public class RequestApiUnit {
         JsonObject dataJson = new JsonObject();
         JsonArray devicesJson = new JsonArray();
         for (String deviceId : deviceIds
-                ) {
+        ) {
             JsonObject deviceJson = new JsonObject();
             deviceJson.addProperty("did", deviceId);
             deviceJson.add("scopes", new JsonArray());
@@ -310,7 +311,7 @@ public class RequestApiUnit {
                     if (responseBean.result != null) {
                         DevicesInfosBean bean = responseBean.result;
                         for (DevicesInfosBean.DeviceInfoBean item : bean.infos
-                                ) {
+                        ) {
                             DeviceCache.getInstance().add(item.info);
                         }
                     }
@@ -364,6 +365,41 @@ public class RequestApiUnit {
         });
     }
 
+    public LiveSrcBean getLiveSrcTokenSync(String deviceId, int reqType, int quality) {
+        Camera camera = DeviceCache.getInstance().get(deviceId);
+        if (camera == null) {
+            return null;
+        }
+
+        JsonObject dataJson = new JsonObject();
+        dataJson.addProperty("reqType", reqType);
+        dataJson.addProperty("quality", quality);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(camera.getGatewayUrl() + "/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient.build())
+                .build();
+        IRequest startup = retrofit.create(IRequest.class);
+        Call<ResponseBean<LiveSrcBean>> getDeviceInfo = startup.getLiveSrcToken(ApiConstant.getReqBody(dataJson, deviceId));
+        try {
+            Response<ResponseBean<LiveSrcBean>> response = getDeviceInfo.execute();
+            if (response.isSuccessful()) {
+                ResponseBean<LiveSrcBean> responseBean = response.body();
+                if (responseBean.isSuccess()) {
+                    return responseBean.result;
+                } else {
+                    return null;
+                }
+            } else {
+                return null;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public void doLanProbe(String url, String deviceId, final HttpCommonListener<LanProbeBean> listener) {
         Camera camera = DeviceCache.getInstance().get(deviceId);
         if (camera == null) {
@@ -414,7 +450,7 @@ public class RequestApiUnit {
             public void onSuccess(List<DeviceUrlBean.UrlInfo> bean) {
                 if (bean != null && bean.size() > 0) {
                     for (String url : DeviceCache.getInstance().getDeviceUrlTable().keySet()
-                            ) {
+                    ) {
                         getDeviceInfo(url, DeviceCache.getInstance().getDeviceUrlTable().get(url), false, new HttpCommonListener<DevicesInfosBean>() {
                             @Override
                             public void onSuccess(DevicesInfosBean bean) {

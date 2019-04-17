@@ -1,31 +1,19 @@
 package net.ajcloud.wansviewplusw.support.utils.play;
 
 
-import com.google.gson.JsonObject;
 import com.sun.istack.internal.NotNull;
 import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
-import net.ajcloud.wansviewplusw.support.http.ApiConstant;
-import net.ajcloud.wansviewplusw.support.http.IRequest;
-import net.ajcloud.wansviewplusw.support.http.Interceptor.CommonInterceptor;
-import net.ajcloud.wansviewplusw.support.http.Interceptor.HttpLoggingInterceptor;
-import net.ajcloud.wansviewplusw.support.http.Interceptor.OkSignatureInterceptor;
+import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
 import net.ajcloud.wansviewplusw.support.http.bean.LinkInfo;
 import net.ajcloud.wansviewplusw.support.http.bean.LiveSrcBean;
-import net.ajcloud.wansviewplusw.support.http.bean.ResponseBean;
-import net.ajcloud.wansviewplusw.support.http.converters.GsonConverterFactory;
 import net.ajcloud.wansviewplusw.support.utils.WLog;
-import okhttp3.OkHttpClient;
 import org.tcprelay.Tcprelay;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Retrofit;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
 
 /**
  * Created by mamengchao on 2019/03/08.
@@ -67,7 +55,7 @@ public class TcprelayHelper {
     public void reset() {
         for (LinkInfo linkInfo : linksMap.values()
         ) {
-            tcprelay.relaydisconnect(linkInfo.getNum());
+            new Thread(() -> tcprelay.relaydisconnect(linkInfo.getNum())).start();
         }
         runningMap.clear();
         linksMap.clear();
@@ -80,7 +68,7 @@ public class TcprelayHelper {
     public void deinit() {
         for (LinkInfo linkInfo : linksMap.values()
         ) {
-            tcprelay.relaydisconnect(linkInfo.getNum());
+            new Thread(() -> tcprelay.relaydisconnect(linkInfo.getNum())).start();
         }
         linksMap.clear();
         runningMap.clear();
@@ -92,7 +80,7 @@ public class TcprelayHelper {
             runningMap.remove(deviceId);
         }
         if (linksMap.containsKey(deviceId)) {
-            tcprelay.relaydisconnect(linksMap.get(deviceId).getNum());
+            new Thread(() -> tcprelay.relaydisconnect(linksMap.get(deviceId).getNum())).start();
             linksMap.remove(deviceId);
         }
     }
@@ -121,64 +109,26 @@ public class TcprelayHelper {
      */
     private void getLiveSec(LinkInfo linkInfo) {
         WLog.w(TAG, "initLink--------getLiveSec");
-
-        Camera camera = DeviceCache.getInstance().get(linkInfo.getDeviceId());
         if (linkInfo.isValid()) {
             try {
-                JsonObject dataJson = new JsonObject();
-                dataJson.addProperty("reqType", 3);
-                dataJson.addProperty("quality", linkInfo.getQuality());
-
-                OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
-                HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor("Retrofit");
-                loggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY);
-                loggingInterceptor.setColorLevel(Level.INFO);
-                okHttpClient.addInterceptor(new CommonInterceptor());
-                okHttpClient.addInterceptor(new OkSignatureInterceptor());
-                okHttpClient.addInterceptor(loggingInterceptor);
-
-                Retrofit retrofit = new Retrofit.Builder()
-                        .baseUrl(camera.getGatewayUrl() + "/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .client(okHttpClient.build())
-                        .build();
-                IRequest startup = retrofit.create(IRequest.class);
-                Call<ResponseBean<LiveSrcBean>> getDeviceInfo = startup.getLiveSrcToken(ApiConstant.getReqBody(dataJson, linkInfo.getDeviceId()));
-                getDeviceInfo.enqueue(new Callback<ResponseBean<LiveSrcBean>>() {
-                    @Override
-                    public void onResponse(Call<ResponseBean<LiveSrcBean>> call, retrofit2.Response<ResponseBean<LiveSrcBean>> response) {
-                        ResponseBean responseBean = response.body();
-                        if (responseBean.isSuccess()) {
-                            LiveSrcBean bean = (LiveSrcBean) responseBean.result;
-                            if (linkInfo.isValid()) {
-                                linkInfo.setServerIp(bean.reqServer);
-                                if (bean.stream != null) {
-                                    linkInfo.setLocalUrl(bean.stream.localUrl);
-                                }
-                                connect(linkInfo);
-                            }
-                        } else {
-                            WLog.w(TAG, "initLink--------getLiveSec_fail");
-                            linkInfo.setStatus(2);
-                            linksMap.put(linkInfo.getDeviceId(), linkInfo);
-                            runningMap.remove(linkInfo.getDeviceId());
-                            if (linkInfo.getConnectCallback() != null) {
-                                linkInfo.getConnectCallback().onFail();
-                            }
-                        }
+                LiveSrcBean liveSrcBean = new RequestApiUnit().getLiveSrcTokenSync(linkInfo.getDeviceId(), 3, linkInfo.getQuality());
+                if (liveSrcBean == null) {
+                    WLog.w(TAG, "initLink--------getLiveSec_fail");
+                    linkInfo.setStatus(2);
+                    linksMap.put(linkInfo.getDeviceId(), linkInfo);
+                    runningMap.remove(linkInfo.getDeviceId());
+                    if (linkInfo.getConnectCallback() != null) {
+                        linkInfo.getConnectCallback().onFail();
                     }
-
-                    @Override
-                    public void onFailure(Call<ResponseBean<LiveSrcBean>> call, Throwable throwable) {
-                        WLog.w(TAG, "initLink--------getLiveSec_fail");
-                        linkInfo.setStatus(2);
-                        linksMap.put(linkInfo.getDeviceId(), linkInfo);
-                        runningMap.remove(linkInfo.getDeviceId());
-                        if (linkInfo.getConnectCallback() != null) {
-                            linkInfo.getConnectCallback().onFail();
+                } else {
+                    if (linkInfo.isValid()) {
+                        linkInfo.setServerIp(liveSrcBean.reqServer);
+                        if (liveSrcBean.stream != null) {
+                            linkInfo.setLocalUrl(liveSrcBean.stream.localUrl);
                         }
+                        connect(linkInfo);
                     }
-                });
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 WLog.w(TAG, "initLink--------getLiveSec_fail");
@@ -263,6 +213,7 @@ public class TcprelayHelper {
                 if (linkInfo.getQuality() == quality) {
                     linkInfo.getConnectCallback().onSuccess(linkInfo.getUrl());
                 } else {
+                    disconnect(deviceId);
                     initLink(deviceId, quality, connectCallback);
                 }
             } else if (linkInfo.getStatus() == 2) {
