@@ -55,6 +55,7 @@ public class TcprelayHelper {
     public void reset() {
         for (LinkInfo linkInfo : linksMap.values()
         ) {
+            WLog.w(TAG, "initLink--------relaydisconnect");
             new Thread(() -> tcprelay.relaydisconnect(linkInfo.getNum())).start();
         }
         runningMap.clear();
@@ -68,6 +69,7 @@ public class TcprelayHelper {
     public void deinit() {
         for (LinkInfo linkInfo : linksMap.values()
         ) {
+            WLog.w(TAG, "initLink--------relaydisconnect");
             new Thread(() -> tcprelay.relaydisconnect(linkInfo.getNum())).start();
         }
         linksMap.clear();
@@ -76,11 +78,17 @@ public class TcprelayHelper {
 
     public void disconnect(String deviceId) {
         if (runningMap.containsKey(deviceId)) {
-            runningMap.get(deviceId).setValid(false);
+            LinkInfo linkInfo = runningMap.get(deviceId);
+            if (linkInfo != null)
+                linkInfo.setValid(false);
             runningMap.remove(deviceId);
         }
         if (linksMap.containsKey(deviceId)) {
-            new Thread(() -> tcprelay.relaydisconnect(linksMap.get(deviceId).getNum())).start();
+            LinkInfo linkInfo = linksMap.get(deviceId);
+            if (linkInfo != null) {
+                WLog.w(TAG, "initLink--------relaydisconnect");
+                new Thread(() -> tcprelay.relaydisconnect(linkInfo.getNum())).start();
+            }
             linksMap.remove(deviceId);
         }
     }
