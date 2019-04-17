@@ -3,8 +3,6 @@ package net.ajcloud.wansviewplusw.support.socket;
 import net.ajcloud.wansviewplusw.support.utils.WLog;
 
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by mamengchao on 2018/10/22.
@@ -14,12 +12,13 @@ public class CheckPortUnit {
     private static final String TAG = "CheckPortUnit";
 
     public interface checkPortCallback {
-        void result(List<Integer> ports);
+        void result(int port);
     }
 
     public void check(checkPortCallback listener) {
-        List list = new ArrayList<>();
         new Thread(new Runnable() {
+            int count = 0;
+
             @Override
             public void run() {
                 Socket socket = null;
@@ -31,15 +30,13 @@ public class CheckPortUnit {
                         socket.setSoTimeout(100);
                         socket.close();
                     } catch (Exception e) {
-                        if (list.size() > 50) {
+                        if (count++ > 50) {
                             break;
                         }
                         WLog.w(TAG, "port:" + i);
-                        list.add(i);
-                        WLog.w(e.toString());
+                        listener.result(i);
                     }
                 }
-                listener.result(list);
             }
         }).start();
     }

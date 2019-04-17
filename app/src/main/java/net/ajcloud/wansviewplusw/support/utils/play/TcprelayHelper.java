@@ -202,6 +202,7 @@ public class TcprelayHelper {
             //获取port
             int port = getPort();
             linkInfo.setPort(port);
+            WLog.w(TAG, "initLink--------port:" + port);
             //链接
             int num = tcprelay.relayconnect(linkInfo.getDeviceId(), camera.getStunServers(), linkInfo.getServerIp(), port);
             if (linkInfo.isValid()) {
@@ -280,8 +281,11 @@ public class TcprelayHelper {
         }
     }
 
-    public void setPorts(ArrayList<Integer> ports) {
-        this.ports = ports;
+    public void addPorts(int port) {
+        if (ports == null) {
+            ports = new ArrayList<>();
+        }
+        ports.add(port);
     }
 
     public Tcprelay getTcprelay() {

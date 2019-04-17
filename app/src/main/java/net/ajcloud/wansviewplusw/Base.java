@@ -89,8 +89,8 @@ public class Base extends Application implements LoginController.OnLoginListener
         getLocalInfo();
         new CheckPortUnit().check(new CheckPortUnit.checkPortCallback() {
             @Override
-            public void result(List<Integer> ports) {
-                TcprelayHelper.getInstance().setPorts(new ArrayList<>(ports));
+            public void result(int port) {
+                TcprelayHelper.getInstance().addPorts(port);
             }
         });
     }
