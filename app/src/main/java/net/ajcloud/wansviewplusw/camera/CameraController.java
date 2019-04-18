@@ -102,27 +102,11 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     @FXML
     private JFXButton btn_voice;
     @FXML
-    private JFXButton btn_voice_full;
-    @FXML
-    private ImageView image_voice_full;
-    @FXML
     private JFXButton btn_screenshot;
-    @FXML
-    private JFXButton btn_screenshot_full;
-    @FXML
-    private ImageView image_screenshot_full;
     @FXML
     private JFXButton btn_play;
     @FXML
-    private JFXButton btn_play_full;
-    @FXML
-    private ImageView image_play_full;
-    @FXML
     private JFXButton btn_record;
-    @FXML
-    private JFXButton btn_record_full;
-    @FXML
-    private ImageView image_record_full;
     @FXML
     private VBox loading;
     @FXML
@@ -143,10 +127,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private Button btn_bottom;
     @FXML
     private Button btn_left;
-    @FXML
-    private HBox control_play_control;
-    @FXML
-    private HBox control_play_control_full;
     @FXML
     private JFXButton btn_quality;
     @FXML
@@ -267,23 +247,13 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     }
 
     private void initListener() {
-        btn_play_full.onMouseClickedProperty().bindBidirectional(image_play_full.onMouseClickedProperty());
-        btn_screenshot_full.onMouseClickedProperty().bindBidirectional(image_screenshot_full.onMouseClickedProperty());
-        btn_record_full.onMouseClickedProperty().bindBidirectional(image_record_full.onMouseClickedProperty());
-        btn_voice_full.onMouseClickedProperty().bindBidirectional(image_voice_full.onMouseClickedProperty());
         reconnect.onMouseClickedProperty().bindBidirectional(iv_reconnect.onMouseClickedProperty());
         reconnect.onMouseClickedProperty().bindBidirectional(label_reconnect.onMouseClickedProperty());
         //function
         btn_voice.setOnMouseClicked((v) -> {
             setMute();
         });
-        btn_voice_full.setOnMouseClicked((v) -> {
-            setMute();
-        });
         btn_screenshot.setOnMouseClicked((v) -> {
-            takeSnapshot(FileUtil.getImagePath(DeviceCache.getInstance().getSigninBean().mail), true);
-        });
-        btn_screenshot_full.setOnMouseClicked((v) -> {
             takeSnapshot(FileUtil.getImagePath(DeviceCache.getInstance().getSigninBean().mail), true);
         });
         btn_play.setOnMouseClicked((v) -> {
@@ -293,17 +263,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                 startOrPause();
             }
         });
-        btn_play_full.setOnMouseClicked((v) -> {
-            if (isFirstPlay) {
-                play();
-            } else {
-                startOrPause();
-            }
-        });
         btn_record.setOnMouseClicked((v) -> {
-            recording();
-        });
-        btn_record_full.setOnMouseClicked((v) -> {
             recording();
         });
         btn_quality.setOnMouseClicked((v) -> {
@@ -408,14 +368,9 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         btn_play.getStyleClass().remove("jfx_button_pause");
         btn_play.getStyleClass().remove("jfx_button_play");
         btn_play.getStyleClass().add("jfx_button_pause");
-        image_play_full.getStyleClass().remove("image_play_full");
-        image_play_full.getStyleClass().remove("image_pause_full");
-        image_play_full.getStyleClass().add("image_pause_full");
 
         //播放背景
         setPlayBg(deviceId);
-        //底部操作栏
-        control_play_control.setVisible(true);
         //清晰度
         btn_quality.setText("FHD");
         Camera camera = DeviceCache.getInstance().get(deviceId);
@@ -540,9 +495,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             btn_play.getStyleClass().remove("jfx_button_pause");
             btn_play.getStyleClass().remove("jfx_button_play");
             btn_play.getStyleClass().add("jfx_button_pause");
-            image_play_full.getStyleClass().remove("image_play_full");
-            image_play_full.getStyleClass().remove("image_pause_full");
-            image_play_full.getStyleClass().add("image_pause_full");
             startOrCancelTimer(true);
             mediaPlayerComponent.getMediaPlayer().playMedia(url);
         }
@@ -554,9 +506,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             btn_play.getStyleClass().remove("jfx_button_pause");
             btn_play.getStyleClass().remove("jfx_button_play");
             btn_play.getStyleClass().add("jfx_button_pause");
-            image_play_full.getStyleClass().remove("image_play_full");
-            image_play_full.getStyleClass().remove("image_pause_full");
-            image_play_full.getStyleClass().add("image_pause_full");
             showLoading(true);
             isFirstPlay = false;
             label_name.setText(camera.aliasName);
@@ -570,9 +519,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             btn_play.getStyleClass().remove("jfx_button_pause");
             btn_play.getStyleClass().remove("jfx_button_play");
             btn_play.getStyleClass().add("jfx_button_play");
-            image_play_full.getStyleClass().remove("image_play_full");
-            image_play_full.getStyleClass().remove("image_pause_full");
-            image_play_full.getStyleClass().add("image_play_full");
             isFirstPlay = true;
             resetPlay();
             startOrCancelTimer(false);
@@ -582,10 +528,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     public void destroy() {
         TcprelayHelper.getInstance().deinit();
         EventBus.getInstance().post(new SnapshotEvent());
-        btn_play_full.onMouseClickedProperty().unbindBidirectional(image_play_full.onMouseClickedProperty());
-        btn_screenshot_full.onMouseClickedProperty().unbindBidirectional(image_screenshot_full.onMouseClickedProperty());
-        btn_record_full.onMouseClickedProperty().unbindBidirectional(image_record_full.onMouseClickedProperty());
-        btn_voice_full.onMouseClickedProperty().unbindBidirectional(image_voice_full.onMouseClickedProperty());
         if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
             isFirstPlay = true;
             stopRecord(false);
@@ -597,13 +539,9 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         writableImage.cancel();
         fullscreenListener = null;
         btn_voice.setOnMouseClicked(null);
-        btn_voice_full.setOnMouseClicked(null);
         btn_screenshot.setOnMouseClicked(null);
-        btn_screenshot_full.setOnMouseClicked(null);
         btn_play.setOnMouseClicked(null);
-        btn_play_full.setOnMouseClicked(null);
         btn_record.setOnMouseClicked(null);
-        btn_record_full.setOnMouseClicked(null);
         btn_quality.setOnMouseClicked(null);
         btn_fullscreen.setOnMouseClicked(null);
         label_continue.setOnMouseClicked(null);
@@ -830,14 +768,10 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         isMute = !isMute;
         btn_voice.getStyleClass().remove("jfx_button_voice");
         btn_voice.getStyleClass().remove("jfx_button_voice_mute");
-        image_voice_full.getStyleClass().remove("image_voice_full");
-        image_voice_full.getStyleClass().remove("image_voice_full_mute");
         if (isMute) {
             btn_voice.getStyleClass().add("jfx_button_voice_mute");
-            image_voice_full.getStyleClass().add("image_voice_full_mute");
         } else {
             btn_voice.getStyleClass().add("jfx_button_voice");
-            image_voice_full.getStyleClass().add("image_voice_full");
         }
         mediaPlayerComponent.getMediaPlayer().mute(isMute);
     }
@@ -851,17 +785,13 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
         btn_play.getStyleClass().remove("jfx_button_pause");
         btn_play.getStyleClass().remove("jfx_button_play");
-        image_play_full.getStyleClass().remove("image_play_full");
-        image_play_full.getStyleClass().remove("image_pause_full");
         if (mediaPlayerComponent.getMediaPlayer().isPlaying()) {
             btn_play.getStyleClass().add("jfx_button_play");
-            image_play_full.getStyleClass().add("image_play_full");
             stopRecord(true);
             mediaPlayerComponent.getMediaPlayer().pause();
             startOrCancelTimer(false);
         } else {
             btn_play.getStyleClass().add("jfx_button_pause");
-            image_play_full.getStyleClass().add("image_pause_full");
             mediaPlayerComponent.getMediaPlayer().start();
             startOrCancelTimer(true);
         }
@@ -878,9 +808,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             btn_play.getStyleClass().remove("jfx_button_pause");
             btn_play.getStyleClass().remove("jfx_button_play");
             btn_play.getStyleClass().add("jfx_button_pause");
-            image_play_full.getStyleClass().remove("image_pause_full");
-            image_play_full.getStyleClass().remove("image_play_full");
-            image_play_full.getStyleClass().add("image_pause_full");
             mediaPlayerComponent.getMediaPlayer().start();
             startOrCancelTimer(true);
         }
@@ -897,9 +824,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             btn_play.getStyleClass().remove("jfx_button_pause");
             btn_play.getStyleClass().remove("jfx_button_play");
             btn_play.getStyleClass().add("jfx_button_play");
-            image_play_full.getStyleClass().remove("image_pause_full");
-            image_play_full.getStyleClass().remove("image_play_full");
-            image_play_full.getStyleClass().add("image_play_full");
             mediaPlayerComponent.getMediaPlayer().pause();
             startOrCancelTimer(false);
         }
@@ -1400,14 +1324,12 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         content_play.setManaged(true);
         content_play_empty.setVisible(false);
         content_play_empty.setManaged(false);
-        control_play_control_full.setVisible(isFullscreen);
-        control_play_control_full.setManaged(isFullscreen);
         content_left.setVisible(!isFullscreen);
         content_left.setManaged(!isFullscreen);
-        content_bottom.setVisible(!isFullscreen);
-        content_bottom.setManaged(!isFullscreen);
-        label_name.setVisible(!isFullscreen);
-        label_name.setManaged(!isFullscreen);
+        content_bottom.setVisible(true);
+        content_bottom.setManaged(true);
+        label_name.setVisible(true);
+        label_name.setManaged(true);
 
         btn_fullscreen.getStyleClass().remove("btn_smallscreen");
         btn_fullscreen.getStyleClass().remove("btn_fullscreen");
@@ -1513,9 +1435,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         btn_play.getStyleClass().remove("jfx_button_pause");
         btn_play.getStyleClass().remove("jfx_button_play");
         btn_play.getStyleClass().add("jfx_button_play");
-        image_play_full.getStyleClass().remove("image_play_full");
-        image_play_full.getStyleClass().remove("image_pause_full");
-        image_play_full.getStyleClass().add("image_play_full");
         isFirstPlay = true;
         showLoading(false);
         reconnect.setVisible(true);

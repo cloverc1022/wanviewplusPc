@@ -95,20 +95,32 @@
 .jfx_button_screenshot_full .jfx-rippler,
 .jfx_button_record .jfx-rippler,
 .jfx_button_record_full .jfx-rippler,
+.btn_fullscreen .jfx-rippler,
+.btn_smallscreen .jfx-rippler,
 .jfx_button_voice .jfx-rippler,
 .jfx_button_voice_full .jfx-rippler,
 .jfx_button_voice_mute .jfx-rippler {
     -jfx-rippler-fill: #82B1FF;
 }
 
-.jfx_button_play_full,
-.jfx_button_screenshot_full,
-.jfx_button_record_full,
-.jfx_button_voice_full {
-    -fx-background-color: rgba(255, 255, 255, 0.6);
-    /*设置圆角*/
-    -fx-background-radius: 24;
-    -fx-border-radius: 24;
+.btn_fullscreen {
+    -fx-pref-width: 24px;
+    -fx-pref-height: 24px;
+    -fx-min-width: 24px;
+    -fx-min-height: 24px;
+    -fx-background-size: 24 auto;
+    -fx-background-position: center center;
+    -fx-background-image: url('/image/ic_full_screen_dark.png');
+}
+
+.btn_smallscreen {
+    -fx-pref-width: 24px;
+    -fx-pref-height: 24px;
+    -fx-min-width: 24px;
+    -fx-min-height: 24px;
+    -fx-background-size: 24 auto;
+    -fx-background-position: center center;
+    -fx-background-image: url('/image/ic_small_screen_dark.png');
 }
 
 .jfx_button_voice {
@@ -293,42 +305,33 @@
 }
 
 .btn_quality {
-    -fx-background-color: rgba(255, 255, 255, 0.4);
+    -fx-background-color: rgba(40, 49, 55, 0.2);
     -fx-background-radius: 2;
     -fx-border-radius: 2;
     -fx-text-fill: #263238;
     -fx-font-size: 12;
 }
 
-.btn_fullscreen {
-    -fx-background-color: transparent;
-    -fx-background-size: 24 auto;
-    -fx-background-position: center center;
-    -fx-background-image: url('/image/ic_full_screen_white.png');
-}
-
-.btn_smallscreen {
-    -fx-background-color: transparent;
-    -fx-background-size: 24 auto;
-    -fx-background-position: center center;
-    -fx-background-image: url('/image/ic_small_screen_white.png');
-}
 
 .jfx-popup-container {
     -fx-background-color: transparent;
 }
 
 .pop_btn_quality {
-    -fx-min-height: 20;
-    -fx-pref-height: 20;
+    -fx-min-height: 24;
+    -fx-pref-height: 24;
     -fx-pref-width: 48;
     -fx-min-width: 48;
     -fx-padding: 0, 0, 0, 0;
-    -fx-background-color: transparent;
-    -fx-text-fill: white;
+    -fx-background-color: rgba(255, 255, 255, 0.8);
+    -fx-text-fill: #263238;
     -fx-text-alignment: center;
     -fx-alignment: center;
     -fx-font-size: 12;
+}
+
+.pop_btn_quality:hover {
+    -fx-background-color: rgba(212,214,215, 0.9);
 }
 
 .loading_content {

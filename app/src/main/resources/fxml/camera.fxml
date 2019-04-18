@@ -41,7 +41,11 @@
                                         <Label fx:id="label_name" minHeight="32.0" minWidth="668.0" prefHeight="32.0"
                                                prefWidth="668.0"
                                                style="-fx-text-fill:#263238;-fx-font-size:12;-fx-font-weight: bold;"
-                                               VBox.vgrow="NEVER"/>
+                                               VBox.vgrow="NEVER">
+                                            <padding>
+                                                <Insets left="24.0"/>
+                                            </padding>
+                                        </Label>
                                         <StackPane fx:id="play_content" minWidth="668.0" prefWidth="668.0"
                                                    style="-fx-background-color: black" VBox.vgrow="ALWAYS">
                                             <children>
@@ -92,8 +96,8 @@
                                                         <GridPane fx:id="gp_control" alignment="CENTER"
                                                                   minHeight="120.0" minWidth="120.0" prefHeight="120.0"
                                                                   prefWidth="120.0" styleClass="direction_pane"
-                                                                  visible="false" AnchorPane.rightAnchor="24.0"
-                                                                  AnchorPane.topAnchor="24.0">
+                                                                  visible="false" AnchorPane.bottomAnchor="12.0"
+                                                                  AnchorPane.leftAnchor="12.0">
                                                             <columnConstraints>
                                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
                                                                                    prefWidth="100.0"/>
@@ -159,17 +163,16 @@
                                                                 </Button>
                                                             </children>
                                                         </GridPane>
-                                                        <VBox fx:id="loading" alignment="CENTER"
-                                                              AnchorPane.bottomAnchor="185.0"
+                                                        <VBox fx:id="loading" alignment="CENTER" managed="false"
+                                                              visible="false" AnchorPane.bottomAnchor="185.0"
                                                               AnchorPane.leftAnchor="100.0"
-                                                              AnchorPane.rightAnchor="100.0" visible="false"
-                                                              managed="false"
+                                                              AnchorPane.rightAnchor="100.0"
                                                               AnchorPane.topAnchor="185.0">
                                                             <children>
-                                                                <JFXSpinner maxHeight="64.0"
-                                                                            maxWidth="64.0" minHeight="64.0"
-                                                                            minWidth="64.0" prefHeight="64.0"
-                                                                            prefWidth="64.0" startingAngle="-40"
+                                                                <JFXSpinner maxHeight="64.0" maxWidth="64.0"
+                                                                            minHeight="64.0" minWidth="64.0"
+                                                                            prefHeight="64.0" prefWidth="64.0"
+                                                                            startingAngle="-40"
                                                                             styleClass="spinner_loading"
                                                                             HBox.hgrow="NEVER"/>
                                                                 <Label style="-fx-text-fill:#FFFFFF;-fx-background-color:transparent;-fx-font-size:18;"
@@ -180,24 +183,23 @@
                                                                 </Label>
                                                             </children>
                                                         </VBox>
-                                                        <VBox fx:id="reconnect" alignment="CENTER"
-                                                              AnchorPane.leftAnchor="250.0"
-                                                              AnchorPane.rightAnchor="250.0" visible="false"
-                                                              managed="false"
+                                                        <VBox fx:id="reconnect" alignment="CENTER" managed="false"
+                                                              visible="false" AnchorPane.leftAnchor="250.0"
+                                                              AnchorPane.rightAnchor="250.0"
                                                               AnchorPane.topAnchor="180.0">
                                                             <children>
-                                                                <AnchorPane styleClass="content_reconnect" maxWidth="48.0" maxHeight="48.0"
+                                                                <AnchorPane maxHeight="48.0" maxWidth="48.0"
                                                                             minHeight="48.0" minWidth="48.0"
-                                                                            prefHeight="48.0" prefWidth="48.0">
+                                                                            prefHeight="48.0" prefWidth="48.0"
+                                                                            styleClass="content_reconnect">
                                                                     <children>
                                                                         <ImageView fx:id="iv_reconnect" fitHeight="24.0"
-                                                                                   fitWidth="24.0"
+                                                                                   fitWidth="24.0" pickOnBounds="true"
+                                                                                   preserveRatio="true"
                                                                                    AnchorPane.bottomAnchor="12.0"
                                                                                    AnchorPane.leftAnchor="12.0"
                                                                                    AnchorPane.rightAnchor="12.0"
-                                                                                   AnchorPane.topAnchor="12.0"
-                                                                                   pickOnBounds="true"
-                                                                                   preserveRatio="true">
+                                                                                   AnchorPane.topAnchor="12.0">
                                                                             <image>
                                                                                 <Image url="@/image/ic_refresh.png"/>
                                                                             </image>
@@ -213,187 +215,51 @@
                                                                 </Label>
                                                             </children>
                                                         </VBox>
-                                                        <HBox fx:id="control_play_control" alignment="CENTER"
+                                                        <HBox fx:id="content_tips" alignment="CENTER" fillHeight="false"
+                                                              minHeight="24.0" minWidth="196.0"
+                                                              style=" -fx-background-color: rgba(255,255,255,0.4);-fx-border-radius: 2px;-fx-background-radius: 2px"
                                                               visible="false" AnchorPane.bottomAnchor="16.0"
-                                                              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+                                                              AnchorPane.leftAnchor="236.0"
+                                                              AnchorPane.rightAnchor="236.0">
                                                             <children>
-                                                                <JFXButton fx:id="btn_quality" alignment="CENTER"
-                                                                           minHeight="20.0" minWidth="48.0"
-                                                                           prefHeight="20.0" prefWidth="48.0"
-                                                                           styleClass="btn_quality" text="FHD">
+                                                                <ImageView fx:id="iv_tips" fitHeight="24.0"
+                                                                           fitWidth="24.0" pickOnBounds="true"
+                                                                           preserveRatio="true" HBox.hgrow="NEVER">
+                                                                    <image>
+                                                                        <Image url="@/image/ic_tip_mid.png"/>
+                                                                    </image>
                                                                     <HBox.margin>
-                                                                        <Insets left="24.0" right="50.0"/>
+                                                                        <Insets left="4.0"/>
                                                                     </HBox.margin>
-                                                                </JFXButton>
-                                                                <VBox alignment="CENTER" fillWidth="false"
-                                                                      spacing="12.0" HBox.hgrow="ALWAYS">
-                                                                    <children>
-                                                                        <HBox fx:id="content_tips" alignment="CENTER"
-                                                                              fillHeight="false" minHeight="24.0"
-                                                                              minWidth="196.0"
-                                                                              style=" -fx-background-color: rgba(255,255,255,0.4);-fx-border-radius: 2px;-fx-background-radius: 2px"
-                                                                              visible="false" VBox.vgrow="NEVER">
-                                                                            <children>
-                                                                                <ImageView fx:id="iv_tips"
-                                                                                           fitHeight="24.0"
-                                                                                           fitWidth="24.0"
-                                                                                           pickOnBounds="true"
-                                                                                           preserveRatio="true"
-                                                                                           HBox.hgrow="NEVER">
-                                                                                    <image>
-                                                                                        <Image url="@/image/ic_tip_mid.png"/>
-                                                                                    </image>
-                                                                                    <HBox.margin>
-                                                                                        <Insets left="4.0"/>
-                                                                                    </HBox.margin>
-                                                                                </ImageView>
-                                                                                <Label fx:id="label_stop"
-                                                                                       style="-fx-text-fill:#61727A;-fx-background-color:transparent;-fx-font-size:12"
-                                                                                       text="Stop after">
-                                                                                    <HBox.margin>
-                                                                                        <Insets left="4.0"/>
-                                                                                    </HBox.margin>
-                                                                                </Label>
-                                                                                <Label fx:id="label_time"
-                                                                                       style="-fx-text-fill:#263238;-fx-background-color:transparent;-fx-font-size:12"
-                                                                                       text="Label">
-                                                                                    <HBox.margin>
-                                                                                        <Insets left="8.0"/>
-                                                                                    </HBox.margin>
-                                                                                </Label>
-                                                                                <Label fx:id="label_continue"
-                                                                                       style="-fx-text-fill:#2979FF;-fx-background-color:transparent;-fx-font-size:12"
-                                                                                       text="Continue">
-                                                                                    <HBox.margin>
-                                                                                        <Insets left="8.0"
-                                                                                                right="10.0"/>
-                                                                                    </HBox.margin>
-                                                                                </Label>
-                                                                            </children>
-                                                                        </HBox>
-                                                                        <HBox fx:id="control_play_control_full"
-                                                                              alignment="CENTER" managed="false"
-                                                                              spacing="48.0" visible="false">
-                                                                            <children>
-                                                                                <AnchorPane minHeight="48.0"
-                                                                                            minWidth="48.0"
-                                                                                            prefHeight="48.0"
-                                                                                            prefWidth="48.0">
-                                                                                    <children>
-                                                                                        <JFXButton fx:id="btn_play_full"
-                                                                                                   minHeight="48.0"
-                                                                                                   minWidth="48.0"
-                                                                                                   prefHeight="48.0"
-                                                                                                   prefWidth="48.0"
-                                                                                                   styleClass="jfx_button_play_full"/>
-                                                                                        <ImageView
-                                                                                                fx:id="image_play_full"
-                                                                                                fitHeight="24.0"
-                                                                                                fitWidth="24.0"
-                                                                                                pickOnBounds="true"
-                                                                                                preserveRatio="true"
-                                                                                                styleClass="image_play_full"
-                                                                                                AnchorPane.bottomAnchor="12.0"
-                                                                                                AnchorPane.leftAnchor="12.0"
-                                                                                                AnchorPane.rightAnchor="12.0"
-                                                                                                AnchorPane.topAnchor="12.0"/>
-                                                                                    </children>
-                                                                                </AnchorPane>
-                                                                                <AnchorPane minHeight="48.0"
-                                                                                            minWidth="48.0"
-                                                                                            prefHeight="48.0"
-                                                                                            prefWidth="48.0">
-                                                                                    <children>
-                                                                                        <JFXButton
-                                                                                                fx:id="btn_screenshot_full"
-                                                                                                minHeight="48.0"
-                                                                                                minWidth="48.0"
-                                                                                                prefHeight="48.0"
-                                                                                                prefWidth="48.0"
-                                                                                                styleClass="jfx_button_screenshot_full"/>
-                                                                                        <ImageView
-                                                                                                fx:id="image_screenshot_full"
-                                                                                                fitHeight="24.0"
-                                                                                                fitWidth="24.0"
-                                                                                                pickOnBounds="true"
-                                                                                                preserveRatio="true"
-                                                                                                styleClass="image_screenshot_full"
-                                                                                                AnchorPane.bottomAnchor="12.0"
-                                                                                                AnchorPane.leftAnchor="12.0"
-                                                                                                AnchorPane.rightAnchor="12.0"
-                                                                                                AnchorPane.topAnchor="12.0"/>
-                                                                                    </children>
-                                                                                </AnchorPane>
-                                                                                <AnchorPane minHeight="48.0"
-                                                                                            minWidth="48.0"
-                                                                                            prefHeight="48.0"
-                                                                                            prefWidth="48.0">
-                                                                                    <children>
-                                                                                        <JFXButton
-                                                                                                fx:id="btn_record_full"
-                                                                                                minHeight="48.0"
-                                                                                                minWidth="48.0"
-                                                                                                prefHeight="48.0"
-                                                                                                prefWidth="48.0"
-                                                                                                styleClass="jfx_button_record_full"/>
-                                                                                        <ImageView
-                                                                                                fx:id="image_record_full"
-                                                                                                fitHeight="24.0"
-                                                                                                fitWidth="24.0"
-                                                                                                pickOnBounds="true"
-                                                                                                preserveRatio="true"
-                                                                                                styleClass="image_record_full"
-                                                                                                AnchorPane.bottomAnchor="12.0"
-                                                                                                AnchorPane.leftAnchor="12.0"
-                                                                                                AnchorPane.rightAnchor="12.0"
-                                                                                                AnchorPane.topAnchor="12.0"/>
-                                                                                    </children>
-                                                                                </AnchorPane>
-                                                                                <AnchorPane minHeight="48.0"
-                                                                                            minWidth="48.0"
-                                                                                            prefHeight="48.0"
-                                                                                            prefWidth="48.0">
-                                                                                    <children>
-                                                                                        <JFXButton
-                                                                                                fx:id="btn_voice_full"
-                                                                                                minHeight="48.0"
-                                                                                                minWidth="48.0"
-                                                                                                prefHeight="48.0"
-                                                                                                prefWidth="48.0"
-                                                                                                styleClass="jfx_button_voice_full"/>
-                                                                                        <ImageView
-                                                                                                fx:id="image_voice_full"
-                                                                                                fitHeight="24.0"
-                                                                                                fitWidth="24.0"
-                                                                                                pickOnBounds="true"
-                                                                                                preserveRatio="true"
-                                                                                                styleClass="image_voice_full"
-                                                                                                AnchorPane.bottomAnchor="12.0"
-                                                                                                AnchorPane.leftAnchor="12.0"
-                                                                                                AnchorPane.rightAnchor="12.0"
-                                                                                                AnchorPane.topAnchor="12.0"/>
-                                                                                    </children>
-                                                                                </AnchorPane>
-                                                                            </children>
-                                                                        </HBox>
-                                                                    </children>
-                                                                </VBox>
-                                                                <Label fx:id="label_speed" alignment="CENTER_RIGHT"
-                                                                       minWidth="50.0" prefWidth="50.0"
-                                                                       style="-fx-text-fill:white;-fx-font-size:12;">
+                                                                </ImageView>
+                                                                <Label fx:id="label_stop"
+                                                                       style="-fx-text-fill:#61727A;-fx-background-color:transparent;-fx-font-size:12"
+                                                                       text="Stop after">
                                                                     <HBox.margin>
-                                                                        <Insets right="24.0"/>
+                                                                        <Insets left="4.0"/>
                                                                     </HBox.margin>
                                                                 </Label>
-                                                                <JFXButton fx:id="btn_fullscreen" minHeight="24.0"
-                                                                           minWidth="24.0" prefHeight="24.0"
-                                                                           prefWidth="24.0" styleClass="btn_fullscreen">
+                                                                <Label fx:id="label_time"
+                                                                       style="-fx-text-fill:#263238;-fx-background-color:transparent;-fx-font-size:12"
+                                                                       text="Label">
                                                                     <HBox.margin>
-                                                                        <Insets right="24.0"/>
+                                                                        <Insets left="8.0"/>
                                                                     </HBox.margin>
-                                                                </JFXButton>
+                                                                </Label>
+                                                                <Label fx:id="label_continue"
+                                                                       style="-fx-text-fill:#2979FF;-fx-background-color:transparent;-fx-font-size:12"
+                                                                       text="Continue">
+                                                                    <HBox.margin>
+                                                                        <Insets left="8.0" right="10.0"/>
+                                                                    </HBox.margin>
+                                                                </Label>
                                                             </children>
                                                         </HBox>
+                                                        <Label fx:id="label_speed" alignment="CENTER_RIGHT"
+                                                               minWidth="50.0" prefWidth="50.0"
+                                                               style="-fx-text-fill:white;-fx-font-size:12;"
+                                                               AnchorPane.bottomAnchor="14.0"
+                                                               AnchorPane.rightAnchor="24.0"/>
                                                     </children>
                                                 </AnchorPane>
                                             </children>
@@ -409,6 +275,10 @@
                                                       spacing="38.0" AnchorPane.bottomAnchor="0.0"
                                                       AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="0.0">
                                                     <children>
+                                                        <JFXButton fx:id="btn_quality"
+                                                                   minHeight="24.0" minWidth="48.0" prefHeight="24.0"
+                                                                   prefWidth="48.0" styleClass="btn_quality"
+                                                                   text="FHD"/>
                                                         <JFXButton fx:id="btn_screenshot" minHeight="24.0"
                                                                    minWidth="24.0" prefHeight="24.0" prefWidth="24.0"
                                                                    styleClass="jfx_button_screenshot"/>
@@ -418,6 +288,10 @@
                                                         <JFXButton fx:id="btn_voice" minHeight="24.0" minWidth="24.0"
                                                                    prefHeight="24.0" prefWidth="24.0"
                                                                    styleClass="jfx_button_voice"/>
+                                                        <JFXButton fx:id="btn_fullscreen" minHeight="24.0"
+                                                                   alignment="CENTER"
+                                                                   minWidth="24.0" prefHeight="24.0" prefWidth="24.0"
+                                                                   styleClass="btn_fullscreen"/>
                                                     </children>
                                                 </HBox>
                                             </children>
