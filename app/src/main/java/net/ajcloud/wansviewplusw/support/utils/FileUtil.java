@@ -1,13 +1,25 @@
 package net.ajcloud.wansviewplusw.support.utils;
 
 import java.io.File;
+import java.util.prefs.Preferences;
 
 public class FileUtil {
     //filePath
-    public static String FILE_PATH = System.getProperty("user.home");
+    private static Preferences preferences = Preferences.userNodeForPackage(FileUtil.class);
+
+    public static String FILE_PATH = System.getProperty("user.home") + File.separator + "WansviewCloud";
+
+    public static String getRootPath() {
+        return preferences.get(IPreferences.P_FILE_LOCATION, FILE_PATH);
+    }
+
+    public static void setRootPath(String path) {
+        if (path != null)
+            preferences.put(IPreferences.P_FILE_LOCATION, path);
+    }
 
     public static String getTmpPath() {
-        String path = FILE_PATH + File.separator + "WansviewCloud" + File.separator + "tmp";
+        String path = preferences.get(IPreferences.P_FILE_LOCATION, FILE_PATH) + File.separator + "tmp";
         File directory = new File(path);
         if (!directory.exists())
             directory.mkdirs();
@@ -15,7 +27,7 @@ public class FileUtil {
     }
 
     public static String getImagePath(String account) {
-        String path = FILE_PATH + File.separator + "WansviewCloud" + File.separator + "image" + File.separator + account;
+        String path = preferences.get(IPreferences.P_FILE_LOCATION, FILE_PATH) + File.separator + "image" + File.separator + account;
         File directory = new File(path);
         if (!directory.exists())
             directory.mkdirs();
@@ -23,7 +35,7 @@ public class FileUtil {
     }
 
     public static String getVideoPath(String account) {
-        String path = FILE_PATH + File.separator + "WansviewCloud" + File.separator + "video" + File.separator + account;
+        String path = preferences.get(IPreferences.P_FILE_LOCATION, FILE_PATH) + File.separator + "video" + File.separator + account;
         File directory = new File(path);
         if (!directory.exists())
             directory.mkdirs();
@@ -31,7 +43,7 @@ public class FileUtil {
     }
 
     public static String getRealtimeImagePath(String deviceId) {
-        String path = FILE_PATH + File.separator + "WansviewCloud" + File.separator + "RealtimeImage" + File.separator + deviceId;
+        String path = preferences.get(IPreferences.P_FILE_LOCATION, FILE_PATH) + File.separator + "RealtimeImage" + File.separator + deviceId;
         File directory = new File(path);
         if (!directory.exists())
             directory.mkdirs();

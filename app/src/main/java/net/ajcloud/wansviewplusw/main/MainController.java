@@ -30,15 +30,12 @@ import javafx.stage.StageStyle;
 import net.ajcloud.wansviewplusw.Base;
 import net.ajcloud.wansviewplusw.BaseController;
 import net.ajcloud.wansviewplusw.camera.CameraController;
+import net.ajcloud.wansviewplusw.setting.SettingController;
 import net.ajcloud.wansviewplusw.support.customview.popup.AccountPopController;
-import net.ajcloud.wansviewplusw.support.customview.popup.LocalFilePopController;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
-import net.ajcloud.wansviewplusw.support.utils.FileUtil;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 
 import javax.annotation.PostConstruct;
-import java.awt.*;
-import java.io.File;
 import java.io.InputStream;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -69,10 +66,11 @@ public class MainController implements BaseController {
 
     private Stage aboutStage;
 
+    private Stage settingStage;
+
     private FlowHandler flowHandler;
 
     private JFXPopup accountPop;
-    private JFXPopup localPop;
 
     private MainListener listener;
 
@@ -96,7 +94,7 @@ public class MainController implements BaseController {
         vb_device.setOnMouseClicked(e -> replace(CONTENT_DEVICE));
         vb_quad.setOnMouseClicked(e -> replace(CONTENT_QUAD));
         vb_nine.setOnMouseClicked(e -> replace(CONTENT_NINE));
-        vb_local.setOnMouseClicked(e -> showLocalFilePop());
+        vb_local.setOnMouseClicked(e -> go2Setting());
 
         currentItem = vb_device.getId();
         Flow innerFlow = new Flow(CameraController.class);
@@ -160,6 +158,38 @@ public class MainController implements BaseController {
         }
     }
 
+    private void go2Setting() {
+        try {
+            if (settingStage == null) {
+                FXMLLoader loader = new FXMLLoader();
+                InputStream in = Base.class.getResourceAsStream("/fxml/setting.fxml");
+                loader.setBuilderFactory(new JavaFXBuilderFactory());
+                loader.setLocation(Base.class.getResource("/fxml/setting.fxml"));
+                Pane page = loader.load(in);
+                SettingController settingController = loader.getController();
+                settingController.init();
+                in.close();
+                Scene scene = new Scene(page, 432, 320);
+                final ObservableList<String> stylesheets = scene.getStylesheets();
+                stylesheets.addAll(Base.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
+                        Base.class.getResource("/css/jfoenix-design.css").toExternalForm(),
+                        Base.class.getResource("/css/main.css").toExternalForm());
+                settingStage = new Stage();
+                settingStage.setScene(scene);
+                settingStage.getIcons().add(new Image("/image/ic_launcher.png"));
+                settingStage.setTitle("Setting");
+                settingStage.sizeToScene();
+                settingStage.setResizable(false);
+                settingStage.initStyle(StageStyle.DECORATED);
+            }
+            settingStage.show();
+        } catch (Exception ex) {
+            Logger.getLogger(Base.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            System.gc();
+        }
+    }
+
     private void showAccountPop() {
         if (accountPop == null) {
             try {
@@ -182,45 +212,6 @@ public class MainController implements BaseController {
             }
         }
         accountPop.show(vb_user, JFXPopup.PopupVPosition.TOP, JFXPopup.PopupHPosition.LEFT, 72, 0);
-    }
-
-    private void showLocalFilePop() {
-        if (localPop == null) {
-            try {
-                FXMLLoader loader = new FXMLLoader();
-                InputStream in = Base.class.getResourceAsStream("/fxml/pop_local_file.fxml");
-                loader.setBuilderFactory(new JavaFXBuilderFactory());
-                loader.setLocation(Base.class.getResource("/fxml/pop_local_file.fxml"));
-                localPop = new JFXPopup(loader.load(in));
-
-                LocalFilePopController localFilePopController = loader.getController();
-                localFilePopController.setOnClick(event -> {
-                    localPop.hide();
-                    new Thread(() -> {
-                        try {
-                            if (Desktop.isDesktopSupported())
-                                Desktop.getDesktop().open(new File(FileUtil.getVideoPath(DeviceCache.getInstance().getSigninBean().mail)));
-                        } catch (Exception e1) {
-                            e1.printStackTrace();
-                        }
-                    }).start();
-                }, event -> {
-                    localPop.hide();
-                    new Thread(() -> {
-                        try {
-                            if (Desktop.isDesktopSupported())
-                                Desktop.getDesktop().open(new File(FileUtil.getImagePath(DeviceCache.getInstance().getSigninBean().mail)));
-                        } catch (Exception e1) {
-                            e1.printStackTrace();
-                        }
-                    }).start();
-                });
-                in.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        localPop.show(vb_local, JFXPopup.PopupVPosition.BOTTOM, JFXPopup.PopupHPosition.LEFT, 72, 0);
     }
 
     /**
