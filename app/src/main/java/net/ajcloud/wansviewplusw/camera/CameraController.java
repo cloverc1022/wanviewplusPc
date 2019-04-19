@@ -414,22 +414,33 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                     mediaPlayerComponent.getMediaPlayer().saveSnapshot(new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg"));
                     Thread.sleep(100);
                     Platform.runLater(() -> {
-                        if (play_method==PlayMethod.RELAY||play_method==PlayMethod.P2P){
+                        if (play_method == PlayMethod.RELAY || play_method == PlayMethod.P2P) {
                             TcprelayHelper.getInstance().disconnect(deviceId);
                             TcprelayHelper.getInstance().init(DeviceCache.getInstance().get(deviceId));
                         }
-                        EventBus.getInstance().post(new SnapshotEvent());
-                        resetPlay();
-                        deviceId = camera.deviceId;
-                        play();
+                        Platform.runLater(() -> {
+                            EventBus.getInstance().post(new SnapshotEvent());
+                            resetPlay();
+                            deviceId = camera.deviceId;
+                            play();
+                        });
                     });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }).start();
         } else {
-            deviceId = camera.deviceId;
-            play();
+            new Thread(() -> {
+                if ((play_method == PlayMethod.RELAY || play_method == PlayMethod.P2P) && !StringUtil.isNullOrEmpty(deviceId)) {
+                    TcprelayHelper.getInstance().disconnect(deviceId);
+                    TcprelayHelper.getInstance().init(DeviceCache.getInstance().get(deviceId));
+                }
+                Platform.runLater(() -> {
+                    resetPlay();
+                    deviceId = camera.deviceId;
+                    play();
+                });
+            }).start();
         }
     }
 
