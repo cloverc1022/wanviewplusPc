@@ -93,6 +93,30 @@ public class TcprelayHelper {
         }
     }
 
+    public void reConnect(String deviceId) {
+        if (runningMap.containsKey(deviceId)) {
+            LinkInfo linkInfo = runningMap.get(deviceId);
+            if (linkInfo != null)
+                linkInfo.setValid(false);
+            runningMap.remove(deviceId);
+        }
+        if (linksMap.containsKey(deviceId)) {
+            LinkInfo linkInfo = linksMap.get(deviceId);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    if (linkInfo != null) {
+                        WLog.w(TAG, "initLink--------relaydisconnect");
+                        tcprelay.relaydisconnect(linkInfo.getNum());
+                        linksMap.remove(deviceId);
+                        init(DeviceCache.getInstance().get(deviceId));
+                    }
+                }
+            }).start();
+
+        }
+    }
+
     /**
      * step1：初始化建链设备
      */

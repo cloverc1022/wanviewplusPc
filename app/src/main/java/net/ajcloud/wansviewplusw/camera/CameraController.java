@@ -316,7 +316,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         reconnect.setOnMouseClicked(event -> {
             reconnect.setVisible(false);
             reconnect.setManaged(false);
-            TcprelayHelper.getInstance().disconnect(deviceId);
+            TcprelayHelper.getInstance().reConnect(deviceId);
             play();
         });
         EventBus.getInstance().register(event -> {
@@ -415,8 +415,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                     Thread.sleep(100);
                     Platform.runLater(() -> {
                         if (play_method == PlayMethod.RELAY || play_method == PlayMethod.P2P) {
-                            TcprelayHelper.getInstance().disconnect(deviceId);
-                            TcprelayHelper.getInstance().init(DeviceCache.getInstance().get(deviceId));
+                            TcprelayHelper.getInstance().reConnect(deviceId);
                         }
                         Platform.runLater(() -> {
                             EventBus.getInstance().post(new SnapshotEvent());
@@ -432,8 +431,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         } else {
             new Thread(() -> {
                 if ((play_method == PlayMethod.RELAY || play_method == PlayMethod.P2P) && !StringUtil.isNullOrEmpty(deviceId)) {
-                    TcprelayHelper.getInstance().disconnect(deviceId);
-                    TcprelayHelper.getInstance().init(DeviceCache.getInstance().get(deviceId));
+                    TcprelayHelper.getInstance().reConnect(deviceId);
                 }
                 Platform.runLater(() -> {
                     resetPlay();
@@ -939,7 +937,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         content_tips.setManaged(false);
         label_stop.setVisible(true);
         label_stop.setManaged(true);
-        if (play_method != PlayMethod.RELAY) {
+        if (play_method != PlayMethod.P2P) {
             return;
         }
         if (isStart) {
@@ -959,9 +957,9 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                     btn_play.getStyleClass().remove("jfx_button_play");
                     btn_play.getStyleClass().add("jfx_button_play");
                     stopRecord(true);
+                    isFirstPlay = true;
                     mediaPlayerComponent.getMediaPlayer().stop();
-                    TcprelayHelper.getInstance().disconnect(deviceId);
-                    TcprelayHelper.getInstance().init(DeviceCache.getInstance().get(deviceId));
+                    TcprelayHelper.getInstance().reConnect(deviceId);
 
                     content_tips.setVisible(true);
                     content_tips.setManaged(true);
