@@ -937,7 +937,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         content_tips.setManaged(false);
         label_stop.setVisible(true);
         label_stop.setManaged(true);
-        if (play_method != PlayMethod.P2P) {
+        if (play_method != PlayMethod.RELAY) {
             return;
         }
         if (isStart) {
