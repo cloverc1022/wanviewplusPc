@@ -280,7 +280,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             if (playTimer.isCounting()) {
                 startOrCancelTimer(true);
             } else {
-                start();
+                play();
             }
             content_tips.setVisible(false);
             label_stop.setVisible(true);
@@ -414,6 +414,10 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                     mediaPlayerComponent.getMediaPlayer().saveSnapshot(new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg"));
                     Thread.sleep(100);
                     Platform.runLater(() -> {
+                        if (play_method==PlayMethod.RELAY||play_method==PlayMethod.P2P){
+                            TcprelayHelper.getInstance().disconnect(deviceId);
+                            TcprelayHelper.getInstance().init(DeviceCache.getInstance().get(deviceId));
+                        }
                         EventBus.getInstance().post(new SnapshotEvent());
                         resetPlay();
                         deviceId = camera.deviceId;
@@ -919,13 +923,14 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     }
 
     private void startOrCancelTimer(boolean isStart) {
+        playTimer.cancel();
+        content_tips.setVisible(false);
+        content_tips.setManaged(false);
+        label_stop.setVisible(true);
+        label_stop.setManaged(true);
         if (play_method != PlayMethod.RELAY) {
             return;
         }
-        playTimer.cancel();
-        content_tips.setVisible(false);
-        label_stop.setVisible(true);
-        label_stop.setManaged(true);
         if (isStart) {
             playTimer.CountDown(PLAY_TIME, new CountDownTimer.OnTimerListener() {
                 @Override
@@ -939,7 +944,16 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                 @Override
                 public void onFinish() {
                     WLog.w("playTimer", "onFinish");
-                    stop();
+                    btn_play.getStyleClass().remove("jfx_button_pause");
+                    btn_play.getStyleClass().remove("jfx_button_play");
+                    btn_play.getStyleClass().add("jfx_button_play");
+                    stopRecord(true);
+                    mediaPlayerComponent.getMediaPlayer().stop();
+                    TcprelayHelper.getInstance().disconnect(deviceId);
+                    TcprelayHelper.getInstance().init(DeviceCache.getInstance().get(deviceId));
+
+                    content_tips.setVisible(true);
+                    content_tips.setManaged(true);
                     label_time.setText("Have stopped");
                     label_stop.setVisible(false);
                     label_stop.setManaged(false);
@@ -1019,8 +1033,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
         @Override
         public void stopped(MediaPlayer mediaPlayer) {
-            isFirstPlay = true;
-            stopRecord(true);
         }
 
         @Override
