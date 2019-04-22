@@ -55,6 +55,7 @@ import net.ajcloud.wansviewplusw.support.utils.play.PoliceHelper;
 import net.ajcloud.wansviewplusw.support.utils.play.TcprelayHelper;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
+import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
 import uk.co.caprica.vlcj.component.DirectMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
@@ -998,197 +999,231 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
     }
 
+    boolean isVideoOut = false;
+    public static libvlc_state_t OldEvent;
     private final MediaPlayerEventListener mMediaPlayerListener = new MediaPlayerEventListener() {
 
         @Override
         public void mediaChanged(MediaPlayer mediaPlayer, libvlc_media_t libvlc_media_t, String s) {
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void opening(MediaPlayer mediaPlayer) {
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void buffering(MediaPlayer mediaPlayer, float v) {
+            if (isVideoOut) {
+                //Buffer
+                WLog.w(v);
+                showLoading(v < 100);
+            }
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void playing(MediaPlayer mediaPlayer) {
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void paused(MediaPlayer mediaPlayer) {
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void stopped(MediaPlayer mediaPlayer) {
+            isVideoOut = false;
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void forward(MediaPlayer mediaPlayer) {
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void backward(MediaPlayer mediaPlayer) {
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void finished(MediaPlayer mediaPlayer) {
-            stopRecord(true);
+            OldEvent = mediaPlayer.getMediaPlayerState();
+            stopRecord(false);
         }
 
         @Override
         public void timeChanged(MediaPlayer mediaPlayer, long l) {
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void positionChanged(MediaPlayer mediaPlayer, float v) {
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void seekableChanged(MediaPlayer mediaPlayer, int i) {
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void pausableChanged(MediaPlayer mediaPlayer, int i) {
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void titleChanged(MediaPlayer mediaPlayer, int i) {
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void snapshotTaken(MediaPlayer mediaPlayer, String s) {
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void lengthChanged(MediaPlayer mediaPlayer, long l) {
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void videoOutput(MediaPlayer mediaPlayer, int i) {
-            showLoading(false);
-            new Thread(() -> {
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                Platform.runLater(() -> {
-                    mediaPlayerComponent.getMediaPlayer().saveSnapshot(new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg"));
-                    EventBus.getInstance().post(new SnapshotEvent());
-                });
-            }).start();
+            if (OldEvent == libvlc_Playing) {
+                isVideoOut = true;
+                showLoading(false);
+                new Thread(() -> {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    Platform.runLater(() -> {
+                        mediaPlayerComponent.getMediaPlayer().saveSnapshot(new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg"));
+                        EventBus.getInstance().post(new SnapshotEvent());
+                    });
+                }).start();
+            }
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void scrambledChanged(MediaPlayer mediaPlayer, int i) {
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void elementaryStreamAdded(MediaPlayer mediaPlayer, int i, int i1) {
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void elementaryStreamDeleted(MediaPlayer mediaPlayer, int i, int i1) {
-
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void elementaryStreamSelected(MediaPlayer mediaPlayer, int i, int i1) {
-
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void corked(MediaPlayer mediaPlayer, boolean b) {
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void muted(MediaPlayer mediaPlayer, boolean b) {
-
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void volumeChanged(MediaPlayer mediaPlayer, float v) {
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void audioDeviceChanged(MediaPlayer mediaPlayer, String s) {
-
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void chapterChanged(MediaPlayer mediaPlayer, int i) {
-
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void error(MediaPlayer mediaPlayer) {
+            OldEvent = mediaPlayer.getMediaPlayerState();
+            cannotPlayDo();
         }
 
         @Override
         public void mediaPlayerReady(MediaPlayer mediaPlayer) {
-
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void mediaMetaChanged(MediaPlayer mediaPlayer, int i) {
-
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void mediaSubItemAdded(MediaPlayer mediaPlayer, libvlc_media_t libvlc_media_t) {
-
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void mediaDurationChanged(MediaPlayer mediaPlayer, long l) {
-
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void mediaParsedChanged(MediaPlayer mediaPlayer, int i) {
-
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void mediaParsedStatus(MediaPlayer mediaPlayer, int newStatus) {
-
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void mediaFreed(MediaPlayer mediaPlayer) {
-
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void mediaStateChanged(MediaPlayer mediaPlayer, int i) {
-
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void mediaSubItemTreeAdded(MediaPlayer mediaPlayer, libvlc_media_t libvlc_media_t) {
-
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void newMedia(MediaPlayer mediaPlayer) {
-
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void subItemPlayed(MediaPlayer mediaPlayer, int i) {
-
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void subItemFinished(MediaPlayer mediaPlayer, int i) {
-
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
         public void endOfSubItems(MediaPlayer mediaPlayer) {
-
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
 //        @Override

@@ -102,18 +102,28 @@ public class TcprelayHelper {
         }
         if (linksMap.containsKey(deviceId)) {
             LinkInfo linkInfo = linksMap.get(deviceId);
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    if (linkInfo != null) {
-                        WLog.w(TAG, "initLink--------relaydisconnect");
-                        tcprelay.relaydisconnect(linkInfo.getNum());
+            new Thread(() -> {
+                if (linkInfo != null) {
+                    WLog.w(TAG, "initLink--------relaydisconnect");
+                    tcprelay.relaydisconnect(linkInfo.getNum());
+                    linksMap.remove(deviceId);
+                    Camera camera = DeviceCache.getInstance().get(deviceId);
+                    if (camera == null) {
+                        WLog.w(TAG, "initLink--------camera==null");
+                        return;
+                    }
+                    if (!linksMap.containsKey(camera.deviceId) &&
+                            (!runningMap.containsKey(camera.deviceId) ||
+                                    (runningMap.containsKey(camera.deviceId) && !runningMap.get(camera.deviceId).isValid()))) {
+                        WLog.w(TAG, "initLink--------start");
                         linksMap.remove(deviceId);
-                        init(DeviceCache.getInstance().get(deviceId));
+                        runningMap.remove(deviceId);
+                        LinkInfo newLinkInfo = new LinkInfo(deviceId, camera.getCurrentQuality(), null);
+                        runningMap.put(deviceId, newLinkInfo);
+                        getLiveSec(newLinkInfo);
                     }
                 }
             }).start();
-
         }
     }
 
