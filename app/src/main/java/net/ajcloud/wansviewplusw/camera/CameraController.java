@@ -499,6 +499,10 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         btn_play.getStyleClass().remove("jfx_button_pause");
         btn_play.getStyleClass().remove("jfx_button_play");
         btn_play.getStyleClass().add("jfx_button_play");
+        isMute = false;
+        btn_voice.getStyleClass().remove("jfx_button_voice");
+        btn_voice.getStyleClass().remove("jfx_button_voice_mute");
+        btn_voice.getStyleClass().add("jfx_button_voice");
         //init flag
         isFirstPlay = true;
         //结束定时器
@@ -512,7 +516,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             mediaPlayerComponent.release(true);
             writableImage.cancel();
             writableImage = null;
-            playPane.getChildren().remove(imageView);
+            playPane.getChildren().removeAll();
 
             initializeImageView();
             mediaPlayerComponent = new CanvasPlayerComponent();
