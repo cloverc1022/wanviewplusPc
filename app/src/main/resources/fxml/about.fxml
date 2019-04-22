@@ -19,7 +19,7 @@
                         <Insets top="38.0"/>
                     </VBox.margin>
                 </Label>
-                <Label style="-fx-text-fill:#223239;-fx-font-size:14;-fx-font-weight: bold" text="Version 1.0">
+                <Label style="-fx-text-fill:#223239;-fx-font-size:14;-fx-font-weight: bold" text="V1.0.19041202">
                     <VBox.margin>
                         <Insets top="15.0"/>
                     </VBox.margin>

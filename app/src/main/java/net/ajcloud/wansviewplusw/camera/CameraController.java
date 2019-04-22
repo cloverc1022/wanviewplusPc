@@ -172,7 +172,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private FullscreenListener fullscreenListener;
     private Timer recordTimer;
     private String deviceId;
-    private boolean isFirstPlay = true;
     private int play_method;
     //control
     private boolean isMute = false;
@@ -256,11 +255,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             takeSnapshot(FileUtil.getImagePath(DeviceCache.getInstance().getSigninBean().mail), true);
         });
         btn_play.setOnMouseClicked((v) -> {
-            if (isFirstPlay) {
-                play();
-            } else {
-                startOrPause();
-            }
+            startOrStop();
         });
         btn_record.setOnMouseClicked((v) -> {
             recording();
@@ -503,8 +498,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         btn_voice.getStyleClass().remove("jfx_button_voice");
         btn_voice.getStyleClass().remove("jfx_button_voice_mute");
         btn_voice.getStyleClass().add("jfx_button_voice");
-        //init flag
-        isFirstPlay = true;
         //结束定时器
         startOrCancelTimer(false);
         //结束录制
@@ -536,7 +529,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             btn_play.getStyleClass().remove("jfx_button_play");
             btn_play.getStyleClass().add("jfx_button_pause");
             showLoading(true);
-            isFirstPlay = false;
             label_name.setText(camera.aliasName);
             policeHelper.setCamera(camera);
             policeHelper.getUrlAndPlay();
@@ -565,7 +557,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         btn_bottom.setOnAction(null);
         btn_left.setOnAction(null);
         if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
-            isFirstPlay = true;
             stopRecord(false);
             mediaPlayerComponent.getMediaPlayer().stop();
             mediaPlayerComponent.getMediaPlayer().release();
@@ -798,7 +789,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     /**
      * 开始/暂停
      */
-    private void startOrPause() {
+    private void startOrStop() {
         if (StringUtil.isNullOrEmpty(deviceId)) {
             return;
         }
@@ -806,13 +797,10 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         btn_play.getStyleClass().remove("jfx_button_play");
         if (mediaPlayerComponent.getMediaPlayer().isPlaying()) {
             btn_play.getStyleClass().add("jfx_button_play");
-            stopRecord(true);
-            mediaPlayerComponent.getMediaPlayer().pause();
-            startOrCancelTimer(false);
+            doVideoStop();
         } else {
             btn_play.getStyleClass().add("jfx_button_pause");
-            mediaPlayerComponent.getMediaPlayer().start();
-            startOrCancelTimer(true);
+            play();
         }
     }
 
@@ -950,7 +938,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                     btn_play.getStyleClass().remove("jfx_button_play");
                     btn_play.getStyleClass().add("jfx_button_play");
                     stopRecord(true);
-                    isFirstPlay = true;
                     mediaPlayerComponent.getMediaPlayer().stop();
                     TcprelayHelper.getInstance().reConnect(deviceId);
 
@@ -1460,7 +1447,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         btn_play.getStyleClass().remove("jfx_button_pause");
         btn_play.getStyleClass().remove("jfx_button_play");
         btn_play.getStyleClass().add("jfx_button_play");
-        isFirstPlay = true;
         showLoading(false);
         reconnect.setVisible(true);
         reconnect.setManaged(true);
