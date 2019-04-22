@@ -173,7 +173,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private Timer recordTimer;
     private String deviceId;
     private boolean isFirstPlay = true;
-    private boolean isP2p = false;
     private int play_method;
     //control
     private boolean isMute = false;
@@ -406,39 +405,22 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
         initView(camera.deviceId);
         if (mediaPlayerComponent.getMediaPlayer().isPlaying()) {
-            new Thread(() -> {
-                try {
-                    if (!StringUtil.isNullOrEmpty(deviceId) && StringUtil.equals(deviceId, camera.deviceId)) {
-                        return;
-                    }
-                    mediaPlayerComponent.getMediaPlayer().saveSnapshot(new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg"));
-                    Thread.sleep(100);
-                    Platform.runLater(() -> {
-                        if (play_method == PlayMethod.RELAY || play_method == PlayMethod.P2P) {
-                            TcprelayHelper.getInstance().reConnect(deviceId);
-                        }
-                        Platform.runLater(() -> {
-                            EventBus.getInstance().post(new SnapshotEvent());
-                            resetPlay();
-                            deviceId = camera.deviceId;
-                            play();
-                        });
-                    });
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }).start();
+            if (!StringUtil.isNullOrEmpty(deviceId) && StringUtil.equals(deviceId, camera.deviceId)) {
+                return;
+            }
+            try {
+                doVideoStop();
+                deviceId = camera.deviceId;
+                play();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
-            new Thread(() -> {
-                if ((play_method == PlayMethod.RELAY || play_method == PlayMethod.P2P) && !StringUtil.isNullOrEmpty(deviceId)) {
-                    TcprelayHelper.getInstance().reConnect(deviceId);
-                }
-                Platform.runLater(() -> {
-                    resetPlay();
-                    deviceId = camera.deviceId;
-                    play();
-                });
-            }).start();
+            if ((play_method == PlayMethod.RELAY || play_method == PlayMethod.P2P) && !StringUtil.isNullOrEmpty(deviceId)) {
+                TcprelayHelper.getInstance().reConnect(deviceId);
+            }
+            deviceId = camera.deviceId;
+            play();
         }
     }
 
@@ -477,7 +459,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
     @Override
     public void onPlay(int playMethod, String url, int mVideoHeight, int mVideoWidth) {
-        isP2p = false;
         play_method = playMethod;
         onVideoPlay(url);
     }
@@ -513,6 +494,29 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
     }
 
+    private void doVideoStop() {
+        //init UI
+        btn_play.getStyleClass().remove("jfx_button_pause");
+        btn_play.getStyleClass().remove("jfx_button_play");
+        btn_play.getStyleClass().add("jfx_button_play");
+        //init flag
+        isFirstPlay = true;
+        //结束定时器
+        startOrCancelTimer(false);
+        //结束录制
+        stopRecord(true);
+        //停止播放
+        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+            WLog.w("onStop--------------", deviceId);
+            mediaPlayerComponent.getMediaPlayer().stop();
+        }
+        //重新建链
+        WLog.w("onStop--------------", play_method);
+        if ((play_method == PlayMethod.RELAY || play_method == PlayMethod.P2P) && !StringUtil.isNullOrEmpty(deviceId)) {
+            TcprelayHelper.getInstance().reConnect(deviceId);
+        }
+    }
+
     public void play() {
         Camera camera = DeviceCache.getInstance().get(deviceId);
         if (camera != null && camera.isOnline()) {
@@ -527,28 +531,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
     }
 
-    public void stop() {
-        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
-            btn_play.getStyleClass().remove("jfx_button_pause");
-            btn_play.getStyleClass().remove("jfx_button_play");
-            btn_play.getStyleClass().add("jfx_button_play");
-            isFirstPlay = true;
-            resetPlay();
-            startOrCancelTimer(false);
-        }
-    }
-
     public void destroy() {
-        TcprelayHelper.getInstance().deinit();
         EventBus.getInstance().post(new SnapshotEvent());
-        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
-            isFirstPlay = true;
-            stopRecord(false);
-            mediaPlayerComponent.getMediaPlayer().stop();
-            mediaPlayerComponent.getMediaPlayer().release();
-            startOrCancelTimer(false);
-            timerService.cancel();
-        }
         writableImage.cancel();
         fullscreenListener = null;
         btn_voice.setOnMouseClicked(null);
@@ -568,6 +552,15 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         btn_right.setOnAction(null);
         btn_bottom.setOnAction(null);
         btn_left.setOnAction(null);
+        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+            isFirstPlay = true;
+            stopRecord(false);
+            mediaPlayerComponent.getMediaPlayer().stop();
+            mediaPlayerComponent.getMediaPlayer().release();
+            startOrCancelTimer(false);
+            timerService.cancel();
+        }
+        TcprelayHelper.getInstance().deinit();
     }
 
     private void initializeImageView() {
@@ -875,15 +868,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
     }
 
-    private void resetPlay() {
-        Platform.runLater(() -> {
-            stopRecord(true);
-            if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
-                mediaPlayerComponent.getMediaPlayer().stop();
-            }
-        });
-    }
-
     private long time = 0;
 
     /**
@@ -923,11 +907,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
      * 重新播放
      */
     private void restart() {
-        if (!canDo()) {
-            return;
-        }
-        stopRecord(true);
-        stop();
+        doVideoStop();
         play();
     }
 
@@ -1088,6 +1068,17 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         @Override
         public void videoOutput(MediaPlayer mediaPlayer, int i) {
             showLoading(false);
+            new Thread(() -> {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Platform.runLater(() -> {
+                    mediaPlayerComponent.getMediaPlayer().saveSnapshot(new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg"));
+                    EventBus.getInstance().post(new SnapshotEvent());
+                });
+            }).start();
         }
 
         @Override
