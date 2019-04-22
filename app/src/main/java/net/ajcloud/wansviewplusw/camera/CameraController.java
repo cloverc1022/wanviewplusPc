@@ -509,6 +509,14 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
             WLog.w("onStop--------------", deviceId);
             mediaPlayerComponent.getMediaPlayer().stop();
+            mediaPlayerComponent.release(true);
+            writableImage.cancel();
+            writableImage = null;
+            playPane.getChildren().remove(imageView);
+
+            initializeImageView();
+            mediaPlayerComponent = new CanvasPlayerComponent();
+            mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(mMediaPlayerListener);
         }
         //重新建链
         WLog.w("onStop--------------", play_method);
@@ -569,6 +577,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
         imageView = new ImageView(writableImage);
         playPane.getChildren().add(imageView);
+
+        fitImageViewSize((float) playPane.getWidth(), (float) playPane.getHeight());
 
         playPane.widthProperty().addListener((observable, oldValue, newValue) -> {
             fitImageViewSize(newValue.floatValue(), (float) playPane.getHeight());
@@ -653,7 +663,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                         mediaPlayer.unlock();
                     }
                 }
-
             });
         }
     }

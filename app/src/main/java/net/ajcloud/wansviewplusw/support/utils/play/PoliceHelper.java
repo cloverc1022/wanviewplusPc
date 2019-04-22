@@ -52,9 +52,7 @@ public class PoliceHelper /*implements ResponseListener*/ {
 
     private void initPolicies() {
         playPolices = new LinkedList<Integer>();
-        if (!playPolices.contains(PlayMethod.LAN)) {
-            playPolices.offer(PlayMethod.LAN);
-        }
+        playPolices.offer(PlayMethod.LAN);
         if (camera.livePolicy.upnp == 1) {
             if (!playPolices.contains(PlayMethod.UPNP))
                 playPolices.offer(PlayMethod.UPNP);
@@ -128,6 +126,8 @@ public class PoliceHelper /*implements ResponseListener*/ {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            initPolicies();
+            listener.onCannotPlay();
         }
     }
 
