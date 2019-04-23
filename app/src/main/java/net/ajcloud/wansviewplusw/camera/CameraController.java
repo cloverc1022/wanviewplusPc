@@ -1213,7 +1213,13 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
         @Override
         public void mediaStateChanged(MediaPlayer mediaPlayer, int i) {
+            WLog.w("logtest", OldEvent);
+            if (OldEvent == libvlc_Playing &&
+                    mediaPlayer.getMediaPlayerState() == libvlc_state_t.libvlc_Ended) {
+                cannotPlayDo();
+            }
             OldEvent = mediaPlayer.getMediaPlayerState();
+            WLog.w("logtest", OldEvent);
         }
 
         @Override
