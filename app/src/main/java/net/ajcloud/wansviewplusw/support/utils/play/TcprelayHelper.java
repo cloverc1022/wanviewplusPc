@@ -94,37 +94,31 @@ public class TcprelayHelper {
     }
 
     public void reConnect(String deviceId) {
+        Camera camera = DeviceCache.getInstance().get(deviceId);
+        if (camera == null) {
+            WLog.w(TAG, "initLink--------camera==null");
+            return;
+        }
+        LinkInfo newLinkInfo = new LinkInfo(deviceId, camera.getCurrentQuality(), null);
         if (runningMap.containsKey(deviceId)) {
             LinkInfo linkInfo = runningMap.get(deviceId);
             if (linkInfo != null)
                 linkInfo.setValid(false);
             runningMap.remove(deviceId);
         }
-        if (linksMap.containsKey(deviceId)) {
-            LinkInfo linkInfo = linksMap.get(deviceId);
-            new Thread(() -> {
+        runningMap.put(deviceId, newLinkInfo);
+        new Thread(() -> {
+            if (linksMap.containsKey(deviceId)) {
+                LinkInfo linkInfo = linksMap.get(deviceId);
                 if (linkInfo != null) {
-                    WLog.w(TAG, "initLink--------relaydisconnect");
-                    tcprelay.relaydisconnect(linkInfo.getNum());
+                    int linkNum = linkInfo.getNum();
                     linksMap.remove(deviceId);
-                    Camera camera = DeviceCache.getInstance().get(deviceId);
-                    if (camera == null) {
-                        WLog.w(TAG, "initLink--------camera==null");
-                        return;
-                    }
-                    if (!linksMap.containsKey(camera.deviceId) &&
-                            (!runningMap.containsKey(camera.deviceId) ||
-                                    (runningMap.containsKey(camera.deviceId) && !runningMap.get(camera.deviceId).isValid()))) {
-                        WLog.w(TAG, "initLink--------start");
-                        linksMap.remove(deviceId);
-                        runningMap.remove(deviceId);
-                        LinkInfo newLinkInfo = new LinkInfo(deviceId, camera.getCurrentQuality(), null);
-                        runningMap.put(deviceId, newLinkInfo);
-                        getLiveSec(newLinkInfo);
-                    }
+                    WLog.w(TAG, "initLink--------relaydisconnect:" + linkNum);
+                    tcprelay.relaydisconnect(linkNum);
                 }
-            }).start();
-        }
+            }
+            getLiveSec(newLinkInfo);
+        }).start();
     }
 
     /**
@@ -255,8 +249,7 @@ public class TcprelayHelper {
                 if (linkInfo.getQuality() == quality) {
                     linkInfo.getConnectCallback().onSuccess(linkInfo.getUrl());
                 } else {
-                    disconnect(deviceId);
-                    initLink(deviceId, quality, connectCallback);
+                    reConnect(deviceId);
                 }
             } else if (linkInfo.getStatus() == 2) {
                 initLink(deviceId, quality, connectCallback);

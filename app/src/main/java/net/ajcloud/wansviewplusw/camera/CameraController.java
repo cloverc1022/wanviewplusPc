@@ -1,8 +1,6 @@
 package net.ajcloud.wansviewplusw.camera;
 
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXPopup;
+import com.jfoenix.controls.*;
 import com.sun.jna.Memory;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
@@ -34,6 +32,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -226,15 +225,21 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
             @Override
             public void handle(WorkerStateEvent t) {
-                count.set((int) t.getSource().getValue());
-                if (!canDo()) {
-                    return;
+                try {
+                    count.set((int) t.getSource().getValue());
+                    if (!canDo()) {
+                        return;
+                    }
+                    if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
+                        libvlc_media_stats_t p_stats = mediaPlayerComponent.getMediaPlayer().getMediaStatistics();
+                        double bitrate = p_stats.f_demux_bitrate * 1000;/*KBps*/
+                        if (bitrate < 0)
+                            bitrate = 0.3;
+                        label_speed.setText((bitrate < 1024 ? ((int) bitrate + "K/s") : String.format("%.1fM/s", bitrate / 1024)));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                libvlc_media_stats_t p_stats = mediaPlayerComponent.getMediaPlayer().getMediaStatistics();
-                double bitrate = p_stats.f_demux_bitrate * 1000;/*KBps*/
-                if (bitrate < 0)
-                    bitrate = 0.3;
-                label_speed.setText((bitrate < 1024 ? ((int) bitrate + "K/s") : String.format("%.1fM/s", bitrate / 1024)));
             }
         });
 
@@ -311,7 +316,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         reconnect.setOnMouseClicked(event -> {
             reconnect.setVisible(false);
             reconnect.setManaged(false);
-            TcprelayHelper.getInstance().reConnect(deviceId);
+            if (play_method == PlayMethod.RELAY || play_method == PlayMethod.P2P)
+                TcprelayHelper.getInstance().reConnect(deviceId);
             play();
         });
         EventBus.getInstance().register(event -> {
@@ -400,7 +406,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             }
         }
         initView(camera.deviceId);
-        if (mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+
+        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
             if (!StringUtil.isNullOrEmpty(deviceId) && StringUtil.equals(deviceId, camera.deviceId)) {
                 return;
             }
@@ -454,30 +461,34 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     }
 
     @Override
-    public void onPlay(int playMethod, String url, int mVideoHeight, int mVideoWidth) {
-        play_method = playMethod;
-        onVideoPlay(url);
+    public void onPlay(String deviceId, int playMethod, String url, int mVideoHeight, int mVideoWidth) {
+        if (StringUtil.equals(this.deviceId, deviceId)) {
+            play_method = playMethod;
+            onVideoPlay(url);
+        }
     }
 
     @Override
-    public void onP2pPlay() {
-        play_method = TcprelayHelper.getInstance().getTcprelay().getConnectType() == 0 ? PlayMethod.P2P : PlayMethod.RELAY;
-        Camera camera = DeviceCache.getInstance().get(deviceId);
-        TcprelayHelper.getInstance().getPlayUrl(deviceId, camera.getCurrentQuality(), new TcprelayHelper.ConnectCallback() {
-            @Override
-            public void onSuccess(String url) {
-                WLog.w("TcprelayHelper", "play-----------onSuccess:" + url);
-                Platform.runLater(() -> onVideoPlay(url));
-            }
+    public void onP2pPlay(String deviceId) {
+        if (StringUtil.equals(this.deviceId, deviceId)) {
+            play_method = TcprelayHelper.getInstance().getTcprelay().getConnectType() == 0 ? PlayMethod.P2P : PlayMethod.RELAY;
+            Camera camera = DeviceCache.getInstance().get(deviceId);
+            TcprelayHelper.getInstance().getPlayUrl(deviceId, camera.getCurrentQuality(), new TcprelayHelper.ConnectCallback() {
+                @Override
+                public void onSuccess(String url) {
+                    WLog.w("TcprelayHelper", "play-----------onSuccess:" + url);
+                    Platform.runLater(() -> onVideoPlay(url));
+                }
 
-            @Override
-            public void onFail() {
-                WLog.w("TcprelayHelper", "play-----------onFail");
-                Platform.runLater(() -> {
-                    cannotPlayDo();
-                });
-            }
-        });
+                @Override
+                public void onFail() {
+                    WLog.w("TcprelayHelper", "play-----------onFail");
+                    Platform.runLater(() -> {
+                        cannotPlayDo();
+                    });
+                }
+            });
+        }
     }
 
     private void onVideoPlay(String url) {
@@ -486,7 +497,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             btn_play.getStyleClass().remove("jfx_button_play");
             btn_play.getStyleClass().add("jfx_button_pause");
             startOrCancelTimer(true);
-            mediaPlayerComponent.getMediaPlayer().playMedia(url);
+            if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null)
+                mediaPlayerComponent.getMediaPlayer().playMedia(url);
         }
     }
 
@@ -502,17 +514,13 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         //结束定时器
         startOrCancelTimer(false);
         //结束录制
-        stopRecord(true);
+        stopRecord(false);
         //停止播放
         if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
             WLog.w("onStop--------------", deviceId);
             mediaPlayerComponent.getMediaPlayer().stop();
+            mediaPlayerComponent.getMediaPlayer().release();
             mediaPlayerComponent.release(true);
-            writableImage.cancel();
-            writableImage = null;
-            playPane.getChildren().removeAll();
-
-            initializeImageView();
             mediaPlayerComponent = new CanvasPlayerComponent();
             mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(mMediaPlayerListener);
         }
@@ -569,7 +577,9 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
     private void initializeImageView() {
         Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
-        writableImage = new WritableImage((int) visualBounds.getWidth(), (int) visualBounds.getHeight());
+        if (writableImage == null) {
+            writableImage = new WritableImage((int) visualBounds.getWidth(), (int) visualBounds.getHeight());
+        }
 
         imageView = new ImageView(writableImage);
         playPane.getChildren().add(imageView);
@@ -796,7 +806,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
         btn_play.getStyleClass().remove("jfx_button_pause");
         btn_play.getStyleClass().remove("jfx_button_play");
-        if (mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
             btn_play.getStyleClass().add("jfx_button_play");
             doVideoStop();
         } else {
@@ -812,7 +822,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         if (StringUtil.isNullOrEmpty(deviceId)) {
             return;
         }
-        if (!mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && !mediaPlayerComponent.getMediaPlayer().isPlaying()) {
             btn_play.getStyleClass().remove("jfx_button_pause");
             btn_play.getStyleClass().remove("jfx_button_play");
             btn_play.getStyleClass().add("jfx_button_pause");
@@ -828,7 +838,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         if (StringUtil.isNullOrEmpty(deviceId)) {
             return;
         }
-        if (mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
             btn_play.getStyleClass().remove("jfx_button_pause");
             btn_play.getStyleClass().remove("jfx_button_play");
             btn_play.getStyleClass().add("jfx_button_play");
@@ -844,15 +854,17 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         if (!canDo()) {
             return;
         }
-        if (mediaPlayerComponent.getMediaPlayer().isRecording()) {
-            WLog.w(TAG, "stopRecord");
-            recordingAnim(false);
-            mediaPlayerComponent.getMediaPlayer().stopRecord();
-            takeSnapshot(FileUtil.getTmpPath(), true);
-        } else {
-            WLog.w(TAG, "startRecord");
-            recordingAnim(true);
-            mediaPlayerComponent.getMediaPlayer().startRecord(FileUtil.getVideoPath(DeviceCache.getInstance().getSigninBean().mail));
+        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
+            if (mediaPlayerComponent.getMediaPlayer().isRecording()) {
+                WLog.w(TAG, "stopRecord");
+                recordingAnim(false);
+                mediaPlayerComponent.getMediaPlayer().stopRecord();
+                takeSnapshot(FileUtil.getTmpPath(), true);
+            } else {
+                WLog.w(TAG, "startRecord");
+                recordingAnim(true);
+                mediaPlayerComponent.getMediaPlayer().startRecord(FileUtil.getVideoPath(DeviceCache.getInstance().getSigninBean().mail));
+            }
         }
     }
 
@@ -939,7 +951,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                     btn_play.getStyleClass().remove("jfx_button_play");
                     btn_play.getStyleClass().add("jfx_button_play");
                     stopRecord(true);
-                    mediaPlayerComponent.getMediaPlayer().stop();
+                    if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null)
+                        mediaPlayerComponent.getMediaPlayer().stop();
                     TcprelayHelper.getInstance().reConnect(deviceId);
 
                     content_tips.setVisible(true);
@@ -1102,8 +1115,10 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                         e.printStackTrace();
                     }
                     Platform.runLater(() -> {
-                        mediaPlayerComponent.getMediaPlayer().saveSnapshot(new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg"));
-                        EventBus.getInstance().post(new SnapshotEvent());
+                        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
+                            mediaPlayerComponent.getMediaPlayer().saveSnapshot(new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg"));
+                            EventBus.getInstance().post(new SnapshotEvent());
+                        }
                     });
                 }).start();
             }
@@ -1225,92 +1240,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         public void endOfSubItems(MediaPlayer mediaPlayer) {
             OldEvent = mediaPlayer.getMediaPlayerState();
         }
-
-//        @Override
-//        public void onEvent(MediaPlayer.Event eventbus) {
-//
-//            switch (eventbus.event) {
-//                case MediaPlayer.Event.Stopped:
-//                    WLog.i(TAG, "Stopped");
-//                    if (NewVideoView.this.mOnChangeListener != null) {
-//                        isVideoOut = false;
-//                        NewVideoView.this.mOnChangeListener.onVideoStop();
-//                    }
-//                    break;
-//                case MediaPlayer.Event.EndReached:
-//                    WLog.d(TAG, "EndReached");
-//                    if (NewVideoView.this.mOnChangeListener != null) {
-//                        if (OldEvent == Media.State.Buffering) {
-//                            NewVideoView.this.mOnChangeListener.onError();
-//                        } else {
-//                            NewVideoView.this.mOnChangeListener.onEnd();
-//                        }
-//                    }
-//                    break;
-//                case MediaPlayer.Event.EncounteredError:
-//                    WLog.d(TAG, "EncounteredError");
-//                    if (NewVideoView.this.mOnChangeListener != null) {
-//                        NewVideoView.this.mOnChangeListener.onError();
-//                    }
-//                    break;
-//                case MediaPlayer.Event.TimeChanged:
-////                    WLog.d(TAG, "TimeChanged");
-//                    if (NewVideoView.this.mOnChangeListener != null) {
-//                        NewVideoView.this.mOnChangeListener.onTimeChange(eventbus.getTimeChanged());
-//                    }
-//                    break;
-//                case MediaPlayer.Event.PositionChanged:
-////                    WLog.d(TAG, "PositionChanged");
-//                    if (!NewVideoView.this.mCanSeek) {
-//                        NewVideoView.this.mCanSeek = true;
-//                    }
-//                    break;
-//                case MediaPlayer.Event.Buffering:
-//                    WLog.d(TAG, "Buffering");
-//                    if (NewVideoView.this.mOnChangeListener != null) {
-//                        if (isVideoOut) {
-//                            if (OldEvent == Media.State.Playing) {
-//                                NewVideoView.this.mOnChangeListener.onFirstBufferChanged(eventbus.getBufferingChanged());
-//                            } else {
-//                                NewVideoView.this.mOnChangeListener.onBufferChanged(eventbus.getBufferingChanged());
-//                            }
-//                        }
-//                    }
-//                    break;
-//                case MediaPlayer.Event.Vout:
-//                    WLog.d(TAG, "Vout:" + OldEvent);
-//                    if (NewVideoView.this.mOnChangeListener != null) {
-//                        if (OldEvent == Media.State.Playing) {
-//                            isVideoOut = true;
-//                            NewVideoView.this.mOnChangeListener.onLoadComplet();
-//                        }
-//                    }
-//                    break;
-//                case MediaPlayer.Event.ESAdded:
-//                    WLog.d(TAG, "ESAdded");
-//                    break;
-//                case MediaPlayer.Event.ESDeleted:
-//                    WLog.d(TAG, "ESDeleted");
-//                    break;
-//                case MediaPlayer.Event.ESSelected:
-//                    WLog.d(TAG, "ESSelected");
-//                    break;
-//                case MediaPlayer.Event.PausableChanged:
-//                    WLog.d(TAG, "PausableChanged");
-//                    break;
-//                case MediaPlayer.Event.SeekableChanged:
-//                    WLog.d(TAG, "SeekableChanged");
-//                    break;
-//                case MediaPlayer.Event.ESDelay:
-//                    WLog.d(TAG, "ESDelay");
-//                    break;
-//                default:
-//                    WLog.d(TAG, "default");
-//                    break;
-//            }
-//            OldEvent = mMediaPlayer.getPlayerState();
-//            WLog.d(TAG, "PlayerState:" + OldEvent);
-//        }
     };
 
     private static class TimerService extends ScheduledService<Integer> {
@@ -1488,5 +1417,21 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         stopRecord(false);
         if (policeHelper != null)
             policeHelper.reset();
+    }
+
+    private void showErrorAlert(String string) {
+        Platform.runLater(() -> {
+            JFXAlert alert = new JFXAlert((Stage) root.getScene().getWindow());
+            alert.initModality(Modality.WINDOW_MODAL);
+            alert.setOverlayClose(false);
+            JFXDialogLayout layout = new JFXDialogLayout();
+            layout.setBody(new Label(string));
+            JFXButton closeButton = new JFXButton("OK");
+            closeButton.getStyleClass().add("dialog-accept");
+            closeButton.setOnAction(event -> alert.hideWithAnimation());
+            layout.setActions(closeButton);
+            alert.setContent(layout);
+            alert.show();
+        });
     }
 }

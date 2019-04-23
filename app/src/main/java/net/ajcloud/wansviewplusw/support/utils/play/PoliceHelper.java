@@ -29,9 +29,9 @@ public class PoliceHelper /*implements ResponseListener*/ {
     public interface PoliceControlListener {
         void onCannotPlay();
 
-        void onPlay(int playMethod, String url, int mVideoHeight, int mVideoWidth);
+        void onPlay(String deviceId, int playMethod, String url, int mVideoHeight, int mVideoWidth);
 
-        void onP2pPlay();
+        void onP2pPlay(String deviceId);
     }
 
     private Camera camera;
@@ -119,7 +119,7 @@ public class PoliceHelper /*implements ResponseListener*/ {
                 getLiveSec(2);
             } else if (police == PlayMethod.P2P || police == PlayMethod.RELAY) {
                 playedRequestType = PlayMethod.P2P;
-                listener.onP2pPlay();
+                listener.onP2pPlay(camera.deviceId);
             } else {
                 isRequestToken = false;
                 tryNextPolicy();
@@ -180,9 +180,9 @@ public class PoliceHelper /*implements ResponseListener*/ {
                 WLog.w("p2p_debug", "------p2p-server-rev------");
                 if (bean.stream != null) {
                     if (reqType == 1) {
-                        listener.onPlay(playedRequestType, bean.stream.localUrl, bean.stream.resHeight, bean.stream.resWidth);
+                        listener.onPlay(camera.deviceId, playedRequestType, bean.stream.localUrl, bean.stream.resHeight, bean.stream.resWidth);
                     } else if (reqType == 2) {
-                        listener.onPlay(playedRequestType, bean.stream.wanUrl, bean.stream.resHeight, bean.stream.resWidth);
+                        listener.onPlay(camera.deviceId, playedRequestType, bean.stream.wanUrl, bean.stream.resHeight, bean.stream.resWidth);
                     }
                 } else {
                     isRequestToken = false;

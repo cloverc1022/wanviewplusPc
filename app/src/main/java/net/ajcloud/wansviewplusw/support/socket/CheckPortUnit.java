@@ -30,7 +30,7 @@ public class CheckPortUnit {
                         socket.setSoTimeout(100);
                         socket.close();
                     } catch (Exception e) {
-                        if (count++ > 50) {
+                        if (count++ > 20) {
                             break;
                         }
                         WLog.w(TAG, "port:" + i);
