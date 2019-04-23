@@ -1418,6 +1418,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         btn_play.getStyleClass().remove("jfx_button_play");
         btn_play.getStyleClass().add("jfx_button_play");
         showLoading(false);
+        startOrCancelTimer(false);
         reconnect.setVisible(true);
         reconnect.setManaged(true);
         stopRecord(false);

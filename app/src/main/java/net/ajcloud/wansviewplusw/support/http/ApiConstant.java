@@ -2,10 +2,9 @@ package net.ajcloud.wansviewplusw.support.http;
 
 import com.alibaba.fastjson.JSONException;
 import com.google.gson.JsonObject;
+import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.http.bean.start.AppConfigBean;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
-
-import java.io.File;
 
 /**
  * Created by mamengchao on 2018/05/21.
@@ -190,6 +189,8 @@ public class ApiConstant {
             metaJson.addProperty("locale", "en");
             metaJson.addProperty("localtz", "480");
             metaJson.addProperty("appVendorCode", appVendorCode);
+            if (DeviceCache.getInstance().getSigninBean() != null && !StringUtil.isNullOrEmpty(DeviceCache.getInstance().getSigninBean().accessToken))
+                metaJson.addProperty("accessToken", DeviceCache.getInstance().getSigninBean().accessToken);
             if (!StringUtil.isNullOrEmpty(deviceId)) {
                 metaJson.addProperty("deviceId", deviceId);
             }

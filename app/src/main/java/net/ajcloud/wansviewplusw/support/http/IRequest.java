@@ -55,4 +55,7 @@ public interface IRequest {
 
     @GET
     Call<File> downloadFile(@Url String url);
+
+    @POST("refresh-token")
+    Call<ResponseBean<RefreshTokenBean>> refreshToken(@Body JsonObject body);
 }

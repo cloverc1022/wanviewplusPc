@@ -267,7 +267,15 @@ public class DeviceCache {
     }
 
     public void setSigninBean(SigninBean signinBean) {
-        this.signinBean = signinBean;
+        this.signinBean = new SigninBean();
+        this.signinBean.mail = signinBean.mail;
+        this.signinBean.accessToken = signinBean.accessToken;
+        this.signinBean.accessExpiresIn = System.currentTimeMillis() / 1000 + signinBean.accessExpiresIn;
+        this.signinBean.refreshToken = signinBean.refreshToken;
+        this.signinBean.refreshExpiresIn = System.currentTimeMillis() / 1000 + signinBean.refreshExpiresIn;
+        this.signinBean.signToken = signinBean.signToken;
+        this.signinBean.scope = signinBean.scope;
+        this.signinBean.tokenType = signinBean.tokenType;
     }
 
     public void logout() {

@@ -13,6 +13,7 @@ import net.ajcloud.wansviewplusw.support.eventbus.event.DeviceRefreshEvent;
 import net.ajcloud.wansviewplusw.support.http.Interceptor.CommonInterceptor;
 import net.ajcloud.wansviewplusw.support.http.Interceptor.HttpLoggingInterceptor;
 import net.ajcloud.wansviewplusw.support.http.Interceptor.OkSignatureInterceptor;
+import net.ajcloud.wansviewplusw.support.http.Interceptor.OkTokenInterceptor;
 import net.ajcloud.wansviewplusw.support.http.bean.*;
 import net.ajcloud.wansviewplusw.support.http.bean.device.DeviceListBean;
 import net.ajcloud.wansviewplusw.support.http.bean.start.AppStartUpBean;
@@ -47,6 +48,7 @@ public class RequestApiUnit {
         loggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY);
         loggingInterceptor.setColorLevel(Level.INFO);
         okHttpClient.addInterceptor(new CommonInterceptor());
+        okHttpClient.addInterceptor(new OkTokenInterceptor());
         okHttpClient.addInterceptor(new OkSignatureInterceptor());
         okHttpClient.addInterceptor(loggingInterceptor);
     }
@@ -628,6 +630,45 @@ public class RequestApiUnit {
                 listener.onFail(-1, throwable.getMessage());
             }
         });
+    }
+
+    public boolean refreshToken() {
+
+        JsonObject dataJson = new JsonObject();
+        dataJson.addProperty("agentName", localInfo.deviceName);
+        dataJson.addProperty("agentToken", localInfo.deviceId);
+        dataJson.addProperty("osName", "android");
+        dataJson.addProperty("accessToken", DeviceCache.getInstance().getSigninBean().accessToken);
+        dataJson.addProperty("refreshToken", DeviceCache.getInstance().getSigninBean().refreshToken);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ApiConstant.BASE_UAC_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient.build())
+                .build();
+        IRequest startup = retrofit.create(IRequest.class);
+        Call<ResponseBean<RefreshTokenBean>> getDeviceInfo = startup.refreshToken(ApiConstant.getReqBody(dataJson, null));
+        try {
+            Response<ResponseBean<RefreshTokenBean>> response = getDeviceInfo.execute();
+            if (response.isSuccessful()) {
+                ResponseBean<RefreshTokenBean> responseBean = response.body();
+                if (responseBean.isSuccess()) {
+                    RefreshTokenBean refreshTokenBean = responseBean.result;
+                    if (refreshTokenBean != null) {
+                        SigninBean signinBean = refreshTokenBean.result;
+                        DeviceCache.getInstance().setSigninBean(signinBean);
+                    }
+                    return true;
+                } else {
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     /**
