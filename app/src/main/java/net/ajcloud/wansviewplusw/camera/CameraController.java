@@ -464,6 +464,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     public void onPlay(String deviceId, int playMethod, String url, int mVideoHeight, int mVideoWidth) {
         if (StringUtil.equals(this.deviceId, deviceId)) {
             play_method = playMethod;
+            if (playPane != null)
+                fitImageViewSize((float) playPane.getWidth(), (float) playPane.getHeight());
             onVideoPlay(url);
         }
     }
@@ -477,7 +479,11 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                 @Override
                 public void onSuccess(String url) {
                     WLog.w("TcprelayHelper", "play-----------onSuccess:" + url);
-                    Platform.runLater(() -> onVideoPlay(url));
+                    Platform.runLater(() -> {
+                        if (playPane != null)
+                            fitImageViewSize((float) playPane.getWidth(), (float) playPane.getHeight());
+                        onVideoPlay(url);
+                    });
                 }
 
                 @Override
@@ -576,12 +582,15 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     }
 
     private void initializeImageView() {
-        Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
         if (writableImage == null) {
+            Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
             writableImage = new WritableImage((int) visualBounds.getWidth(), (int) visualBounds.getHeight());
         }
 
-        imageView = new ImageView(writableImage);
+        if (imageView == null)
+            imageView = new ImageView(writableImage);
+
+        playPane.getChildren().removeAll();
         playPane.getChildren().add(imageView);
 
         fitImageViewSize((float) playPane.getWidth(), (float) playPane.getHeight());
@@ -600,21 +609,22 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     }
 
     private void fitImageViewSize(float width, float height) {
-        Platform.runLater(() -> {
-            float fitHeight = videoSourceRatioProperty.get() * width;
-            if (fitHeight > height) {
-                imageView.setFitHeight(height);
-                double fitWidth = height / videoSourceRatioProperty.get();
-                imageView.setFitWidth(fitWidth);
-                imageView.setX((width - fitWidth) / 2);
-                imageView.setY(0);
-            } else {
-                imageView.setFitWidth(width);
-                imageView.setFitHeight(fitHeight);
-                imageView.setY((height - fitHeight) / 2);
-                imageView.setX(0);
-            }
-        });
+        if (imageView != null)
+            Platform.runLater(() -> {
+                float fitHeight = videoSourceRatioProperty.get() * width;
+                if (fitHeight > height) {
+                    imageView.setFitHeight(height);
+                    double fitWidth = height / videoSourceRatioProperty.get();
+                    imageView.setFitWidth(fitWidth);
+                    imageView.setX((width - fitWidth) / 2);
+                    imageView.setY(0);
+                } else {
+                    imageView.setFitWidth(width);
+                    imageView.setFitHeight(fitHeight);
+                    imageView.setY((height - fitHeight) / 2);
+                    imageView.setX(0);
+                }
+            });
     }
 
     private void setPtz(int action) {

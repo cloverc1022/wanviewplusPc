@@ -96,7 +96,7 @@ public class MainController implements BaseController {
         vb_nine.setOnMouseClicked(e -> replace(CONTENT_NINE));
         vb_local.setOnMouseClicked(e -> go2Setting());
 
-        currentItem = vb_device.getId();
+        currentItem = CONTENT_DEVICE;
         Flow innerFlow = new Flow(CameraController.class);
         flowHandler = innerFlow.createHandler(context);
         bindNodeToController(CONTENT_DEVICE, CameraController.class, innerFlow, flowHandler);
