@@ -85,7 +85,7 @@ public class Base extends Application implements LoginController.OnLoginListener
         Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
         getLocalInfo();
         TcprelayHelper.getInstance().getTcprelay().relayinit();
-        new CheckPortUnit().check(port -> TcprelayHelper.getInstance().addPorts(port));
+//        new CheckPortUnit().check(port -> TcprelayHelper.getInstance().addPorts(port));
     }
 
     private void go2Login() {
