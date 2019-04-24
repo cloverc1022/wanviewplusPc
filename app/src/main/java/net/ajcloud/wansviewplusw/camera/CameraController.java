@@ -10,15 +10,11 @@ import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
-import javafx.beans.property.FloatProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.ScheduledService;
 import javafx.concurrent.Task;
-import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -172,6 +168,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private FullscreenListener fullscreenListener;
     private Timer recordTimer;
     private String deviceId;
+    private StringProperty speed;
     private int play_method;
     //control
     private boolean isMute = false;
@@ -221,27 +218,28 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         AtomicInteger count = new AtomicInteger(0);
         timerService.setCount(count.get());
         timerService.setPeriod(Duration.seconds(1));
-        timerService.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-
-            @Override
-            public void handle(WorkerStateEvent t) {
-                try {
-                    count.set((int) t.getSource().getValue());
-                    if (!canDo()) {
-                        return;
+        timerService.setOnSucceeded(t -> {
+                    try {
+                        count.set((int) t.getSource().getValue());
+                        if (!canDo()) {
+                            return;
+                        }
+                        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
+                            libvlc_media_stats_t p_stats = mediaPlayerComponent.getMediaPlayer().getMediaStatistics();
+                            double bitrate = p_stats.f_demux_bitrate * 1000;/*KBps*/
+                            if (bitrate < 0)
+                                bitrate = 0.3;
+                            if (bitrate < 1024) {
+                                speed.set((int) bitrate + "K/s");
+                            } else {
+                                speed.set(String.format("%.1fM/s", bitrate / 1024));
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
-                    if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
-                        libvlc_media_stats_t p_stats = mediaPlayerComponent.getMediaPlayer().getMediaStatistics();
-                        double bitrate = p_stats.f_demux_bitrate * 1000;/*KBps*/
-                        if (bitrate < 0)
-                            bitrate = 0.3;
-                        label_speed.setText((bitrate < 1024 ? ((int) bitrate + "K/s") : String.format("%.1fM/s", bitrate / 1024)));
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
-            }
-        });
+        );
 
         Tooltip tooltip = new Tooltip("Through the Internet, it allow to \nview live video for up to 10 minutes \neach time. \nClick \"Continue\" to continue viewing.");
         tooltip.getStyleClass().add("tips");
@@ -329,6 +327,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     }
 
     private void initData() {
+        speed = new SimpleStringProperty("0K/s");
+        label_speed.textProperty().bind(speed);
         if (requestApiUnit == null) {
             requestApiUnit = new RequestApiUnit();
         }
