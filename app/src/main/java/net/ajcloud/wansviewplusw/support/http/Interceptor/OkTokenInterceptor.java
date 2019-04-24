@@ -44,13 +44,13 @@ public class OkTokenInterceptor implements Interceptor {
                 final long expiresIn = DeviceCache.getInstance().getSigninBean().accessExpiresIn;
 
                 if (!StringUtil.isNullOrEmpty(token)) {
-                    boolean isValid = expiresIn - System.currentTimeMillis() / 1000 > 5 * 60;
+                    boolean isValid = (expiresIn - System.currentTimeMillis() / 1000) > 1800;
                     if (isValid) {
                         WLog.i(TAG, "token有效 ");
                     } else {
                         try {
                             //阻塞获取新token
-                            boolean isSuccess = new RequestApiUnit().refreshToken();
+                            boolean isSuccess = new RequestApiUnit().refreshToken_sysc();
                             if (!isSuccess) {
                                 return chain.proceed(originalRequest);
                             }

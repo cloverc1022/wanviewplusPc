@@ -1,5 +1,8 @@
 package net.ajcloud.wansviewplusw;
 
+import com.jfoenix.controls.JFXAlert;
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
 import io.datafx.controller.flow.Flow;
@@ -11,17 +14,19 @@ import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.event.EventType;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+import javafx.util.Duration;
 import net.ajcloud.wansviewplusw.camera.CameraController;
 import net.ajcloud.wansviewplusw.login.LoginController;
 import net.ajcloud.wansviewplusw.main.MainController;
@@ -30,7 +35,9 @@ import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.entity.LocalInfo;
 import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
 import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
-import net.ajcloud.wansviewplusw.support.utils.WLog;
+import net.ajcloud.wansviewplusw.support.http.bean.RefreshTokenBean;
+import net.ajcloud.wansviewplusw.support.utils.StringUtil;
+import net.ajcloud.wansviewplusw.support.utils.TimeService;
 import net.ajcloud.wansviewplusw.support.utils.play.TcprelayHelper;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
@@ -40,6 +47,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Formatter;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -59,6 +67,8 @@ public class Base extends Application implements LoginController.OnLoginListener
     @FXMLViewFlowContext
     private ViewFlowContext flowContext;
     private boolean isFullscreen = false;
+    private RequestApiUnit requestApiUnit;
+    private TimeService timerService;
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -81,11 +91,13 @@ public class Base extends Application implements LoginController.OnLoginListener
     @Override
     public void init() throws Exception {
         super.init();
+        requestApiUnit = new RequestApiUnit();
         flowContext = new ViewFlowContext();
         NativeLibrary.addSearchPath(RuntimeUtil.getLibVlcLibraryName(), NATIVE_LIBRARY_SEARCH_PATH);
         Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
         getLocalInfo();
         TcprelayHelper.getInstance().getTcprelay().relayinit();
+
 //        new CheckPortUnit().check(port -> TcprelayHelper.getInstance().addPorts(port));
     }
 
@@ -163,6 +175,18 @@ public class Base extends Application implements LoginController.OnLoginListener
             }
             mainStage.show();
             loginStage.hide();
+            //开始刷新token
+
+            if (timerService != null) {
+                timerService.cancel();
+                timerService = null;
+            }
+            timerService = new TimeService();
+            AtomicInteger count = new AtomicInteger(0);
+            timerService.setCount(count.get());
+            timerService.setPeriod(Duration.minutes(5));
+            timerService.setOnSucceeded(t -> doRefreshToken());
+            timerService.start();
         } catch (Exception ex) {
             Logger.getLogger(Base.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -205,46 +229,72 @@ public class Base extends Application implements LoginController.OnLoginListener
         }
     }
 
-    private MainController.MainListener mainListener = new MainController.MainListener() {
-        @Override
-        public void onLogout() {
-            LoadingManager.getLoadingManager().showDefaultLoading(mainStage);
-            new RequestApiUnit().signout(new HttpCommonListener<Object>() {
-                @Override
-                public void onSuccess(Object bean) {
-                    Platform.runLater(() -> {
-                        //清理camera view
-                        FlowHandler flowHandler = (FlowHandler) flowContext.getRegisteredObject("ContentFlowHandler");
-                        CameraController cameraController = (CameraController) flowHandler.getCurrentView().getViewContext().getController();
-                        if (cameraController != null) {
-                            try {
-                                cameraController.destroy();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+    private void doLogout(boolean isForce, String msg) {
+        Platform.runLater(() -> LoadingManager.getLoadingManager().showDefaultLoading(mainStage));
+        new RequestApiUnit().signout(new HttpCommonListener<Object>() {
+            @Override
+            public void onSuccess(Object bean) {
+                Platform.runLater(() -> {
+                    //清理camera view
+                    FlowHandler flowHandler = (FlowHandler) flowContext.getRegisteredObject("ContentFlowHandler");
+                    CameraController cameraController = (CameraController) flowHandler.getCurrentView().getViewContext().getController();
+                    if (cameraController != null) {
+                        try {
+                            cameraController.destroy();
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                        //清理main view
-                        MainController mainController = (MainController) mainFlowHandler.getCurrentView().getViewContext().getController();
-                        if (mainController != null) {
-                            mainController.destroy();
-                        }
-                        //清理base
-                        mainFlowHandler = null;
-                        //清理数据
-                        DeviceCache.getInstance().logout();
-                        LoadingManager.getLoadingManager().hideDefaultLoading();
-                        mainStage.close();
-                        loginStage.show();
-                    });
-                }
-
-                @Override
-                public void onFail(int code, String msg) {
+                    }
+                    //清理main view
+                    MainController mainController = (MainController) mainFlowHandler.getCurrentView().getViewContext().getController();
+                    if (mainController != null) {
+                        mainController.destroy();
+                    }
+                    //清理base
+                    mainFlowHandler = null;
+                    //清理数据
+                    DeviceCache.getInstance().logout();
+                    //停止刷新token
+                    timerService.cancel();
                     LoadingManager.getLoadingManager().hideDefaultLoading();
-                }
-            });
-        }
-    };
+                    mainStage.close();
+                    loginStage.show();
+                    if (isForce) {
+                        showForceLogoutTips(msg);
+                    }
+                });
+            }
+
+            @Override
+            public void onFail(int code, String msg) {
+                Platform.runLater(() -> LoadingManager.getLoadingManager().hideDefaultLoading());
+            }
+        });
+    }
+
+    private void showForceLogoutTips(String msg) {
+        JFXAlert alert = new JFXAlert(loginStage);
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.setOverlayClose(false);
+        JFXDialogLayout layout = new JFXDialogLayout();
+        layout.setPrefWidth(320);
+        layout.setMinWidth(320);
+        layout.setMaxWidth(320);
+        layout.setBody(new Label(StringUtil.isNullOrEmpty(msg) ? "error" : msg));
+        JFXButton closeButton = new JFXButton("Ok");
+        closeButton.setMinWidth(80);
+        closeButton.setMaxWidth(80);
+        closeButton.setPrefWidth(80);
+        closeButton.getStyleClass().add("dialog-accept");
+        closeButton.setOnAction(event -> {
+            alert.hideWithAnimation();
+        });
+        layout.setActions(closeButton);
+        alert.setContent(layout);
+        alert.show();
+    }
+
+    private MainController.MainListener mainListener = () -> doLogout(false, null);
 
     private CameraController.FullscreenListener fullscreenListener = this::fullScreen;
 
@@ -264,5 +314,19 @@ public class Base extends Application implements LoginController.OnLoginListener
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void doRefreshToken() {
+        requestApiUnit.refreshToken(new HttpCommonListener<RefreshTokenBean>() {
+            @Override
+            public void onSuccess(RefreshTokenBean bean) {
+
+            }
+
+            @Override
+            public void onFail(int code, String msg) {
+                doLogout(true, msg);
+            }
+        });
     }
 }

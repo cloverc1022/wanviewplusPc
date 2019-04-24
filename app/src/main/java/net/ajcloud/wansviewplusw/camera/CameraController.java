@@ -10,11 +10,12 @@ import javafx.animation.ParallelTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
-import javafx.beans.property.*;
+import javafx.beans.property.FloatProperty;
+import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.ScheduledService;
-import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
@@ -41,10 +42,7 @@ import net.ajcloud.wansviewplusw.support.eventbus.event.SnapshotEvent;
 import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
 import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
 import net.ajcloud.wansviewplusw.support.timer.CountDownTimer;
-import net.ajcloud.wansviewplusw.support.utils.DateUtils;
-import net.ajcloud.wansviewplusw.support.utils.FileUtil;
-import net.ajcloud.wansviewplusw.support.utils.StringUtil;
-import net.ajcloud.wansviewplusw.support.utils.WLog;
+import net.ajcloud.wansviewplusw.support.utils.*;
 import net.ajcloud.wansviewplusw.support.utils.play.PlayMethod;
 import net.ajcloud.wansviewplusw.support.utils.play.PoliceHelper;
 import net.ajcloud.wansviewplusw.support.utils.play.TcprelayHelper;
@@ -173,7 +171,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     //control
     private boolean isMute = false;
 
-    private TimerService timerService = new TimerService();
+    private TimeService timerService = new TimeService();
 
     /**
      * 定时，限制播放时长
@@ -1257,32 +1255,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             OldEvent = mediaPlayer.getMediaPlayerState();
         }
     };
-
-    private static class TimerService extends ScheduledService<Integer> {
-        private IntegerProperty count = new SimpleIntegerProperty();
-
-        public final void setCount(Integer value) {
-            count.set(value);
-        }
-
-        public final Integer getCount() {
-            return count.get();
-        }
-
-        public final IntegerProperty countProperty() {
-            return count;
-        }
-
-        protected Task<Integer> createTask() {
-            return new Task<Integer>() {
-                protected Integer call() {
-                    //Adds 1 to the count
-                    count.set(getCount() + 1);
-                    return getCount();
-                }
-            };
-        }
-    }
 
     private void showControlPane(boolean isShow) {
         if (!StringUtil.isNullOrEmpty(deviceId)) {

@@ -49,7 +49,7 @@ public class RequestApiUnit {
         loggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY);
         loggingInterceptor.setColorLevel(Level.INFO);
         okHttpClient.addInterceptor(new CommonInterceptor());
-        okHttpClient.addInterceptor(new OkTokenInterceptor());
+//        okHttpClient.addInterceptor(new OkTokenInterceptor());
         okHttpClient.addInterceptor(new OkSignatureInterceptor());
         okHttpClient.addInterceptor(loggingInterceptor);
     }
@@ -633,8 +633,7 @@ public class RequestApiUnit {
         });
     }
 
-    public boolean refreshToken() {
-
+    public boolean refreshToken_sysc() {
         JsonObject dataJson = new JsonObject();
         dataJson.addProperty("agentName", localInfo.deviceName);
         dataJson.addProperty("agentToken", localInfo.deviceId);
@@ -661,11 +660,11 @@ public class RequestApiUnit {
                     if (refreshTokenBean != null && StringUtil.equals(refreshTokenBean.code, "1008")) {
                         //refreshtoken过期，重新登录
                         WLog.w("token error,please relogin");
-                        //TODO 登出 异常
+                        //TODO 异常
                     } else if (refreshTokenBean != null && StringUtil.equals(refreshTokenBean.code, "1011")) {
                         //账号被其他设备登录
                         WLog.w("count has been login by another device");
-                        //TODO 登出 被踢
+                        //TODO 被踢
                     }
                     return false;
                 }
@@ -676,6 +675,49 @@ public class RequestApiUnit {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public void refreshToken(final HttpCommonListener<RefreshTokenBean> listener) {
+        JsonObject dataJson = new JsonObject();
+        dataJson.addProperty("agentName", localInfo.deviceName);
+        dataJson.addProperty("agentToken", localInfo.deviceId);
+        dataJson.addProperty("osName", "android");
+        dataJson.addProperty("accessToken", DeviceCache.getInstance().getSigninBean().accessToken);
+        dataJson.addProperty("refreshToken", DeviceCache.getInstance().getSigninBean().refreshToken);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(ApiConstant.BASE_UAC_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient.build())
+                .build();
+        IRequest startup = retrofit.create(IRequest.class);
+        Call<RefreshTokenBean> getDeviceInfo = startup.refreshToken(ApiConstant.getReqBody(dataJson, null));
+        getDeviceInfo.enqueue(new Callback<RefreshTokenBean>() {
+            @Override
+            public void onResponse(Call<RefreshTokenBean> call, Response<RefreshTokenBean> response) {
+                RefreshTokenBean refreshTokenBean = response.body();
+                if (refreshTokenBean != null && refreshTokenBean.isSuccess()) {
+                    SigninBean signinBean = refreshTokenBean.result;
+                    DeviceCache.getInstance().setSigninBean(signinBean);
+                    listener.onSuccess(refreshTokenBean);
+                } else {
+                    if (refreshTokenBean != null && StringUtil.equals(refreshTokenBean.code, "1008")) {
+                        //refreshtoken过期，重新登录
+                        WLog.w("token error,please relogin");
+                        listener.onFail(1008, null);
+                    } else if (refreshTokenBean != null && StringUtil.equals(refreshTokenBean.code, "1011")) {
+                        //账号被其他设备登录
+                        WLog.w("count has been login by another device");
+                        listener.onFail(1011, refreshTokenBean.message);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<RefreshTokenBean> call, Throwable throwable) {
+                listener.onFail(-1, throwable.getMessage());
+            }
+        });
     }
 
     /**
