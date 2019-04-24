@@ -22,6 +22,7 @@ import net.ajcloud.wansviewplusw.support.http.converters.GsonConverterFactory;
 import net.ajcloud.wansviewplusw.support.utils.CipherUtil;
 import net.ajcloud.wansviewplusw.support.utils.FileUtil;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
+import net.ajcloud.wansviewplusw.support.utils.WLog;
 import okhttp3.OkHttpClient;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -647,19 +648,25 @@ public class RequestApiUnit {
                 .client(okHttpClient.build())
                 .build();
         IRequest startup = retrofit.create(IRequest.class);
-        Call<ResponseBean<RefreshTokenBean>> getDeviceInfo = startup.refreshToken(ApiConstant.getReqBody(dataJson, null));
+        Call<RefreshTokenBean> getDeviceInfo = startup.refreshToken(ApiConstant.getReqBody(dataJson, null));
         try {
-            Response<ResponseBean<RefreshTokenBean>> response = getDeviceInfo.execute();
+            Response<RefreshTokenBean> response = getDeviceInfo.execute();
             if (response.isSuccessful()) {
-                ResponseBean<RefreshTokenBean> responseBean = response.body();
-                if (responseBean.isSuccess()) {
-                    RefreshTokenBean refreshTokenBean = responseBean.result;
-                    if (refreshTokenBean != null) {
-                        SigninBean signinBean = refreshTokenBean.result;
-                        DeviceCache.getInstance().setSigninBean(signinBean);
-                    }
+                RefreshTokenBean refreshTokenBean = response.body();
+                if (refreshTokenBean != null && refreshTokenBean.isSuccess()) {
+                    SigninBean signinBean = refreshTokenBean.result;
+                    DeviceCache.getInstance().setSigninBean(signinBean);
                     return true;
                 } else {
+                    if (refreshTokenBean != null && StringUtil.equals(refreshTokenBean.code, "1008")) {
+                        //refreshtoken过期，重新登录
+                        WLog.w("token error,please relogin");
+                        //TODO 登出 异常
+                    } else if (refreshTokenBean != null && StringUtil.equals(refreshTokenBean.code, "1011")) {
+                        //账号被其他设备登录
+                        WLog.w("count has been login by another device");
+                        //TODO 登出 被踢
+                    }
                     return false;
                 }
             } else {

@@ -44,7 +44,7 @@ public class OkTokenInterceptor implements Interceptor {
                 final long expiresIn = DeviceCache.getInstance().getSigninBean().accessExpiresIn;
 
                 if (!StringUtil.isNullOrEmpty(token)) {
-                    boolean isValid = expiresIn - System.currentTimeMillis() / 1000 > 3600 * 2 / 4;
+                    boolean isValid = expiresIn - System.currentTimeMillis() / 1000 > 5 * 60;
                     if (isValid) {
                         WLog.i(TAG, "token有效 ");
                     } else {
