@@ -102,41 +102,25 @@ public class LoginController implements BaseController {
             return;
         }
         LoadingManager.getLoadingManager().showDefaultLoading((Stage) tf_name.getScene().getWindow());
-        new Thread(new Runnable() {
+        new Thread(() -> requestApiUnit.appStartup(new HttpCommonListener<AppStartUpBean>() {
             @Override
-            public void run() {
-                requestApiUnit.appStartup(new HttpCommonListener<AppStartUpBean>() {
+            public void onSuccess(AppStartUpBean bean) {
+                requestApiUnit.signin(tf_name.getText(), tf_password.getText(), new HttpCommonListener<SigninBean>() {
                     @Override
-                    public void onSuccess(AppStartUpBean bean) {
-                        requestApiUnit.signin(tf_name.getText(), tf_password.getText(), new HttpCommonListener<SigninBean>() {
-                            @Override
-                            public void onSuccess(SigninBean bean) {
-                                if (cb_remember.isSelected()) {
-                                    preferences.putBoolean(IPreferences.P_REMEMBER_ACCOUNT, true);
-                                    preferences.put(IPreferences.P_LAST_ACCOUNT, bean.mail);
+                    public void onSuccess(SigninBean bean) {
+                        Platform.runLater(() -> {
+                            if (cb_remember.isSelected()) {
+                                preferences.putBoolean(IPreferences.P_REMEMBER_ACCOUNT, true);
+                                preferences.put(IPreferences.P_LAST_ACCOUNT, bean.mail);
 //                                    preferences.put(IPreferences.P_LAST_ACCOUNT_PASSWORD, CipherUtil.naclEncodeLocal(tf_password.getText(), preferences.get(IPreferences.P_SALT, "")));
-                                } else {
-                                    preferences.putBoolean(IPreferences.P_REMEMBER_ACCOUNT, false);
-                                    preferences.put(IPreferences.P_LAST_ACCOUNT, "");
+                            } else {
+                                preferences.putBoolean(IPreferences.P_REMEMBER_ACCOUNT, false);
+                                preferences.put(IPreferences.P_LAST_ACCOUNT, "");
 //                                    preferences.put(IPreferences.P_LAST_ACCOUNT_PASSWORD, "");
-                                }
-                                Platform.runLater(() -> {
-                                    if (onLoginListener != null) {
-                                        LoadingManager.getLoadingManager().hideDefaultLoading();
-                                        onLoginListener.onLoginSuccess();
-                                    }
-                                });
                             }
-
-                            @Override
-                            public void onFail(int code, String msg) {
-                                Platform.runLater(() -> {
-                                    LoadingManager.getLoadingManager().hideDefaultLoading();
-                                    tf_name.resetValidation();
-                                    tf_password.clear();
-                                    password_validator.setMessage(msg);
-                                    tf_password.validate();
-                                });
+                            if (onLoginListener != null) {
+                                LoadingManager.getLoadingManager().hideDefaultLoading();
+                                onLoginListener.onLoginSuccess();
                             }
                         });
                     }
@@ -145,11 +129,22 @@ public class LoginController implements BaseController {
                     public void onFail(int code, String msg) {
                         Platform.runLater(() -> {
                             LoadingManager.getLoadingManager().hideDefaultLoading();
+                            tf_name.resetValidation();
+                            tf_password.clear();
+                            password_validator.setMessage(msg);
+                            tf_password.validate();
                         });
                     }
                 });
             }
-        }).start();
+
+            @Override
+            public void onFail(int code, String msg) {
+                Platform.runLater(() -> {
+                    LoadingManager.getLoadingManager().hideDefaultLoading();
+                });
+            }
+        })).start();
     }
 
     @FXML

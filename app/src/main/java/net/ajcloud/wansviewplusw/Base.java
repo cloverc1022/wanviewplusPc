@@ -325,7 +325,7 @@ public class Base extends Application implements LoginController.OnLoginListener
 
             @Override
             public void onFail(int code, String msg) {
-                doLogout(true, msg);
+                Platform.runLater(() -> doLogout(true, msg));
             }
         });
     }

@@ -1,5 +1,6 @@
 package net.ajcloud.wansviewplusw.support.utils.play;
 
+import javafx.application.Platform;
 import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.http.ApiConstant;
 import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
@@ -7,7 +8,6 @@ import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
 import net.ajcloud.wansviewplusw.support.http.bean.LanProbeBean;
 import net.ajcloud.wansviewplusw.support.http.bean.LiveSrcBean;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
-import net.ajcloud.wansviewplusw.support.utils.WLog;
 
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
@@ -165,36 +165,40 @@ public class PoliceHelper /*implements ResponseListener*/ {
 
             @Override
             public void onFail(int code, String msg) {
-                isRequestToken = false;
-                tryNextPolicy();
+                Platform.runLater(() -> {
+                    isRequestToken = false;
+                    tryNextPolicy();
+                });
             }
         });
     }
 
     //获取播放地址，token
     private void getLiveSec(int reqType) {
-        WLog.w("p2p_debug", "------p2p-server-req------");
-        deviceApiUnit.getLiveSrcToken(camera.deviceId, reqType, camera.getCurrentQuality(), new HttpCommonListener<LiveSrcBean>() {
+        new Thread(() -> deviceApiUnit.getLiveSrcToken(camera.deviceId, reqType, camera.getCurrentQuality(), new HttpCommonListener<LiveSrcBean>() {
             @Override
             public void onSuccess(LiveSrcBean bean) {
-                WLog.w("p2p_debug", "------p2p-server-rev------");
-                if (bean.stream != null) {
-                    if (reqType == 1) {
-                        listener.onPlay(camera.deviceId, playedRequestType, bean.stream.localUrl, bean.stream.resHeight, bean.stream.resWidth);
-                    } else if (reqType == 2) {
-                        listener.onPlay(camera.deviceId, playedRequestType, bean.stream.wanUrl, bean.stream.resHeight, bean.stream.resWidth);
+                Platform.runLater(() -> {
+                    if (bean.stream != null) {
+                        if (reqType == 1) {
+                            listener.onPlay(camera.deviceId, playedRequestType, bean.stream.localUrl, bean.stream.resHeight, bean.stream.resWidth);
+                        } else if (reqType == 2) {
+                            listener.onPlay(camera.deviceId, playedRequestType, bean.stream.wanUrl, bean.stream.resHeight, bean.stream.resWidth);
+                        }
+                    } else {
+                        isRequestToken = false;
+                        tryNextPolicy();
                     }
-                } else {
-                    isRequestToken = false;
-                    tryNextPolicy();
-                }
+                });
             }
 
             @Override
             public void onFail(int code, String msg) {
-                isRequestToken = false;
-                tryNextPolicy();
+                Platform.runLater(() -> {
+                    isRequestToken = false;
+                    tryNextPolicy();
+                });
             }
-        });
+        })).start();
     }
 }

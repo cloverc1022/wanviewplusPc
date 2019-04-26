@@ -432,24 +432,21 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                 (camera.isShare() && !camera.isVaild())) {
             return;
         }
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (FileUtil.getRealImageNum(camera.deviceId) > 2) {
-                    FileUtil.resetRealTimeImage(camera.deviceId);
-                }
-                requestApiUnit.doSnapshot(camera.deviceId, new HttpCommonListener<Object>() {
-                    @Override
-                    public void onSuccess(Object bean) {
-                        EventBus.getInstance().post(new SnapshotEvent());
-                    }
-
-                    @Override
-                    public void onFail(int code, String msg) {
-
-                    }
-                });
+        new Thread(() -> {
+            if (FileUtil.getRealImageNum(camera.deviceId) > 2) {
+                FileUtil.resetRealTimeImage(camera.deviceId);
             }
+            requestApiUnit.doSnapshot(camera.deviceId, new HttpCommonListener<Object>() {
+                @Override
+                public void onSuccess(Object bean) {
+                    EventBus.getInstance().post(new SnapshotEvent());
+                }
+
+                @Override
+                public void onFail(int code, String msg) {
+
+                }
+            });
         }).start();
     }
 
@@ -501,8 +498,10 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             btn_play.getStyleClass().remove("jfx_button_play");
             btn_play.getStyleClass().add("jfx_button_pause");
             startOrCancelTimer(true);
-            if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null)
-                mediaPlayerComponent.getMediaPlayer().playMedia(url);
+            if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
+                mediaPlayerComponent.getMediaPlayer().prepareMedia(url);
+                mediaPlayerComponent.getMediaPlayer().play();
+            }
         }
     }
 
