@@ -116,7 +116,7 @@ public class PoliceHelper /*implements ResponseListener*/ {
                 }
             } else if (police == PlayMethod.UPNP) {
                 playedRequestType = PlayMethod.UPNP;
-                getLiveSec(2);
+                getLiveSec(camera,2);
             } else if (police == PlayMethod.P2P || police == PlayMethod.RELAY) {
                 playedRequestType = PlayMethod.P2P;
                 listener.onP2pPlay(camera.deviceId);
@@ -160,7 +160,7 @@ public class PoliceHelper /*implements ResponseListener*/ {
         deviceApiUnit.doLanProbe(camera.networkConfig.localDirectProbeUrl, camera.deviceId, new HttpCommonListener<LanProbeBean>() {
             @Override
             public void onSuccess(LanProbeBean bean) {
-                getLiveSec(1);
+                getLiveSec(camera, 1);
             }
 
             @Override
@@ -174,16 +174,19 @@ public class PoliceHelper /*implements ResponseListener*/ {
     }
 
     //获取播放地址，token
-    private void getLiveSec(int reqType) {
-        new Thread(() -> deviceApiUnit.getLiveSrcToken(camera.deviceId, reqType, camera.getCurrentQuality(), new HttpCommonListener<LiveSrcBean>() {
+    private void getLiveSec(Camera camera, int reqType) {
+        Camera tmpCamera =new Camera();
+        tmpCamera.deviceId = camera.deviceId;
+        tmpCamera.setCurrentQuality(camera.getCurrentQuality());
+        new Thread(() -> deviceApiUnit.getLiveSrcToken(tmpCamera.deviceId, reqType, tmpCamera.getCurrentQuality(), new HttpCommonListener<LiveSrcBean>() {
             @Override
             public void onSuccess(LiveSrcBean bean) {
                 Platform.runLater(() -> {
                     if (bean.stream != null) {
                         if (reqType == 1) {
-                            listener.onPlay(camera.deviceId, playedRequestType, bean.stream.localUrl, bean.stream.resHeight, bean.stream.resWidth);
+                            listener.onPlay(tmpCamera.deviceId, playedRequestType, bean.stream.localUrl, bean.stream.resHeight, bean.stream.resWidth);
                         } else if (reqType == 2) {
-                            listener.onPlay(camera.deviceId, playedRequestType, bean.stream.wanUrl, bean.stream.resHeight, bean.stream.resWidth);
+                            listener.onPlay(tmpCamera.deviceId, playedRequestType, bean.stream.wanUrl, bean.stream.resHeight, bean.stream.resWidth);
                         }
                     } else {
                         isRequestToken = false;

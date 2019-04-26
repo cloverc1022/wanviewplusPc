@@ -189,7 +189,7 @@
                                                                     startingAngle="-40"
                                                                     styleClass="spinner_loading"
                                                                     HBox.hgrow="NEVER"/>
-                                                        <Label style="-fx-text-fill:#FFFFFF;-fx-background-color:transparent;-fx-font-size:18;"
+                                                        <Label fx:id="label_tips" style="-fx-text-fill:#FFFFFF;-fx-background-color:transparent;-fx-font-size:18;"
                                                                text="preparing to play video...">
                                                             <VBox.margin>
                                                                 <Insets top="8.0"/>
