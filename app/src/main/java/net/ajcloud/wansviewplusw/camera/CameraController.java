@@ -185,67 +185,76 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
      * 初始化
      */
     @PostConstruct
-    public void init() throws Exception {
-        Objects.requireNonNull(context, "context");
-        fullscreenListener = (FullscreenListener) context.getRegisteredObject("FullscreenListener");
-        //init play
-        showLoading(false, "");
-        policeHelper = new PoliceHelper(this);
-        mediaPlayerComponent = new CanvasPlayerComponent();
-        mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(mMediaPlayerListener);
-        videoSourceRatioProperty = new SimpleFloatProperty(0.4f);
-        pixelFormat = PixelFormat.getByteBgraPreInstance();
-        initializeImageView();
-        //init device list
-        lv_devices.depthProperty().set(1);
-        lv_devices.setExpanded(true);
-        lv_devices.setCellFactory(param -> {
-            DeviceListCell deviceListCell = new DeviceListCell();
-            deviceListCell.setOnMouseClicked((v) -> {
-                if (v.getButton() == MouseButton.PRIMARY) {
-                    if (!content_play.isVisible()) {
-                        content_play.setVisible(true);
-                        content_play.setManaged(true);
-                        content_play_empty.setVisible(false);
-                        content_play_empty.setManaged(false);
-                    }
-                    handleMouseClick(deviceListCell.getItem());
+    public void init() {
+        try {
+            Objects.requireNonNull(context, "context");
+            fullscreenListener = (FullscreenListener) context.getRegisteredObject("FullscreenListener");
+            //init play
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    mediaPlayerComponent = new CanvasPlayerComponent();
+                    mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(mMediaPlayerListener);
                 }
+            }).start();
+            showLoading(false, "");
+            policeHelper = new PoliceHelper(this);
+            videoSourceRatioProperty = new SimpleFloatProperty(0.4f);
+            pixelFormat = PixelFormat.getByteBgraPreInstance();
+            initializeImageView();
+            //init device list
+            lv_devices.depthProperty().set(1);
+            lv_devices.setExpanded(true);
+            lv_devices.setCellFactory(param -> {
+                DeviceListCell deviceListCell = new DeviceListCell();
+                deviceListCell.setOnMouseClicked((v) -> {
+                    if (v.getButton() == MouseButton.PRIMARY) {
+                        if (!content_play.isVisible()) {
+                            content_play.setVisible(true);
+                            content_play.setManaged(true);
+                            content_play_empty.setVisible(false);
+                            content_play_empty.setManaged(false);
+                        }
+                        handleMouseClick(deviceListCell.getItem());
+                    }
+                });
+                return deviceListCell;
             });
-            return deviceListCell;
-        });
 
-        AtomicInteger count = new AtomicInteger(0);
-        timerService.setCount(count.get());
-        timerService.setPeriod(Duration.seconds(1));
-        timerService.setOnSucceeded(t -> {
-                    try {
-                        count.set((int) t.getSource().getValue());
-                        if (!canDo()) {
-                            return;
-                        }
-                        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
-                            libvlc_media_stats_t p_stats = mediaPlayerComponent.getMediaPlayer().getMediaStatistics();
-                            double bitrate = p_stats.f_demux_bitrate * 1000;/*KBps*/
-                            if (bitrate < 0)
-                                bitrate = 0.3;
-                            if (bitrate < 1024) {
-                                speed.set((int) bitrate + "K/s");
-                            } else {
-                                speed.set(String.format("%.1fM/s", bitrate / 1024));
+            AtomicInteger count = new AtomicInteger(0);
+            timerService.setCount(count.get());
+            timerService.setPeriod(Duration.seconds(1));
+            timerService.setOnSucceeded(t -> {
+                        try {
+                            count.set((int) t.getSource().getValue());
+                            if (!canDo()) {
+                                return;
                             }
+                            if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
+                                libvlc_media_stats_t p_stats = mediaPlayerComponent.getMediaPlayer().getMediaStatistics();
+                                double bitrate = p_stats.f_demux_bitrate * 1000;/*KBps*/
+                                if (bitrate < 0)
+                                    bitrate = 0.3;
+                                if (bitrate < 1024) {
+                                    speed.set((int) bitrate + "K/s");
+                                } else {
+                                    speed.set(String.format("%.1fM/s", bitrate / 1024));
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
                     }
-                }
-        );
+            );
 
-        Tooltip tooltip = new Tooltip("Through the Internet, it allow to \nview live video for up to 10 minutes \neach time. \nClick \"Continue\" to continue viewing.");
-        tooltip.getStyleClass().add("tips");
-        Tooltip.install(iv_tips, tooltip);
-        initListener();
-        initData();
+            Tooltip tooltip = new Tooltip("Through the Internet, it allow to \nview live video for up to 10 minutes \neach time. \nClick \"Continue\" to continue viewing.");
+            tooltip.getStyleClass().add("tips");
+            Tooltip.install(iv_tips, tooltip);
+            initListener();
+            initData();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initListener() {
@@ -495,16 +504,21 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     }
 
     private void onVideoPlay(String url) {
-        if (!StringUtil.isNullOrEmpty(url)) {
-            btn_play.getStyleClass().remove("jfx_button_pause");
-            btn_play.getStyleClass().remove("jfx_button_play");
-            btn_play.getStyleClass().add("jfx_button_pause");
-            showLoading(true, "preparing to play video...");
-            startOrCancelTimer(true);
-            if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
-                mediaPlayerComponent.getMediaPlayer().prepareMedia(url);
-                mediaPlayerComponent.getMediaPlayer().play();
+        try {
+            if (!StringUtil.isNullOrEmpty(url)) {
+                btn_play.getStyleClass().remove("jfx_button_pause");
+                btn_play.getStyleClass().remove("jfx_button_play");
+                btn_play.getStyleClass().add("jfx_button_pause");
+                showLoading(true, "preparing to play video...");
+                startOrCancelTimer(true);
+                if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
+                    mediaPlayerComponent.getMediaPlayer().prepareMedia(url);
+                    mediaPlayerComponent.getMediaPlayer().play();
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+            cannotPlayDo();
         }
     }
 
@@ -628,22 +642,17 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     }
 
     private void setPtz(int action) {
-        new Thread(new Runnable() {
+        new Thread(() -> requestApiUnit.setPtz(deviceId, action, new HttpCommonListener<Object>() {
             @Override
-            public void run() {
-                requestApiUnit.setPtz(deviceId, action, new HttpCommonListener<Object>() {
-                    @Override
-                    public void onSuccess(Object bean) {
+            public void onSuccess(Object bean) {
 
-                    }
-
-                    @Override
-                    public void onFail(int code, String msg) {
-
-                    }
-                });
             }
-        }).start();
+
+            @Override
+            public void onFail(int code, String msg) {
+
+            }
+        })).start();
     }
 
     private class CanvasPlayerComponent extends DirectMediaPlayerComponent {

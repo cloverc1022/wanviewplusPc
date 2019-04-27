@@ -81,35 +81,39 @@ public class MainController implements BaseController {
      * 初始化
      */
     @PostConstruct
-    public void init() throws Exception {
-        WLog.s("LoginTest","-----------------------step--4-----------------------------");
-        Objects.requireNonNull(context, "context");
-        listener = (MainListener) context.getRegisteredObject("MainListener");
-        //init menu
-        DropShadow dropShadow = new DropShadow(BlurType.GAUSSIAN, Color.rgb(0, 0, 0, 0.26), 10, 0.12, -1, 2);
-        content_left.setEffect(dropShadow);
-        content_left.setStyle("-fx-background-color: white");
-        //init listener
-        vb_user.setOnMouseClicked(e -> {
-            showAccountPop();
-        });
-        vb_device.setOnMouseClicked(e -> replace(CONTENT_DEVICE));
-        vb_quad.setOnMouseClicked(e -> replace(CONTENT_QUAD));
-        vb_nine.setOnMouseClicked(e -> replace(CONTENT_NINE));
-        vb_local.setOnMouseClicked(e -> go2Setting());
+    public void init() {
+        try {
+            WLog.s("LoginTest","-----------------------step--4-----------------------------");
+            Objects.requireNonNull(context, "context");
+            listener = (MainListener) context.getRegisteredObject("MainListener");
+            //init menu
+            DropShadow dropShadow = new DropShadow(BlurType.GAUSSIAN, Color.rgb(0, 0, 0, 0.26), 10, 0.12, -1, 2);
+            content_left.setEffect(dropShadow);
+            content_left.setStyle("-fx-background-color: white");
+            //init listener
+            vb_user.setOnMouseClicked(e -> {
+                showAccountPop();
+            });
+            vb_device.setOnMouseClicked(e -> replace(CONTENT_DEVICE));
+            vb_quad.setOnMouseClicked(e -> replace(CONTENT_QUAD));
+            vb_nine.setOnMouseClicked(e -> replace(CONTENT_NINE));
+            vb_local.setOnMouseClicked(e -> go2Setting());
 
-        currentItem = CONTENT_DEVICE;
-        Flow innerFlow = new Flow(CameraController.class);
-        flowHandler = innerFlow.createHandler(context);
-        bindNodeToController(CONTENT_DEVICE, CameraController.class, innerFlow, flowHandler);
+            currentItem = CONTENT_DEVICE;
+            Flow innerFlow = new Flow(CameraController.class);
+            flowHandler = innerFlow.createHandler(context);
+            bindNodeToController(CONTENT_DEVICE, CameraController.class, innerFlow, flowHandler);
 //        bindNodeToController(CONTENT_QUAD, QuadController.class, innerFlow, flowHandler);
 //        bindNodeToController(CONTENT_NINE, NineController.class, innerFlow, flowHandler);
 
-        context.register("ContentFlowHandler", flowHandler);
-        context.register("ContentFlow", innerFlow);
-        content.getChildren().add(flowHandler.start(new DefaultFlowContainer()));
-        context.register("ContentPane", content);
-        WLog.s("LoginTest","-----------------------step--5-----------------------------");
+            context.register("ContentFlowHandler", flowHandler);
+            context.register("ContentFlow", innerFlow);
+            content.getChildren().add(flowHandler.start(new DefaultFlowContainer()));
+            context.register("ContentPane", content);
+            WLog.s("LoginTest","-----------------------step--5-----------------------------");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     private void replace(final String id) {
