@@ -462,8 +462,10 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     }
 
     @Override
-    public void onCannotPlay() {
-        cannotPlayDo();
+    public void onCannotPlay(String deviceId) {
+        if (StringUtil.equals(this.deviceId, deviceId)) {
+            cannotPlayDo();
+        }
     }
 
     @Override
@@ -511,10 +513,12 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                 btn_play.getStyleClass().add("jfx_button_pause");
                 showLoading(true, "preparing to play video...");
                 startOrCancelTimer(true);
-                if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
-                    mediaPlayerComponent.getMediaPlayer().prepareMedia(url);
-                    mediaPlayerComponent.getMediaPlayer().play();
+                if (mediaPlayerComponent == null || mediaPlayerComponent.getMediaPlayer() == null) {
+                    mediaPlayerComponent = new CanvasPlayerComponent();
+                    mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(mMediaPlayerListener);
                 }
+                mediaPlayerComponent.getMediaPlayer().prepareMedia(url);
+                mediaPlayerComponent.getMediaPlayer().play();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -553,15 +557,24 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
     public void play() {
         Camera camera = DeviceCache.getInstance().get(deviceId);
-        if (camera != null && camera.isOnline()) {
+        if (camera != null) {
             btn_play.getStyleClass().remove("jfx_button_pause");
             btn_play.getStyleClass().remove("jfx_button_play");
             btn_play.getStyleClass().add("jfx_button_pause");
-            showLoading(true, "establishing secure channel...");
+            loading.setVisible(true);
+            loading.setManaged(true);
+            label_tips.setText("establishing secure channel...");
+            reconnect.setVisible(false);
+            reconnect.setManaged(false);
             label_name.setText(camera.aliasName);
             policeHelper.setCamera(camera);
-            policeHelper.getUrlAndPlay();
+            if (camera.isOnline()) {
+                policeHelper.getUrlAndPlay();
+            } else {
+                cannotPlayDo();
+            }
         }
+
     }
 
     public void destroy() {

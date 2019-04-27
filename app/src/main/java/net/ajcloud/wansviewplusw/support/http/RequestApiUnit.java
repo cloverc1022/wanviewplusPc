@@ -28,6 +28,7 @@ import retrofit2.Retrofit;
 import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Base64;
@@ -446,10 +447,20 @@ public class RequestApiUnit {
         JsonObject dataJson = new JsonObject();
         dataJson.addProperty("accessKey", camera.accessKey);
 
+        OkHttpClient.Builder client = new OkHttpClient.Builder();
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor("Retrofit");
+        loggingInterceptor.setPrintLevel(HttpLoggingInterceptor.Level.BODY);
+        loggingInterceptor.setColorLevel(Level.INFO);
+        client.addInterceptor(new CommonInterceptor());
+//        client.addInterceptor(new OkTokenInterceptor());
+        client.addInterceptor(new OkSignatureInterceptor());
+        client.addInterceptor(loggingInterceptor);
+        client.connectTimeout(Duration.ofMillis(500));
+
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(url + "/")
                 .addConverterFactory(GsonConverterFactory.create())
-                .client(okHttpClient.build())
+                .client(client.build())
                 .build();
         IRequest startup = retrofit.create(IRequest.class);
         Call<ResponseBean<LanProbeBean>> doLanProbe = startup.doLanProbe("", ApiConstant.getReqBody(dataJson, deviceId));

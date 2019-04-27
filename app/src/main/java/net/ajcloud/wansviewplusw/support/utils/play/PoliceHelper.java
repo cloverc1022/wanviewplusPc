@@ -27,7 +27,7 @@ public class PoliceHelper /*implements ResponseListener*/ {
     private RequestApiUnit deviceApiUnit;
 
     public interface PoliceControlListener {
-        void onCannotPlay();
+        void onCannotPlay(String deviceId);
 
         void onPlay(String deviceId, int playMethod, String url, int mVideoHeight, int mVideoWidth);
 
@@ -78,17 +78,18 @@ public class PoliceHelper /*implements ResponseListener*/ {
     }
 
     public void tryNextPolicy() {
+        String deviceId = camera.deviceId;
         try {
             playPolices.remove();
             if (playPolices.size() > 0) {
                 getUrlAndPlay();
             } else {
                 initPolicies();
-                listener.onCannotPlay();
+                listener.onCannotPlay(deviceId);
             }
         } catch (NoSuchElementException e) {
             initPolicies();
-            listener.onCannotPlay();
+            listener.onCannotPlay(deviceId);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -97,6 +98,7 @@ public class PoliceHelper /*implements ResponseListener*/ {
     public String url;
 
     public void getUrlAndPlay() {
+        String deviceId = camera.deviceId;
         if (isRequestToken) {
             return;
         }
@@ -127,7 +129,7 @@ public class PoliceHelper /*implements ResponseListener*/ {
         } catch (Exception e) {
             e.printStackTrace();
             initPolicies();
-            listener.onCannotPlay();
+            listener.onCannotPlay(deviceId);
         }
     }
 
