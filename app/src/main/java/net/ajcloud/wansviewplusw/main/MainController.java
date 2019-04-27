@@ -34,6 +34,7 @@ import net.ajcloud.wansviewplusw.setting.SettingController;
 import net.ajcloud.wansviewplusw.support.customview.popup.AccountPopController;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
+import net.ajcloud.wansviewplusw.support.utils.WLog;
 
 import javax.annotation.PostConstruct;
 import java.io.InputStream;
@@ -81,6 +82,7 @@ public class MainController implements BaseController {
      */
     @PostConstruct
     public void init() throws Exception {
+        WLog.s("LoginTest","-----------------------step--4-----------------------------");
         Objects.requireNonNull(context, "context");
         listener = (MainListener) context.getRegisteredObject("MainListener");
         //init menu
@@ -107,6 +109,7 @@ public class MainController implements BaseController {
         context.register("ContentFlow", innerFlow);
         content.getChildren().add(flowHandler.start(new DefaultFlowContainer()));
         context.register("ContentPane", content);
+        WLog.s("LoginTest","-----------------------step--5-----------------------------");
     }
 
     private void replace(final String id) {

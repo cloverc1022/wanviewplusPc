@@ -2,9 +2,6 @@ package net.ajcloud.wansviewplusw.support.http;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
-import javafx.util.Duration;
 import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.entity.LocalInfo;
@@ -13,7 +10,6 @@ import net.ajcloud.wansviewplusw.support.eventbus.event.DeviceRefreshEvent;
 import net.ajcloud.wansviewplusw.support.http.Interceptor.CommonInterceptor;
 import net.ajcloud.wansviewplusw.support.http.Interceptor.HttpLoggingInterceptor;
 import net.ajcloud.wansviewplusw.support.http.Interceptor.OkSignatureInterceptor;
-import net.ajcloud.wansviewplusw.support.http.Interceptor.OkTokenInterceptor;
 import net.ajcloud.wansviewplusw.support.http.bean.*;
 import net.ajcloud.wansviewplusw.support.http.bean.device.DeviceListBean;
 import net.ajcloud.wansviewplusw.support.http.bean.start.AppStartUpBean;
@@ -66,15 +62,19 @@ public class RequestApiUnit {
             @Override
             public void onResponse(Call<ResponseBean<AppStartUpBean>> call, Response<ResponseBean<AppStartUpBean>> response) {
                 ResponseBean<AppStartUpBean> responseBean = response.body();
-                if (responseBean.isSuccess()) {
-                    AppStartUpBean bean = responseBean.result;
-                    ApiConstant.setUrl(bean.appConfig);
-                    if (responseBean.result != null && bean.appVersion != null && !StringUtil.isNullOrEmpty(bean.appVersion.appVendorCode)) {
-                        ApiConstant.appVendorCode = bean.appVersion.appVendorCode;
+                if (responseBean != null) {
+                    if (responseBean.isSuccess()) {
+                        AppStartUpBean bean = responseBean.result;
+                        ApiConstant.setUrl(bean.appConfig);
+                        if (responseBean.result != null && bean.appVersion != null && !StringUtil.isNullOrEmpty(bean.appVersion.appVendorCode)) {
+                            ApiConstant.appVendorCode = bean.appVersion.appVendorCode;
+                        }
+                        listener.onSuccess(bean);
+                    } else {
+                        listener.onFail(responseBean.getResultCode(), responseBean.message);
                     }
-                    listener.onSuccess(bean);
                 } else {
-                    listener.onFail(responseBean.getResultCode(), responseBean.message);
+                    listener.onFail(response.code(), response.message());
                 }
             }
 
@@ -103,10 +103,14 @@ public class RequestApiUnit {
             @Override
             public void onResponse(Call<ResponseBean<ChallengeBean>> call, Response<ResponseBean<ChallengeBean>> response) {
                 ResponseBean responseBean = response.body();
-                if (responseBean.isSuccess()) {
-                    listener.onSuccess((ChallengeBean) responseBean.result);
+                if (responseBean != null) {
+                    if (responseBean.isSuccess()) {
+                        listener.onSuccess((ChallengeBean) responseBean.result);
+                    } else {
+                        listener.onFail(responseBean.getResultCode(), responseBean.message);
+                    }
                 } else {
-                    listener.onFail(responseBean.getResultCode(), responseBean.message);
+                    listener.onFail(response.code(), response.message());
                 }
             }
 
@@ -147,12 +151,16 @@ public class RequestApiUnit {
                     @Override
                     public void onResponse(Call<ResponseBean<SigninBean>> call, Response<ResponseBean<SigninBean>> response) {
                         ResponseBean<SigninBean> responseBean = response.body();
-                        if (responseBean.isSuccess()) {
-                            SigninBean bean = responseBean.result;
-                            saveAccount(mail, password, bean);
-                            listener.onSuccess(bean);
+                        if (responseBean != null) {
+                            if (responseBean.isSuccess()) {
+                                SigninBean bean = responseBean.result;
+                                saveAccount(mail, password, bean);
+                                listener.onSuccess(bean);
+                            } else {
+                                listener.onFail(responseBean.getResultCode(), responseBean.message);
+                            }
                         } else {
-                            listener.onFail(responseBean.getResultCode(), responseBean.message);
+                            listener.onFail(response.code(), response.message());
                         }
                     }
 
@@ -187,11 +195,15 @@ public class RequestApiUnit {
             @Override
             public void onResponse(Call<ResponseBean<Object>> call, Response<ResponseBean<Object>> response) {
                 ResponseBean responseBean = response.body();
-                if (responseBean.isSuccess()) {
-                    DeviceCache.getInstance().logout();
-                    listener.onSuccess(responseBean);
+                if (responseBean != null) {
+                    if (responseBean.isSuccess()) {
+                        DeviceCache.getInstance().logout();
+                        listener.onSuccess(responseBean);
+                    } else {
+                        listener.onFail(responseBean.getResultCode(), responseBean.message);
+                    }
                 } else {
-                    listener.onFail(responseBean.getResultCode(), responseBean.message);
+                    listener.onFail(response.code(), response.message());
                 }
             }
 
@@ -214,13 +226,17 @@ public class RequestApiUnit {
             @Override
             public void onResponse(Call<ResponseBean<DeviceListBean>> call, Response<ResponseBean<DeviceListBean>> response) {
                 ResponseBean<DeviceListBean> responseBean = response.body();
-                if (responseBean.isSuccess()) {
-                    DeviceListBean deviceListBean = responseBean.result;
-                    DeviceCache.getInstance().upDate(deviceListBean.conDevices, deviceListBean.devGenerals);
-                    doGetDeviceList(new ArrayList<>(DeviceCache.getInstance().getAllDevices()));
-                    listener.onSuccess(new ArrayList<>(DeviceCache.getInstance().getAllDevices()));
+                if (responseBean != null) {
+                    if (responseBean.isSuccess()) {
+                        DeviceListBean deviceListBean = responseBean.result;
+                        DeviceCache.getInstance().upDate(deviceListBean.conDevices, deviceListBean.devGenerals);
+                        doGetDeviceList(new ArrayList<>(DeviceCache.getInstance().getAllDevices()));
+                        listener.onSuccess(new ArrayList<>(DeviceCache.getInstance().getAllDevices()));
+                    } else {
+                        listener.onFail(responseBean.getResultCode(), responseBean.message);
+                    }
                 } else {
-                    listener.onFail(responseBean.getResultCode(), responseBean.message);
+                    listener.onFail(response.code(), response.message());
                 }
             }
 
@@ -255,27 +271,31 @@ public class RequestApiUnit {
             @Override
             public void onResponse(Call<ResponseBean<DeviceUrlBean>> call, Response<ResponseBean<DeviceUrlBean>> response) {
                 ResponseBean responseBean = response.body();
-                if (responseBean.isSuccess()) {
-                    DeviceUrlBean bean = (DeviceUrlBean) responseBean.result;
-                    if (bean.devices != null && bean.devices.size() != 0) {
-                        for (DeviceUrlBean.UrlInfo info : bean.devices) {
-                            Camera camera = DeviceCache.getInstance().get(info.deviceId);
-                            if (camera != null) {
-                                camera.setGatewayUrl(info.gatewayUrl);
-                                camera.setTunnelUrl(info.tunnelUrl);
-                                camera.setCloudStorUrl(info.cloudStorUrl);
-                                camera.setEmcUrl(info.emcUrl);
-                                camera.setDevCloudStorUrl(info.devCloudStorUrl);
-                                camera.setDevEmcUrl(info.devEmcUrl);
-                                camera.setDevGatewayUrl(info.devGatewayUrl);
-                                camera.setStunServers(info.stunServers);
-                                DeviceCache.getInstance().setDeviceUrlTable(camera);
+                if (responseBean != null) {
+                    if (responseBean.isSuccess()) {
+                        DeviceUrlBean bean = (DeviceUrlBean) responseBean.result;
+                        if (bean.devices != null && bean.devices.size() != 0) {
+                            for (DeviceUrlBean.UrlInfo info : bean.devices) {
+                                Camera camera = DeviceCache.getInstance().get(info.deviceId);
+                                if (camera != null) {
+                                    camera.setGatewayUrl(info.gatewayUrl);
+                                    camera.setTunnelUrl(info.tunnelUrl);
+                                    camera.setCloudStorUrl(info.cloudStorUrl);
+                                    camera.setEmcUrl(info.emcUrl);
+                                    camera.setDevCloudStorUrl(info.devCloudStorUrl);
+                                    camera.setDevEmcUrl(info.devEmcUrl);
+                                    camera.setDevGatewayUrl(info.devGatewayUrl);
+                                    camera.setStunServers(info.stunServers);
+                                    DeviceCache.getInstance().setDeviceUrlTable(camera);
+                                }
                             }
                         }
+                        listener.onSuccess(bean.devices);
+                    } else {
+                        listener.onFail(responseBean.getResultCode(), responseBean.message);
                     }
-                    listener.onSuccess(bean.devices);
                 } else {
-                    listener.onFail(responseBean.getResultCode(), responseBean.message);
+                    listener.onFail(response.code(), response.message());
                 }
             }
 
@@ -310,17 +330,21 @@ public class RequestApiUnit {
             @Override
             public void onResponse(Call<ResponseBean<DevicesInfosBean>> call, Response<ResponseBean<DevicesInfosBean>> response) {
                 ResponseBean<DevicesInfosBean> responseBean = response.body();
-                if (responseBean.isSuccess()) {
-                    if (responseBean.result != null) {
-                        DevicesInfosBean bean = responseBean.result;
-                        for (DevicesInfosBean.DeviceInfoBean item : bean.infos
-                        ) {
-                            DeviceCache.getInstance().add(item.info);
+                if (responseBean != null) {
+                    if (responseBean.isSuccess()) {
+                        if (responseBean.result != null) {
+                            DevicesInfosBean bean = responseBean.result;
+                            for (DevicesInfosBean.DeviceInfoBean item : bean.infos
+                            ) {
+                                DeviceCache.getInstance().add(item.info);
+                            }
                         }
+                        listener.onSuccess(responseBean.result);
+                    } else {
+                        listener.onFail(responseBean.getResultCode(), responseBean.message);
                     }
-                    listener.onSuccess(responseBean.result);
                 } else {
-                    listener.onFail(responseBean.getResultCode(), responseBean.message);
+                    listener.onFail(response.code(), response.message());
                 }
             }
 
@@ -353,11 +377,15 @@ public class RequestApiUnit {
             @Override
             public void onResponse(Call<ResponseBean<LiveSrcBean>> call, Response<ResponseBean<LiveSrcBean>> response) {
                 ResponseBean responseBean = response.body();
-                if (responseBean.isSuccess()) {
-                    LiveSrcBean bean = (LiveSrcBean) responseBean.result;
-                    listener.onSuccess(bean);
+                if (responseBean != null) {
+                    if (responseBean.isSuccess()) {
+                        LiveSrcBean bean = (LiveSrcBean) responseBean.result;
+                        listener.onSuccess(bean);
+                    } else {
+                        listener.onFail(responseBean.getResultCode(), responseBean.message);
+                    }
                 } else {
-                    listener.onFail(responseBean.getResultCode(), responseBean.message);
+                    listener.onFail(response.code(), response.message());
                 }
             }
 
@@ -389,11 +417,16 @@ public class RequestApiUnit {
             Response<ResponseBean<LiveSrcBean>> response = getDeviceInfo.execute();
             if (response.isSuccessful()) {
                 ResponseBean<LiveSrcBean> responseBean = response.body();
-                if (responseBean.isSuccess()) {
-                    return responseBean.result;
+                if (responseBean != null) {
+                    if (responseBean.isSuccess()) {
+                        return responseBean.result;
+                    } else {
+                        return null;
+                    }
                 } else {
                     return null;
                 }
+
             } else {
                 return null;
             }
@@ -424,15 +457,19 @@ public class RequestApiUnit {
             @Override
             public void onResponse(Call<ResponseBean<LanProbeBean>> call, Response<ResponseBean<LanProbeBean>> response) {
                 ResponseBean responseBean = response.body();
-                if (responseBean.isSuccess()) {
-                    LanProbeBean bean = (LanProbeBean) responseBean.result;
-                    if (StringUtil.equals(bean.deviceId, deviceId)) {
-                        listener.onSuccess(bean);
+                if (responseBean != null) {
+                    if (responseBean.isSuccess()) {
+                        LanProbeBean bean = (LanProbeBean) responseBean.result;
+                        if (StringUtil.equals(bean.deviceId, deviceId)) {
+                            listener.onSuccess(bean);
+                        } else {
+                            listener.onFail(-1, responseBean.message);
+                        }
                     } else {
-                        listener.onFail(-1, responseBean.message);
+                        listener.onFail(responseBean.getResultCode(), responseBean.message);
                     }
                 } else {
-                    listener.onFail(responseBean.getResultCode(), responseBean.message);
+                    listener.onFail(response.code(), response.message());
                 }
             }
 
@@ -512,10 +549,14 @@ public class RequestApiUnit {
             @Override
             public void onResponse(Call<ResponseBean<Object>> call, Response<ResponseBean<Object>> response) {
                 ResponseBean responseBean = response.body();
-                if (responseBean.isSuccess()) {
-                    listener.onSuccess(responseBean.result);
+                if (responseBean != null) {
+                    if (responseBean.isSuccess()) {
+                        listener.onSuccess(responseBean.result);
+                    } else {
+                        listener.onFail(responseBean.getResultCode(), responseBean.message);
+                    }
                 } else {
-                    listener.onFail(responseBean.getResultCode(), responseBean.message);
+                    listener.onFail(response.code(), response.message());
                 }
             }
 
@@ -553,8 +594,13 @@ public class RequestApiUnit {
             @Override
             public void onResponse(Call<ResponseBean<Object>> call, Response<ResponseBean<Object>> response) {
                 ResponseBean responseBean = response.body();
-                if (responseBean.isSuccess()) {
-                    Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(3), ae -> {
+                if (responseBean != null) {
+                    if (responseBean.isSuccess()) {
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                         getDeviceInfo(camera.getGatewayUrl(), Arrays.asList(deviceId), false, new HttpCommonListener<DevicesInfosBean>() {
                             @Override
                             public void onSuccess(DevicesInfosBean bean) {
@@ -589,11 +635,11 @@ public class RequestApiUnit {
                                 listener.onFail(code, msg);
                             }
                         });
-                    }));
-                    timeline.setCycleCount(1);
-                    timeline.play();
+                    } else {
+                        listener.onFail(responseBean.getResultCode(), responseBean.message);
+                    }
                 } else {
-                    listener.onFail(responseBean.getResultCode(), responseBean.message);
+                    listener.onFail(response.code(), response.message());
                 }
             }
 

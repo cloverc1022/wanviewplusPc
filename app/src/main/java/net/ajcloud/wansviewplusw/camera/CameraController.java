@@ -189,7 +189,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         Objects.requireNonNull(context, "context");
         fullscreenListener = (FullscreenListener) context.getRegisteredObject("FullscreenListener");
         //init play
-        showLoading(false,"");
+        showLoading(false, "");
         policeHelper = new PoliceHelper(this);
         mediaPlayerComponent = new CanvasPlayerComponent();
         mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(mMediaPlayerListener);
@@ -499,7 +499,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             btn_play.getStyleClass().remove("jfx_button_pause");
             btn_play.getStyleClass().remove("jfx_button_play");
             btn_play.getStyleClass().add("jfx_button_pause");
-            showLoading(true,"preparing to play video...");
+            showLoading(true, "preparing to play video...");
             startOrCancelTimer(true);
             if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
                 mediaPlayerComponent.getMediaPlayer().prepareMedia(url);
@@ -525,10 +525,10 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
             WLog.w("onStop--------------", deviceId);
             mediaPlayerComponent.getMediaPlayer().stop();
-            mediaPlayerComponent.getMediaPlayer().release();
-            mediaPlayerComponent.release(true);
-            mediaPlayerComponent = new CanvasPlayerComponent();
-            mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(mMediaPlayerListener);
+//            mediaPlayerComponent.getMediaPlayer().release();
+//            mediaPlayerComponent.release(true);
+//            mediaPlayerComponent = new CanvasPlayerComponent();
+//            mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(mMediaPlayerListener);
         }
         //重新建链
         WLog.w("onStop--------------", play_method);
@@ -543,7 +543,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             btn_play.getStyleClass().remove("jfx_button_pause");
             btn_play.getStyleClass().remove("jfx_button_play");
             btn_play.getStyleClass().add("jfx_button_pause");
-            showLoading(true,"establishing secure channel...");
+            showLoading(true, "establishing secure channel...");
             label_name.setText(camera.aliasName);
             policeHelper.setCamera(camera);
             policeHelper.getUrlAndPlay();
@@ -1041,7 +1041,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             if (isVideoOut) {
                 //Buffer
                 WLog.w(v);
-                showLoading(v < 100,"");
+                showLoading(v < 100, "");
             }
             OldEvent = mediaPlayer.getMediaPlayerState();
         }
@@ -1117,19 +1117,17 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         public void videoOutput(MediaPlayer mediaPlayer, int i) {
             if (OldEvent == libvlc_Playing) {
                 isVideoOut = true;
-                showLoading(false,"");
+                showLoading(false, "");
                 new Thread(() -> {
                     try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    Platform.runLater(() -> {
+                        Thread.sleep(1500);
                         if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
                             mediaPlayerComponent.getMediaPlayer().saveSnapshot(new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg"));
                             EventBus.getInstance().post(new SnapshotEvent());
                         }
-                    });
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }).start();
             }
             OldEvent = mediaPlayer.getMediaPlayerState();
@@ -1402,7 +1400,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         btn_play.getStyleClass().remove("jfx_button_pause");
         btn_play.getStyleClass().remove("jfx_button_play");
         btn_play.getStyleClass().add("jfx_button_play");
-        showLoading(false,"");
+        showLoading(false, "");
         startOrCancelTimer(false);
         reconnect.setVisible(true);
         reconnect.setManaged(true);

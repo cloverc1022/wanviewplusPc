@@ -18,6 +18,7 @@ import net.ajcloud.wansviewplusw.support.http.bean.start.AppStartUpBean;
 import net.ajcloud.wansviewplusw.support.utils.CipherUtil;
 import net.ajcloud.wansviewplusw.support.utils.IPreferences;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
+import net.ajcloud.wansviewplusw.support.utils.WLog;
 
 import java.util.prefs.Preferences;
 
@@ -102,6 +103,7 @@ public class LoginController implements BaseController {
             return;
         }
         LoadingManager.getLoadingManager().showDefaultLoading((Stage) tf_name.getScene().getWindow());
+        WLog.s("LoginTest","-----------------------step--1-----------------------------");
         new Thread(() -> requestApiUnit.appStartup(new HttpCommonListener<AppStartUpBean>() {
             @Override
             public void onSuccess(AppStartUpBean bean) {
@@ -109,6 +111,7 @@ public class LoginController implements BaseController {
                     @Override
                     public void onSuccess(SigninBean bean) {
                         Platform.runLater(() -> {
+                            WLog.s("LoginTest","-----------------------step--2-----------------------------");
                             if (cb_remember.isSelected()) {
                                 preferences.putBoolean(IPreferences.P_REMEMBER_ACCOUNT, true);
                                 preferences.put(IPreferences.P_LAST_ACCOUNT, bean.mail);
