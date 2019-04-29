@@ -107,18 +107,16 @@ public class TcprelayHelper {
             runningMap.remove(deviceId);
         }
         runningMap.put(deviceId, newLinkInfo);
-        new Thread(() -> {
-            if (linksMap.containsKey(deviceId)) {
-                LinkInfo linkInfo = linksMap.get(deviceId);
-                if (linkInfo != null) {
-                    int linkNum = linkInfo.getNum();
-                    linksMap.remove(deviceId);
-                    WLog.w(TAG, "initLink--------relaydisconnect:" + linkNum);
-                    tcprelay.relaydisconnect(linkNum);
-                }
+        if (linksMap.containsKey(deviceId)) {
+            LinkInfo linkInfo = linksMap.get(deviceId);
+            if (linkInfo != null) {
+                int linkNum = linkInfo.getNum();
+                linksMap.remove(deviceId);
+                WLog.w(TAG, "initLink--------relaydisconnect:" + linkNum);
+                tcprelay.relaydisconnect(linkNum);
             }
-            getLiveSec(newLinkInfo);
-        }).start();
+        }
+        new Thread(() -> getLiveSec(newLinkInfo)).start();
     }
 
     /**
