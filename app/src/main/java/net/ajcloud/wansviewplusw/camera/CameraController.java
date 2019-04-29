@@ -1,7 +1,6 @@
 package net.ajcloud.wansviewplusw.camera;
 
 import com.jfoenix.controls.*;
-import com.sun.jna.Memory;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
@@ -24,7 +23,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.effect.GaussianBlur;
-import javafx.scene.image.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -49,17 +50,11 @@ import net.ajcloud.wansviewplusw.support.utils.play.TcprelayHelper;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_stats_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_media_t;
 import uk.co.caprica.vlcj.binding.internal.libvlc_state_t;
-import uk.co.caprica.vlcj.component.DirectMediaPlayerComponent;
 import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
-import uk.co.caprica.vlcj.player.direct.BufferFormat;
-import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
-import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
-import uk.co.caprica.vlcj.player.direct.format.RV32BufferFormat;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
-import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -154,9 +149,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
     private ImageView imageView;
 
-    private DirectMediaPlayerComponent mediaPlayerComponent;
     private WritableImage writableImage;
-    private WritablePixelFormat<ByteBuffer> pixelFormat;
     private FloatProperty videoSourceRatioProperty;
     private RequestApiUnit requestApiUnit;
     private ObservableList<Camera> mInfos = FXCollections.observableArrayList();
@@ -189,18 +182,9 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         try {
             Objects.requireNonNull(context, "context");
             fullscreenListener = (FullscreenListener) context.getRegisteredObject("FullscreenListener");
-            //init play
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    mediaPlayerComponent = new CanvasPlayerComponent();
-                    mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(mMediaPlayerListener);
-                }
-            }).start();
             showLoading(false, "");
             policeHelper = new PoliceHelper(this);
             videoSourceRatioProperty = new SimpleFloatProperty(0.4f);
-            pixelFormat = PixelFormat.getByteBgraPreInstance();
             initializeImageView();
             //init device list
             lv_devices.depthProperty().set(1);
@@ -230,8 +214,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                             if (!canDo()) {
                                 return;
                             }
-                            if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
-                                libvlc_media_stats_t p_stats = mediaPlayerComponent.getMediaPlayer().getMediaStatistics();
+                            if (CanvasPlayerUtil.getInstance().getMediaPlayerComponent() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer() != null) {
+                                libvlc_media_stats_t p_stats = CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().getMediaStatistics();
                                 double bitrate = p_stats.f_demux_bitrate * 1000;/*KBps*/
                                 if (bitrate < 0)
                                     bitrate = 0.3;
@@ -416,7 +400,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
         initView(camera.deviceId);
 
-        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+        if (CanvasPlayerUtil.getInstance().getMediaPlayerComponent() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().isPlaying()) {
             if (!StringUtil.isNullOrEmpty(deviceId) && StringUtil.equals(deviceId, camera.deviceId)) {
                 return;
             }
@@ -512,13 +496,19 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                 btn_play.getStyleClass().remove("jfx_button_play");
                 btn_play.getStyleClass().add("jfx_button_pause");
                 showLoading(true, "preparing to play video...");
-                startOrCancelTimer(true);
-                if (mediaPlayerComponent == null || mediaPlayerComponent.getMediaPlayer() == null) {
-                    mediaPlayerComponent = new CanvasPlayerComponent();
-                    mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(mMediaPlayerListener);
+                if (CanvasPlayerUtil.getInstance().isInit()) {
+                    startOrCancelTimer(true);
+                    CanvasPlayerUtil.getInstance().addOptions(writableImage.getPixelWriter(), videoSourceRatioProperty, (observable, oldValue, newValue) -> fitImageViewSize((float) playPane.getWidth(), (float) playPane.getHeight()), mMediaPlayerListener);
+                    CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().prepareMedia(url);
+                    CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().play();
+                } else {
+                    CanvasPlayerUtil.getInstance().setOnInitListener(() -> {
+                        startOrCancelTimer(true);
+                        CanvasPlayerUtil.getInstance().addOptions(writableImage.getPixelWriter(), videoSourceRatioProperty, (observable, oldValue, newValue) -> fitImageViewSize((float) playPane.getWidth(), (float) playPane.getHeight()), mMediaPlayerListener);
+                        CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().prepareMedia(url);
+                        CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().play();
+                    });
                 }
-                mediaPlayerComponent.getMediaPlayer().prepareMedia(url);
-                mediaPlayerComponent.getMediaPlayer().play();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -540,13 +530,13 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         //结束录制
         stopRecord(false);
         //停止播放
-        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+        if (CanvasPlayerUtil.getInstance().getMediaPlayerComponent() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().isPlaying()) {
             WLog.w("onStop--------------", deviceId);
-            mediaPlayerComponent.getMediaPlayer().stop();
-//            mediaPlayerComponent.getMediaPlayer().release();
-//            mediaPlayerComponent.release(true);
-//            mediaPlayerComponent = new CanvasPlayerComponent();
-//            mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(mMediaPlayerListener);
+            CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().stop();
+//            CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().release();
+//            CanvasPlayerUtil.getInstance().getMediaPlayerComponent().release(true);
+//            CanvasPlayerUtil.getInstance().getMediaPlayerComponent() = new CanvasPlayerComponent();
+//            CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().addMediaPlayerEventListener(mMediaPlayerListener);
         }
         //重新建链
         WLog.w("onStop--------------", play_method);
@@ -598,10 +588,10 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         btn_right.setOnAction(null);
         btn_bottom.setOnAction(null);
         btn_left.setOnAction(null);
-        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+        if (CanvasPlayerUtil.getInstance().getMediaPlayerComponent() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().isPlaying()) {
             stopRecord(false);
-            mediaPlayerComponent.getMediaPlayer().stop();
-            mediaPlayerComponent.getMediaPlayer().release();
+            CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().stop();
+            CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().release();
             startOrCancelTimer(false);
             timerService.cancel();
         }
@@ -628,10 +618,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
         playPane.heightProperty().addListener((observable, oldValue, newValue) -> {
             fitImageViewSize((float) playPane.getWidth(), newValue.floatValue());
-        });
-
-        videoSourceRatioProperty.addListener((observable, oldValue, newValue) -> {
-            fitImageViewSize((float) playPane.getWidth(), (float) playPane.getHeight());
         });
     }
 
@@ -666,52 +652,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
             }
         })).start();
-    }
-
-    private class CanvasPlayerComponent extends DirectMediaPlayerComponent {
-
-        public CanvasPlayerComponent() {
-            super(new CanvasBufferFormatCallback());
-        }
-
-        PixelWriter pixelWriter = null;
-
-        private PixelWriter getPW() {
-            if (pixelWriter == null) {
-                pixelWriter = writableImage.getPixelWriter();
-            }
-            return pixelWriter;
-        }
-
-        @Override
-        public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat) {
-            if (writableImage == null || mediaPlayer == null) {
-                return;
-            }
-            Platform.runLater(() -> {
-                Memory[] nativeBufferArray = mediaPlayer.lock();
-                if (nativeBufferArray == null || nativeBufferArray.length == 0) {
-                    mediaPlayer.unlock();
-                } else {
-                    Memory nativeBuffer = nativeBufferArray[0];
-                    try {
-                        ByteBuffer byteBuffer = nativeBuffer.getByteBuffer(0, nativeBuffer.size());
-                        getPW().setPixels(0, 0, bufferFormat.getWidth(), bufferFormat.getHeight(), pixelFormat, byteBuffer, bufferFormat.getPitches()[0]);
-                    } finally {
-                        mediaPlayer.unlock();
-                    }
-                }
-            });
-        }
-    }
-
-    private class CanvasBufferFormatCallback implements BufferFormatCallback {
-        @Override
-        public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
-            Rectangle2D visualBounds = Screen.getPrimary().getVisualBounds();
-            Platform.runLater(() -> videoSourceRatioProperty.set((float) sourceHeight / (float) sourceWidth));
-            return new RV32BufferFormat((int) visualBounds.getWidth(), (int) visualBounds.getHeight());
-        }
     }
 
     class ExecuteTimer extends AnimationTimer {
@@ -751,8 +691,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
             return false;
         }
         Camera camera = DeviceCache.getInstance().get(deviceId);
-        if (camera == null || mediaPlayerComponent == null || mediaPlayerComponent.getMediaPlayer() == null ||
-                mediaPlayerComponent.getMediaPlayer().getMediaPlayerState() != libvlc_Playing ||
+        if (camera == null || CanvasPlayerUtil.getInstance().getMediaPlayerComponent() == null || CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer() == null ||
+                CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().getMediaPlayerState() != libvlc_Playing ||
                 !camera.isOnline()) {
             return false;
         } else {
@@ -782,7 +722,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
         String fileName = path + File.separator + sDateFormat.format(System.currentTimeMillis()) + ".jpg";
         File file = new File(fileName);
-        mediaPlayerComponent.getMediaPlayer().saveSnapshot(file);
+        CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().saveSnapshot(file);
 
         ImageView imageView = new ImageView();
         imageView.setImage(new Image(file.toURI().toString()));
@@ -826,7 +766,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         } else {
             btn_voice.getStyleClass().add("jfx_button_voice");
         }
-        mediaPlayerComponent.getMediaPlayer().mute(isMute);
+        CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().mute(isMute);
     }
 
     /**
@@ -838,7 +778,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         }
         btn_play.getStyleClass().remove("jfx_button_pause");
         btn_play.getStyleClass().remove("jfx_button_play");
-        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+        if (CanvasPlayerUtil.getInstance().getMediaPlayerComponent() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().isPlaying()) {
             btn_play.getStyleClass().add("jfx_button_play");
             doVideoStop();
         } else {
@@ -854,11 +794,11 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         if (StringUtil.isNullOrEmpty(deviceId)) {
             return;
         }
-        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && !mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+        if (CanvasPlayerUtil.getInstance().getMediaPlayerComponent() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer() != null && !CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().isPlaying()) {
             btn_play.getStyleClass().remove("jfx_button_pause");
             btn_play.getStyleClass().remove("jfx_button_play");
             btn_play.getStyleClass().add("jfx_button_pause");
-            mediaPlayerComponent.getMediaPlayer().start();
+            CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().start();
             startOrCancelTimer(true);
         }
     }
@@ -870,11 +810,11 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         if (StringUtil.isNullOrEmpty(deviceId)) {
             return;
         }
-        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+        if (CanvasPlayerUtil.getInstance().getMediaPlayerComponent() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().isPlaying()) {
             btn_play.getStyleClass().remove("jfx_button_pause");
             btn_play.getStyleClass().remove("jfx_button_play");
             btn_play.getStyleClass().add("jfx_button_play");
-            mediaPlayerComponent.getMediaPlayer().pause();
+            CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().pause();
             startOrCancelTimer(false);
         }
     }
@@ -886,16 +826,16 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
         if (!canDo()) {
             return;
         }
-        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
-            if (mediaPlayerComponent.getMediaPlayer().isRecording()) {
+        if (CanvasPlayerUtil.getInstance().getMediaPlayerComponent() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer() != null) {
+            if (CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().isRecording()) {
                 WLog.w(TAG, "stopRecord");
                 recordingAnim(false);
-                mediaPlayerComponent.getMediaPlayer().stopRecord();
+                CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().stopRecord();
                 takeSnapshot(FileUtil.getTmpPath(), true);
             } else {
                 WLog.w(TAG, "startRecord");
                 recordingAnim(true);
-                mediaPlayerComponent.getMediaPlayer().startRecord(FileUtil.getVideoPath(DeviceCache.getInstance().getSigninBean().mail));
+                CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().startRecord(FileUtil.getVideoPath(DeviceCache.getInstance().getSigninBean().mail));
             }
         }
     }
@@ -904,10 +844,10 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
      * 录像
      */
     private void stopRecord(boolean showAnim) {
-        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isRecording()) {
+        if (CanvasPlayerUtil.getInstance().getMediaPlayerComponent() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().isRecording()) {
             WLog.w(TAG, "stopRecord");
             recordingAnim(false);
-            mediaPlayerComponent.getMediaPlayer().stopRecord();
+            CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().stopRecord();
             if (showAnim) {
                 takeSnapshot(FileUtil.getTmpPath(), true);
             }
@@ -983,8 +923,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                     btn_play.getStyleClass().remove("jfx_button_play");
                     btn_play.getStyleClass().add("jfx_button_play");
                     stopRecord(true);
-                    if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null)
-                        mediaPlayerComponent.getMediaPlayer().stop();
+                    if (CanvasPlayerUtil.getInstance().getMediaPlayerComponent() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer() != null)
+                        CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().stop();
                     TcprelayHelper.getInstance().reConnect(deviceId);
 
                     content_tips.setVisible(true);
@@ -1143,8 +1083,8 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
                 new Thread(() -> {
                     try {
                         Thread.sleep(1500);
-                        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null) {
-                            mediaPlayerComponent.getMediaPlayer().saveSnapshot(new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg"));
+                        if (CanvasPlayerUtil.getInstance().getMediaPlayerComponent() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer() != null) {
+                            CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().saveSnapshot(new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg"));
                             EventBus.getInstance().post(new SnapshotEvent());
                         }
                     } catch (InterruptedException e) {

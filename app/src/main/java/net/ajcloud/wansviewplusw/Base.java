@@ -36,6 +36,7 @@ import net.ajcloud.wansviewplusw.support.entity.LocalInfo;
 import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
 import net.ajcloud.wansviewplusw.support.http.RequestApiUnit;
 import net.ajcloud.wansviewplusw.support.http.bean.RefreshTokenBean;
+import net.ajcloud.wansviewplusw.support.utils.CanvasPlayerUtil;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 import net.ajcloud.wansviewplusw.support.utils.TimeService;
 import net.ajcloud.wansviewplusw.support.utils.WLog;
@@ -98,7 +99,7 @@ public class Base extends Application implements LoginController.OnLoginListener
         Native.load(RuntimeUtil.getLibVlcLibraryName(), LibVlc.class);
         getLocalInfo();
         TcprelayHelper.getInstance().getTcprelay().relayinit();
-
+        CanvasPlayerUtil.getInstance().init();
 //        new CheckPortUnit().check(port -> TcprelayHelper.getInstance().addPorts(port));
     }
 
