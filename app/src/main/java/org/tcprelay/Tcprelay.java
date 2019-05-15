@@ -10,11 +10,9 @@ public class Tcprelay {
 
     public native void relayinit();
 
-    public native int relayconnect(String dev_id, String p2p_server_ip, String relay_server_ip, int port);
+    public native int[] relayconnect(String dev_id, String p2p_server_ip, String relay_server_ip, int port);
 
     public native void relaydisconnect(int cnt_num);
 
     public native void relaydeinit();
-
-    public native int getConnectType();
 }

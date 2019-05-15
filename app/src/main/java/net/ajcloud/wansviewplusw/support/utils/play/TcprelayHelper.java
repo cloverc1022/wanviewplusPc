@@ -188,7 +188,10 @@ public class TcprelayHelper {
             linkInfo.setPort(port);
             WLog.w(TAG, "initLink--------port:" + port);
             //链接
-            int num = tcprelay.relayconnect(linkInfo.getDeviceId(), camera.getStunServers(), linkInfo.getServerIp(), port);
+            int[] result = tcprelay.relayconnect(linkInfo.getDeviceId(), camera.getStunServers(), linkInfo.getServerIp(), port);
+            int num = result[0];
+            int type = result[1];
+            WLog.w(TAG, "num:" + num + "\ttype:" + type);
             if (linkInfo.isValid()) {
                 if (num > 0) {
                     //成功
@@ -200,6 +203,7 @@ public class TcprelayHelper {
                     url.append("/live");
                     url.append(token);
                     linkInfo.setNum(num);
+                    linkInfo.setConnectType(type);
                     linkInfo.setUrl(url.toString());
                     WLog.w(TAG, "initLink--------connect_success-----num:" + num);
                     WLog.w(TAG, "initLink--------connect_success-----url:" + url.toString());
@@ -274,6 +278,13 @@ public class TcprelayHelper {
 
     public Tcprelay getTcprelay() {
         return tcprelay;
+    }
+
+    public int getConnectType(String deviceId) {
+        if (linksMap != null && linksMap.containsKey(deviceId) && linksMap.get(deviceId) != null) {
+            return linksMap.get(deviceId).getConnectType();
+        }
+        return 1;
     }
 
     public interface ConnectCallback {

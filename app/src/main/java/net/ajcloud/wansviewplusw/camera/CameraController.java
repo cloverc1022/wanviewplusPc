@@ -465,7 +465,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     @Override
     public void onP2pPlay(String deviceId) {
         if (StringUtil.equals(this.deviceId, deviceId)) {
-            play_method = TcprelayHelper.getInstance().getTcprelay().getConnectType() == 0 ? PlayMethod.P2P : PlayMethod.RELAY;
+            play_method = TcprelayHelper.getInstance().getConnectType(deviceId) == 0 ? PlayMethod.P2P : PlayMethod.RELAY;
             Camera camera = DeviceCache.getInstance().get(deviceId);
             TcprelayHelper.getInstance().getPlayUrl(deviceId, camera.getCurrentQuality(), new TcprelayHelper.ConnectCallback() {
                 @Override

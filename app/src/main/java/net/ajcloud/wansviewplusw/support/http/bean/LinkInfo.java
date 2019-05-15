@@ -16,6 +16,7 @@ public class LinkInfo {
     private String localUrl;                  //接口返回url，用于生成url
     private String url;                         //最终的播放url
     private int status;                         //当前连接状态 0：正在连接     1：成功    2：失败
+    private int connectType;                         // connect_type == 0 ? "P2P":"RLY"
     private boolean isValid;                         //是否有效
     private TcprelayHelper.ConnectCallback connectCallback;
 
@@ -23,6 +24,7 @@ public class LinkInfo {
         this.deviceId = deviceId;
         this.quality = quality;
         this.status = 0;
+        this.connectType = 1;
         this.connectCallback = connectCallback;
         this.isValid = true;
     }
@@ -91,6 +93,14 @@ public class LinkInfo {
         this.status = status;
     }
 
+    public int getConnectType() {
+        return connectType;
+    }
+
+    public void setConnectType(int connectType) {
+        this.connectType = connectType;
+    }
+
     public void resetQuality(int quality, TcprelayHelper.ConnectCallback connectCallback) {
         this.quality = quality;
         this.status = 0;
@@ -99,6 +109,7 @@ public class LinkInfo {
         this.port = 0;
         this.localUrl = "";
         this.url = "";
+        this.connectType = 1;
         this.connectCallback = connectCallback;
     }
 
