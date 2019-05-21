@@ -322,39 +322,51 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
     private void initData() {
         speed = new SimpleStringProperty("0K/s");
         label_speed.textProperty().bind(speed);
-        if (requestApiUnit == null) {
-            requestApiUnit = new RequestApiUnit();
-        }
-        requestApiUnit.getDeviceList(new HttpCommonListener<java.util.List<Camera>>() {
-            @Override
-            public void onSuccess(List<Camera> bean) {
-                Platform.runLater(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (bean != null && bean.size() > 0) {
-                            content_list.setVisible(true);
-                            content_list.setManaged(true);
-                            content_list_empty.setVisible(false);
-                            content_list_empty.setManaged(false);
+        if (DeviceCache.getInstance().getAllDevices().size()>0){
+            content_list.setVisible(true);
+            content_list.setManaged(true);
+            content_list_empty.setVisible(false);
+            content_list_empty.setManaged(false);
 
-                            label_num.setText(bean.size() + " devices");
-                            mInfos.setAll(bean);
-                            lv_devices.setItems(mInfos);
-                        } else {
-                            content_list_empty.setVisible(true);
-                            content_list_empty.setManaged(true);
-                            content_list.setVisible(false);
-                            content_list.setManaged(false);
+            label_num.setText(DeviceCache.getInstance().getAllDevices().size() + " devices");
+            mInfos.setAll(DeviceCache.getInstance().getAllDevices());
+            lv_devices.setItems(mInfos);
+        }else {
+            if (requestApiUnit == null) {
+                requestApiUnit = new RequestApiUnit();
+            }
+            requestApiUnit.getDeviceList(new HttpCommonListener<java.util.List<Camera>>() {
+                @Override
+                public void onSuccess(List<Camera> bean) {
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (bean != null && bean.size() > 0) {
+                                content_list.setVisible(true);
+                                content_list.setManaged(true);
+                                content_list_empty.setVisible(false);
+                                content_list_empty.setManaged(false);
+
+                                label_num.setText(bean.size() + " devices");
+                                mInfos.setAll(bean);
+                                lv_devices.setItems(mInfos);
+                            } else {
+                                content_list_empty.setVisible(true);
+                                content_list_empty.setManaged(true);
+                                content_list.setVisible(false);
+                                content_list.setManaged(false);
+                            }
                         }
-                    }
-                });
-            }
+                    });
+                }
 
-            @Override
-            public void onFail(int code, String msg) {
+                @Override
+                public void onFail(int code, String msg) {
 
-            }
-        });
+                }
+            });
+        }
+
     }
 
     private void initView(String deviceId) {

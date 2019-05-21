@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <AnchorPane prefHeight="540.0" prefWidth="888.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <Label layoutX="415.0" layoutY="254.0" text="quad" />
-   </children>
+    <children>
+        <GridPane alignment="CENTER" hgap="1.0" style="-fx-background-color: #888B8C" vgap="1.0"
+                  AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                  AnchorPane.topAnchor="0.0">
+            <columnConstraints>
+                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS"/>
+                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints valignment="CENTER" vgrow="ALWAYS"/>
+                <RowConstraints valignment="CENTER" vgrow="ALWAYS"/>
+            </rowConstraints>
+            <children>
+                <StackPane fx:id="content_1" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0"
+                           GridPane.vgrow="ALWAYS"/>
+                <StackPane fx:id="content_2" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0"
+                           GridPane.vgrow="ALWAYS"/>
+                <StackPane fx:id="content_3" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1"
+                           GridPane.vgrow="ALWAYS"/>
+                <StackPane fx:id="content_4" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1"
+                           GridPane.vgrow="ALWAYS"/>
+            </children>
+        </GridPane>
+    </children>
 </AnchorPane>

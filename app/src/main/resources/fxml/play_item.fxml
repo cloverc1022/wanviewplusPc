@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<VBox alignment="CENTER" minHeight="270.0" minWidth="334.0" prefHeight="270.0" prefWidth="334.0"
+      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="net.ajcloud.wansviewplusw.support.customview.PlayItemController">
+    <children>
+        <StackPane maxHeight="32.0" minWidth="32.0" prefHeight="32.0" style="-fx-background-color: white"
+                   VBox.vgrow="NEVER">
+            <children>
+                <Label fx:id="label_name" style="-fx-text-fill:#263238;-fx-font-size:12;-fx-font-weight: bold;"
+                       StackPane.alignment="CENTER_LEFT">
+                    <StackPane.margin>
+                        <Insets left="24.0"/>
+                    </StackPane.margin>
+                </Label>
+                <Label fx:id="label_status" alignment="CENTER" maxHeight="16.0" maxWidth="44.0" minHeight="16.0"
+                       minWidth="44.0" prefHeight="16.0" prefWidth="44.0" StackPane.alignment="CENTER_RIGHT">
+                    <StackPane.margin>
+                        <Insets right="24.0"/>
+                    </StackPane.margin>
+                </Label>
+            </children>
+        </StackPane>
+        <StackPane fx:id="play_content" style="-fx-background-color: black" VBox.vgrow="ALWAYS">
+            <children>
+                <BorderPane fx:id="playPane" styleClass="play_pane" StackPane.alignment="CENTER"/>
+            </children>
+        </StackPane>
+        <StackPane maxHeight="40.0" minHeight="40.0" prefHeight="40.0" style="-fx-background-color: white"
+                   VBox.vgrow="NEVER">
+            <children>
+                <JFXButton fx:id="btn_play" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0"
+                           prefHeight="24.0" prefWidth="24.0" styleClass="jfx_button_play"
+                           StackPane.alignment="CENTER_LEFT">
+                    <StackPane.margin>
+                        <Insets left="24.0"/>
+                    </StackPane.margin>
+                </JFXButton>
+                <HBox maxHeight="24.0" maxWidth="140.0" minHeight="24.0" minWidth="140.0" prefHeight="24.0"
+                      prefWidth="140.0" StackPane.alignment="CENTER"/>
+                <JFXButton fx:id="btn_delete" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0"
+                           prefHeight="24.0" prefWidth="24.0" styleClass="jfx_button_delete"
+                           StackPane.alignment="CENTER_RIGHT">
+                    <StackPane.margin>
+                        <Insets right="24.0"/>
+                    </StackPane.margin>
+                </JFXButton>
+            </children>
+        </StackPane>
+    </children>
+</VBox>

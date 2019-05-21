@@ -99,6 +99,7 @@
 .btn_smallscreen .jfx-rippler,
 .jfx_button_voice .jfx-rippler,
 .jfx_button_voice_full .jfx-rippler,
+.jfx_button_delete .jfx-rippler,
 .jfx_button_voice_mute .jfx-rippler {
     -jfx-rippler-fill: #82B1FF;
 }
@@ -155,6 +156,16 @@
 
 .jfx_button_play {
     -fx-background-image: url('/image/ic_play_dark.png');
+    -fx-pref-width: 24px;
+    -fx-pref-height: 24px;
+    -fx-min-width: 24px;
+    -fx-min-height: 24px;
+    -fx-background-size: 24 auto;
+    -fx-background-position: center center;
+}
+
+.jfx_button_delete {
+    -fx-background-image: url('/image/ic_delete_group.png');
     -fx-pref-width: 24px;
     -fx-pref-height: 24px;
     -fx-min-width: 24px;
@@ -331,7 +342,7 @@
 }
 
 .pop_btn_quality:hover {
-    -fx-background-color: rgba(212,214,215, 0.9);
+    -fx-background-color: rgba(212, 214, 215, 0.9);
 }
 
 .loading_content {
@@ -389,4 +400,14 @@
     /*设置圆角*/
     -fx-background-radius: 24;
     -fx-border-radius: 24;
+}
+
+.label_selected {
+    -fx-text-fill: #2979ff;
+    -fx-font-size: 8;
+}
+
+.label_normal {
+    -fx-text-fill: #263238;
+    -fx-font-size: 8;
 }

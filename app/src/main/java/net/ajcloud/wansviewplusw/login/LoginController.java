@@ -48,14 +48,14 @@ public class LoginController implements BaseController {
 
     public void init() {
         preferences = Preferences.userNodeForPackage(LoginController.class);
-//        if (StringUtil.isNullOrEmpty(preferences.get(IPreferences.P_SALT, ""))) {
-//            String salt = CipherUtil.getRandomSalt();
-//            preferences.put(IPreferences.P_SALT, salt);
-//        }
+        if (StringUtil.isNullOrEmpty(preferences.get(IPreferences.P_SALT, ""))) {
+            String salt = CipherUtil.getRandomSalt();
+            preferences.put(IPreferences.P_SALT, salt);
+        }
         if (preferences.getBoolean(IPreferences.P_REMEMBER_ACCOUNT, false)) {
             cb_remember.setSelected(true);
             tf_name.setText(preferences.get(IPreferences.P_LAST_ACCOUNT, null));
-//            tf_password.setText(CipherUtil.naclDecodeLocal(preferences.get(IPreferences.P_LAST_ACCOUNT_PASSWORD, null), preferences.get(IPreferences.P_SALT, null)));
+            tf_password.setText(CipherUtil.naclDecodeLocal(preferences.get(IPreferences.P_LAST_ACCOUNT_PASSWORD, null), preferences.get(IPreferences.P_SALT, null)));
         } else {
             cb_remember.setSelected(false);
         }

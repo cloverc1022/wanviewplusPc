@@ -16,9 +16,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -30,6 +32,7 @@ import javafx.stage.StageStyle;
 import net.ajcloud.wansviewplusw.Base;
 import net.ajcloud.wansviewplusw.BaseController;
 import net.ajcloud.wansviewplusw.camera.CameraController;
+import net.ajcloud.wansviewplusw.quad.QuadController;
 import net.ajcloud.wansviewplusw.setting.SettingController;
 import net.ajcloud.wansviewplusw.support.customview.popup.AccountPopController;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
@@ -64,6 +67,14 @@ public class MainController implements BaseController {
     private VBox vb_local;
     @FXML
     private StackPane content;
+    @FXML
+    private ImageView iv_play;
+    @FXML
+    private ImageView iv_quad;
+    @FXML
+    private Label label_play;
+    @FXML
+    private Label label_quad;
 
     private Stage aboutStage;
 
@@ -83,7 +94,7 @@ public class MainController implements BaseController {
     @PostConstruct
     public void init() {
         try {
-            WLog.s("LoginTest","-----------------------step--4-----------------------------");
+            WLog.s("LoginTest", "-----------------------step--4-----------------------------");
             Objects.requireNonNull(context, "context");
             listener = (MainListener) context.getRegisteredObject("MainListener");
             //init menu
@@ -103,20 +114,39 @@ public class MainController implements BaseController {
             Flow innerFlow = new Flow(CameraController.class);
             flowHandler = innerFlow.createHandler(context);
             bindNodeToController(CONTENT_DEVICE, CameraController.class, innerFlow, flowHandler);
-//        bindNodeToController(CONTENT_QUAD, QuadController.class, innerFlow, flowHandler);
+            bindNodeToController(CONTENT_QUAD, QuadController.class, innerFlow, flowHandler);
 //        bindNodeToController(CONTENT_NINE, NineController.class, innerFlow, flowHandler);
 
             context.register("ContentFlowHandler", flowHandler);
             context.register("ContentFlow", innerFlow);
             content.getChildren().add(flowHandler.start(new DefaultFlowContainer()));
             context.register("ContentPane", content);
-            WLog.s("LoginTest","-----------------------step--5-----------------------------");
-        }catch (Exception e){
+            WLog.s("LoginTest", "-----------------------step--5-----------------------------");
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void replace(final String id) {
+        if (StringUtil.equals(id, CONTENT_DEVICE)) {
+            iv_play.setImage(new Image("/image/ic_device_color.png", 24, 24, true, true, true));
+            iv_quad.setImage(new Image("/image/ic_quad_screen_mid.png", 24, 24, true, true, true));
+            label_play.getStyleClass().remove("label_selected");
+            label_play.getStyleClass().remove("label_normal");
+            label_quad.getStyleClass().remove("label_selected");
+            label_quad.getStyleClass().remove("label_normal");
+            label_play.getStyleClass().add("label_selected");
+            label_quad.getStyleClass().add("label_normal");
+        } else if (StringUtil.equals(id, CONTENT_QUAD)) {
+            iv_play.setImage(new Image("/image/ic_device_mid.png", 24, 24, true, true, true));
+            iv_quad.setImage(new Image("/image/ic_quad_screen_color.png", 24, 24, true, true, true));
+            label_play.getStyleClass().remove("label_selected");
+            label_play.getStyleClass().remove("label_normal");
+            label_quad.getStyleClass().remove("label_selected");
+            label_quad.getStyleClass().remove("label_normal");
+            label_play.getStyleClass().add("label_normal");
+            label_quad.getStyleClass().add("label_selected");
+        }
         if (!StringUtil.equals(currentItem, id)) {
             new Thread(() -> {
                 Platform.runLater(() -> {
