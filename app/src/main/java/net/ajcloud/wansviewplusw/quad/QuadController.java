@@ -50,9 +50,9 @@ public class QuadController {
 //                addCamera(content_1, camera.deviceId);
             } else if (i == 1) {
                 addCamera(content_1, camera.deviceId);
-                addCamera(content_2, camera.deviceId);
-                addCamera(content_3, camera.deviceId);
-                addCamera(content_4, camera.deviceId);
+//                addCamera(content_2, camera.deviceId);
+//                addCamera(content_3, camera.deviceId);
+//                addCamera(content_4, camera.deviceId);
             } else if (i == 2) {
 //                addCamera(content_3, camera.deviceId);
             } else if (i == 3) {

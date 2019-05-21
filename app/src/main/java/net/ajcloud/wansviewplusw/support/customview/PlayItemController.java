@@ -1,6 +1,7 @@
 package net.ajcloud.wansviewplusw.support.customview;
 
 
+import com.jfoenix.controls.JFXButton;
 import com.sun.jna.Memory;
 import javafx.application.Platform;
 import javafx.beans.property.FloatProperty;
@@ -10,10 +11,13 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
 import javafx.scene.image.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import net.ajcloud.wansviewplusw.BaseController;
 import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
+import net.ajcloud.wansviewplusw.support.timer.CountDownTimer;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 import net.ajcloud.wansviewplusw.support.utils.WLog;
 import net.ajcloud.wansviewplusw.support.utils.play.PlayMethod;
@@ -41,6 +45,26 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
     private Label label_status;
     @FXML
     private BorderPane playPane;
+    @FXML
+    private VBox loading;
+    @FXML
+    private Label label_tips;
+    @FXML
+    private VBox reconnect;
+    @FXML
+    private ImageView iv_reconnect;
+    @FXML
+    private Label label_reconnect;
+    @FXML
+    private HBox content_tips;
+    @FXML
+    private Label label_stop;
+    @FXML
+    private Label label_time;
+    @FXML
+    private Label label_continue;
+    @FXML
+    private JFXButton btn_play;
 
     private CanvasPlayerComponent mediaPlayerComponent;
     private ImageView imageView;
@@ -52,14 +76,21 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
     private int play_method;
     private Camera camera;
 
+    /**
+     * 定时，限制播放时长
+     */
+    private static final long PLAY_TIME = 10 * 60 * 1000;
+    private CountDownTimer playTimer = new CountDownTimer();
+
     public void init(String deviceId) {
         if (StringUtil.isNullOrEmpty(deviceId))
             return;
         this.deviceId = deviceId;
         camera = DeviceCache.getInstance().get(deviceId);
-        if (camera == null||!camera.isOnline())
+        if (camera == null || !camera.isOnline())
             return;
         //init
+        showLoading(false, "");
         new Thread(() -> {
             mediaPlayerComponent = new CanvasPlayerComponent();
             mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(mMediaPlayerListener);
@@ -73,11 +104,85 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
         label_status.styleProperty().bind(camera.deviceStatusCssProperty());
         label_name.textFillProperty().bind(camera.deviceNameBgProperty());
         label_name.setText(camera.aliasName);
+
+        initListener();
         play();
+    }
+
+    private void initListener() {
+        reconnect.onMouseClickedProperty().bindBidirectional(iv_reconnect.onMouseClickedProperty());
+        reconnect.onMouseClickedProperty().bindBidirectional(label_reconnect.onMouseClickedProperty());
+        btn_play.setOnMouseClicked((v) -> {
+            startOrStop();
+        });
+        reconnect.setOnMouseClicked(event -> {
+            reconnect.setVisible(false);
+            reconnect.setManaged(false);
+            if (play_method == PlayMethod.RELAY || play_method == PlayMethod.P2P)
+                TcprelayHelper.getInstance().reConnect(deviceId);
+            play();
+        });
+        label_continue.setOnMouseClicked((v) -> {
+            if (playTimer.isCounting()) {
+                startOrCancelTimer(true);
+            } else {
+                play();
+            }
+            content_tips.setVisible(false);
+            label_stop.setVisible(true);
+            label_stop.setManaged(true);
+        });
+    }
+
+    private void startOrCancelTimer(boolean isStart) {
+        playTimer.cancel();
+        content_tips.setVisible(false);
+        content_tips.setManaged(false);
+        label_stop.setVisible(true);
+        label_stop.setManaged(true);
+        if (play_method != PlayMethod.RELAY) {
+            return;
+        }
+        if (isStart) {
+            playTimer.CountDown(PLAY_TIME, new CountDownTimer.OnTimerListener() {
+                @Override
+                public void onTick(int second) {
+                    if ((PLAY_TIME / 1000 - second) <= 20) {
+                        content_tips.setVisible(true);
+                        label_time.setText((PLAY_TIME / 1000 - second) + "s");
+                    }
+                }
+
+                @Override
+                public void onFinish() {
+                    WLog.w("playTimer", "onFinish");
+                    btn_play.getStyleClass().remove("jfx_button_pause");
+                    btn_play.getStyleClass().remove("jfx_button_play");
+                    btn_play.getStyleClass().add("jfx_button_play");
+                    if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null)
+                        mediaPlayerComponent.getMediaPlayer().stop();
+                    TcprelayHelper.getInstance().reConnect(deviceId);
+
+                    content_tips.setVisible(true);
+                    content_tips.setManaged(true);
+                    label_time.setText("Have stopped");
+                    label_stop.setVisible(false);
+                    label_stop.setManaged(false);
+                }
+            });
+        }
     }
 
     public void play() {
         if (camera != null) {
+            btn_play.getStyleClass().remove("jfx_button_pause");
+            btn_play.getStyleClass().remove("jfx_button_play");
+            btn_play.getStyleClass().add("jfx_button_pause");
+            loading.setVisible(true);
+            loading.setManaged(true);
+            label_tips.setText("establishing secure channel...");
+            reconnect.setVisible(false);
+            reconnect.setManaged(false);
             camera.setCurrentQuality(1);
             policeHelper.setCamera(camera);
             if (camera.isOnline()) {
@@ -88,7 +193,26 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
         }
     }
 
+    private void showLoading(boolean isShow, String msg) {
+        Platform.runLater(() -> {
+            loading.setVisible(isShow);
+            loading.setManaged(isShow);
+            label_tips.setText(msg);
+            if (isShow) {
+                reconnect.setVisible(false);
+                reconnect.setManaged(false);
+            }
+        });
+    }
+
     private void cannotPlayDo() {
+        btn_play.getStyleClass().remove("jfx_button_pause");
+        btn_play.getStyleClass().remove("jfx_button_play");
+        btn_play.getStyleClass().add("jfx_button_play");
+        showLoading(false, "");
+        startOrCancelTimer(false);
+        reconnect.setVisible(true);
+        reconnect.setManaged(true);
         if (policeHelper != null)
             policeHelper.reset();
     }
@@ -96,11 +220,54 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
     private void onVideoPlay(String url) {
         try {
             if (!StringUtil.isNullOrEmpty(url)) {
+                btn_play.getStyleClass().remove("jfx_button_pause");
+                btn_play.getStyleClass().remove("jfx_button_play");
+                btn_play.getStyleClass().add("jfx_button_pause");
+                showLoading(true, "preparing to play video...");
+                startOrCancelTimer(true);
                 mediaPlayerComponent.getMediaPlayer().playMedia(url);
+                mediaPlayerComponent.getMediaPlayer().mute(true);
             }
         } catch (Exception e) {
             e.printStackTrace();
             cannotPlayDo();
+        }
+    }
+
+    /**
+     * 开始/暂停
+     */
+    private void startOrStop() {
+        if (StringUtil.isNullOrEmpty(deviceId)) {
+            return;
+        }
+        btn_play.getStyleClass().remove("jfx_button_pause");
+        btn_play.getStyleClass().remove("jfx_button_play");
+        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+            btn_play.getStyleClass().add("jfx_button_play");
+            doVideoStop();
+        } else {
+            btn_play.getStyleClass().add("jfx_button_pause");
+            play();
+        }
+    }
+
+    private void doVideoStop() {
+        //init UI
+        btn_play.getStyleClass().remove("jfx_button_pause");
+        btn_play.getStyleClass().remove("jfx_button_play");
+        btn_play.getStyleClass().add("jfx_button_play");
+        //结束定时器
+        startOrCancelTimer(false);
+        //停止播放
+        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+            WLog.w("onStop--------------", deviceId);
+            mediaPlayerComponent.getMediaPlayer().stop();
+        }
+        //重新建链
+        WLog.w("onStop--------------", play_method);
+        if ((play_method == PlayMethod.RELAY || play_method == PlayMethod.P2P) && !StringUtil.isNullOrEmpty(deviceId)) {
+            TcprelayHelper.getInstance().reConnect(deviceId);
         }
     }
 
@@ -146,6 +313,17 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
             });
     }
 
+    public void destroy() {
+        writableImage.cancel();
+        btn_play.setOnMouseClicked(null);
+        label_continue.setOnMouseClicked(null);
+        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+            mediaPlayerComponent.getMediaPlayer().stop();
+            mediaPlayerComponent.getMediaPlayer().release();
+            startOrCancelTimer(false);
+        }
+    }
+
     boolean isVideoOut = false;
     public static libvlc_state_t OldEvent;
     private final MediaPlayerEventListener mMediaPlayerListener = new MediaPlayerEventListener() {
@@ -162,11 +340,11 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
 
         @Override
         public void buffering(MediaPlayer mediaPlayer, float v) {
-//            if (isVideoOut) {
-//                //Buffer
-//                WLog.w(v);
-//                showLoading(v < 100, "");
-//            }
+            if (isVideoOut) {
+                //Buffer
+                WLog.w(v);
+                showLoading(v < 100, "");
+            }
             OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
@@ -199,7 +377,6 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
         @Override
         public void finished(MediaPlayer mediaPlayer) {
             OldEvent = mediaPlayer.getMediaPlayerState();
-//            stopRecord(false);
         }
 
         @Override
@@ -239,22 +416,11 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
 
         @Override
         public void videoOutput(MediaPlayer mediaPlayer, int i) {
-//            if (OldEvent == libvlc_Playing) {
-//                isVideoOut = true;
-//                showLoading(false, "");
-//                new Thread(() -> {
-//                    try {
-//                        Thread.sleep(1500);
-//                        if (CanvasPlayerUtil.getInstance().getMediaPlayerComponent() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer() != null) {
-//                            CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().saveSnapshot(new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg"));
-//                            EventBus.getInstance().post(new SnapshotEvent());
-//                        }
-//                    } catch (InterruptedException e) {
-//                        e.printStackTrace();
-//                    }
-//                }).start();
-//            }
-//            OldEvent = mediaPlayer.getMediaPlayerState();
+            if (OldEvent == libvlc_Playing) {
+                isVideoOut = true;
+                showLoading(false, "");
+            }
+            OldEvent = mediaPlayer.getMediaPlayerState();
         }
 
         @Override
