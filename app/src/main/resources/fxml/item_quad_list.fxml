@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<StackPane fx:id="pane" minHeight="116.0" minWidth="196.0" prefHeight="116.0" prefWidth="196.0"
+           styleClass="devices_item_pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <StackPane maxHeight="88.0" maxWidth="196.0" minHeight="88.0" minWidth="196.0" prefHeight="88.0"
+                   prefWidth="196.0" StackPane.alignment="TOP_CENTER">
+            <children>
+                <GridPane style="-fx-background-color: white" hgap="1.0" vgap="1.0" StackPane.alignment="CENTER">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <children>
+                        <ImageView fitHeight="44.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true"/>
+                        <ImageView fitHeight="44.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true"
+                                   GridPane.columnIndex="1"/>
+                        <ImageView fitHeight="44.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true"
+                                   GridPane.rowIndex="1"/>
+                        <ImageView fitHeight="44.0" fitWidth="98.0" pickOnBounds="true" preserveRatio="true"
+                                   GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                    </children>
+                </GridPane>
+                <StackPane style="-fx-background-color: rgba(38,50,56,0.3)">
+                    <children>
+                        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true"
+                                   StackPane.alignment="CENTER">
+                            <image>
+                                <Image url="@/image/playing.gif"/>
+                            </image>
+                        </ImageView>
+                    </children>
+                </StackPane>
+            </children>
+        </StackPane>
+        <Label fx:id="groupName" maxHeight="28.0" minHeight="28.0" prefHeight="28.0"
+               styleClass="devices_item_deviceName" text="Name" StackPane.alignment="BOTTOM_LEFT">
+            <padding>
+                <Insets left="12.0" right="12.0"/>
+            </padding>
+        </Label>
+        <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true"
+                   StackPane.alignment="BOTTOM_RIGHT">
+            <StackPane.margin>
+                <Insets bottom="2.0" right="8.0"/>
+            </StackPane.margin>
+            <image>
+                <Image url="@/image/ic_delete_group.png"/>
+            </image>
+        </ImageView>
+    </children>
+</StackPane>

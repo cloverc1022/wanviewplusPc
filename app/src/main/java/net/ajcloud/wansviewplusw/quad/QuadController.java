@@ -9,6 +9,7 @@ import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import net.ajcloud.wansviewplusw.Base;
+import net.ajcloud.wansviewplusw.login.LoginController;
 import net.ajcloud.wansviewplusw.support.customview.PlayItemController;
 import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
@@ -17,6 +18,7 @@ import javax.annotation.PostConstruct;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.prefs.Preferences;
 
 @ViewController(value = "/fxml/quad.fxml", title = "Quad")
 public class QuadController {
@@ -40,6 +42,7 @@ public class QuadController {
     private StackPane content_8;
     @FXML
     private StackPane content_9;
+
 
     @PostConstruct
     public void init() {

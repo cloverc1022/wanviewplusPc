@@ -13,7 +13,7 @@ public class QuadListCache {
 
     private String currentAccount;
 
-    private List<QuadData> groupList = new ArrayList<>();
+    private List<QuadBean> groupList = new ArrayList<>();
 
 
     public static QuadListCache getInstance() {
@@ -24,7 +24,7 @@ public class QuadListCache {
         private static final QuadListCache instance = new QuadListCache();
     }
 
-    public List<QuadData> getGroupList(String account) {
+    public List<QuadBean> getGroupList(String account) {
         if (StringUtil.isNullOrEmpty(account))
             return null;
         if (StringUtil.isNullOrEmpty(currentAccount) || !StringUtil.equals(currentAccount, account)) {
@@ -38,7 +38,7 @@ public class QuadListCache {
             if (groupNames.length == 0)
                 return null;
             for (int i = 0; i < groupNames.length; i++) {
-                QuadData data = new QuadData();
+                QuadBean data = new QuadBean();
 
                 String name = groupNames[i];
                 data.groupName = name;
@@ -80,8 +80,8 @@ public class QuadListCache {
         return groupList;
     }
 
-    public void addQuadData(QuadData quadData) {
-        groupList.add(quadData);
+    public void addQuadData(QuadBean quadBean) {
+        groupList.add(quadBean);
         save();
     }
 
@@ -97,21 +97,21 @@ public class QuadListCache {
         save();
     }
 
-    public void editQuadData(QuadData quadData, String newGroupName) {
+    public void editQuadData(QuadBean quadBean, String newGroupName) {
         for (int i = 0; i < groupList.size(); i++) {
-            if (StringUtil.equals(groupList.get(i).groupName, quadData.groupName)) {
+            if (StringUtil.equals(groupList.get(i).groupName, quadBean.groupName)) {
                 groupList.get(i).groupName = newGroupName;
-                groupList.get(i).camera_one = quadData.camera_one;
-                groupList.get(i).camera_two = quadData.camera_two;
-                groupList.get(i).camera_three = quadData.camera_three;
-                groupList.get(i).camera_four = quadData.camera_four;
+                groupList.get(i).camera_one = quadBean.camera_one;
+                groupList.get(i).camera_two = quadBean.camera_two;
+                groupList.get(i).camera_three = quadBean.camera_three;
+                groupList.get(i).camera_four = quadBean.camera_four;
                 break;
             }
         }
         save();
     }
 
-    public QuadData getQuadData(String groupName) {
+    public QuadBean getQuadData(String groupName) {
         for (int i = 0; i < groupList.size(); i++) {
             if (StringUtil.equals(groupList.get(i).groupName, groupName)) {
                 return groupList.get(i);
@@ -123,7 +123,7 @@ public class QuadListCache {
     private void save() {
         StringBuilder quadList = new StringBuilder();
         for (int i = 0; i < groupList.size(); i++) {
-            QuadData item = groupList.get(i);
+            QuadBean item = groupList.get(i);
 
             quadList.append(item.groupName);
             if (i != groupList.size() - 1)

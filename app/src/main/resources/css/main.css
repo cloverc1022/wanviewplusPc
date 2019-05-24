@@ -165,7 +165,7 @@
 }
 
 .jfx_button_delete {
-    -fx-background-image: url('/image/ic_delete_group.png');
+    -fx-background-image: url('/image/ic_delete_camera_light.png');
     -fx-pref-width: 24px;
     -fx-pref-height: 24px;
     -fx-min-width: 24px;
