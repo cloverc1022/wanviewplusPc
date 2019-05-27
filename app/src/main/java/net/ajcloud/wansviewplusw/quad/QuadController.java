@@ -1,66 +1,95 @@
 package net.ajcloud.wansviewplusw.quad;
 
+import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXListView;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.input.MouseButton;
+import javafx.scene.layout.*;
 import net.ajcloud.wansviewplusw.Base;
-import net.ajcloud.wansviewplusw.login.LoginController;
 import net.ajcloud.wansviewplusw.support.customview.PlayItemController;
-import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 
 import javax.annotation.PostConstruct;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.prefs.Preferences;
 
 @ViewController(value = "/fxml/quad.fxml", title = "Quad")
 public class QuadController {
     @FXMLViewFlowContext
     private ViewFlowContext context;
     @FXML
-    private StackPane content_1;
+    private HBox content_list;
     @FXML
-    private StackPane content_2;
-    @FXML
-    private StackPane content_3;
-    @FXML
-    private StackPane content_4;
-    @FXML
-    private StackPane content_5;
-    @FXML
-    private StackPane content_6;
-    @FXML
-    private StackPane content_7;
-    @FXML
-    private StackPane content_8;
-    @FXML
-    private StackPane content_9;
+    private StackPane content_list_empty;
 
+    @FXML
+    private VBox content_left;
+    @FXML
+    private JFXListView<QuadBean> lv_quads;
+    @FXML
+    private JFXButton btn_create;
+
+    @FXML
+    private GridPane content_play;
+    @FXML
+    private StackPane content_play_empty;
+
+    private ObservableList<QuadBean> mInfos = FXCollections.observableArrayList();
 
     @PostConstruct
     public void init() {
-        List<Camera> deviceList = new ArrayList<>(DeviceCache.getInstance().getAllDevices());
-        for (int i = 0; i < deviceList.size(); i++) {
-            Camera camera = deviceList.get(i);
-            if (i == 0) {
-//                addCamera(content_1, camera.deviceId);
-            } else if (i == 1) {
-                addCamera(content_1, camera.deviceId);
-//                addCamera(content_2, camera.deviceId);
-//                addCamera(content_3, camera.deviceId);
-//                addCamera(content_4, camera.deviceId);
-            } else if (i == 2) {
-//                addCamera(content_3, camera.deviceId);
-            } else if (i == 3) {
+        lv_quads.depthProperty().set(1);
+        lv_quads.setExpanded(true);
+        lv_quads.setCellFactory(param -> {
+            QuadListCell quadListCell = new QuadListCell();
+            quadListCell.setOnMouseClicked((v) -> {
+                if (v.getButton() == MouseButton.PRIMARY) {
+                    if (!content_play.isVisible()) {
+                        content_play.setVisible(true);
+                        content_play.setManaged(true);
+                        content_play_empty.setVisible(false);
+                        content_play_empty.setManaged(false);
+                    }
+//                    handleMouseClick(quadListCell.getItem());
+                }
+            });
+            return quadListCell;
+        });
+
+        initData();
+        initListener();
+    }
+
+    private void initData() {
+        //initData
+        if (DeviceCache.getInstance().getAllDevices() == null || DeviceCache.getInstance().getAllDevices().size() == 0) {
+            content_list_empty.setVisible(true);
+            content_list_empty.setManaged(true);
+            content_list.setVisible(false);
+            content_list.setManaged(false);
+        } else {
+            content_list_empty.setVisible(false);
+            content_list_empty.setManaged(false);
+            content_list.setVisible(true);
+            content_list.setManaged(true);
+            List<QuadBean> quadBeanList = QuadListCache.getInstance().getGroupList(DeviceCache.getInstance().getSigninBean().mail);
+            if (quadBeanList != null && quadBeanList.size() > 0) {
+                mInfos.setAll(quadBeanList);
+                lv_quads.setItems(mInfos);
             }
         }
+    }
+
+    private void initListener() {
+        btn_create.setOnMouseClicked((v) -> {
+        });
     }
 
     private void addCamera(Pane parent, String deviceId) {

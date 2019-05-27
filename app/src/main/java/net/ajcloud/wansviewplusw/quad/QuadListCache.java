@@ -41,7 +41,7 @@ public class QuadListCache {
                 QuadBean data = new QuadBean();
 
                 String name = groupNames[i];
-                data.groupName = name;
+                data.setGroupName(name);
 
                 String groupDetail = preferences.get(String.format(IPreferences.P_QUAD_DETAIL_, account, name), null);
                 if (StringUtil.isNullOrEmpty(group)) {
@@ -59,16 +59,16 @@ public class QuadListCache {
                     String deviceId = detail.split("_")[1];
                     switch (num) {
                         case 1:
-                            data.camera_one = deviceId;
+                            data.setCamera_one(deviceId);
                             break;
                         case 2:
-                            data.camera_two = deviceId;
+                            data.setCamera_two(deviceId);
                             break;
                         case 3:
-                            data.camera_three = deviceId;
+                            data.setCamera_three(deviceId);
                             break;
                         case 4:
-                            data.camera_four = deviceId;
+                            data.setCamera_four(deviceId);
                             break;
                     }
                 }
@@ -88,7 +88,7 @@ public class QuadListCache {
     public void deleteQuadData(String groupName) {
         int index = 0;
         for (int i = 0; i < groupList.size(); i++) {
-            if (StringUtil.equals(groupList.get(i).groupName, groupName)) {
+            if (StringUtil.equals(groupList.get(i).getGroupName(), groupName)) {
                 index = i;
                 break;
             }
@@ -99,12 +99,12 @@ public class QuadListCache {
 
     public void editQuadData(QuadBean quadBean, String newGroupName) {
         for (int i = 0; i < groupList.size(); i++) {
-            if (StringUtil.equals(groupList.get(i).groupName, quadBean.groupName)) {
-                groupList.get(i).groupName = newGroupName;
-                groupList.get(i).camera_one = quadBean.camera_one;
-                groupList.get(i).camera_two = quadBean.camera_two;
-                groupList.get(i).camera_three = quadBean.camera_three;
-                groupList.get(i).camera_four = quadBean.camera_four;
+            if (StringUtil.equals(groupList.get(i).getGroupName(), quadBean.getGroupName())) {
+                groupList.get(i).setGroupName(newGroupName);
+                groupList.get(i).setCamera_one(quadBean.getCamera_one());
+                groupList.get(i).setCamera_two(quadBean.getCamera_two());
+                groupList.get(i).setCamera_three(quadBean.getCamera_three());
+                groupList.get(i).setCamera_four(quadBean.getCamera_four());
                 break;
             }
         }
@@ -113,7 +113,7 @@ public class QuadListCache {
 
     public QuadBean getQuadData(String groupName) {
         for (int i = 0; i < groupList.size(); i++) {
-            if (StringUtil.equals(groupList.get(i).groupName, groupName)) {
+            if (StringUtil.equals(groupList.get(i).getGroupName(), groupName)) {
                 return groupList.get(i);
             }
         }
@@ -125,34 +125,34 @@ public class QuadListCache {
         for (int i = 0; i < groupList.size(); i++) {
             QuadBean item = groupList.get(i);
 
-            quadList.append(item.groupName);
+            quadList.append(item.getGroupName());
             if (i != groupList.size() - 1)
                 quadList.append("_");
 
             StringBuilder quadDetail = new StringBuilder();
-            if (!StringUtil.isNullOrEmpty(item.camera_one)) {
+            if (!StringUtil.isNullOrEmpty(item.getCamera_one())) {
                 quadDetail.append("1_");
-                quadDetail.append(item.camera_one);
+                quadDetail.append(item.getCamera_one());
                 quadDetail.append("-");
             }
-            if (!StringUtil.isNullOrEmpty(item.camera_two)) {
+            if (!StringUtil.isNullOrEmpty(item.getCamera_two())) {
                 quadDetail.append("2_");
-                quadDetail.append(item.camera_two);
+                quadDetail.append(item.getCamera_two());
                 quadDetail.append("-");
             }
-            if (!StringUtil.isNullOrEmpty(item.camera_three)) {
+            if (!StringUtil.isNullOrEmpty(item.getCamera_three())) {
                 quadDetail.append("3_");
-                quadDetail.append(item.camera_three);
+                quadDetail.append(item.getCamera_three());
                 quadDetail.append("-");
             }
-            if (!StringUtil.isNullOrEmpty(item.camera_four)) {
+            if (!StringUtil.isNullOrEmpty(item.getCamera_four())) {
                 quadDetail.append("4_");
-                quadDetail.append(item.camera_four);
+                quadDetail.append(item.getCamera_four());
             }
             if (quadDetail.length() > 0 && quadDetail.toString().endsWith("-")) {
                 quadDetail.deleteCharAt(quadDetail.length() - 1);
             }
-            preferences.put(String.format(IPreferences.P_QUAD_DETAIL_, currentAccount, item.groupName), quadDetail.toString());
+            preferences.put(String.format(IPreferences.P_QUAD_DETAIL_, currentAccount, item.getGroupName()), quadDetail.toString());
         }
         preferences.put(String.format(IPreferences.P_QUAD_LIST_, currentAccount), quadList.toString());
     }
