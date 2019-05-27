@@ -10,15 +10,22 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import net.ajcloud.wansviewplusw.Base;
+import net.ajcloud.wansviewplusw.quad.add.AddGroupController;
 import net.ajcloud.wansviewplusw.support.customview.PlayItemController;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 
 import javax.annotation.PostConstruct;
 import java.io.InputStream;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @ViewController(value = "/fxml/quad.fxml", title = "Quad")
 public class QuadController {
@@ -40,6 +47,8 @@ public class QuadController {
     private GridPane content_play;
     @FXML
     private StackPane content_play_empty;
+
+    private Stage addGroupStage;
 
     private ObservableList<QuadBean> mInfos = FXCollections.observableArrayList();
 
@@ -89,7 +98,40 @@ public class QuadController {
 
     private void initListener() {
         btn_create.setOnMouseClicked((v) -> {
+            go2AddGroup();
         });
+    }
+
+    private void go2AddGroup() {
+        try {
+            if (addGroupStage == null) {
+                FXMLLoader loader = new FXMLLoader();
+                InputStream in = Base.class.getResourceAsStream("/fxml/add_group.fxml");
+                loader.setBuilderFactory(new JavaFXBuilderFactory());
+                loader.setLocation(Base.class.getResource("/fxml/add_group.fxml"));
+                Pane page = loader.load(in);
+                AddGroupController addGroupController = loader.getController();
+                //TODO
+                in.close();
+                Scene scene = new Scene(page, 432, 360);
+                final ObservableList<String> stylesheets = scene.getStylesheets();
+                stylesheets.addAll(Base.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
+                        Base.class.getResource("/css/jfoenix-design.css").toExternalForm(),
+                        Base.class.getResource("/css/main.css").toExternalForm());
+                addGroupStage = new Stage();
+                addGroupStage.setScene(scene);
+                addGroupStage.getIcons().add(new Image("/image/ic_launcher.png"));
+                addGroupStage.setTitle("Create a group");
+                addGroupStage.sizeToScene();
+                addGroupStage.setResizable(false);
+                addGroupStage.initStyle(StageStyle.DECORATED);
+            }
+            addGroupStage.show();
+        } catch (Exception ex) {
+            Logger.getLogger(Base.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            System.gc();
+        }
     }
 
     private void addCamera(Pane parent, String deviceId) {

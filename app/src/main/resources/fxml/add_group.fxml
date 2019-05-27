@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.*?>
+<?import org.controlsfx.control.GridView?>
+<VBox alignment="CENTER" maxHeight="360.0" maxWidth="432.0" minHeight="360.0" minWidth="432.0" prefHeight="360.0"
+      prefWidth="432.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <StackPane maxHeight="40.0" minHeight="40.0" prefHeight="40.0">
+            <children>
+                <Label fx:id="label_tittle" style="-fx-text-fill:#223239;-fx-font-size:16;" text="Create a  group"
+                       alignment="CENTER" StackPane.alignment="CENTER"/>
+                <Label fx:id="label_num" style="-fx-text-fill:#223239;-fx-font-size:16;-fx-font-weight: bold" text="0/0"
+                       alignment="CENTER" StackPane.alignment="CENTER_RIGHT">
+                    <StackPane.margin>
+                        <Insets right="15.0"/>
+                    </StackPane.margin>
+                </Label>
+            </children>
+        </StackPane>
+        <GridView fx:id="device_list" maxHeight="276.0" minHeight="276.0" prefHeight="276.0"/>
+        <StackPane maxHeight="44.0" minHeight="44.0" prefHeight="44.0">
+            <children>
+                <JFXTextField fx:id="text_name" maxWidth="220.0" minWidth="220.0" prefWidth="220.0"
+                              StackPane.alignment="CENTER_LEFT">
+                    <StackPane.margin>
+                        <Insets left="20.0"/>
+                    </StackPane.margin>
+                </JFXTextField>
+                <JFXButton fx:id="btn_done" maxHeight="28.0" maxWidth="160.0" minHeight="28.0" minWidth="160.0"
+                           prefHeight="28.0"
+                           prefWidth="160.0" StackPane.alignment="CENTER_RIGHT" disable="true">
+                    <StackPane.margin>
+                        <Insets right="16.0"/>
+                    </StackPane.margin>
+                </JFXButton>
+            </children>
+        </StackPane>
+    </children>
+</VBox>
