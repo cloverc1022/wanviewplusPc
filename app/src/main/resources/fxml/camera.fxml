@@ -130,7 +130,7 @@
                                                                 mnemonicParsing="false"
                                                                 prefHeight="28.0"
                                                                 prefWidth="28.0" styleClass="top_button"
-                                                                text="Button" GridPane.columnIndex="1"
+                                                                 GridPane.columnIndex="1"
                                                                 GridPane.halignment="CENTER"
                                                                 GridPane.rowIndex="0"
                                                                 GridPane.valignment="TOP">
@@ -141,7 +141,7 @@
                                                         <Button fx:id="btn_right" minHeight="28.0"
                                                                 minWidth="28.0" mnemonicParsing="false"
                                                                 prefHeight="28.0" prefWidth="28.0"
-                                                                styleClass="right_button" text="Button"
+                                                                styleClass="right_button"
                                                                 GridPane.columnIndex="2"
                                                                 GridPane.halignment="RIGHT"
                                                                 GridPane.rowIndex="1"
@@ -153,7 +153,7 @@
                                                         <Button fx:id="btn_bottom" minHeight="28.0"
                                                                 minWidth="28.0" mnemonicParsing="false"
                                                                 prefHeight="28.0" prefWidth="28.0"
-                                                                styleClass="bottom_button" text="Button"
+                                                                styleClass="bottom_button"
                                                                 GridPane.columnIndex="1"
                                                                 GridPane.halignment="CENTER"
                                                                 GridPane.rowIndex="2"
@@ -165,7 +165,7 @@
                                                         <Button fx:id="btn_left" minHeight="28.0"
                                                                 minWidth="28.0" mnemonicParsing="false"
                                                                 prefHeight="28.0" prefWidth="28.0"
-                                                                styleClass="left_button" text="Button"
+                                                                styleClass="left_button"
                                                                 GridPane.columnIndex="0"
                                                                 GridPane.halignment="LEFT"
                                                                 GridPane.rowIndex="1"
@@ -265,7 +265,7 @@
                                                         </Label>
                                                         <Label fx:id="label_time"
                                                                style="-fx-text-fill:#263238;-fx-background-color:transparent;-fx-font-size:12"
-                                                               text="Label">
+                                                               >
                                                             <HBox.margin>
                                                                 <Insets left="8.0"/>
                                                             </HBox.margin>

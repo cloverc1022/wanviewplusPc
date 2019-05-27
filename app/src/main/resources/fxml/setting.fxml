@@ -9,7 +9,7 @@
       style="-fx-background-color: #F7FAFA"
       fx:controller="net.ajcloud.wansviewplusw.setting.SettingController">
     <children>
-        <AnchorPane  style="-fx-background-color: #FFFFFF" maxHeight="40.0" minHeight="40.0" prefHeight="40.0">
+        <AnchorPane style="-fx-background-color: #FFFFFF" maxHeight="40.0" minHeight="40.0" prefHeight="40.0">
             <children>
                 <Label text="Download location：" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="16.0"
                        style="-fx-text-fill:#223239;-fx-font-size:14;"

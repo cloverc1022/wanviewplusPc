@@ -29,7 +29,8 @@
                         </VBox>
                         <VBox fx:id="vb_device" alignment="CENTER" minWidth="72.0" prefWidth="72.0" VBox.vgrow="NEVER">
                             <children>
-                                <ImageView fx:id="iv_play" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fx:id="iv_play" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true"
+                                           preserveRatio="true">
                                     <image>
                                         <Image url="@/image/ic_device_color.png"/>
                                     </image>
@@ -40,12 +41,14 @@
                         <VBox fx:id="vb_quad" alignment="CENTER" minWidth="72.0" prefWidth="72.0"
                               VBox.vgrow="NEVER">
                             <children>
-                                <ImageView fx:id="iv_quad" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true">
+                                <ImageView fx:id="iv_quad" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true"
+                                           preserveRatio="true">
                                     <image>
                                         <Image url="@/image/ic_quad_screen_mid.png"/>
                                     </image>
                                 </ImageView>
-                                <Label fx:id="label_quad"  style="-fx-text-fill:#95a5ad;-fx-font-size:8;" text="Quad screen"/>
+                                <Label fx:id="label_quad" style="-fx-text-fill:#95a5ad;-fx-font-size:8;"
+                                       text="Quad screen"/>
                             </children>
                         </VBox>
                         <VBox fx:id="vb_nine" alignment="CENTER" minWidth="72.0" prefWidth="72.0" visible="false"

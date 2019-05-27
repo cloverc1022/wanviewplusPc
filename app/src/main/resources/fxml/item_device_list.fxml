@@ -36,7 +36,7 @@
                     </children>
                 </StackPane>
                 <Label fx:id="deviceName" minHeight="28.0" minWidth="196.0" prefWidth="196.0"
-                       styleClass="devices_item_deviceName" text="Name" VBox.vgrow="ALWAYS">
+                       styleClass="devices_item_deviceName"  VBox.vgrow="ALWAYS">
                     <padding>
                         <Insets left="16.0" right="16.0"/>
                     </padding>

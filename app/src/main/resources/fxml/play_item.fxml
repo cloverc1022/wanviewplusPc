@@ -117,7 +117,7 @@
                         </Label>
                         <Label fx:id="label_time"
                                style="-fx-text-fill:#263238;-fx-background-color:transparent;-fx-font-size:12"
-                               text="Label">
+                        >
                             <HBox.margin>
                                 <Insets left="8.0"/>
                             </HBox.margin>

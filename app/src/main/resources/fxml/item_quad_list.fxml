@@ -22,18 +22,21 @@
                     <children>
                         <ImageView fx:id="iv_one" style="-fx-background-color: #CFD8DC" fitHeight="44.0" fitWidth="98.0"
                                    pickOnBounds="true" preserveRatio="true"/>
-                        <ImageView  fx:id="iv_two" style="-fx-background-color: #CFD8DC" fitHeight="44.0" fitWidth="98.0"
+                        <ImageView fx:id="iv_two" style="-fx-background-color: #CFD8DC" fitHeight="44.0" fitWidth="98.0"
                                    pickOnBounds="true" preserveRatio="true"
                                    GridPane.columnIndex="1"/>
-                        <ImageView  fx:id="iv_three" style="-fx-background-color: #CFD8DC" fitHeight="44.0" fitWidth="98.0"
+                        <ImageView fx:id="iv_three" style="-fx-background-color: #CFD8DC" fitHeight="44.0"
+                                   fitWidth="98.0"
                                    pickOnBounds="true" preserveRatio="true"
                                    GridPane.rowIndex="1"/>
-                        <ImageView  fx:id="iv_four" style="-fx-background-color: #CFD8DC" fitHeight="44.0" fitWidth="98.0"
+                        <ImageView fx:id="iv_four" style="-fx-background-color: #CFD8DC" fitHeight="44.0"
+                                   fitWidth="98.0"
                                    pickOnBounds="true" preserveRatio="true"
                                    GridPane.columnIndex="1" GridPane.rowIndex="1"/>
                     </children>
                 </GridPane>
-                <StackPane fx:id="sp_play_anim" style="-fx-background-color: rgba(38,50,56,0.3)" visible="false" managed="false">
+                <StackPane fx:id="sp_play_anim" style="-fx-background-color: rgba(38,50,56,0.3)" visible="false"
+                           managed="false">
                     <children>
                         <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true"
                                    StackPane.alignment="CENTER">
@@ -46,7 +49,7 @@
             </children>
         </StackPane>
         <Label fx:id="groupName" maxHeight="28.0" minHeight="28.0" prefHeight="28.0"
-               styleClass="devices_item_deviceName" text="Name" StackPane.alignment="BOTTOM_LEFT">
+               styleClass="devices_item_deviceName" StackPane.alignment="BOTTOM_LEFT">
             <padding>
                 <Insets left="12.0" right="12.0"/>
             </padding>
