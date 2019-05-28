@@ -15,7 +15,6 @@
                style="-fx-text-fill:#223239;-fx-font-size:12;-fx-font-weight: bold"/>
         <Label fx:id="label_selected" alignment="CENTER" maxHeight="24.0" maxWidth="24.0" minHeight="24.0"
                minWidth="24.0" prefHeight="24.0"
-               style="-fx-text-fill:white;-fx-font-size:12;-fx-font-weight: bold"
                styleClass="add_camera_unselected"
                prefWidth="24.0" AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="8.0"/>
     </children>

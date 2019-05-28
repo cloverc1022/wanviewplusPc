@@ -108,30 +108,33 @@ public class QuadController implements Initializable {
 
     private void go2AddGroup() {
         try {
+            FXMLLoader loader = new FXMLLoader();
+            InputStream in = QuadController.class.getResourceAsStream("/fxml/add_group.fxml");
+            loader.setBuilderFactory(new JavaFXBuilderFactory());
+            loader.setLocation(QuadController.class.getResource("/fxml/add_group.fxml"));
+            ResourceBundle bundle = ResourceBundle.getBundle("strings");
+            loader.setResources(bundle);
+            Pane page = loader.load(in);
+            AddGroupController addGroupController = loader.getController();
+            addGroupController.init(null);
+            addGroupController.setOnFinishListener(() -> {
+                addGroupStage.close();
+            });
+            in.close();
+            Scene scene = new Scene(page, 445, 360);
+            final ObservableList<String> stylesheets = scene.getStylesheets();
+            stylesheets.addAll(Base.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
+                    Base.class.getResource("/css/jfoenix-design.css").toExternalForm(),
+                    Base.class.getResource("/css/main.css").toExternalForm());
             if (addGroupStage == null) {
-                FXMLLoader loader = new FXMLLoader();
-                InputStream in = QuadController.class.getResourceAsStream("/fxml/add_group.fxml");
-                loader.setBuilderFactory(new JavaFXBuilderFactory());
-                loader.setLocation(QuadController.class.getResource("/fxml/add_group.fxml"));
-                ResourceBundle bundle = ResourceBundle.getBundle("strings");
-                loader.setResources(bundle);
-                Pane page = loader.load(in);
-                AddGroupController addGroupController = loader.getController();
-                addGroupController.init(null);
-                in.close();
-                Scene scene = new Scene(page, 445, 360);
-                final ObservableList<String> stylesheets = scene.getStylesheets();
-                stylesheets.addAll(Base.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
-                        Base.class.getResource("/css/jfoenix-design.css").toExternalForm(),
-                        Base.class.getResource("/css/main.css").toExternalForm());
                 addGroupStage = new Stage();
-                addGroupStage.setScene(scene);
                 addGroupStage.getIcons().add(new Image("/image/ic_launcher.png"));
                 addGroupStage.setTitle(resourceBundle.getString("quadScreen_creatGroup"));
                 addGroupStage.sizeToScene();
                 addGroupStage.setResizable(false);
                 addGroupStage.initStyle(StageStyle.DECORATED);
             }
+            addGroupStage.setScene(scene);
             addGroupStage.show();
         } catch (Exception ex) {
             Logger.getLogger(QuadController.class.getName()).log(Level.SEVERE, null, ex);

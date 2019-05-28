@@ -72,16 +72,16 @@ public class QuadBean {
     public void setCamera_two(String camera_two) {
         if (!StringUtil.equals(this.camera_two, camera_two)) {
             this.camera_two = camera_two;
-            if (StringUtil.isNullOrEmpty(camera_one)) {
+            if (StringUtil.isNullOrEmpty(camera_two)) {
                 Image image = new Image("/image/ic_device_default.png", 98, 44, false, true, false);
                 setCamera_two_image(image);
             } else {
-                File thumbnail = new File(FileUtil.getRealtimeImagePath(camera_one) + File.separator + "realtime_picture.jpg");
+                File thumbnail = new File(FileUtil.getRealtimeImagePath(camera_two) + File.separator + "realtime_picture.jpg");
                 if (thumbnail.exists()) {
                     Image image = new Image(thumbnail.toURI().toString(), 98, 44, false, true, false);
                     setCamera_two_image(image);
                 } else {
-                    Camera camera = DeviceCache.getInstance().get(camera_one);
+                    Camera camera = DeviceCache.getInstance().get(camera_two);
                     if (camera == null || StringUtil.isNullOrEmpty(camera.snapshotUrl)) {
                         Image image = new Image("/image/ic_device_default.png", 98, 44, false, true, false);
                         setCamera_two_image(image);
@@ -101,16 +101,16 @@ public class QuadBean {
     public void setCamera_three(String camera_three) {
         if (!StringUtil.equals(this.camera_three, camera_three)) {
             this.camera_three = camera_three;
-            if (StringUtil.isNullOrEmpty(camera_one)) {
+            if (StringUtil.isNullOrEmpty(camera_three)) {
                 Image image = new Image("/image/ic_device_default.png", 98, 44, false, true, false);
                 setCamera_three_image(image);
             } else {
-                File thumbnail = new File(FileUtil.getRealtimeImagePath(camera_one) + File.separator + "realtime_picture.jpg");
+                File thumbnail = new File(FileUtil.getRealtimeImagePath(camera_three) + File.separator + "realtime_picture.jpg");
                 if (thumbnail.exists()) {
                     Image image = new Image(thumbnail.toURI().toString(), 98, 44, false, true, false);
                     setCamera_three_image(image);
                 } else {
-                    Camera camera = DeviceCache.getInstance().get(camera_one);
+                    Camera camera = DeviceCache.getInstance().get(camera_three);
                     if (camera == null || StringUtil.isNullOrEmpty(camera.snapshotUrl)) {
                         Image image = new Image("/image/ic_device_default.png", 98, 44, false, true, false);
                         setCamera_three_image(image);
@@ -130,16 +130,16 @@ public class QuadBean {
     public void setCamera_four(String camera_four) {
         if (!StringUtil.equals(this.camera_four, camera_four)) {
             this.camera_four = camera_four;
-            if (StringUtil.isNullOrEmpty(camera_one)) {
+            if (StringUtil.isNullOrEmpty(camera_four)) {
                 Image image = new Image("/image/ic_device_default.png", 98, 44, false, true, false);
                 setCamera_four_image(image);
             } else {
-                File thumbnail = new File(FileUtil.getRealtimeImagePath(camera_one) + File.separator + "realtime_picture.jpg");
+                File thumbnail = new File(FileUtil.getRealtimeImagePath(camera_four) + File.separator + "realtime_picture.jpg");
                 if (thumbnail.exists()) {
                     Image image = new Image(thumbnail.toURI().toString(), 98, 44, false, true, false);
                     setCamera_four_image(image);
                 } else {
-                    Camera camera = DeviceCache.getInstance().get(camera_one);
+                    Camera camera = DeviceCache.getInstance().get(camera_four);
                     if (camera == null || StringUtil.isNullOrEmpty(camera.snapshotUrl)) {
                         Image image = new Image("/image/ic_device_default.png", 98, 44, false, true, false);
                         setCamera_four_image(image);

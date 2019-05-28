@@ -50,6 +50,7 @@ public class AddGroupData {
         }
         label_deviceId.setText(bean.camera.deviceId);
         label_selected.styleProperty().bind(bean.selectedCssProperty());
+        label_selected.textProperty().bind(bean.indexPropertyProperty());
     }
 
     public AnchorPane getPane() {

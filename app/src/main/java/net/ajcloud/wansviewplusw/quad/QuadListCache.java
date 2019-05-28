@@ -28,6 +28,7 @@ public class QuadListCache {
         if (StringUtil.isNullOrEmpty(account))
             return null;
         if (StringUtil.isNullOrEmpty(currentAccount) || !StringUtil.equals(currentAccount, account)) {
+            currentAccount = account;
             //重新获取
             groupList.clear();
             //获取组信息
@@ -54,7 +55,7 @@ public class QuadListCache {
                     continue;
                 }
                 for (int j = 0; j < groupDetails.length; j++) {
-                    String detail = groupDetails[i];
+                    String detail = groupDetails[j];
                     int num = Integer.parseInt(detail.split("_")[0]);
                     String deviceId = detail.split("_")[1];
                     switch (num) {
@@ -72,7 +73,6 @@ public class QuadListCache {
                             break;
                     }
                 }
-
                 groupList.add(data);
             }
         }

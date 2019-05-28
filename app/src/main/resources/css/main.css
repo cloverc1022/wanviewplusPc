@@ -416,12 +416,18 @@
     -fx-background-image: url('/image/ic_select_camera.png');
     -fx-background-size: 24 24;
     -fx-background-position: center center;
+    -fx-text-fill: white;
+    -fx-font-size: 12;
+    -fx-font-weight: bold
 }
 
 .add_camera_selected {
     -fx-background-image: url('/image/ic_selected_camera.png');
     -fx-background-size: 24 24;
     -fx-background-position: center center;
+    -fx-text-fill: white;
+    -fx-font-size: 12;
+    -fx-font-weight: bold
 }
 
 .iv_play_normal {
