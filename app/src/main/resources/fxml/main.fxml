@@ -30,24 +30,17 @@
                         <VBox fx:id="vb_device" alignment="CENTER" minWidth="72.0" prefWidth="72.0" VBox.vgrow="NEVER">
                             <children>
                                 <ImageView fx:id="iv_play" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true"
-                                           preserveRatio="true">
-                                    <image>
-                                        <Image url="@/image/ic_device_color.png"/>
-                                    </image>
-                                </ImageView>
-                                <Label fx:id="label_play" style="-fx-text-fill:#2979ff;-fx-font-size:8;" text="%home_camera"/>
+                                           preserveRatio="true" styleClass="iv_play_selected"/>
+                                <Label fx:id="label_play" styleClass="label_selected"
+                                       text="%home_camera"/>
                             </children>
                         </VBox>
                         <VBox fx:id="vb_quad" alignment="CENTER" minWidth="72.0" prefWidth="72.0"
                               VBox.vgrow="NEVER">
                             <children>
                                 <ImageView fx:id="iv_quad" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true"
-                                           preserveRatio="true">
-                                    <image>
-                                        <Image url="@/image/ic_quad_screen_mid.png"/>
-                                    </image>
-                                </ImageView>
-                                <Label fx:id="label_quad" style="-fx-text-fill:#95a5ad;-fx-font-size:8;"
+                                           preserveRatio="true" styleClass="iv_quad_normal"/>
+                                <Label fx:id="label_quad" styleClass="label_normal"
                                        text="%home_quad"/>
                             </children>
                         </VBox>

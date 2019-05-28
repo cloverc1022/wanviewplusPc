@@ -44,14 +44,13 @@ import net.ajcloud.wansviewplusw.support.utils.WLog;
 import javax.annotation.PostConstruct;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @ViewController(value = "/fxml/main.fxml", title = "Main")
-public class MainController implements BaseController , Initializable {
+public class MainController implements BaseController, Initializable {
 
     private static final String CONTENT_DEVICE = "CONTENT_DEVICE";
     private static final String CONTENT_QUAD = "CONTENT_QUAD";
@@ -122,7 +121,7 @@ public class MainController implements BaseController , Initializable {
             ResourceBundle bundle = ResourceBundle.getBundle("strings");
             viewConfiguration.setResources(bundle);
             Flow innerFlow = new Flow(CameraController.class, viewConfiguration);
-            flowHandler = new FlowHandler(innerFlow,context,viewConfiguration);
+            flowHandler = new FlowHandler(innerFlow, context, viewConfiguration);
             bindNodeToController(CONTENT_DEVICE, CameraController.class, innerFlow, flowHandler);
             bindNodeToController(CONTENT_QUAD, QuadController.class, innerFlow, flowHandler);
 //        bindNodeToController(CONTENT_NINE, NineController.class, innerFlow, flowHandler);
@@ -138,22 +137,22 @@ public class MainController implements BaseController , Initializable {
     }
 
     private void replace(final String id) {
+        iv_play.getStyleClass().remove("iv_play_selected");
+        iv_play.getStyleClass().remove("iv_play_normal");
+        iv_quad.getStyleClass().remove("iv_quad_selected");
+        iv_quad.getStyleClass().remove("iv_quad_normal");
+        label_play.getStyleClass().remove("label_selected");
+        label_play.getStyleClass().remove("label_normal");
+        label_quad.getStyleClass().remove("label_selected");
+        label_quad.getStyleClass().remove("label_normal");
         if (StringUtil.equals(id, CONTENT_DEVICE)) {
-            iv_play.setImage(new Image("/image/ic_device_color.png", 24, 24, true, true, true));
-            iv_quad.setImage(new Image("/image/ic_quad_screen_mid.png", 24, 24, true, true, true));
-            label_play.getStyleClass().remove("label_selected");
-            label_play.getStyleClass().remove("label_normal");
-            label_quad.getStyleClass().remove("label_selected");
-            label_quad.getStyleClass().remove("label_normal");
+            iv_play.getStyleClass().add("iv_play_selected");
+            iv_quad.getStyleClass().add("iv_quad_normal");
             label_play.getStyleClass().add("label_selected");
             label_quad.getStyleClass().add("label_normal");
         } else if (StringUtil.equals(id, CONTENT_QUAD)) {
-            iv_play.setImage(new Image("/image/ic_device_mid.png", 24, 24, true, true, true));
-            iv_quad.setImage(new Image("/image/ic_quad_screen_color.png", 24, 24, true, true, true));
-            label_play.getStyleClass().remove("label_selected");
-            label_play.getStyleClass().remove("label_normal");
-            label_quad.getStyleClass().remove("label_selected");
-            label_quad.getStyleClass().remove("label_normal");
+            iv_play.getStyleClass().add("iv_play_normal");
+            iv_quad.getStyleClass().add("iv_quad_selected");
             label_play.getStyleClass().add("label_normal");
             label_quad.getStyleClass().add("label_selected");
         }

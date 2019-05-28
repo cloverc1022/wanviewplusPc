@@ -408,6 +408,34 @@
 }
 
 .label_normal {
-    -fx-text-fill: #263238;
+    -fx-text-fill: #95A5AD;
     -fx-font-size: 8;
+}
+
+.add_camera_unselected {
+    -fx-background-image: url('/image/ic_select camera.png');
+    -fx-background-size: 24 24;
+    -fx-background-position: center center;
+}
+
+.add_camera_selected {
+    -fx-background-image: url('/image/ic_selected_ camera.png');
+    -fx-background-size: 24 24;
+    -fx-background-position: center center;
+}
+
+.iv_play_normal {
+    -fx-image: url('/image/ic_device_mid.png');
+}
+
+.iv_play_selected {
+    -fx-image: url('/image/ic_device_color.png');
+}
+
+.iv_quad_normal {
+    -fx-image: url('/image/ic_quad_screen_mid.png');
+}
+
+.iv_quad_selected {
+    -fx-image: url('/image/ic_quad_screen_color.png');
 }
