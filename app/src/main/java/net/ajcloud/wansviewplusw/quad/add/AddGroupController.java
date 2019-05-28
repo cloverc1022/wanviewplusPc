@@ -52,29 +52,27 @@ public class AddGroupController implements BaseController, Initializable {
                     if (addGroupBean.isSelected()) {
                         addGroupBean.setSelected(false);
                         addGroupBean.setIndex(0);
-
-                        int index = 0;
-                        List<AddGroupBean> beans = device_list.getItems();
-                        for (AddGroupBean bean : beans) {
-                            if (bean.getIndex() == 1)
-                                index++;
-                            if (bean.getIndex() == 2)
-                                index++;
-                            if (bean.getIndex() == 3)
-                                index++;
-                            if (bean.getIndex() == 4)
-                                index++;
-                        }
-                        if (index >= 0) {
-                            label_num.setText(index + "/4");
-                        }
                     } else {
                         int index = judgeIndex();
                         if (index > 0) {
-                            label_num.setText(index + "/4");
                             addGroupBean.setSelected(true);
                             addGroupBean.setIndex(index);
                         }
+                    }
+                    int index = 0;
+                    List<AddGroupBean> beans = device_list.getItems();
+                    for (AddGroupBean bean : beans) {
+                        if (bean.getIndex() == 1)
+                            index++;
+                        if (bean.getIndex() == 2)
+                            index++;
+                        if (bean.getIndex() == 3)
+                            index++;
+                        if (bean.getIndex() == 4)
+                            index++;
+                    }
+                    if (index >= 0) {
+                        label_num.setText(index + "/4");
                     }
                 }
             });
@@ -179,21 +177,25 @@ public class AddGroupController implements BaseController, Initializable {
 
     private int judgeIndex() {
         List<AddGroupBean> beans = device_list.getItems();
-        List<Integer> indexes = new ArrayList<>(Arrays.asList(1, 2, 3, 4));
+        List<String> indexes = new ArrayList<>(Arrays.asList("1", "2", "3", "4"));
         for (AddGroupBean bean : beans) {
-            if (bean.getIndex() == 1)
-                indexes.remove(0);
-            if (bean.getIndex() == 2)
-                indexes.remove(1);
-            if (bean.getIndex() == 3)
-                indexes.remove(2);
-            if (bean.getIndex() == 4)
-                indexes.remove(3);
+            if (bean.getIndex() == 1) {
+                indexes.remove("1");
+            }
+            if (bean.getIndex() == 2) {
+                indexes.remove("2");
+            }
+            if (bean.getIndex() == 3) {
+                indexes.remove("3");
+            }
+            if (bean.getIndex() == 4) {
+                indexes.remove("4");
+            }
         }
         if (indexes.size() == 0) {
             return 0;
         } else {
-            return indexes.get(0);
+            return Integer.parseInt(indexes.get(0));
         }
     }
 

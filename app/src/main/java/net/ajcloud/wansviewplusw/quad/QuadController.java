@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXListView;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -118,7 +119,8 @@ public class QuadController implements Initializable {
             AddGroupController addGroupController = loader.getController();
             addGroupController.init(null);
             addGroupController.setOnFinishListener(() -> {
-                addGroupStage.close();
+                if (addGroupStage != null)
+                    addGroupStage.close();
             });
             in.close();
             Scene scene = new Scene(page, 445, 360);
@@ -135,7 +137,7 @@ public class QuadController implements Initializable {
                 addGroupStage.initStyle(StageStyle.DECORATED);
             }
             addGroupStage.setScene(scene);
-            addGroupStage.show();
+            Platform.runLater(() -> addGroupStage.show());
         } catch (Exception ex) {
             Logger.getLogger(QuadController.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
