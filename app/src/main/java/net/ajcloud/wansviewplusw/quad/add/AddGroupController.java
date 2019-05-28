@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 import net.ajcloud.wansviewplusw.BaseController;
@@ -15,10 +16,12 @@ import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 import org.controlsfx.control.GridView;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
-public class AddGroupController implements BaseController {
+public class AddGroupController implements BaseController, Initializable {
 
     @FXML
     private Label label_tittle;
@@ -31,6 +34,7 @@ public class AddGroupController implements BaseController {
     @FXML
     private JFXButton btn_done;
 
+    private ResourceBundle resourceBundle;
     private ObservableList<AddGroupBean> mInfos = FXCollections.observableArrayList();
 
     private void init(String groupName) {
@@ -102,5 +106,10 @@ public class AddGroupController implements BaseController {
                 btn_done.setDisable(true);
             }
         });
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        resourceBundle = resources;
     }
 }

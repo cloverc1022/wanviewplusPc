@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.beans.property.FloatProperty;
 import javafx.beans.property.SimpleFloatProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
 import javafx.scene.image.*;
@@ -33,11 +34,13 @@ import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.format.RV32BufferFormat;
 
+import java.net.URL;
 import java.nio.ByteBuffer;
+import java.util.ResourceBundle;
 
 import static uk.co.caprica.vlcj.binding.internal.libvlc_state_t.libvlc_Playing;
 
-public class PlayItemController implements BaseController, PoliceHelper.PoliceControlListener {
+public class PlayItemController implements BaseController, PoliceHelper.PoliceControlListener, Initializable {
     private static final String TAG = "PlayItemController";
     @FXML
     private Label label_name;
@@ -66,6 +69,7 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
     @FXML
     private JFXButton btn_play;
 
+    private ResourceBundle resourceBundle;
     private CanvasPlayerComponent mediaPlayerComponent;
     private ImageView imageView;
     private WritableImage writableImage;
@@ -165,7 +169,7 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
 
                     content_tips.setVisible(true);
                     content_tips.setManaged(true);
-                    label_time.setText("Have stopped");
+                    label_time.setText(resourceBundle.getString("countDown_haveStopped"));
                     label_stop.setVisible(false);
                     label_stop.setManaged(false);
                 }
@@ -180,7 +184,7 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
             btn_play.getStyleClass().add("jfx_button_pause");
             loading.setVisible(true);
             loading.setManaged(true);
-            label_tips.setText("establishing secure channel...");
+            label_tips.setText(resourceBundle.getString("play_establishing_channel"));
             reconnect.setVisible(false);
             reconnect.setManaged(false);
             camera.setCurrentQuality(1);
@@ -223,7 +227,7 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
                 btn_play.getStyleClass().remove("jfx_button_pause");
                 btn_play.getStyleClass().remove("jfx_button_play");
                 btn_play.getStyleClass().add("jfx_button_pause");
-                showLoading(true, "preparing to play video...");
+                showLoading(true, resourceBundle.getString("play_preraring"));
                 startOrCancelTimer(true);
                 mediaPlayerComponent.getMediaPlayer().playMedia(url);
                 mediaPlayerComponent.getMediaPlayer().mute(true);
@@ -579,6 +583,11 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
                 });
             }
         });
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        resourceBundle = resources;
     }
 
     private class CanvasPlayerComponent extends DirectMediaPlayerComponent {

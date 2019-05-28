@@ -57,6 +57,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 import javax.annotation.PostConstruct;
 import java.io.File;
 import java.net.URL;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -151,6 +152,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener, Ini
 
     private ImageView imageView;
 
+    private ResourceBundle resourceBundle;
     private WritableImage writableImage;
     private FloatProperty videoSourceRatioProperty;
     private RequestApiUnit requestApiUnit;
@@ -233,7 +235,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener, Ini
                     }
             );
 
-            Tooltip tooltip = new Tooltip("Through the Internet, it allow to \nview live video for up to 10 minutes \neach time. \nClick \"Continue\" to continue viewing.");
+            Tooltip tooltip = new Tooltip(resourceBundle.getString("countDown_msg"));
             tooltip.getStyleClass().add("tips");
             Tooltip.install(iv_tips, tooltip);
             initListener();
@@ -330,7 +332,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener, Ini
             content_list_empty.setVisible(false);
             content_list_empty.setManaged(false);
 
-            label_num.setText(DeviceCache.getInstance().getAllDevices().size() + " devices");
+            label_num.setText(new MessageFormat(resourceBundle.getString("home_device_num")).format(new Object[]{DeviceCache.getInstance().getAllDevices().size()}));
             mInfos.setAll(DeviceCache.getInstance().getAllDevices());
             lv_devices.setItems(mInfos);
         }else {
@@ -340,24 +342,21 @@ public class CameraController implements PoliceHelper.PoliceControlListener, Ini
             requestApiUnit.getDeviceList(new HttpCommonListener<java.util.List<Camera>>() {
                 @Override
                 public void onSuccess(List<Camera> bean) {
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            if (bean != null && bean.size() > 0) {
-                                content_list.setVisible(true);
-                                content_list.setManaged(true);
-                                content_list_empty.setVisible(false);
-                                content_list_empty.setManaged(false);
+                    Platform.runLater(() -> {
+                        if (bean != null && bean.size() > 0) {
+                            content_list.setVisible(true);
+                            content_list.setManaged(true);
+                            content_list_empty.setVisible(false);
+                            content_list_empty.setManaged(false);
 
-                                label_num.setText(bean.size() + " devices");
-                                mInfos.setAll(bean);
-                                lv_devices.setItems(mInfos);
-                            } else {
-                                content_list_empty.setVisible(true);
-                                content_list_empty.setManaged(true);
-                                content_list.setVisible(false);
-                                content_list.setManaged(false);
-                            }
+                            label_num.setText(new MessageFormat(resourceBundle.getString("home_device_num")).format(new Object[]{bean.size()}));
+                            mInfos.setAll(bean);
+                            lv_devices.setItems(mInfos);
+                        } else {
+                            content_list_empty.setVisible(true);
+                            content_list_empty.setManaged(true);
+                            content_list.setVisible(false);
+                            content_list.setManaged(false);
                         }
                     });
                 }
@@ -509,7 +508,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener, Ini
                 btn_play.getStyleClass().remove("jfx_button_pause");
                 btn_play.getStyleClass().remove("jfx_button_play");
                 btn_play.getStyleClass().add("jfx_button_pause");
-                showLoading(true, "preparing to play video...");
+                showLoading(true, resourceBundle.getString("play_preraring"));
                 if (CanvasPlayerUtil.getInstance().isInit()) {
                     startOrCancelTimer(true);
                     CanvasPlayerUtil.getInstance().addOptions(writableImage.getPixelWriter(), videoSourceRatioProperty, (observable, oldValue, newValue) -> fitImageViewSize((float) playPane.getWidth(), (float) playPane.getHeight()), mMediaPlayerListener);
@@ -567,7 +566,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener, Ini
             btn_play.getStyleClass().add("jfx_button_pause");
             loading.setVisible(true);
             loading.setManaged(true);
-            label_tips.setText("establishing secure channel...");
+            label_tips.setText(resourceBundle.getString("play_establishing_channel"));
             reconnect.setVisible(false);
             reconnect.setManaged(false);
             label_name.setText(camera.aliasName);
@@ -670,7 +669,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener, Ini
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        resourceBundle = resources;
     }
 
     class ExecuteTimer extends AnimationTimer {
@@ -948,7 +947,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener, Ini
 
                     content_tips.setVisible(true);
                     content_tips.setManaged(true);
-                    label_time.setText("Have stopped");
+                    label_time.setText(resourceBundle.getString("countDown_haveStopped"));
                     label_stop.setVisible(false);
                     label_stop.setManaged(false);
                 }
@@ -1397,7 +1396,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener, Ini
             alert.setOverlayClose(false);
             JFXDialogLayout layout = new JFXDialogLayout();
             layout.setBody(new Label(string));
-            JFXButton closeButton = new JFXButton("OK");
+            JFXButton closeButton = new JFXButton(resourceBundle.getString("common_ok"));
             closeButton.getStyleClass().add("dialog-accept");
             closeButton.setOnAction(event -> alert.hideWithAnimation());
             layout.setActions(closeButton);

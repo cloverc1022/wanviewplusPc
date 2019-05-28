@@ -16,6 +16,7 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -48,6 +49,7 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.URL;
 import java.util.Formatter;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -55,7 +57,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Base extends Application implements LoginController.OnLoginListener {
+public class Base extends Application implements LoginController.OnLoginListener, Initializable {
 
     private final double LOGIN_WIDTH = 320;
     private final double LOGIN_HEIGHT = 360;
@@ -70,6 +72,7 @@ public class Base extends Application implements LoginController.OnLoginListener
     private FlowHandler mainFlowHandler;
     @FXMLViewFlowContext
     private ViewFlowContext flowContext;
+    private ResourceBundle resourceBundle;
     private boolean isFullscreen = false;
     private RequestApiUnit requestApiUnit;
     private TimeService timerService;
@@ -111,7 +114,7 @@ public class Base extends Application implements LoginController.OnLoginListener
             InputStream in = Base.class.getResourceAsStream("/fxml/login.fxml");
             loader.setBuilderFactory(new JavaFXBuilderFactory());
             loader.setLocation(Base.class.getResource("/fxml/login.fxml"));
-            ResourceBundle bundle = ResourceBundle.getBundle("strings", Locale.getDefault());
+            ResourceBundle bundle = ResourceBundle.getBundle("strings");
             loader.setResources(bundle);
             Pane page = loader.load(in);
             LoginController login = loader.getController();
@@ -157,7 +160,7 @@ public class Base extends Application implements LoginController.OnLoginListener
                 Flow flow = new Flow(MainController.class);
                 DefaultFlowContainer container = new DefaultFlowContainer();
                 ViewConfiguration viewConfiguration = new ViewConfiguration();
-                ResourceBundle bundle = ResourceBundle.getBundle("strings", Locale.getDefault());
+                ResourceBundle bundle = ResourceBundle.getBundle("strings");
                 viewConfiguration.setResources(bundle);
                 mainFlowHandler = new FlowHandler(flow,flowContext,viewConfiguration);
                 mainFlowHandler.start(container);
@@ -292,8 +295,8 @@ public class Base extends Application implements LoginController.OnLoginListener
         layout.setPrefWidth(320);
         layout.setMinWidth(320);
         layout.setMaxWidth(320);
-        layout.setBody(new Label(StringUtil.isNullOrEmpty(msg) ? "error" : msg));
-        JFXButton closeButton = new JFXButton("Ok");
+        layout.setBody(new Label(StringUtil.isNullOrEmpty(msg) ? resourceBundle.getString("common_error") : msg));
+        JFXButton closeButton = new JFXButton(resourceBundle.getString("common_ok"));
         closeButton.setMinWidth(80);
         closeButton.setMaxWidth(80);
         closeButton.setPrefWidth(80);
@@ -340,5 +343,10 @@ public class Base extends Application implements LoginController.OnLoginListener
                 Platform.runLater(() -> doLogout(true, msg));
             }
         });
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        resourceBundle = resources;
     }
 }

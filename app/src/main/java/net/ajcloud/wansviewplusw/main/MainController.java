@@ -15,6 +15,7 @@ import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -42,6 +43,7 @@ import net.ajcloud.wansviewplusw.support.utils.WLog;
 
 import javax.annotation.PostConstruct;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -49,7 +51,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @ViewController(value = "/fxml/main.fxml", title = "Main")
-public class MainController implements BaseController {
+public class MainController implements BaseController , Initializable {
 
     private static final String CONTENT_DEVICE = "CONTENT_DEVICE";
     private static final String CONTENT_QUAD = "CONTENT_QUAD";
@@ -91,6 +93,8 @@ public class MainController implements BaseController {
 
     private String currentItem;
 
+    private ResourceBundle resourceBundle;
+
     /**
      * 初始化
      */
@@ -115,7 +119,7 @@ public class MainController implements BaseController {
 
             currentItem = CONTENT_DEVICE;
             ViewConfiguration viewConfiguration = new ViewConfiguration();
-            ResourceBundle bundle = ResourceBundle.getBundle("strings", Locale.getDefault());
+            ResourceBundle bundle = ResourceBundle.getBundle("strings");
             viewConfiguration.setResources(bundle);
             Flow innerFlow = new Flow(CameraController.class, viewConfiguration);
             flowHandler = new FlowHandler(innerFlow,context,viewConfiguration);
@@ -178,8 +182,7 @@ public class MainController implements BaseController {
                 InputStream in = Base.class.getResourceAsStream("/fxml/about.fxml");
                 loader.setBuilderFactory(new JavaFXBuilderFactory());
                 loader.setLocation(Base.class.getResource("/fxml/about.fxml"));
-                ResourceBundle bundle = ResourceBundle.getBundle("strings", Locale.getDefault());
-                loader.setResources(bundle);
+                loader.setResources(resourceBundle);
                 Pane page = loader.load(in);
                 in.close();
                 Scene scene = new Scene(page, 530, 240);
@@ -210,8 +213,7 @@ public class MainController implements BaseController {
                 InputStream in = Base.class.getResourceAsStream("/fxml/setting.fxml");
                 loader.setBuilderFactory(new JavaFXBuilderFactory());
                 loader.setLocation(Base.class.getResource("/fxml/setting.fxml"));
-                ResourceBundle bundle = ResourceBundle.getBundle("strings", Locale.getDefault());
-                loader.setResources(bundle);
+                loader.setResources(resourceBundle);
                 Pane page = loader.load(in);
                 SettingController settingController = loader.getController();
                 settingController.init();
@@ -224,7 +226,7 @@ public class MainController implements BaseController {
                 settingStage = new Stage();
                 settingStage.setScene(scene);
                 settingStage.getIcons().add(new Image("/image/ic_launcher.png"));
-                settingStage.setTitle("Setting");
+                settingStage.setTitle(resourceBundle.getString("home_setting"));
                 settingStage.sizeToScene();
                 settingStage.setResizable(false);
                 settingStage.initStyle(StageStyle.DECORATED);
@@ -244,8 +246,7 @@ public class MainController implements BaseController {
                 InputStream in = Base.class.getResourceAsStream("/fxml/pop_account.fxml");
                 loader.setBuilderFactory(new JavaFXBuilderFactory());
                 loader.setLocation(Base.class.getResource("/fxml/pop_account.fxml"));
-                ResourceBundle bundle = ResourceBundle.getBundle("strings", Locale.getDefault());
-                loader.setResources(bundle);
+                loader.setResources(resourceBundle);
                 accountPop = new JFXPopup(loader.load(in));
 
                 AccountPopController accountPopController = loader.getController();
@@ -271,6 +272,11 @@ public class MainController implements BaseController {
         content_left.setManaged(!isFullscreen);
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        resourceBundle = resources;
+    }
+
     public interface MainListener {
         void onLogout();
     }
@@ -280,8 +286,8 @@ public class MainController implements BaseController {
         alert.initModality(Modality.APPLICATION_MODAL);
         alert.setOverlayClose(false);
         JFXDialogLayout layout = new JFXDialogLayout();
-        layout.setHeading(new javafx.scene.control.Label("Sign out?"));
-        JFXButton closeButton = new JFXButton("Ok");
+        layout.setHeading(new javafx.scene.control.Label(resourceBundle.getString("home_pop_signout")));
+        JFXButton closeButton = new JFXButton(resourceBundle.getString("common_ok"));
         closeButton.setMinWidth(100);
         closeButton.setMaxWidth(100);
         closeButton.setPrefWidth(100);
@@ -292,7 +298,7 @@ public class MainController implements BaseController {
                 listener.onLogout();
             }
         });
-        JFXButton cancelButton = new JFXButton("Cancel");
+        JFXButton cancelButton = new JFXButton(resourceBundle.getString("common_cancel"));
         cancelButton.setMinWidth(100);
         cancelButton.setMaxWidth(100);
         cancelButton.setPrefWidth(100);

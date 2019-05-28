@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -23,14 +24,14 @@ import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 
 import javax.annotation.PostConstruct;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.List;
-import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @ViewController(value = "/fxml/quad.fxml", title = "Quad")
-public class QuadController {
+public class QuadController implements Initializable {
     @FXMLViewFlowContext
     private ViewFlowContext context;
     @FXML
@@ -50,6 +51,7 @@ public class QuadController {
     @FXML
     private StackPane content_play_empty;
 
+    private ResourceBundle resourceBundle;
     private Stage addGroupStage;
 
     private ObservableList<QuadBean> mInfos = FXCollections.observableArrayList();
@@ -111,8 +113,7 @@ public class QuadController {
                 InputStream in = Base.class.getResourceAsStream("/fxml/add_group.fxml");
                 loader.setBuilderFactory(new JavaFXBuilderFactory());
                 loader.setLocation(Base.class.getResource("/fxml/add_group.fxml"));
-                ResourceBundle bundle = ResourceBundle.getBundle("strings", Locale.getDefault());
-                loader.setResources(bundle);
+                loader.setResources(resourceBundle);
                 Pane page = loader.load(in);
                 AddGroupController addGroupController = loader.getController();
                 //TODO
@@ -125,7 +126,7 @@ public class QuadController {
                 addGroupStage = new Stage();
                 addGroupStage.setScene(scene);
                 addGroupStage.getIcons().add(new Image("/image/ic_launcher.png"));
-                addGroupStage.setTitle("Create a group");
+                addGroupStage.setTitle(resourceBundle.getString("quadScreen_creatGroup"));
                 addGroupStage.sizeToScene();
                 addGroupStage.setResizable(false);
                 addGroupStage.initStyle(StageStyle.DECORATED);
@@ -144,8 +145,7 @@ public class QuadController {
             InputStream in = Base.class.getResourceAsStream("/fxml/play_item.fxml");
             loader.setBuilderFactory(new JavaFXBuilderFactory());
             loader.setLocation(Base.class.getResource("/fxml/play_item.fxml"));
-            ResourceBundle bundle = ResourceBundle.getBundle("strings", Locale.getDefault());
-            loader.setResources(bundle);
+            loader.setResources(resourceBundle);
             Pane page = loader.load(in);
             PlayItemController playItemController = loader.getController();
             playItemController.init(deviceId);
@@ -154,5 +154,10 @@ public class QuadController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        resourceBundle = resources;
     }
 }

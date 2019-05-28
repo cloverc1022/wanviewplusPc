@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import net.ajcloud.wansviewplusw.BaseController;
@@ -20,9 +21,11 @@ import net.ajcloud.wansviewplusw.support.utils.IPreferences;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 import net.ajcloud.wansviewplusw.support.utils.WLog;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 import java.util.prefs.Preferences;
 
-public class LoginController implements BaseController {
+public class LoginController implements BaseController , Initializable {
 
     @FXML
     public JFXTextField tf_name;
@@ -37,6 +40,12 @@ public class LoginController implements BaseController {
     private RequiredFieldValidator email_validator;
     private RequiredFieldValidator password_validator;
     private Preferences preferences;
+    private ResourceBundle resourceBundle;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        resourceBundle = resources;
+    }
 
     public interface OnLoginListener {
         void onLoginSuccess();
@@ -62,7 +71,7 @@ public class LoginController implements BaseController {
         email_validator = new RequiredFieldValidator();
         tf_name.getValidators().add(email_validator);
         tf_name.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (StringUtil.equals(email_validator.getMessage(), "Can not be empty") &&
+            if (StringUtil.equals(email_validator.getMessage(), resourceBundle.getString("login_empty")) &&
                     email_validator.isVisible() &&
                     tf_name.getText() != null && tf_name.getText().length() > 0) {
                 tf_name.resetValidation();
@@ -71,7 +80,7 @@ public class LoginController implements BaseController {
         password_validator = new RequiredFieldValidator();
         tf_password.getValidators().add(password_validator);
         tf_password.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (StringUtil.equals(password_validator.getMessage(), "Can not be empty") &&
+            if (StringUtil.equals(password_validator.getMessage(), resourceBundle.getString("login_empty")) &&
                     password_validator.isVisible() &&
                     tf_password.getText() != null && tf_password.getText().length() > 0) {
                 tf_password.resetValidation();
@@ -93,12 +102,12 @@ public class LoginController implements BaseController {
             requestApiUnit = new RequestApiUnit();
         }
         if (StringUtil.isNullOrEmpty(tf_name.getText())) {
-            email_validator.setMessage("Can not be empty");
+            email_validator.setMessage(resourceBundle.getString("login_empty"));
             tf_name.validate();
             return;
         }
         if (StringUtil.isNullOrEmpty(tf_password.getText())) {
-            password_validator.setMessage("Can not be empty");
+            password_validator.setMessage(resourceBundle.getString("login_empty"));
             tf_password.validate();
             return;
         }
@@ -148,9 +157,5 @@ public class LoginController implements BaseController {
                 });
             }
         })).start();
-    }
-
-    @FXML
-    private void initialize() {
     }
 }

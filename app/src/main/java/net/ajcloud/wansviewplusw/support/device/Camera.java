@@ -13,6 +13,7 @@ import java.io.*;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.ResourceBundle;
 
 /**
  * Created by mamengchao on 2018/06/07.
@@ -20,6 +21,7 @@ import java.util.LinkedHashMap;
  */
 public class Camera implements Serializable {
     private static final long serialVersionUID = 1L;
+    private ResourceBundle resourceBundle = ResourceBundle.getBundle("strings");
     public int whiteBalance;
     public int freqValue;
     public String nightMode;
@@ -79,9 +81,8 @@ public class Camera implements Serializable {
     private ObjectProperty<Paint> deviceNameBg = new SimpleObjectProperty<>(Color.rgb(38, 50, 56));
     private BooleanProperty playingBg = new SimpleBooleanProperty(false);
 
-    private StringProperty deviceStatus = new SimpleStringProperty("Connecting");
+    private StringProperty deviceStatus = new SimpleStringProperty(resourceBundle.getString("home_connecting"));
     private StringProperty deviceStatusCss = new SimpleStringProperty("devices_item_status");
-
     public Camera() {
 
     }
@@ -207,7 +208,7 @@ public class Camera implements Serializable {
         Platform.runLater(() -> {
             if (refreshStatus == 1) {
                 if (onlineStatus == 1) {
-                    setDeviceStatus("Offline");
+                    setDeviceStatus(resourceBundle.getString("home_offline"));
                     setDeviceStatusCss("-fx-text-fill: White;\n" +
                             "    -fx-font-size: 7px;\n" +
                             "    -fx-font-weight: bold;\n" +
@@ -215,7 +216,7 @@ public class Camera implements Serializable {
                             "    -fx-border-radius: 2px;\n" +
                             "    -fx-background-radius: 2px;");
                 } else if (onlineStatus == 2) {
-                    setDeviceStatus("Online");
+                    setDeviceStatus(resourceBundle.getString("home_online"));
                     setDeviceStatusCss("-fx-text-fill: White;\n" +
                             "    -fx-font-size: 7px;\n" +
                             "    -fx-font-weight: bold;\n" +
