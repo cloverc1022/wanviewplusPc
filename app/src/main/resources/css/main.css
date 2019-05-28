@@ -413,13 +413,13 @@
 }
 
 .add_camera_unselected {
-    -fx-background-image: url('/image/ic_select camera.png');
+    -fx-background-image: url('/image/ic_select_camera.png');
     -fx-background-size: 24 24;
     -fx-background-position: center center;
 }
 
 .add_camera_selected {
-    -fx-background-image: url('/image/ic_selected_ camera.png');
+    -fx-background-image: url('/image/ic_selected_camera.png');
     -fx-background-size: 24 24;
     -fx-background-position: center center;
 }

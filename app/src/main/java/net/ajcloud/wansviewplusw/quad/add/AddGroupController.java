@@ -37,25 +37,26 @@ public class AddGroupController implements BaseController, Initializable {
     private ResourceBundle resourceBundle;
     private ObservableList<AddGroupBean> mInfos = FXCollections.observableArrayList();
 
-    private void init(String groupName) {
+    public void init(String groupName) {
         device_list.setCellFactory(param -> {
             AddGroupCell addGroupCell = new AddGroupCell();
             addGroupCell.setOnMouseClicked((v) -> {
                 if (v.getButton() == MouseButton.PRIMARY) {
                     AddGroupBean addGroupBean = addGroupCell.getItem();
-                    addGroupBean.setIsSelected(!addGroupBean.isIsSelected());
+                    addGroupBean.setSelected(!addGroupBean.isSelected());
                 }
             });
             return addGroupCell;
         });
         initData(groupName);
+        initListener();
     }
 
     private void initData(String groupName) {
         List<Camera> cameras = new ArrayList<>(DeviceCache.getInstance().getAllDevices());
 
         if (StringUtil.isNullOrEmpty(groupName)) {
-            label_tittle.setText("Create a group");
+            label_tittle.setText(resourceBundle.getString("quadScreen_creatGroup"));
             label_num.setText("0/4");
             for (Camera camera : cameras) {
                 AddGroupBean addGroupBean = new AddGroupBean(camera);
@@ -63,7 +64,8 @@ public class AddGroupController implements BaseController, Initializable {
             }
         } else {
             QuadBean quadBean = QuadListCache.getInstance().getQuadData(groupName);
-            label_tittle.setText("Manage group");
+            //TODO
+            label_tittle.setText(resourceBundle.getString("quadScreen_manageGroup"));
             if (quadBean != null) {
                 int num = 0;
                 if (!StringUtil.isNullOrEmpty(quadBean.getCamera_one())) {
@@ -86,7 +88,7 @@ public class AddGroupController implements BaseController, Initializable {
                             StringUtil.equals(camera.deviceId, quadBean.getCamera_two()) ||
                             StringUtil.equals(camera.deviceId, quadBean.getCamera_two()) ||
                             StringUtil.equals(camera.deviceId, quadBean.getCamera_two())) {
-                        addGroupBean.setIsSelected(true);
+                        addGroupBean.setSelected(true);
                     }
                     mInfos.add(addGroupBean);
                 }
@@ -95,14 +97,14 @@ public class AddGroupController implements BaseController, Initializable {
         device_list.setItems(mInfos);
     }
 
-    private void initListener(){
+    private void initListener() {
         btn_done.setOnMouseClicked((v) -> {
             //TODO
         });
         text_name.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!StringUtil.isNullOrEmpty(text_name.getText())&&text_name.getText().length()>0) {
+            if (!StringUtil.isNullOrEmpty(text_name.getText()) && text_name.getText().length() > 0) {
                 btn_done.setDisable(false);
-            }else {
+            } else {
                 btn_done.setDisable(true);
             }
         });

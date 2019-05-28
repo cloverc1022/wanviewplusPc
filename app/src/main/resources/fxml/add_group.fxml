@@ -7,12 +7,14 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.*?>
 <?import org.controlsfx.control.GridView?>
-<VBox alignment="CENTER" maxHeight="360.0" maxWidth="432.0" minHeight="360.0" minWidth="432.0" prefHeight="360.0"
-      prefWidth="432.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<VBox alignment="CENTER" maxHeight="360.0" maxWidth="445.0" minHeight="360.0" minWidth="445.0" prefHeight="360.0"
+      prefWidth="445.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="net.ajcloud.wansviewplusw.quad.add.AddGroupController">
     <children>
-        <StackPane maxHeight="40.0" minHeight="40.0" prefHeight="40.0">
+        <StackPane VBox.vgrow="NEVER" maxHeight="40.0" minHeight="40.0" prefHeight="40.0" style="-fx-background-color: white">
             <children>
-                <Label fx:id="label_tittle" style="-fx-text-fill:#223239;-fx-font-size:16;" text="%quadScreen_creatGroup"
+                <Label fx:id="label_tittle" style="-fx-text-fill:#223239;-fx-font-size:16;"
+                       text="%quadScreen_creatGroup"
                        alignment="CENTER" StackPane.alignment="CENTER"/>
                 <Label fx:id="label_num" style="-fx-text-fill:#223239;-fx-font-size:16;-fx-font-weight: bold" text="0/0"
                        alignment="CENTER" StackPane.alignment="CENTER_RIGHT">
@@ -22,17 +24,26 @@
                 </Label>
             </children>
         </StackPane>
-        <GridView fx:id="device_list" maxHeight="276.0" minHeight="276.0" prefHeight="276.0"/>
-        <StackPane maxHeight="44.0" minHeight="44.0" prefHeight="44.0">
+        <GridView VBox.vgrow="ALWAYS" fx:id="device_list"  minHeight="276.0" prefHeight="276.0" horizontalCellSpacing="8.0"
+                  verticalCellSpacing="8.0" cellWidth="196.0" cellHeight="116.0">
+            <padding>
+                <Insets left="8.0" right="8.0"/>
+            </padding>
+        </GridView>
+        <StackPane VBox.vgrow="NEVER" style="-fx-background-color: white" maxHeight="44.0" minHeight="44.0" prefHeight="44.0">
             <children>
                 <JFXTextField fx:id="text_name" maxWidth="220.0" minWidth="220.0" prefWidth="220.0"
+                              promptText="%quadScreen_creatGroupName" unFocusColor="#acbec6" focusColor="#0078ff"
+                              style="-fx-text-fill:#223239;-fx-background-color:#FFFFFFFF;-fx-font-size:14;"
                               StackPane.alignment="CENTER_LEFT">
                     <StackPane.margin>
                         <Insets left="20.0"/>
                     </StackPane.margin>
                 </JFXTextField>
                 <JFXButton fx:id="btn_done" maxHeight="28.0" maxWidth="160.0" minHeight="28.0" minWidth="160.0"
-                           prefHeight="28.0"
+                           prefHeight="28.0" style="-fx-text-fill:WHITE;-fx-background-color:#0078ff;-fx-font-size:12;"
+                           text="%common_done"
+                           alignment="CENTER"
                            prefWidth="160.0" StackPane.alignment="CENTER_RIGHT" disable="true">
                     <StackPane.margin>
                         <Insets right="16.0"/>

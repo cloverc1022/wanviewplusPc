@@ -110,15 +110,16 @@ public class QuadController implements Initializable {
         try {
             if (addGroupStage == null) {
                 FXMLLoader loader = new FXMLLoader();
-                InputStream in = Base.class.getResourceAsStream("/fxml/add_group.fxml");
+                InputStream in = QuadController.class.getResourceAsStream("/fxml/add_group.fxml");
                 loader.setBuilderFactory(new JavaFXBuilderFactory());
-                loader.setLocation(Base.class.getResource("/fxml/add_group.fxml"));
-                loader.setResources(resourceBundle);
+                loader.setLocation(QuadController.class.getResource("/fxml/add_group.fxml"));
+                ResourceBundle bundle = ResourceBundle.getBundle("strings");
+                loader.setResources(bundle);
                 Pane page = loader.load(in);
                 AddGroupController addGroupController = loader.getController();
-                //TODO
+                addGroupController.init(null);
                 in.close();
-                Scene scene = new Scene(page, 432, 360);
+                Scene scene = new Scene(page, 445, 360);
                 final ObservableList<String> stylesheets = scene.getStylesheets();
                 stylesheets.addAll(Base.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
                         Base.class.getResource("/css/jfoenix-design.css").toExternalForm(),
@@ -133,7 +134,7 @@ public class QuadController implements Initializable {
             }
             addGroupStage.show();
         } catch (Exception ex) {
-            Logger.getLogger(Base.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(QuadController.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             System.gc();
         }

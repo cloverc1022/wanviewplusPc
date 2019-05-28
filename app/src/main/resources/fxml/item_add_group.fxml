@@ -5,7 +5,8 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <AnchorPane fx:id="pane" maxHeight="116.0" maxWidth="196.0" minHeight="116.0" minWidth="196.0" prefHeight="116.0"
-            prefWidth="196.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+            prefWidth="196.0" style="-fx-background-color: white" xmlns="http://javafx.com/javafx/8"
+            xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <ImageView fx:id="iv_thumbnail" fitHeight="88.0" fitWidth="196.0" pickOnBounds="true" preserveRatio="true"
                    AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
@@ -15,6 +16,7 @@
         <Label fx:id="label_selected" alignment="CENTER" maxHeight="24.0" maxWidth="24.0" minHeight="24.0"
                minWidth="24.0" prefHeight="24.0"
                style="-fx-text-fill:white;-fx-font-size:12;-fx-font-weight: bold"
-               prefWidth="24.0" text="Label" AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="8.0"/>
+               styleClass="add_camera_unselected"
+               prefWidth="24.0" AnchorPane.bottomAnchor="2.0" AnchorPane.rightAnchor="8.0"/>
     </children>
 </AnchorPane>
