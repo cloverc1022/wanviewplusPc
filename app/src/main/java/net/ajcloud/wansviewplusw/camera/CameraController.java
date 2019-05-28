@@ -17,6 +17,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Button;
@@ -55,6 +56,7 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -62,7 +64,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static uk.co.caprica.vlcj.binding.internal.libvlc_state_t.libvlc_Playing;
 
 @ViewController(value = "/fxml/camera.fxml", title = "Camera")
-public class CameraController implements PoliceHelper.PoliceControlListener {
+public class CameraController implements PoliceHelper.PoliceControlListener, Initializable {
 
     private static final String TAG = "CameraController";
     private SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
@@ -664,6 +666,11 @@ public class CameraController implements PoliceHelper.PoliceControlListener {
 
             }
         })).start();
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
     }
 
     class ExecuteTimer extends AnimationTimer {

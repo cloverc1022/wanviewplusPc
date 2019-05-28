@@ -35,7 +35,7 @@
                                         <Image url="@/image/ic_device_color.png"/>
                                     </image>
                                 </ImageView>
-                                <Label fx:id="label_play" style="-fx-text-fill:#2979ff;-fx-font-size:8;" text="Camera"/>
+                                <Label fx:id="label_play" style="-fx-text-fill:#2979ff;-fx-font-size:8;" text="%home_camera"/>
                             </children>
                         </VBox>
                         <VBox fx:id="vb_quad" alignment="CENTER" minWidth="72.0" prefWidth="72.0"
@@ -48,7 +48,7 @@
                                     </image>
                                 </ImageView>
                                 <Label fx:id="label_quad" style="-fx-text-fill:#95a5ad;-fx-font-size:8;"
-                                       text="Quad screen"/>
+                                       text="%home_quad"/>
                             </children>
                         </VBox>
                         <VBox fx:id="vb_nine" alignment="CENTER" minWidth="72.0" prefWidth="72.0" visible="false"
@@ -71,7 +71,7 @@
                                         <Image url="@/image/ic_system setting.png"/>
                                     </image>
                                 </ImageView>
-                                <Label style="-fx-text-fill:#95a5ad;-fx-font-size:8;" text="Settings"/>
+                                <Label style="-fx-text-fill:#95a5ad;-fx-font-size:8;" text="%home_setting"/>
                             </children>
                             <VBox.margin>
                                 <Insets bottom="12.0"/>

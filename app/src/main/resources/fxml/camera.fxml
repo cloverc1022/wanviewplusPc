@@ -190,7 +190,7 @@
                                                                     styleClass="spinner_loading"
                                                                     HBox.hgrow="NEVER"/>
                                                         <Label fx:id="label_tips" style="-fx-text-fill:#FFFFFF;-fx-background-color:transparent;-fx-font-size:18;"
-                                                               text="preparing to play video...">
+                                                               text="%play_preraring">
                                                             <VBox.margin>
                                                                 <Insets top="8.0"/>
                                                             </VBox.margin>
@@ -226,7 +226,7 @@
                                                         </AnchorPane>
                                                         <Label fx:id="label_reconnect"
                                                                style="-fx-text-fill:#FFFFFF;-fx-background-color:transparent;-fx-font-size:18;"
-                                                               text="reconnect">
+                                                               text="%play_network_interruption">
                                                             <VBox.margin>
                                                                 <Insets top="8.0"/>
                                                             </VBox.margin>
@@ -258,7 +258,7 @@
                                                         </ImageView>
                                                         <Label fx:id="label_stop"
                                                                style="-fx-text-fill:#61727A;-fx-background-color:transparent;-fx-font-size:12"
-                                                               text="Stop after">
+                                                               text="%countDown_stopAfter">
                                                             <HBox.margin>
                                                                 <Insets left="4.0"/>
                                                             </HBox.margin>
@@ -272,7 +272,7 @@
                                                         </Label>
                                                         <Label fx:id="label_continue"
                                                                style="-fx-text-fill:#2979FF;-fx-background-color:transparent;-fx-font-size:12"
-                                                               text="Continue">
+                                                               text="%common_continue">
                                                             <HBox.margin>
                                                                 <Insets left="8.0" right="10.0"/>
                                                             </HBox.margin>
@@ -341,7 +341,7 @@
                                                     </VBox.margin>
                                                 </ImageView>
                                                 <Label style="-fx-text-fill:#263238;-fx-font-size:14"
-                                                       text="Chose the camera you want to broadcast live">
+                                                       text="%play_empty">
                                                     <VBox.margin>
                                                         <Insets left="16.0" right="16.0" top="32.0"/>
                                                     </VBox.margin>
@@ -366,7 +366,7 @@
                                         <Insets top="120.0"/>
                                     </VBox.margin>
                                 </ImageView>
-                                <Label style="-fx-text-fill:#263238;-fx-font-size:14" text="No device paired">
+                                <Label style="-fx-text-fill:#263238;-fx-font-size:14" text="%home_no_device_info">
                                     <VBox.margin>
                                         <Insets left="16.0" right="16.0" top="32.0"/>
                                     </VBox.margin>

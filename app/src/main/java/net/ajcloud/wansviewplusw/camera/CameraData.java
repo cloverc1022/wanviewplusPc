@@ -17,6 +17,8 @@ import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class CameraData {
     @FXML
@@ -39,6 +41,8 @@ public class CameraData {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fxml/item_device_list.fxml"));
         fxmlLoader.setController(this);
         try {
+            ResourceBundle bundle = ResourceBundle.getBundle("strings", Locale.getDefault());
+            fxmlLoader.setResources(bundle);
             fxmlLoader.load();
         } catch (IOException e) {
             throw new RuntimeException(e);

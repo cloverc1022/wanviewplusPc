@@ -12,7 +12,7 @@
     <children>
         <StackPane maxHeight="40.0" minHeight="40.0" prefHeight="40.0">
             <children>
-                <Label fx:id="label_tittle" style="-fx-text-fill:#223239;-fx-font-size:16;" text="Create a  group"
+                <Label fx:id="label_tittle" style="-fx-text-fill:#223239;-fx-font-size:16;" text="%quadScreen_creatGroup"
                        alignment="CENTER" StackPane.alignment="CENTER"/>
                 <Label fx:id="label_num" style="-fx-text-fill:#223239;-fx-font-size:16;-fx-font-weight: bold" text="0/0"
                        alignment="CENTER" StackPane.alignment="CENTER_RIGHT">

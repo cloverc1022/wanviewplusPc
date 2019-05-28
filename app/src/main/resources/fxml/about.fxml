@@ -27,7 +27,7 @@
                 <AnchorPane onMouseClicked="#onContentTerms" fx:id="content_terms" minHeight="32.0" minWidth="272.0"
                             prefHeight="32.0" prefWidth="272.0" VBox.vgrow="NEVER">
                     <children>
-                        <Label style="-fx-text-fill:#223239;-fx-font-size:12;" text="Terms of Use"
+                        <Label style="-fx-text-fill:#223239;-fx-font-size:12;" text="%login_agreement_tap_string"
                                AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                         <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true"
                                    AnchorPane.bottomAnchor="4.0" AnchorPane.rightAnchor="0.0"
@@ -46,7 +46,7 @@
                 <AnchorPane onMouseClicked="#onContentPolicy" fx:id="content_policy" minHeight="32.0" minWidth="272.0"
                             prefHeight="32.0" prefWidth="272.0">
                     <children>
-                        <Label style="-fx-text-fill:#223239;-fx-font-size:12;" text="Privacy Policy"
+                        <Label style="-fx-text-fill:#223239;-fx-font-size:12;" text="%me_about_privacy_policy"
                                AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                         <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true"
                                    AnchorPane.bottomAnchor="4.0" AnchorPane.rightAnchor="0.0"

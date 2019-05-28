@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialogLayout;
 import com.sun.jna.Native;
 import com.sun.jna.NativeLibrary;
+import io.datafx.controller.ViewConfiguration;
 import io.datafx.controller.flow.Flow;
 import io.datafx.controller.flow.FlowHandler;
 import io.datafx.controller.flow.container.DefaultFlowContainer;
@@ -49,6 +50,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.util.Formatter;
 import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -109,6 +111,8 @@ public class Base extends Application implements LoginController.OnLoginListener
             InputStream in = Base.class.getResourceAsStream("/fxml/login.fxml");
             loader.setBuilderFactory(new JavaFXBuilderFactory());
             loader.setLocation(Base.class.getResource("/fxml/login.fxml"));
+            ResourceBundle bundle = ResourceBundle.getBundle("strings", Locale.getDefault());
+            loader.setResources(bundle);
             Pane page = loader.load(in);
             LoginController login = loader.getController();
             login.init();
@@ -152,7 +156,10 @@ public class Base extends Application implements LoginController.OnLoginListener
 
                 Flow flow = new Flow(MainController.class);
                 DefaultFlowContainer container = new DefaultFlowContainer();
-                mainFlowHandler = flow.createHandler(flowContext);
+                ViewConfiguration viewConfiguration = new ViewConfiguration();
+                ResourceBundle bundle = ResourceBundle.getBundle("strings", Locale.getDefault());
+                viewConfiguration.setResources(bundle);
+                mainFlowHandler = new FlowHandler(flow,flowContext,viewConfiguration);
                 mainFlowHandler.start(container);
                 mainScene = new Scene(container.getView(), MAIN_WIDTH, MAIN_HEIGHT);
                 final ObservableList<String> stylesheets = mainScene.getStylesheets();

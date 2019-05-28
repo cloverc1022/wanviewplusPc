@@ -24,6 +24,8 @@ import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import javax.annotation.PostConstruct;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -109,6 +111,8 @@ public class QuadController {
                 InputStream in = Base.class.getResourceAsStream("/fxml/add_group.fxml");
                 loader.setBuilderFactory(new JavaFXBuilderFactory());
                 loader.setLocation(Base.class.getResource("/fxml/add_group.fxml"));
+                ResourceBundle bundle = ResourceBundle.getBundle("strings", Locale.getDefault());
+                loader.setResources(bundle);
                 Pane page = loader.load(in);
                 AddGroupController addGroupController = loader.getController();
                 //TODO
@@ -140,6 +144,8 @@ public class QuadController {
             InputStream in = Base.class.getResourceAsStream("/fxml/play_item.fxml");
             loader.setBuilderFactory(new JavaFXBuilderFactory());
             loader.setLocation(Base.class.getResource("/fxml/play_item.fxml"));
+            ResourceBundle bundle = ResourceBundle.getBundle("strings", Locale.getDefault());
+            loader.setResources(bundle);
             Pane page = loader.load(in);
             PlayItemController playItemController = loader.getController();
             playItemController.init(deviceId);

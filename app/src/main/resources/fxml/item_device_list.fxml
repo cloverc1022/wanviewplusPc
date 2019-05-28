@@ -30,7 +30,7 @@
                             <children>
                                 <Label fx:id="status" alignment="CENTER" minHeight="16.0" minWidth="44.0"
                                        prefHeight="16.0" prefWidth="44.0"
-                                       text="Connecting" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="8.0"/>
+                                       text="%home_connecting" AnchorPane.bottomAnchor="8.0" AnchorPane.rightAnchor="8.0"/>
                             </children>
                         </AnchorPane>
                     </children>

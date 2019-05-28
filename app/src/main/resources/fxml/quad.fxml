@@ -21,7 +21,7 @@
                                 <Label layoutX="228.0" layoutY="91.0" minHeight="32.0" minWidth="220.0"
                                        prefHeight="32.0" prefWidth="220.0"
                                        style="-fx-text-fill:#263238;-fx-font-size:10;-fx-font-weight: bold;-fx-background-color: transparent"
-                                       text="Quad screen" VBox.vgrow="NEVER">
+                                       text="%home_quad" VBox.vgrow="NEVER">
                                     <padding>
                                         <Insets left="10.0"/>
                                     </padding>
@@ -35,7 +35,7 @@
                                 <JFXButton fx:id="btn_create" maxHeight="32.0" maxWidth="196.0" minHeight="32.0" minWidth="196.0"
                                            prefHeight="32.0" prefWidth="196.0" VBox.vgrow="NEVER"
                                            style="-fx-text-fill:#0078FF;-fx-background-color:#DDE9FF;-fx-font-size:11;"
-                                           text="Create a group">
+                                           text="%quadScreen_creatGroup">
                                     <VBox.margin>
                                         <Insets bottom="12.0" top="12.0"/>
                                     </VBox.margin>
@@ -80,7 +80,7 @@
                                                     </VBox.margin>
                                                 </ImageView>
                                                 <Label style="-fx-text-fill:#263238;-fx-font-size:14"
-                                                       text="Chose the camera you want to broadcast live">
+                                                       text="%play_empty">
                                                     <VBox.margin>
                                                         <Insets left="16.0" right="16.0" top="32.0"/>
                                                     </VBox.margin>
@@ -105,7 +105,7 @@
                                         <Insets top="120.0"/>
                                     </VBox.margin>
                                 </ImageView>
-                                <Label style="-fx-text-fill:#263238;-fx-font-size:14" text="No device paired">
+                                <Label style="-fx-text-fill:#263238;-fx-font-size:14" text="%home_no_device_info">
                                     <VBox.margin>
                                         <Insets left="16.0" right="16.0" top="32.0"/>
                                     </VBox.margin>
