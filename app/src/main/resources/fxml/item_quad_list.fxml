@@ -37,8 +37,7 @@
                                    GridPane.vgrow="ALWAYS"/>
                     </children>
                 </GridPane>
-                <StackPane fx:id="sp_play_anim" style="-fx-background-color: rgba(38,50,56,0.3)" visible="false"
-                           managed="false">
+                <StackPane fx:id="sp_play_anim" style="-fx-background-color: rgba(38,50,56,0.3)" visible="false">
                     <children>
                         <ImageView fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true"
                                    StackPane.alignment="CENTER">
@@ -56,7 +55,7 @@
                 <Insets left="12.0" right="12.0"/>
             </padding>
         </Label>
-        <ImageView  fx:id="iv_delete" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true"
+        <ImageView fx:id="iv_delete" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true" preserveRatio="true"
                    StackPane.alignment="BOTTOM_RIGHT">
             <StackPane.margin>
                 <Insets bottom="2.0" right="8.0"/>

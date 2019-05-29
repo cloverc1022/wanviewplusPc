@@ -54,6 +54,8 @@ public class QuadData {
         iv_two.imageProperty().bind(quadBean.camera_two_imageProperty());
         iv_three.imageProperty().bind(quadBean.camera_three_imageProperty());
         iv_four.imageProperty().bind(quadBean.camera_four_imageProperty());
+        sp_play_anim.visibleProperty().bind(quadBean.isAnimShowProperty());
+        groupName.textFillProperty().bind(quadBean.groupNameBgProperty());
     }
 
     public void setListenner(EventHandler<? super MouseEvent> paneClick, EventHandler<? super MouseEvent> deleteClick) {

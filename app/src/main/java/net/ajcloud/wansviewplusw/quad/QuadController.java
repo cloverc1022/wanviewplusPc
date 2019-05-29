@@ -25,6 +25,7 @@ import net.ajcloud.wansviewplusw.Base;
 import net.ajcloud.wansviewplusw.quad.add.AddGroupController;
 import net.ajcloud.wansviewplusw.support.customview.PlayItemController;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
+import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 
 import javax.annotation.PostConstruct;
 import java.io.InputStream;
@@ -67,6 +68,7 @@ public class QuadController implements Initializable {
     private ResourceBundle resourceBundle;
     private Stage addGroupStage;
 
+    private String currentGroupName;
     private ObservableList<QuadBean> mInfos = FXCollections.observableArrayList();
 
     @PostConstruct
@@ -171,6 +173,18 @@ public class QuadController implements Initializable {
     }
 
     private void handleMouseClick(QuadBean quadBean) {
+        if (StringUtil.equals(currentGroupName, quadBean.getGroupName())) {
+            return;
+        }
+        currentGroupName = quadBean.getGroupName();
+        for (QuadBean bean :
+                QuadListCache.getInstance().getGroupList(DeviceCache.getInstance().getSigninBean().mail)) {
+            if (StringUtil.equals(bean.getGroupName(), quadBean.getGroupName())) {
+                bean.setSelected(true);
+            } else {
+                bean.setSelected(false);
+            }
+        }
         content_1.getChildren().clear();
         content_2.getChildren().clear();
         content_3.getChildren().clear();

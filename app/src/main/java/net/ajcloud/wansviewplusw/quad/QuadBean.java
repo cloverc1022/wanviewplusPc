@@ -1,10 +1,9 @@
 package net.ajcloud.wansviewplusw.quad;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.scene.image.Image;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.utils.FileUtil;
@@ -18,6 +17,9 @@ public class QuadBean {
     private String camera_two;
     private String camera_three;
     private String camera_four;
+    private boolean isSelected;
+    private BooleanProperty isAnimShow = new SimpleBooleanProperty(false);
+    private ObjectProperty<Paint> groupNameBg = new SimpleObjectProperty<>(Color.rgb(38, 50, 56, 1));
 
     private ObjectProperty<Image> camera_one_image = new SimpleObjectProperty<>(new Image("/image/ic_device_default.png", 98, 44, false, true, false));
     private ObjectProperty<Image> camera_two_image = new SimpleObjectProperty<>(new Image("/image/ic_device_default.png", 98, 44, false, true, false));
@@ -198,5 +200,43 @@ public class QuadBean {
 
     public void setCamera_four_image(Image camera_four_image) {
         this.camera_four_image.set(camera_four_image);
+    }
+
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
+        setIsAnimShow(selected);
+        if (selected) {
+            setGroupNameBg(Color.rgb(41, 121, 255, 1));
+        } else {
+            setGroupNameBg(Color.rgb(38, 50, 56, 1));
+        }
+    }
+
+    public boolean isIsAnimShow() {
+        return isAnimShow.get();
+    }
+
+    public BooleanProperty isAnimShowProperty() {
+        return isAnimShow;
+    }
+
+    public void setIsAnimShow(boolean isAnimShow) {
+        this.isAnimShow.set(isAnimShow);
+    }
+
+    public Paint getGroupNameBg() {
+        return groupNameBg.get();
+    }
+
+    public ObjectProperty<Paint> groupNameBgProperty() {
+        return groupNameBg;
+    }
+
+    public void setGroupNameBg(Paint groupNameBg) {
+        this.groupNameBg.set(groupNameBg);
     }
 }
