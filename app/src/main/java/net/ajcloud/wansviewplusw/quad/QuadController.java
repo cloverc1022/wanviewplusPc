@@ -1,6 +1,8 @@
 package net.ajcloud.wansviewplusw.quad;
 
+import com.jfoenix.controls.JFXAlert;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXListView;
 import io.datafx.controller.ViewController;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
@@ -16,6 +18,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import net.ajcloud.wansviewplusw.Base;
@@ -63,7 +66,7 @@ public class QuadController implements Initializable {
         lv_quads.setExpanded(true);
         lv_quads.setCellFactory(param -> {
             QuadListCell quadListCell = new QuadListCell();
-            quadListCell.setOnMouseClicked((v) -> {
+            quadListCell.setPaneClicked((v -> {
                 if (v.getButton() == MouseButton.PRIMARY) {
                     if (!content_play.isVisible()) {
                         content_play.setVisible(true);
@@ -72,8 +75,13 @@ public class QuadController implements Initializable {
                         content_play_empty.setManaged(false);
                     }
 //                    handleMouseClick(quadListCell.getItem());
+                    v.consume();
                 }
-            });
+            }));
+            quadListCell.setDeleteClicked((v -> {
+                showDeleteGroupDialog(quadListCell.getItem());
+                v.consume();
+            }));
             return quadListCell;
         });
 
@@ -82,6 +90,8 @@ public class QuadController implements Initializable {
     }
 
     private void initData() {
+        mInfos.clear();
+        lv_quads.setItems(null);
         //initData
         if (DeviceCache.getInstance().getAllDevices() == null || DeviceCache.getInstance().getAllDevices().size() == 0) {
             content_list_empty.setVisible(true);
@@ -119,8 +129,10 @@ public class QuadController implements Initializable {
             AddGroupController addGroupController = loader.getController();
             addGroupController.init(null);
             addGroupController.setOnFinishListener(() -> {
-                if (addGroupStage != null)
+                if (addGroupStage != null) {
                     addGroupStage.close();
+                }
+                initData();
             });
             in.close();
             Scene scene = new Scene(page, 445, 360);
@@ -160,6 +172,39 @@ public class QuadController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void showDeleteGroupDialog(QuadBean quadBean) {
+        JFXAlert alert = new JFXAlert((Stage) lv_quads.getScene().getWindow());
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.setOverlayClose(false);
+        JFXDialogLayout layout = new JFXDialogLayout();
+        layout.setHeading(new javafx.scene.control.Label(resourceBundle.getString("quadScreen_delete_group")));
+        JFXButton deleteButton = new JFXButton(resourceBundle.getString("common_ok"));
+        deleteButton.setMinWidth(100);
+        deleteButton.setMaxWidth(100);
+        deleteButton.setPrefWidth(100);
+        deleteButton.getStyleClass().add("dialog-accept");
+        deleteButton.setOnAction(event -> {
+            QuadListCache.getInstance().deleteQuadData(quadBean.getGroupName());
+            initData();
+            alert.hideWithAnimation();
+        });
+        JFXButton cancelButton = new JFXButton(resourceBundle.getString("common_cancel"));
+        cancelButton.setMinWidth(100);
+        cancelButton.setMaxWidth(100);
+        cancelButton.setPrefWidth(100);
+        cancelButton.getStyleClass().add("dialog-cancel");
+        cancelButton.setOnAction(event -> {
+            alert.hideWithAnimation();
+        });
+        HBox hBox = new HBox();
+        hBox.setSpacing(10);
+        hBox.getChildren().add(deleteButton);
+        hBox.getChildren().add(cancelButton);
+        layout.setActions(hBox);
+        alert.setContent(layout);
+        alert.show();
     }
 
     @Override

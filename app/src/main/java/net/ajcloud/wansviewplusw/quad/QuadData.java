@@ -1,16 +1,12 @@
 package net.ajcloud.wansviewplusw.quad;
 
-import com.jfoenix.controls.JFXAlert;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialogLayout;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.ResourceBundle;
@@ -49,8 +45,6 @@ public class QuadData {
 
         this.quadBean = quadBean;
         initData();
-
-        iv_delete.setOnMouseClicked((v) -> showDeleteGroupDialog());
     }
 
     private void initData() {
@@ -62,39 +56,14 @@ public class QuadData {
         iv_four.imageProperty().bind(quadBean.camera_four_imageProperty());
     }
 
+    public void setListenner(EventHandler<? super MouseEvent> paneClick, EventHandler<? super MouseEvent> deleteClick) {
+        pane.setOnMouseClicked(paneClick);
+        iv_delete.setOnMouseClicked(deleteClick);
+    }
+
     public StackPane getPane() {
         return pane;
     }
 
-    private void showDeleteGroupDialog() {
-        JFXAlert alert = new JFXAlert((Stage) pane.getScene().getWindow());
-        alert.initModality(Modality.APPLICATION_MODAL);
-        alert.setOverlayClose(false);
-        JFXDialogLayout layout = new JFXDialogLayout();
-        layout.setHeading(new javafx.scene.control.Label(resourceBundle.getString("quadScreen_delete_group")));
-        JFXButton deleteButton = new JFXButton(resourceBundle.getString("common_ok"));
-        deleteButton.setMinWidth(100);
-        deleteButton.setMaxWidth(100);
-        deleteButton.setPrefWidth(100);
-        deleteButton.getStyleClass().add("dialog-accept");
-        deleteButton.setOnAction(event -> {
-            QuadListCache.getInstance().deleteQuadData(quadBean.getGroupName());
-            alert.hideWithAnimation();
-        });
-        JFXButton cancelButton = new JFXButton(resourceBundle.getString("common_cancel"));
-        cancelButton.setMinWidth(100);
-        cancelButton.setMaxWidth(100);
-        cancelButton.setPrefWidth(100);
-        cancelButton.getStyleClass().add("dialog-cancel");
-        cancelButton.setOnAction(event -> {
-            alert.hideWithAnimation();
-        });
-        HBox hBox = new HBox();
-        hBox.setSpacing(10);
-        hBox.getChildren().add(deleteButton);
-        hBox.getChildren().add(cancelButton);
-        layout.setActions(hBox);
-        alert.setContent(layout);
-        alert.show();
-    }
+
 }
