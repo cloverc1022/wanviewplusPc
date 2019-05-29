@@ -42,6 +42,7 @@ public class AddGroupController implements BaseController, Initializable {
     private ObservableList<AddGroupBean> mInfos = FXCollections.observableArrayList();
 
     private OnFinishListener onFinishListener;
+    private boolean isAdd = true;
 
     public void init(String groupName) {
         device_list.setCellFactory(param -> {
@@ -86,6 +87,8 @@ public class AddGroupController implements BaseController, Initializable {
         List<Camera> cameras = new ArrayList<>(DeviceCache.getInstance().getAllDevices());
 
         if (StringUtil.isNullOrEmpty(groupName)) {
+            btn_done.setDisable(true);
+            isAdd = true;
             quadBean = new QuadBean();
             label_tittle.setText(resourceBundle.getString("quadScreen_creatGroup"));
             label_num.setText("0/4");
@@ -94,6 +97,8 @@ public class AddGroupController implements BaseController, Initializable {
                 mInfos.add(addGroupBean);
             }
         } else {
+            btn_done.setDisable(false);
+            isAdd = false;
             quadBean = QuadListCache.getInstance().getQuadData(groupName);
             label_tittle.setText(resourceBundle.getString("quadScreen_manageGroup"));
             if (quadBean != null) {
@@ -141,15 +146,19 @@ public class AddGroupController implements BaseController, Initializable {
         btn_done.setOnMouseClicked((v) -> {
             String groupName = text_name.getText();
 
+            quadBean.setCamera_one(null);
+            quadBean.setCamera_two(null);
+            quadBean.setCamera_three(null);
+            quadBean.setCamera_four(null);
             List<AddGroupBean> beans = device_list.getItems();
             for (AddGroupBean bean : beans) {
-                if (bean.getIndex() == 1)
+                if (bean.getIndex() == 1 && bean.isSelected())
                     quadBean.setCamera_one(bean.camera.deviceId);
-                if (bean.getIndex() == 2)
+                if (bean.getIndex() == 2 && bean.isSelected())
                     quadBean.setCamera_two(bean.camera.deviceId);
-                if (bean.getIndex() == 3)
+                if (bean.getIndex() == 3 && bean.isSelected())
                     quadBean.setCamera_three(bean.camera.deviceId);
-                if (bean.getIndex() == 4)
+                if (bean.getIndex() == 4 && bean.isSelected())
                     quadBean.setCamera_four(bean.camera.deviceId);
             }
 
@@ -163,7 +172,7 @@ public class AddGroupController implements BaseController, Initializable {
             }
 
             if (onFinishListener != null) {
-                onFinishListener.onFinish();
+                onFinishListener.onFinish(quadBean.getGroupName(), isAdd);
             }
         });
         text_name.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -205,7 +214,7 @@ public class AddGroupController implements BaseController, Initializable {
     }
 
     public interface OnFinishListener {
-        void onFinish();
+        void onFinish(String groupName, boolean isAdd);
     }
 
     public void setOnFinishListener(OnFinishListener onFinishListener) {

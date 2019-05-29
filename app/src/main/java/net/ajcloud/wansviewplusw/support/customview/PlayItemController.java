@@ -11,9 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
 import javafx.scene.image.*;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.Screen;
 import net.ajcloud.wansviewplusw.BaseController;
 import net.ajcloud.wansviewplusw.support.device.Camera;
@@ -68,6 +66,14 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
     private Label label_continue;
     @FXML
     private JFXButton btn_play;
+    @FXML
+    private VBox vb_play;
+    @FXML
+    private VBox vb_add;
+    @FXML
+    private StackPane sp_add;
+    @FXML
+    private Label label_add;
 
     private ResourceBundle resourceBundle;
     private CanvasPlayerComponent mediaPlayerComponent;
@@ -87,30 +93,49 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
     private CountDownTimer playTimer = new CountDownTimer();
 
     public void init(String deviceId) {
-        if (StringUtil.isNullOrEmpty(deviceId))
-            return;
-        this.deviceId = deviceId;
-        camera = DeviceCache.getInstance().get(deviceId);
-        if (camera == null || !camera.isOnline())
-            return;
-        //init
-        showLoading(false, "");
-        new Thread(() -> {
-            mediaPlayerComponent = new CanvasPlayerComponent();
-            mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(mMediaPlayerListener);
-        }).start();
-        policeHelper = new PoliceHelper(this);
-        videoSourceRatioProperty = new SimpleFloatProperty(0.4f);
-        pixelFormat = PixelFormat.getByteBgraPreInstance();
-        initializeImageView();
+        if (StringUtil.isNullOrEmpty(deviceId)) {
+            vb_add.setVisible(true);
+            vb_add.setManaged(true);
+            vb_play.setVisible(false);
+            vb_play.setManaged(false);
 
-        label_status.textProperty().bind(camera.deviceStatusProperty());
-        label_status.styleProperty().bind(camera.deviceStatusCssProperty());
-        label_name.textFillProperty().bind(camera.deviceNameBgProperty());
-        label_name.setText(camera.aliasName);
+            sp_add.setOnMouseClicked((v) -> {
+                addListener.onAdd();
+                v.consume();
+            });
+            label_add.setOnMouseClicked((v) -> {
+                addListener.onAdd();
+                v.consume();
+            });
+        } else {
+            vb_add.setVisible(false);
+            vb_add.setManaged(false);
+            vb_play.setVisible(true);
+            vb_play.setManaged(true);
 
-        initListener();
-        play();
+            this.deviceId = deviceId;
+            camera = DeviceCache.getInstance().get(deviceId);
+            if (camera == null || !camera.isOnline())
+                return;
+            //init
+            showLoading(false, "");
+            new Thread(() -> {
+                mediaPlayerComponent = new CanvasPlayerComponent();
+                mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(mMediaPlayerListener);
+            }).start();
+            policeHelper = new PoliceHelper(this);
+            videoSourceRatioProperty = new SimpleFloatProperty(0.4f);
+            pixelFormat = PixelFormat.getByteBgraPreInstance();
+            initializeImageView();
+
+            label_status.textProperty().bind(camera.deviceStatusProperty());
+            label_status.styleProperty().bind(camera.deviceStatusCssProperty());
+            label_name.textFillProperty().bind(camera.deviceNameBgProperty());
+            label_name.setText(camera.aliasName);
+
+            initListener();
+            play();
+        }
     }
 
     private void initListener() {
@@ -311,6 +336,7 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
                 } else {
                     imageView.setFitWidth(width);
                     imageView.setFitHeight(fitHeight);
+                    WLog.w("======2=====fitWidth:" + width + "\tfitHeight:" + fitHeight + "\tvideoSourceRatioProperty:" + videoSourceRatioProperty.get());
                     imageView.setY((height - fitHeight) / 2);
                     imageView.setX(0);
                 }
@@ -422,6 +448,7 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
         public void videoOutput(MediaPlayer mediaPlayer, int i) {
             if (OldEvent == libvlc_Playing) {
                 isVideoOut = true;
+                fitImageViewSize((float) playPane.getWidth(), (float) playPane.getHeight());
                 showLoading(false, "");
             }
             OldEvent = mediaPlayer.getMediaPlayerState();
@@ -639,5 +666,15 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
             return new RV32BufferFormat((int) visualBounds.getWidth(), (int) visualBounds.getHeight());
         }
 
+    }
+
+    private AddListener addListener;
+
+    public interface AddListener {
+        void onAdd();
+    }
+
+    public void setAddListener(PlayItemController.AddListener addListener) {
+        this.addListener = addListener;
     }
 }

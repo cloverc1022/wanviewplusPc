@@ -45,7 +45,7 @@ public class QuadListCache {
                 data.setGroupName(name);
 
                 String groupDetail = preferences.get(String.format(IPreferences.P_QUAD_DETAIL_, account, name), null);
-                if (StringUtil.isNullOrEmpty(group)) {
+                if (StringUtil.isNullOrEmpty(groupDetail)) {
                     groupList.add(data);
                     continue;
                 }

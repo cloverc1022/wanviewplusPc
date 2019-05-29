@@ -7,138 +7,148 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
-<VBox alignment="CENTER" minHeight="270.0" minWidth="334.0" prefHeight="270.0" prefWidth="334.0"
-      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="net.ajcloud.wansviewplusw.support.customview.PlayItemController">
+<StackPane minHeight="270.0" minWidth="334.0" prefHeight="270.0" prefWidth="334.0" xmlns="http://javafx.com/javafx/8"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="net.ajcloud.wansviewplusw.support.customview.PlayItemController">
     <children>
-        <StackPane maxHeight="32.0" minWidth="32.0" prefHeight="32.0" style="-fx-background-color: white"
-                   VBox.vgrow="NEVER">
+        <VBox fx:id="vb_play" style="-fx-background-color: white" alignment="CENTER" minHeight="270.0" minWidth="334.0"
+              prefHeight="270.0" prefWidth="334.0"
+              visible="false">
             <children>
-                <Label fx:id="label_name" style="-fx-text-fill:#263238;-fx-font-size:12;-fx-font-weight: bold;"
-                       StackPane.alignment="CENTER_LEFT">
-                    <StackPane.margin>
-                        <Insets left="24.0"/>
-                    </StackPane.margin>
-                </Label>
-                <Label fx:id="label_status" alignment="CENTER" maxHeight="16.0" maxWidth="44.0" minHeight="16.0"
-                       minWidth="44.0" prefHeight="16.0" prefWidth="44.0" StackPane.alignment="CENTER_RIGHT">
-                    <StackPane.margin>
-                        <Insets right="24.0"/>
-                    </StackPane.margin>
-                </Label>
-            </children>
-        </StackPane>
-        <StackPane fx:id="play_content" style="-fx-background-color: black" VBox.vgrow="ALWAYS">
-            <children>
-                <BorderPane fx:id="playPane" styleClass="play_pane" StackPane.alignment="CENTER"/>
-                <VBox fx:id="loading" StackPane.alignment="CENTER" alignment="CENTER"
-                      managed="false"
-                      maxHeight="64.0"
-                      minHeight="64.0"
-                      prefHeight="64.0"
-                      visible="false">
+                <StackPane maxHeight="32.0" minWidth="32.0" prefHeight="32.0" style="-fx-background-color: white"
+                           VBox.vgrow="NEVER">
                     <children>
-                        <JFXSpinner maxHeight="64.0" maxWidth="64.0"
-                                    minHeight="64.0" minWidth="64.0"
-                                    prefHeight="64.0" prefWidth="64.0"
-                                    startingAngle="-40"
-                                    styleClass="spinner_loading"
-                                    HBox.hgrow="NEVER"/>
-                        <Label fx:id="label_tips"
-                               style="-fx-text-fill:#FFFFFF;-fx-background-color:transparent;-fx-font-size:18;"
-                               text="%play_preraring">
-                            <VBox.margin>
-                                <Insets top="8.0"/>
-                            </VBox.margin>
+                        <Label fx:id="label_name" style="-fx-text-fill:#263238;-fx-font-size:12;-fx-font-weight: bold;"
+                               StackPane.alignment="CENTER_LEFT">
+                            <StackPane.margin>
+                                <Insets left="24.0"/>
+                            </StackPane.margin>
+                        </Label>
+                        <Label fx:id="label_status" alignment="CENTER" maxHeight="16.0" maxWidth="44.0" minHeight="16.0"
+                               minWidth="44.0" prefHeight="16.0" prefWidth="44.0" StackPane.alignment="CENTER_RIGHT">
+                            <StackPane.margin>
+                                <Insets right="24.0"/>
+                            </StackPane.margin>
                         </Label>
                     </children>
-                </VBox>
-                <VBox fx:id="reconnect" StackPane.alignment="CENTER"
-                      managed="false"
-                      alignment="CENTER"
-                      visible="false" maxHeight="48.0"
-                      minHeight="48.0"
-                      prefHeight="48.0">
+                </StackPane>
+                <StackPane fx:id="play_content" style="-fx-background-color: black" VBox.vgrow="ALWAYS">
                     <children>
-                        <AnchorPane maxHeight="48.0" maxWidth="48.0"
-                                    minHeight="48.0" minWidth="48.0"
-                                    prefHeight="48.0" prefWidth="48.0"
-                                    styleClass="content_reconnect">
+                        <BorderPane fx:id="playPane" styleClass="play_pane" StackPane.alignment="CENTER"/>
+                        <VBox fx:id="loading" alignment="CENTER" managed="false" maxHeight="64.0" minHeight="64.0"
+                              prefHeight="64.0" visible="false" StackPane.alignment="CENTER">
                             <children>
-                                <ImageView fx:id="iv_reconnect"
-                                           fitHeight="24.0"
-                                           fitWidth="24.0"
-                                           pickOnBounds="true"
-                                           preserveRatio="true"
-                                           AnchorPane.bottomAnchor="12.0"
-                                           AnchorPane.leftAnchor="12.0"
-                                           AnchorPane.rightAnchor="12.0"
-                                           AnchorPane.topAnchor="12.0">
-                                    <image>
-                                        <Image url="@/image/ic_refresh.png"/>
-                                    </image>
-                                </ImageView>
+                                <JFXSpinner maxHeight="64.0" maxWidth="64.0" minHeight="64.0" minWidth="64.0"
+                                            prefHeight="64.0" prefWidth="64.0" startingAngle="-40"
+                                            styleClass="spinner_loading" HBox.hgrow="NEVER"/>
+                                <Label fx:id="label_tips"
+                                       style="-fx-text-fill:#FFFFFF;-fx-background-color:transparent;-fx-font-size:18;"
+                                       text="%play_preraring">
+                                    <VBox.margin>
+                                        <Insets top="8.0"/>
+                                    </VBox.margin>
+                                </Label>
                             </children>
-                        </AnchorPane>
-                        <Label fx:id="label_reconnect"
-                               style="-fx-text-fill:#FFFFFF;-fx-background-color:transparent;-fx-font-size:18;"
-                               text="%play_network_interruption">
-                            <VBox.margin>
-                                <Insets top="8.0"/>
-                            </VBox.margin>
-                        </Label>
+                        </VBox>
+                        <VBox fx:id="reconnect" alignment="CENTER" managed="false" maxHeight="48.0" minHeight="48.0"
+                              prefHeight="48.0" visible="false" StackPane.alignment="CENTER">
+                            <children>
+                                <AnchorPane maxHeight="48.0" maxWidth="48.0" minHeight="48.0" minWidth="48.0"
+                                            prefHeight="48.0" prefWidth="48.0" styleClass="content_reconnect">
+                                    <children>
+                                        <ImageView fx:id="iv_reconnect" fitHeight="24.0" fitWidth="24.0"
+                                                   pickOnBounds="true" preserveRatio="true"
+                                                   AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="12.0"
+                                                   AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="12.0">
+                                            <image>
+                                                <Image url="@/image/ic_refresh.png"/>
+                                            </image>
+                                        </ImageView>
+                                    </children>
+                                </AnchorPane>
+                                <Label fx:id="label_reconnect"
+                                       style="-fx-text-fill:#FFFFFF;-fx-background-color:transparent;-fx-font-size:18;"
+                                       text="%play_network_interruption">
+                                    <VBox.margin>
+                                        <Insets top="8.0"/>
+                                    </VBox.margin>
+                                </Label>
+                            </children>
+                        </VBox>
                     </children>
-                </VBox>
-            </children>
-        </StackPane>
-        <StackPane maxHeight="40.0" minHeight="40.0" prefHeight="40.0" style="-fx-background-color: white"
-                   VBox.vgrow="NEVER">
-            <children>
-                <JFXButton fx:id="btn_play" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0"
-                           prefHeight="24.0" prefWidth="24.0" styleClass="jfx_button_play"
-                           StackPane.alignment="CENTER_LEFT">
-                    <StackPane.margin>
-                        <Insets left="24.0"/>
-                    </StackPane.margin>
-                </JFXButton>
-                <HBox fx:id="content_tips" maxHeight="24.0" maxWidth="190.0" minHeight="24.0" minWidth="190.0"
-                      prefHeight="24.0"
-                      prefWidth="190.0" StackPane.alignment="CENTER" alignment="CENTER"
-                      fillHeight="false"
-                      style=" -fx-background-color: rgba(255,255,255,0.4);-fx-border-radius: 2px;-fx-background-radius: 2px"
-                      visible="false">
+                </StackPane>
+                <StackPane maxHeight="40.0" minHeight="40.0" prefHeight="40.0" style="-fx-background-color: white"
+                           VBox.vgrow="NEVER">
                     <children>
-                        <Label fx:id="label_stop"
-                               style="-fx-text-fill:#61727A;-fx-background-color:transparent;-fx-font-size:12"
-                               text="%countDown_stopAfter">
-                            <HBox.margin>
-                                <Insets left="10.0"/>
-                            </HBox.margin>
-                        </Label>
-                        <Label fx:id="label_time"
-                               style="-fx-text-fill:#263238;-fx-background-color:transparent;-fx-font-size:12"
-                        >
-                            <HBox.margin>
-                                <Insets left="8.0"/>
-                            </HBox.margin>
-                        </Label>
-                        <Label fx:id="label_continue"
-                               style="-fx-text-fill:#2979FF;-fx-background-color:transparent;-fx-font-size:12"
-                               text="%common_continue">
-                            <HBox.margin>
-                                <Insets left="8.0" right="10.0"/>
-                            </HBox.margin>
-                        </Label>
+                        <JFXButton fx:id="btn_play" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0"
+                                   prefHeight="24.0" prefWidth="24.0" styleClass="jfx_button_play"
+                                   StackPane.alignment="CENTER_LEFT">
+                            <StackPane.margin>
+                                <Insets left="24.0"/>
+                            </StackPane.margin>
+                        </JFXButton>
+                        <HBox fx:id="content_tips" alignment="CENTER" fillHeight="false" maxHeight="24.0"
+                              maxWidth="190.0" minHeight="24.0" minWidth="190.0" prefHeight="24.0" prefWidth="190.0"
+                              style=" -fx-background-color: rgba(255,255,255,0.4);-fx-border-radius: 2px;-fx-background-radius: 2px"
+                              visible="false" StackPane.alignment="CENTER">
+                            <children>
+                                <Label fx:id="label_stop"
+                                       style="-fx-text-fill:#61727A;-fx-background-color:transparent;-fx-font-size:12"
+                                       text="%countDown_stopAfter">
+                                    <HBox.margin>
+                                        <Insets left="10.0"/>
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="label_time"
+                                       style="-fx-text-fill:#263238;-fx-background-color:transparent;-fx-font-size:12">
+                                    <HBox.margin>
+                                        <Insets left="8.0"/>
+                                    </HBox.margin>
+                                </Label>
+                                <Label fx:id="label_continue"
+                                       style="-fx-text-fill:#2979FF;-fx-background-color:transparent;-fx-font-size:12"
+                                       text="%common_continue">
+                                    <HBox.margin>
+                                        <Insets left="8.0" right="10.0"/>
+                                    </HBox.margin>
+                                </Label>
+                            </children>
+                        </HBox>
+                        <JFXButton fx:id="btn_delete" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0"
+                                   prefHeight="24.0" prefWidth="24.0" styleClass="jfx_button_delete"
+                                   StackPane.alignment="CENTER_RIGHT">
+                            <StackPane.margin>
+                                <Insets right="24.0"/>
+                            </StackPane.margin>
+                        </JFXButton>
                     </children>
-                </HBox>
-                <JFXButton fx:id="btn_delete" maxHeight="24.0" maxWidth="24.0" minHeight="24.0" minWidth="24.0"
-                           prefHeight="24.0" prefWidth="24.0" styleClass="jfx_button_delete"
-                           StackPane.alignment="CENTER_RIGHT">
-                    <StackPane.margin>
-                        <Insets right="24.0"/>
-                    </StackPane.margin>
-                </JFXButton>
+                </StackPane>
             </children>
-        </StackPane>
+        </VBox>
+        <VBox fx:id="vb_add" style="-fx-background-color: white" alignment="CENTER" minHeight="270.0" minWidth="334.0"
+              prefHeight="270.0"
+              prefWidth="334.0" StackPane.alignment="CENTER">
+            <children>
+                <StackPane fx:id="sp_add" maxHeight="48.0" maxWidth="48.0" minHeight="48.0" minWidth="48.0"
+                           prefHeight="48.0"
+                           prefWidth="48.0" styleClass="content_add_camera">
+                    <children>
+                        <ImageView StackPane.alignment="CENTER" fitHeight="24.0" fitWidth="24.0" pickOnBounds="true"
+                                   preserveRatio="true">
+                            <image>
+                                <Image url="@/image/ic_add.png"/>
+                            </image>
+                        </ImageView>
+                    </children>
+                </StackPane>
+                <Label fx:id="label_add"
+                       style="-fx-text-fill:#61727A;-fx-background-color:transparent;-fx-font-size:12;"
+                       text="%quadScreen_add_camera">
+                    <VBox.margin>
+                        <Insets top="8.0"/>
+                    </VBox.margin>
+                </Label>
+            </children>
+        </VBox>
     </children>
-</VBox>
+</StackPane>

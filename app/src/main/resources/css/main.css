@@ -445,3 +445,10 @@
 .iv_quad_selected {
     -fx-image: url('/image/ic_quad_screen_color.png');
 }
+
+.content_add_camera {
+    -fx-border-radius: 24;
+    -fx-border-color: rgba(207, 216, 220, 1);
+    -fx-border-width: 1;
+    -fx-border-style: solid inside;
+}

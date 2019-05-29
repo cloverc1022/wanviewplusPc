@@ -55,6 +55,15 @@ public class QuadController implements Initializable {
     @FXML
     private StackPane content_play_empty;
 
+    @FXML
+    private StackPane content_1;
+    @FXML
+    private StackPane content_2;
+    @FXML
+    private StackPane content_3;
+    @FXML
+    private StackPane content_4;
+
     private ResourceBundle resourceBundle;
     private Stage addGroupStage;
 
@@ -74,7 +83,7 @@ public class QuadController implements Initializable {
                         content_play_empty.setVisible(false);
                         content_play_empty.setManaged(false);
                     }
-//                    handleMouseClick(quadListCell.getItem());
+                    handleMouseClick(quadListCell.getItem());
                     v.consume();
                 }
             }));
@@ -113,11 +122,12 @@ public class QuadController implements Initializable {
 
     private void initListener() {
         btn_create.setOnMouseClicked((v) -> {
-            go2AddGroup();
+            go2AddGroup(null);
+            v.consume();
         });
     }
 
-    private void go2AddGroup() {
+    private void go2AddGroup(String groupName) {
         try {
             FXMLLoader loader = new FXMLLoader();
             InputStream in = QuadController.class.getResourceAsStream("/fxml/add_group.fxml");
@@ -127,12 +137,15 @@ public class QuadController implements Initializable {
             loader.setResources(bundle);
             Pane page = loader.load(in);
             AddGroupController addGroupController = loader.getController();
-            addGroupController.init(null);
-            addGroupController.setOnFinishListener(() -> {
+            addGroupController.init(groupName);
+            addGroupController.setOnFinishListener((groupName1, isAdd) -> {
                 if (addGroupStage != null) {
                     addGroupStage.close();
                 }
                 initData();
+                if (!isAdd) {
+                    handleMouseClick(QuadListCache.getInstance().getQuadData(groupName1));
+                }
             });
             in.close();
             Scene scene = new Scene(page, 445, 360);
@@ -157,15 +170,30 @@ public class QuadController implements Initializable {
         }
     }
 
-    private void addCamera(Pane parent, String deviceId) {
+    private void handleMouseClick(QuadBean quadBean) {
+        content_1.getChildren().clear();
+        content_2.getChildren().clear();
+        content_3.getChildren().clear();
+        content_4.getChildren().clear();
+        addCamera(content_1, quadBean.getGroupName(), quadBean.getCamera_one());
+        addCamera(content_2, quadBean.getGroupName(), quadBean.getCamera_two());
+        addCamera(content_3, quadBean.getGroupName(), quadBean.getCamera_three());
+        addCamera(content_4, quadBean.getGroupName(), quadBean.getCamera_four());
+    }
+
+    private void addCamera(Pane parent, String groupName, String deviceId) {
         try {
             FXMLLoader loader = new FXMLLoader();
             InputStream in = Base.class.getResourceAsStream("/fxml/play_item.fxml");
             loader.setBuilderFactory(new JavaFXBuilderFactory());
             loader.setLocation(Base.class.getResource("/fxml/play_item.fxml"));
-            loader.setResources(resourceBundle);
+            ResourceBundle bundle = ResourceBundle.getBundle("strings");
+            loader.setResources(bundle);
             Pane page = loader.load(in);
             PlayItemController playItemController = loader.getController();
+            playItemController.setAddListener(() -> {
+                go2AddGroup(groupName);
+            });
             playItemController.init(deviceId);
             in.close();
             parent.getChildren().add(page);
