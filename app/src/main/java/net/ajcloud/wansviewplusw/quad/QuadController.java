@@ -280,6 +280,15 @@ public class QuadController implements Initializable {
         deleteButton.setOnAction(event -> {
             QuadListCache.getInstance().deleteQuadData(quadBean.getGroupName());
             initData();
+            if (StringUtil.equals(quadBean.getGroupName(), currentGroupName)) {
+                for (PlayItemController controller : controllers) {
+                    content_play.setVisible(false);
+                    content_play.setManaged(false);
+                    content_play_empty.setVisible(true);
+                    content_play_empty.setManaged(true);
+                    controller.stop();
+                }
+            }
             alert.hideWithAnimation();
         });
         JFXButton cancelButton = new JFXButton(resourceBundle.getString("common_cancel"));
