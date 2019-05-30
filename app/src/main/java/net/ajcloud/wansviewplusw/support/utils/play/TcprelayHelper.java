@@ -102,14 +102,17 @@ public class TcprelayHelper {
         LinkInfo newLinkInfo = new LinkInfo(deviceId, camera.getCurrentQuality(), null);
         if (runningMap.containsKey(deviceId)) {
             LinkInfo linkInfo = runningMap.get(deviceId);
-            if (linkInfo != null)
+            if (linkInfo != null) {
                 linkInfo.setValid(false);
+                newLinkInfo.setConnectCallback(linkInfo.getConnectCallback());
+            }
             runningMap.remove(deviceId);
         }
         runningMap.put(deviceId, newLinkInfo);
         if (linksMap.containsKey(deviceId)) {
             LinkInfo linkInfo = linksMap.get(deviceId);
             if (linkInfo != null) {
+                newLinkInfo.setConnectCallback(linkInfo.getConnectCallback());
                 int linkNum = linkInfo.getNum();
                 linksMap.remove(deviceId);
                 WLog.w(TAG, "initLink--------relaydisconnect:" + linkNum);

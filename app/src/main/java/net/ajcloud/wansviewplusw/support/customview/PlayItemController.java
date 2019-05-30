@@ -628,10 +628,10 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
 
     @Override
     public void onP2pPlay(String deviceId) {
-        play_method = TcprelayHelper.getInstance().getConnectType(deviceId) == 0 ? PlayMethod.P2P : PlayMethod.RELAY;
         TcprelayHelper.getInstance().getPlayUrl(deviceId, camera.getCurrentQuality(), new TcprelayHelper.ConnectCallback() {
             @Override
             public void onSuccess(String url) {
+                play_method = TcprelayHelper.getInstance().getConnectType(deviceId) == 0 ? PlayMethod.P2P : PlayMethod.RELAY;
                 Platform.runLater(() -> {
                     if (playPane != null)
                         fitImageViewSize((float) playPane.getWidth(), (float) playPane.getHeight());
