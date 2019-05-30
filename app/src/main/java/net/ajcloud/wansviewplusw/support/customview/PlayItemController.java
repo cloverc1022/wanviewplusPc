@@ -11,7 +11,10 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.control.Label;
 import javafx.scene.image.*;
-import javafx.scene.layout.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Screen;
 import net.ajcloud.wansviewplusw.BaseController;
 import net.ajcloud.wansviewplusw.support.device.Camera;
@@ -67,6 +70,8 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
     @FXML
     private JFXButton btn_play;
     @FXML
+    private JFXButton btn_delete;
+    @FXML
     private VBox vb_play;
     @FXML
     private VBox vb_add;
@@ -100,11 +105,11 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
             vb_play.setManaged(false);
 
             sp_add.setOnMouseClicked((v) -> {
-                addListener.onAdd();
+                playItemListener.onAdd();
                 v.consume();
             });
             label_add.setOnMouseClicked((v) -> {
-                addListener.onAdd();
+                playItemListener.onAdd();
                 v.consume();
             });
         } else {
@@ -160,6 +165,10 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
             content_tips.setVisible(false);
             label_stop.setVisible(true);
             label_stop.setManaged(true);
+        });
+        btn_delete.setOnMouseClicked((v) -> {
+            if (playItemListener != null)
+                playItemListener.onDelete(deviceId);
         });
     }
 
@@ -668,13 +677,15 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
 
     }
 
-    private AddListener addListener;
+    private PlayItemListener playItemListener;
 
-    public interface AddListener {
+    public interface PlayItemListener {
         void onAdd();
+
+        void onDelete(String deviceId);
     }
 
-    public void setAddListener(PlayItemController.AddListener addListener) {
-        this.addListener = addListener;
+    public void setPlayItemListener(PlayItemListener playItemListener) {
+        this.playItemListener = playItemListener;
     }
 }

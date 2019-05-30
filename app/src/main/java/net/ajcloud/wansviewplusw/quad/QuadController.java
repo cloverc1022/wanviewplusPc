@@ -140,13 +140,13 @@ public class QuadController implements Initializable {
             Pane page = loader.load(in);
             AddGroupController addGroupController = loader.getController();
             addGroupController.init(groupName);
-            addGroupController.setOnFinishListener((groupName1, isAdd) -> {
+            addGroupController.setOnFinishListener((newGroup, oldGroup, isAdd) -> {
                 if (addGroupStage != null) {
                     addGroupStage.close();
                 }
                 initData();
                 if (!isAdd) {
-                    handleMouseClick(QuadListCache.getInstance().getQuadData(groupName1));
+                    editGroup(newGroup, oldGroup);
                 }
             });
             in.close();
@@ -195,6 +195,30 @@ public class QuadController implements Initializable {
         addCamera(content_4, quadBean.getGroupName(), quadBean.getCamera_four());
     }
 
+    private void editGroup(QuadBean newQuad, QuadBean oldQuad) {
+        if (!StringUtil.equals(currentGroupName, newQuad.getGroupName())) {
+            return;
+        }
+        if (!StringUtil.equals(newQuad.getCamera_one(), oldQuad.getCamera_one())) {
+            content_1.getChildren().clear();
+            addCamera(content_1, newQuad.getGroupName(), newQuad.getCamera_one());
+        }
+        if (!StringUtil.equals(newQuad.getCamera_two(), oldQuad.getCamera_two())) {
+            content_2.getChildren().clear();
+            addCamera(content_2, newQuad.getGroupName(), newQuad.getCamera_two());
+        }
+        if (!StringUtil.equals(newQuad.getCamera_three(), oldQuad.getCamera_three())) {
+            content_3.getChildren().clear();
+            addCamera(content_3, newQuad.getGroupName(), newQuad.getCamera_three());
+        }
+        if (!StringUtil.equals(newQuad.getCamera_four(), oldQuad.getCamera_four())) {
+            content_4.getChildren().clear();
+            addCamera(content_4, newQuad.getGroupName(), newQuad.getCamera_four());
+        }
+
+        QuadListCache.getInstance().editQuadData(newQuad, newQuad.getGroupName());
+    }
+
     private void addCamera(Pane parent, String groupName, String deviceId) {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -205,8 +229,33 @@ public class QuadController implements Initializable {
             loader.setResources(bundle);
             Pane page = loader.load(in);
             PlayItemController playItemController = loader.getController();
-            playItemController.setAddListener(() -> {
-                go2AddGroup(groupName);
+            playItemController.setPlayItemListener(new PlayItemController.PlayItemListener() {
+                @Override
+                public void onAdd() {
+                    go2AddGroup(groupName);
+                }
+
+                @Override
+                public void onDelete(String deviceId) {
+                    QuadBean oldQuadBean = QuadListCache.getInstance().getQuadData(groupName);
+                    QuadBean newQuadBean = new QuadBean();
+                    newQuadBean.setGroupName(oldQuadBean.getGroupName());
+                    newQuadBean.setCamera_one(oldQuadBean.getCamera_one());
+                    newQuadBean.setCamera_two(oldQuadBean.getCamera_two());
+                    newQuadBean.setCamera_three(oldQuadBean.getCamera_three());
+                    newQuadBean.setCamera_four(oldQuadBean.getCamera_four());
+
+                    if (StringUtil.equals(oldQuadBean.getCamera_one(), deviceId))
+                        newQuadBean.setCamera_one(null);
+                    if (StringUtil.equals(oldQuadBean.getCamera_two(), deviceId))
+                        newQuadBean.setCamera_two(null);
+                    if (StringUtil.equals(oldQuadBean.getCamera_three(), deviceId))
+                        newQuadBean.setCamera_three(null);
+                    if (StringUtil.equals(oldQuadBean.getCamera_four(), deviceId))
+                        newQuadBean.setCamera_four(null);
+
+                    showDeleteCameraDialog(newQuadBean, oldQuadBean);
+                }
             });
             playItemController.init(deviceId);
             in.close();
@@ -230,6 +279,39 @@ public class QuadController implements Initializable {
         deleteButton.setOnAction(event -> {
             QuadListCache.getInstance().deleteQuadData(quadBean.getGroupName());
             initData();
+            alert.hideWithAnimation();
+        });
+        JFXButton cancelButton = new JFXButton(resourceBundle.getString("common_cancel"));
+        cancelButton.setMinWidth(100);
+        cancelButton.setMaxWidth(100);
+        cancelButton.setPrefWidth(100);
+        cancelButton.getStyleClass().add("dialog-cancel");
+        cancelButton.setOnAction(event -> {
+            alert.hideWithAnimation();
+        });
+        HBox hBox = new HBox();
+        hBox.setSpacing(10);
+        hBox.getChildren().add(deleteButton);
+        hBox.getChildren().add(cancelButton);
+        layout.setActions(hBox);
+        alert.setContent(layout);
+        alert.show();
+    }
+
+    private void showDeleteCameraDialog(QuadBean newQuad, QuadBean oldQuad) {
+        JFXAlert alert = new JFXAlert((Stage) lv_quads.getScene().getWindow());
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.setOverlayClose(false);
+        JFXDialogLayout layout = new JFXDialogLayout();
+        layout.setHeading(new javafx.scene.control.Label(resourceBundle.getString("quadScreen_remove")));
+        JFXButton deleteButton = new JFXButton(resourceBundle.getString("common_ok"));
+        deleteButton.setMinWidth(100);
+        deleteButton.setMaxWidth(100);
+        deleteButton.setPrefWidth(100);
+        deleteButton.getStyleClass().add("dialog-accept");
+        deleteButton.setOnAction(event -> {
+            editGroup(newQuad, oldQuad);
+            QuadListCache.getInstance().editQuadData(newQuad, newQuad.getGroupName());
             alert.hideWithAnimation();
         });
         JFXButton cancelButton = new JFXButton(resourceBundle.getString("common_cancel"));

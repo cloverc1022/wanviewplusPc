@@ -37,6 +37,7 @@ public class AddGroupController implements BaseController, Initializable {
     @FXML
     private JFXButton btn_done;
 
+    private QuadBean oldQuadBean;
     private QuadBean quadBean;
     private ResourceBundle resourceBundle;
     private ObservableList<AddGroupBean> mInfos = FXCollections.observableArrayList();
@@ -90,6 +91,7 @@ public class AddGroupController implements BaseController, Initializable {
             btn_done.setDisable(true);
             isAdd = true;
             quadBean = new QuadBean();
+            oldQuadBean = new QuadBean();
             label_tittle.setText(resourceBundle.getString("quadScreen_creatGroup"));
             label_num.setText("0/4");
             for (Camera camera : cameras) {
@@ -100,6 +102,14 @@ public class AddGroupController implements BaseController, Initializable {
             btn_done.setDisable(false);
             isAdd = false;
             quadBean = QuadListCache.getInstance().getQuadData(groupName);
+
+            oldQuadBean = new QuadBean();
+            oldQuadBean.setGroupName(quadBean.getGroupName());
+            oldQuadBean.setCamera_one(quadBean.getCamera_one());
+            oldQuadBean.setCamera_two(quadBean.getCamera_two());
+            oldQuadBean.setCamera_three(quadBean.getCamera_three());
+            oldQuadBean.setCamera_four(quadBean.getCamera_four());
+
             label_tittle.setText(resourceBundle.getString("quadScreen_manageGroup"));
             if (quadBean != null) {
                 int num = 0;
@@ -172,7 +182,7 @@ public class AddGroupController implements BaseController, Initializable {
             }
 
             if (onFinishListener != null) {
-                onFinishListener.onFinish(quadBean.getGroupName(), isAdd);
+                onFinishListener.onFinish(quadBean, oldQuadBean, isAdd);
             }
         });
         text_name.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -214,7 +224,7 @@ public class AddGroupController implements BaseController, Initializable {
     }
 
     public interface OnFinishListener {
-        void onFinish(String groupName, boolean isAdd);
+        void onFinish(QuadBean newQuad, QuadBean oldQuad, boolean isAdd);
     }
 
     public void setOnFinishListener(OnFinishListener onFinishListener) {
