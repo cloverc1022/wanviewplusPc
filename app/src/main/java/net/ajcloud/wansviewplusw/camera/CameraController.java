@@ -55,6 +55,7 @@ import uk.co.caprica.vlcj.player.MediaPlayer;
 import uk.co.caprica.vlcj.player.MediaPlayerEventListener;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.io.File;
 import java.net.URL;
 import java.text.MessageFormat;
@@ -326,7 +327,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener, Ini
     private void initData() {
         speed = new SimpleStringProperty("0K/s");
         label_speed.textProperty().bind(speed);
-        if (DeviceCache.getInstance().getAllDevices().size()>0){
+        if (DeviceCache.getInstance().getAllDevices().size() > 0) {
             content_list.setVisible(true);
             content_list.setManaged(true);
             content_list_empty.setVisible(false);
@@ -335,7 +336,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener, Ini
             label_num.setText(new MessageFormat(resourceBundle.getString("home_device_num")).format(new Object[]{DeviceCache.getInstance().getAllDevices().size()}));
             mInfos.setAll(DeviceCache.getInstance().getAllDevices());
             lv_devices.setItems(mInfos);
-        }else {
+        } else {
             if (requestApiUnit == null) {
                 requestApiUnit = new RequestApiUnit();
             }
@@ -581,26 +582,7 @@ public class CameraController implements PoliceHelper.PoliceControlListener, Ini
     }
 
     public void destroy() {
-        EventBus.getInstance().post(new SnapshotEvent());
         writableImage.cancel();
-        fullscreenListener = null;
-        btn_voice.setOnMouseClicked(null);
-        btn_screenshot.setOnMouseClicked(null);
-        btn_play.setOnMouseClicked(null);
-        btn_record.setOnMouseClicked(null);
-        btn_quality.setOnMouseClicked(null);
-        btn_fullscreen.setOnMouseClicked(null);
-        label_continue.setOnMouseClicked(null);
-        play_content.setOnMouseEntered(null);
-        play_content.setOnMouseExited(null);
-        btn_top.removeEventFilter(MouseEvent.ANY, topEventHandler);
-        btn_right.removeEventFilter(MouseEvent.ANY, rightEventHandler);
-        btn_bottom.removeEventFilter(MouseEvent.ANY, bottomEventHandler);
-        btn_left.removeEventFilter(MouseEvent.ANY, leftEventHandler);
-        btn_top.setOnAction(null);
-        btn_right.setOnAction(null);
-        btn_bottom.setOnAction(null);
-        btn_left.setOnAction(null);
         if (CanvasPlayerUtil.getInstance().getMediaPlayerComponent() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().isPlaying()) {
             stopRecord(false);
             CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().stop();
@@ -608,7 +590,6 @@ public class CameraController implements PoliceHelper.PoliceControlListener, Ini
             startOrCancelTimer(false);
             timerService.cancel();
         }
-        TcprelayHelper.getInstance().deinit();
     }
 
     private void initializeImageView() {
@@ -1403,5 +1384,14 @@ public class CameraController implements PoliceHelper.PoliceControlListener, Ini
             alert.setContent(layout);
             alert.show();
         });
+    }
+
+    @PreDestroy
+    public void Destroy() {
+        for (Camera c :
+                DeviceCache.getInstance().getAllDevices()) {
+            c.setSelected(false);
+        }
+        destroy();
     }
 }

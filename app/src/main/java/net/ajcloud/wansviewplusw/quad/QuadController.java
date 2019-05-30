@@ -28,6 +28,7 @@ import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
@@ -344,5 +345,16 @@ public class QuadController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         resourceBundle = resources;
+    }
+
+    @PreDestroy
+    public void Destroy() {
+        for (QuadBean bean :
+                QuadListCache.getInstance().getGroupList(DeviceCache.getInstance().getSigninBean().mail)) {
+            bean.setSelected(false);
+        }
+        for (PlayItemController controller : controllers) {
+            controller.destroy();
+        }
     }
 }

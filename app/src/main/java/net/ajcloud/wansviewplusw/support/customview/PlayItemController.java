@@ -387,9 +387,6 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
     }
 
     public void destroy() {
-        writableImage.cancel();
-        btn_play.setOnMouseClicked(null);
-        label_continue.setOnMouseClicked(null);
         if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
             mediaPlayerComponent.getMediaPlayer().stop();
             mediaPlayerComponent.getMediaPlayer().release();
