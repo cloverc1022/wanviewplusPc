@@ -35,6 +35,7 @@ import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import net.ajcloud.wansviewplusw.BaseController;
 import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.eventbus.EventBus;
@@ -66,7 +67,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static uk.co.caprica.vlcj.binding.internal.libvlc_state_t.libvlc_Playing;
 
 @ViewController(value = "/fxml/camera.fxml", title = "Camera")
-public class CameraController implements PoliceHelper.PoliceControlListener, Initializable {
+public class CameraController implements BaseController, PoliceHelper.PoliceControlListener, Initializable {
 
     private static final String TAG = "CameraController";
     private SimpleDateFormat sDateFormat = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
@@ -651,6 +652,20 @@ public class CameraController implements PoliceHelper.PoliceControlListener, Ini
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         resourceBundle = resources;
+    }
+
+    @PreDestroy
+    public void Destroy() {
+        WLog.w("============================");
+        try {
+            for (Camera c :
+                    DeviceCache.getInstance().getAllDevices()) {
+                c.setSelected(false);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        destroy();
     }
 
     class ExecuteTimer extends AnimationTimer {
@@ -1386,12 +1401,5 @@ public class CameraController implements PoliceHelper.PoliceControlListener, Ini
         });
     }
 
-    @PreDestroy
-    public void Destroy() {
-        for (Camera c :
-                DeviceCache.getInstance().getAllDevices()) {
-            c.setSelected(false);
-        }
-        destroy();
-    }
+
 }

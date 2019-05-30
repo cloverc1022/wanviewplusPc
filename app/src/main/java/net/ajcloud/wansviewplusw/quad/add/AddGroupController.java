@@ -223,6 +223,11 @@ public class AddGroupController implements BaseController, Initializable {
         resourceBundle = resources;
     }
 
+    @Override
+    public void Destroy() {
+
+    }
+
     public interface OnFinishListener {
         void onFinish(QuadBean newQuad, QuadBean oldQuad, boolean isAdd);
     }

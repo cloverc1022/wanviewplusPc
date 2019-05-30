@@ -29,4 +29,9 @@ public class AccountPopController implements BaseController {
     public void setOnAboutListener(EventHandler<? super MouseEvent> value) {
         about.setOnMouseClicked(value);
     }
+
+    @Override
+    public void Destroy() {
+
+    }
 }

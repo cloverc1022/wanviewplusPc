@@ -47,6 +47,11 @@ public class LoginController implements BaseController , Initializable {
         resourceBundle = resources;
     }
 
+    @Override
+    public void Destroy() {
+
+    }
+
     public interface OnLoginListener {
         void onLoginSuccess();
     }

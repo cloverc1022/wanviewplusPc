@@ -276,6 +276,11 @@ public class MainController implements BaseController, Initializable {
         resourceBundle = resources;
     }
 
+    @Override
+    public void Destroy() {
+
+    }
+
     public interface MainListener {
         void onLogout();
     }

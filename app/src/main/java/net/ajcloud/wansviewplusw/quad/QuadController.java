@@ -22,10 +22,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import net.ajcloud.wansviewplusw.Base;
+import net.ajcloud.wansviewplusw.BaseController;
 import net.ajcloud.wansviewplusw.quad.add.AddGroupController;
 import net.ajcloud.wansviewplusw.support.customview.PlayItemController;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
+import net.ajcloud.wansviewplusw.support.utils.WLog;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -38,7 +40,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @ViewController(value = "/fxml/quad.fxml", title = "Quad")
-public class QuadController implements Initializable {
+public class QuadController implements BaseController,Initializable {
     @FXMLViewFlowContext
     private ViewFlowContext context;
     @FXML
@@ -124,8 +126,9 @@ public class QuadController implements Initializable {
             List<QuadBean> quadBeanList = QuadListCache.getInstance().getGroupList(DeviceCache.getInstance().getSigninBean().mail);
             if (quadBeanList != null && quadBeanList.size() > 0) {
                 mInfos.setAll(quadBeanList);
-                lv_quads.setItems(mInfos);
             }
+            lv_quads.setItems(mInfos);
+
         }
     }
 
@@ -349,9 +352,14 @@ public class QuadController implements Initializable {
 
     @PreDestroy
     public void Destroy() {
-        for (QuadBean bean :
-                QuadListCache.getInstance().getGroupList(DeviceCache.getInstance().getSigninBean().mail)) {
-            bean.setSelected(false);
+        WLog.w("============================");
+        try {
+            for (QuadBean bean :
+                    QuadListCache.getInstance().getGroupList(DeviceCache.getInstance().getSigninBean().mail)) {
+                bean.setSelected(false);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
         for (PlayItemController controller : controllers) {
             controller.destroy();

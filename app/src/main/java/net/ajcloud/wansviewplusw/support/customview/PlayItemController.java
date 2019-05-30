@@ -657,6 +657,11 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
         resourceBundle = resources;
     }
 
+    @Override
+    public void Destroy() {
+
+    }
+
     private class CanvasPlayerComponent extends DirectMediaPlayerComponent {
 
         public CanvasPlayerComponent() {

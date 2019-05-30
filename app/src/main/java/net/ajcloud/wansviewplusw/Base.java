@@ -147,7 +147,7 @@ public class Base extends Application implements LoginController.OnLoginListener
     private void go2Main() {
         try {
             if (mainStage == null) {
-                WLog.s("LoginTest","-----------------------step--3-----------------------------");
+                WLog.s("LoginTest", "-----------------------step--3-----------------------------");
                 mainStage = new Stage(StageStyle.DECORATED);
                 mainStage.getIcons().add(new Image("/image/ic_launcher.png"));
                 mainStage.setTitle("WansviewCloud");
@@ -162,7 +162,7 @@ public class Base extends Application implements LoginController.OnLoginListener
                 ViewConfiguration viewConfiguration = new ViewConfiguration();
                 ResourceBundle bundle = ResourceBundle.getBundle("strings");
                 viewConfiguration.setResources(bundle);
-                mainFlowHandler = new FlowHandler(flow,flowContext,viewConfiguration);
+                mainFlowHandler = new FlowHandler(flow, flowContext, viewConfiguration);
                 mainFlowHandler.start(container);
                 mainScene = new Scene(container.getView(), MAIN_WIDTH, MAIN_HEIGHT);
                 final ObservableList<String> stylesheets = mainScene.getStylesheets();
@@ -180,14 +180,17 @@ public class Base extends Application implements LoginController.OnLoginListener
                     }
                 });
             } else {
-                WLog.s("LoginTest","-----------------------step--3-----------------------------");
+                WLog.s("LoginTest", "-----------------------step--3-----------------------------");
                 Flow flow = new Flow(MainController.class);
                 DefaultFlowContainer container = new DefaultFlowContainer();
-                mainFlowHandler = flow.createHandler(flowContext);
+                ViewConfiguration viewConfiguration = new ViewConfiguration();
+                ResourceBundle bundle = ResourceBundle.getBundle("strings");
+                viewConfiguration.setResources(bundle);
+                mainFlowHandler = new FlowHandler(flow, flowContext, viewConfiguration);
                 mainFlowHandler.start(container);
                 mainScene.setRoot(container.getView());
             }
-            WLog.s("LoginTest","-----------------------step--6-----------------------------");
+            WLog.s("LoginTest", "-----------------------step--6-----------------------------");
             mainStage.show();
             loginStage.hide();
             //开始刷新token
@@ -252,10 +255,10 @@ public class Base extends Application implements LoginController.OnLoginListener
                 Platform.runLater(() -> {
                     //清理camera view
                     FlowHandler flowHandler = (FlowHandler) flowContext.getRegisteredObject("ContentFlowHandler");
-                    CameraController cameraController = (CameraController) flowHandler.getCurrentView().getViewContext().getController();
-                    if (cameraController != null) {
+                    BaseController controller = (BaseController) flowHandler.getCurrentView().getViewContext().getController();
+                    if (controller != null) {
                         try {
-                            cameraController.destroy();
+                            controller.Destroy();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

@@ -30,4 +30,9 @@ public class AboutController implements BaseController {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public void Destroy() {
+
+    }
 }

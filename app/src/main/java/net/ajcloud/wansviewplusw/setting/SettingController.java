@@ -49,4 +49,9 @@ public class SettingController implements BaseController {
             }
         }).start();
     }
+
+    @Override
+    public void Destroy() {
+
+    }
 }
