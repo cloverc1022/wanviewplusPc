@@ -30,6 +30,7 @@ import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 import javax.annotation.PostConstruct;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -70,6 +71,7 @@ public class QuadController implements Initializable {
 
     private String currentGroupName;
     private ObservableList<QuadBean> mInfos = FXCollections.observableArrayList();
+    private List<PlayItemController> controllers = new ArrayList<>();
 
     @PostConstruct
     public void init() {
@@ -96,6 +98,10 @@ public class QuadController implements Initializable {
             return quadListCell;
         });
 
+        addCamera(content_1);
+        addCamera(content_2);
+        addCamera(content_3);
+        addCamera(content_4);
         initData();
         initListener();
     }
@@ -127,6 +133,36 @@ public class QuadController implements Initializable {
             go2AddGroup(null);
             v.consume();
         });
+        for (PlayItemController controller : controllers) {
+            controller.setPlayItemListener(new PlayItemController.PlayItemListener() {
+                @Override
+                public void onAdd() {
+                    go2AddGroup(currentGroupName);
+                }
+
+                @Override
+                public void onDelete(String deviceId) {
+                    QuadBean oldQuadBean = QuadListCache.getInstance().getQuadData(currentGroupName);
+                    QuadBean newQuadBean = new QuadBean();
+                    newQuadBean.setGroupName(oldQuadBean.getGroupName());
+                    newQuadBean.setCamera_one(oldQuadBean.getCamera_one());
+                    newQuadBean.setCamera_two(oldQuadBean.getCamera_two());
+                    newQuadBean.setCamera_three(oldQuadBean.getCamera_three());
+                    newQuadBean.setCamera_four(oldQuadBean.getCamera_four());
+
+                    if (StringUtil.equals(oldQuadBean.getCamera_one(), deviceId))
+                        newQuadBean.setCamera_one(null);
+                    if (StringUtil.equals(oldQuadBean.getCamera_two(), deviceId))
+                        newQuadBean.setCamera_two(null);
+                    if (StringUtil.equals(oldQuadBean.getCamera_three(), deviceId))
+                        newQuadBean.setCamera_three(null);
+                    if (StringUtil.equals(oldQuadBean.getCamera_four(), deviceId))
+                        newQuadBean.setCamera_four(null);
+
+                    showDeleteCameraDialog(newQuadBean, oldQuadBean);
+                }
+            });
+        }
     }
 
     private void go2AddGroup(String groupName) {
@@ -185,14 +221,10 @@ public class QuadController implements Initializable {
                 bean.setSelected(false);
             }
         }
-        content_1.getChildren().clear();
-        content_2.getChildren().clear();
-        content_3.getChildren().clear();
-        content_4.getChildren().clear();
-        addCamera(content_1, quadBean.getGroupName(), quadBean.getCamera_one());
-        addCamera(content_2, quadBean.getGroupName(), quadBean.getCamera_two());
-        addCamera(content_3, quadBean.getGroupName(), quadBean.getCamera_three());
-        addCamera(content_4, quadBean.getGroupName(), quadBean.getCamera_four());
+        controllers.get(0).prepare(quadBean.getCamera_one());
+        controllers.get(1).prepare(quadBean.getCamera_two());
+        controllers.get(2).prepare(quadBean.getCamera_three());
+        controllers.get(3).prepare(quadBean.getCamera_four());
     }
 
     private void editGroup(QuadBean newQuad, QuadBean oldQuad) {
@@ -200,26 +232,22 @@ public class QuadController implements Initializable {
             return;
         }
         if (!StringUtil.equals(newQuad.getCamera_one(), oldQuad.getCamera_one())) {
-            content_1.getChildren().clear();
-            addCamera(content_1, newQuad.getGroupName(), newQuad.getCamera_one());
+            controllers.get(0).prepare(newQuad.getCamera_one());
         }
         if (!StringUtil.equals(newQuad.getCamera_two(), oldQuad.getCamera_two())) {
-            content_2.getChildren().clear();
-            addCamera(content_2, newQuad.getGroupName(), newQuad.getCamera_two());
+            controllers.get(1).prepare(newQuad.getCamera_two());
         }
         if (!StringUtil.equals(newQuad.getCamera_three(), oldQuad.getCamera_three())) {
-            content_3.getChildren().clear();
-            addCamera(content_3, newQuad.getGroupName(), newQuad.getCamera_three());
+            controllers.get(2).prepare(newQuad.getCamera_three());
         }
         if (!StringUtil.equals(newQuad.getCamera_four(), oldQuad.getCamera_four())) {
-            content_4.getChildren().clear();
-            addCamera(content_4, newQuad.getGroupName(), newQuad.getCamera_four());
+            controllers.get(3).prepare(newQuad.getCamera_four());
         }
 
         QuadListCache.getInstance().editQuadData(newQuad, newQuad.getGroupName());
     }
 
-    private void addCamera(Pane parent, String groupName, String deviceId) {
+    private void addCamera(Pane parent) {
         try {
             FXMLLoader loader = new FXMLLoader();
             InputStream in = Base.class.getResourceAsStream("/fxml/play_item.fxml");
@@ -229,37 +257,10 @@ public class QuadController implements Initializable {
             loader.setResources(bundle);
             Pane page = loader.load(in);
             PlayItemController playItemController = loader.getController();
-            playItemController.setPlayItemListener(new PlayItemController.PlayItemListener() {
-                @Override
-                public void onAdd() {
-                    go2AddGroup(groupName);
-                }
-
-                @Override
-                public void onDelete(String deviceId) {
-                    QuadBean oldQuadBean = QuadListCache.getInstance().getQuadData(groupName);
-                    QuadBean newQuadBean = new QuadBean();
-                    newQuadBean.setGroupName(oldQuadBean.getGroupName());
-                    newQuadBean.setCamera_one(oldQuadBean.getCamera_one());
-                    newQuadBean.setCamera_two(oldQuadBean.getCamera_two());
-                    newQuadBean.setCamera_three(oldQuadBean.getCamera_three());
-                    newQuadBean.setCamera_four(oldQuadBean.getCamera_four());
-
-                    if (StringUtil.equals(oldQuadBean.getCamera_one(), deviceId))
-                        newQuadBean.setCamera_one(null);
-                    if (StringUtil.equals(oldQuadBean.getCamera_two(), deviceId))
-                        newQuadBean.setCamera_two(null);
-                    if (StringUtil.equals(oldQuadBean.getCamera_three(), deviceId))
-                        newQuadBean.setCamera_three(null);
-                    if (StringUtil.equals(oldQuadBean.getCamera_four(), deviceId))
-                        newQuadBean.setCamera_four(null);
-
-                    showDeleteCameraDialog(newQuadBean, oldQuadBean);
-                }
-            });
-            playItemController.init(deviceId);
+            playItemController.init();
             in.close();
             parent.getChildren().add(page);
+            controllers.add(playItemController);
         } catch (Exception e) {
             e.printStackTrace();
         }

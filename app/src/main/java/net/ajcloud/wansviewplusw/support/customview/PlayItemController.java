@@ -90,6 +90,7 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
     private String deviceId;
     private int play_method;
     private Camera camera;
+    private boolean isReady = false;
 
     /**
      * 定时，限制播放时长
@@ -97,48 +98,64 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
     private static final long PLAY_TIME = 10 * 60 * 1000;
     private CountDownTimer playTimer = new CountDownTimer();
 
-    public void init(String deviceId) {
+    public void init() {
+        sp_add.setOnMouseClicked((v) -> {
+            playItemListener.onAdd();
+            v.consume();
+        });
+        label_add.setOnMouseClicked((v) -> {
+            playItemListener.onAdd();
+            v.consume();
+        });
+        if (mediaPlayerComponent == null) {
+            new Thread(() -> {
+                mediaPlayerComponent = new CanvasPlayerComponent();
+                mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(mMediaPlayerListener);
+                isReady = true;
+            }).start();
+        }
+        policeHelper = new PoliceHelper(this);
+        videoSourceRatioProperty = new SimpleFloatProperty(0.4f);
+        pixelFormat = PixelFormat.getByteBgraPreInstance();
+        initializeImageView();
+
+        initListener();
+    }
+
+    public void prepare(String deviceId) {
+        if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
+            mediaPlayerComponent.getMediaPlayer().stop();
+            startOrCancelTimer(false);
+        }
+
+        this.deviceId = deviceId;
         if (StringUtil.isNullOrEmpty(deviceId)) {
             vb_add.setVisible(true);
             vb_add.setManaged(true);
             vb_play.setVisible(false);
             vb_play.setManaged(false);
-
-            sp_add.setOnMouseClicked((v) -> {
-                playItemListener.onAdd();
-                v.consume();
-            });
-            label_add.setOnMouseClicked((v) -> {
-                playItemListener.onAdd();
-                v.consume();
-            });
         } else {
             vb_add.setVisible(false);
             vb_add.setManaged(false);
             vb_play.setVisible(true);
             vb_play.setManaged(true);
 
-            this.deviceId = deviceId;
             camera = DeviceCache.getInstance().get(deviceId);
             if (camera == null || !camera.isOnline())
                 return;
             //init
             showLoading(false, "");
-            new Thread(() -> {
-                mediaPlayerComponent = new CanvasPlayerComponent();
-                mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(mMediaPlayerListener);
-            }).start();
-            policeHelper = new PoliceHelper(this);
-            videoSourceRatioProperty = new SimpleFloatProperty(0.4f);
-            pixelFormat = PixelFormat.getByteBgraPreInstance();
-            initializeImageView();
-
+            if (mediaPlayerComponent == null) {
+                new Thread(() -> {
+                    mediaPlayerComponent = new CanvasPlayerComponent();
+                    mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(mMediaPlayerListener);
+                    isReady = true;
+                }).start();
+            }
             label_status.textProperty().bind(camera.deviceStatusProperty());
             label_status.styleProperty().bind(camera.deviceStatusCssProperty());
             label_name.textFillProperty().bind(camera.deviceNameBgProperty());
             label_name.setText(camera.aliasName);
-
-            initListener();
             play();
         }
     }
@@ -263,8 +280,18 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
                 btn_play.getStyleClass().add("jfx_button_pause");
                 showLoading(true, resourceBundle.getString("play_preraring"));
                 startOrCancelTimer(true);
-                mediaPlayerComponent.getMediaPlayer().playMedia(url);
-                mediaPlayerComponent.getMediaPlayer().mute(true);
+                new Thread(() -> {
+                    boolean finish = false;
+                    while (!finish) {
+                        if (isReady) {
+                            finish = true;
+                            Platform.runLater(() -> {
+                                mediaPlayerComponent.getMediaPlayer().playMedia(url);
+                                mediaPlayerComponent.getMediaPlayer().mute(true);
+                            });
+                        }
+                    }
+                }).start();
             }
         } catch (Exception e) {
             e.printStackTrace();
