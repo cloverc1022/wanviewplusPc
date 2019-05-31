@@ -147,7 +147,6 @@ public class Base extends Application implements LoginController.OnLoginListener
     private void go2Main() {
         try {
             if (mainStage == null) {
-                WLog.s("LoginTest", "-----------------------step--3-----------------------------");
                 mainStage = new Stage(StageStyle.DECORATED);
                 mainStage.getIcons().add(new Image("/image/ic_launcher.png"));
                 mainStage.setTitle("WansviewCloud");
@@ -180,7 +179,6 @@ public class Base extends Application implements LoginController.OnLoginListener
                     }
                 });
             } else {
-                WLog.s("LoginTest", "-----------------------step--3-----------------------------");
                 Flow flow = new Flow(MainController.class);
                 DefaultFlowContainer container = new DefaultFlowContainer();
                 ViewConfiguration viewConfiguration = new ViewConfiguration();
@@ -190,7 +188,6 @@ public class Base extends Application implements LoginController.OnLoginListener
                 mainFlowHandler.start(container);
                 mainScene.setRoot(container.getView());
             }
-            WLog.s("LoginTest", "-----------------------step--6-----------------------------");
             mainStage.show();
             loginStage.hide();
             //开始刷新token

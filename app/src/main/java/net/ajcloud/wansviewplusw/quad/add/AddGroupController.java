@@ -1,6 +1,8 @@
 package net.ajcloud.wansviewplusw.quad.add;
 
+import com.jfoenix.controls.JFXAlert;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXDialogLayout;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -8,6 +10,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
+import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import net.ajcloud.wansviewplusw.BaseController;
 import net.ajcloud.wansviewplusw.quad.QuadBean;
 import net.ajcloud.wansviewplusw.quad.QuadListCache;
@@ -18,6 +23,7 @@ import net.ajcloud.wansviewplusw.support.utils.WLog;
 import org.controlsfx.control.GridView;
 
 import java.net.URL;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -155,6 +161,15 @@ public class AddGroupController implements BaseController, Initializable {
     private void initListener() {
         btn_done.setOnMouseClicked((v) -> {
             String groupName = text_name.getText();
+            if (isAdd) {
+                for (int i = 0; i < QuadListCache.getInstance().getGroupList(DeviceCache.getInstance().getSigninBean().mail).size(); i++) {
+                    if (StringUtil.equals(QuadListCache.getInstance().getGroupList(DeviceCache.getInstance().getSigninBean().mail).get(i).getGroupName(),
+                            groupName)) {
+                        showExistDialog(groupName);
+                        return;
+                    }
+                }
+            }
 
             quadBean.setCamera_one(null);
             quadBean.setCamera_two(null);
@@ -216,6 +231,28 @@ public class AddGroupController implements BaseController, Initializable {
         } else {
             return Integer.parseInt(indexes.get(0));
         }
+    }
+
+    private void showExistDialog(String groupName) {
+        JFXAlert alert = new JFXAlert((Stage) btn_done.getScene().getWindow());
+        alert.initModality(Modality.APPLICATION_MODAL);
+        alert.setOverlayClose(false);
+        JFXDialogLayout layout = new JFXDialogLayout();
+        layout.setHeading(new javafx.scene.control.Label(new MessageFormat(resourceBundle.getString("quadScreen_exists")).format(new Object[]{groupName})));
+        JFXButton closeButton = new JFXButton(resourceBundle.getString("common_ok"));
+        closeButton.setMinWidth(100);
+        closeButton.setMaxWidth(100);
+        closeButton.setPrefWidth(100);
+        closeButton.getStyleClass().add("dialog-accept");
+        closeButton.setOnAction(event -> {
+            alert.hideWithAnimation();
+        });
+        HBox hBox = new HBox();
+        hBox.setSpacing(10);
+        hBox.getChildren().add(closeButton);
+        layout.setActions(hBox);
+        alert.setContent(layout);
+        alert.show();
     }
 
     @Override

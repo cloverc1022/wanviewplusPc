@@ -372,7 +372,6 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
                 } else {
                     imageView.setFitWidth(width);
                     imageView.setFitHeight(fitHeight);
-                    WLog.w("======2=====fitWidth:" + width + "\tfitHeight:" + fitHeight + "\tvideoSourceRatioProperty:" + videoSourceRatioProperty.get());
                     imageView.setY((height - fitHeight) / 2);
                     imageView.setX(0);
                 }

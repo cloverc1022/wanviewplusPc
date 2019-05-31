@@ -100,7 +100,6 @@ public class MainController implements BaseController, Initializable {
     @PostConstruct
     public void init() {
         try {
-            WLog.s("LoginTest", "-----------------------step--4-----------------------------");
             Objects.requireNonNull(context, "context");
             listener = (MainListener) context.getRegisteredObject("MainListener");
             //init menu
@@ -130,7 +129,6 @@ public class MainController implements BaseController, Initializable {
             context.register("ContentFlow", innerFlow);
             content.getChildren().add(flowHandler.start(new DefaultFlowContainer()));
             context.register("ContentPane", content);
-            WLog.s("LoginTest", "-----------------------step--5-----------------------------");
         } catch (Exception e) {
             e.printStackTrace();
         }

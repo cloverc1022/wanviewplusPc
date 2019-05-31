@@ -1,5 +1,10 @@
 package net.ajcloud.wansviewplusw.quad;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.google.gson.Gson;
+import net.ajcloud.wansviewplusw.support.http.bean.group.GroupDetail;
+import net.ajcloud.wansviewplusw.support.http.bean.group.GroupList;
 import net.ajcloud.wansviewplusw.support.utils.IPreferences;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 
@@ -31,52 +36,21 @@ public class QuadListCache {
             currentAccount = account;
             //重新获取
             groupList.clear();
-            //获取组信息
-            String group = preferences.get(String.format(IPreferences.P_QUAD_LIST_, account), null);
-            if (StringUtil.isNullOrEmpty(group))
-                return null;
-            String[] groupNames = group.split("_");
-            if (groupNames.length == 0)
-                return null;
-            for (int i = 0; i < groupNames.length; i++) {
-                QuadBean data = new QuadBean();
 
-                String name = groupNames[i];
-                data.setGroupName(name);
-
-                String groupDetail = preferences.get(String.format(IPreferences.P_QUAD_DETAIL_, account, name), null);
-                if (StringUtil.isNullOrEmpty(groupDetail)) {
-                    groupList.add(data);
-                    continue;
-                }
-                String[] groupDetails = groupDetail.split("-");
-                if (groupDetails.length == 0) {
-                    groupList.add(data);
-                    continue;
-                }
-                for (int j = 0; j < groupDetails.length; j++) {
-                    String detail = groupDetails[j];
-                    int num = Integer.parseInt(detail.split("_")[0]);
-                    String deviceId = detail.split("_")[1];
-                    switch (num) {
-                        case 1:
-                            data.setCamera_one(deviceId);
-                            break;
-                        case 2:
-                            data.setCamera_two(deviceId);
-                            break;
-                        case 3:
-                            data.setCamera_three(deviceId);
-                            break;
-                        case 4:
-                            data.setCamera_four(deviceId);
-                            break;
-                    }
-                }
-                groupList.add(data);
+            GroupList groupListBean = JSONObject.parseObject(preferences.get(String.format(IPreferences.P_QUAD, account), null), GroupList.class);
+            if (groupListBean == null || groupListBean.groupList == null || groupListBean.groupList.size() == 0) {
+                return null;
+            }
+            for (GroupDetail groupDetail : groupListBean.groupList) {
+                QuadBean quadBean = new QuadBean();
+                quadBean.setGroupName(groupDetail.groupName);
+                quadBean.setCamera_one(groupDetail.cameraOne);
+                quadBean.setCamera_two(groupDetail.cameraTwo);
+                quadBean.setCamera_three(groupDetail.cameraThree);
+                quadBean.setCamera_four(groupDetail.cameraFour);
+                groupList.add(quadBean);
             }
         }
-        currentAccount = account;
         return groupList;
     }
 
@@ -121,39 +95,18 @@ public class QuadListCache {
     }
 
     private void save() {
-        StringBuilder quadList = new StringBuilder();
-        for (int i = 0; i < groupList.size(); i++) {
-            QuadBean item = groupList.get(i);
-
-            quadList.append(item.getGroupName());
-            if (i != groupList.size() - 1)
-                quadList.append("_");
-
-            StringBuilder quadDetail = new StringBuilder();
-            if (!StringUtil.isNullOrEmpty(item.getCamera_one())) {
-                quadDetail.append("1_");
-                quadDetail.append(item.getCamera_one());
-                quadDetail.append("-");
-            }
-            if (!StringUtil.isNullOrEmpty(item.getCamera_two())) {
-                quadDetail.append("2_");
-                quadDetail.append(item.getCamera_two());
-                quadDetail.append("-");
-            }
-            if (!StringUtil.isNullOrEmpty(item.getCamera_three())) {
-                quadDetail.append("3_");
-                quadDetail.append(item.getCamera_three());
-                quadDetail.append("-");
-            }
-            if (!StringUtil.isNullOrEmpty(item.getCamera_four())) {
-                quadDetail.append("4_");
-                quadDetail.append(item.getCamera_four());
-            }
-            if (quadDetail.length() > 0 && quadDetail.toString().endsWith("-")) {
-                quadDetail.deleteCharAt(quadDetail.length() - 1);
-            }
-            preferences.put(String.format(IPreferences.P_QUAD_DETAIL_, currentAccount, item.getGroupName()), quadDetail.toString());
+        JSONObject jsonObject = new JSONObject();
+        JSONArray jsonArray = new JSONArray();
+        for (QuadBean quadBean : groupList) {
+            JSONObject itemJson = new JSONObject();
+            itemJson.put("groupName", quadBean.getGroupName());
+            itemJson.put("cameraOne", quadBean.getCamera_one());
+            itemJson.put("cameraTwo", quadBean.getCamera_two());
+            itemJson.put("cameraThree", quadBean.getCamera_three());
+            itemJson.put("cameraFour", quadBean.getCamera_four());
+            jsonArray.add(itemJson);
         }
-        preferences.put(String.format(IPreferences.P_QUAD_LIST_, currentAccount), quadList.toString());
+        jsonObject.put("groupList", jsonArray);
+        preferences.put(String.format(IPreferences.P_QUAD, currentAccount), jsonObject.toString());
     }
 }

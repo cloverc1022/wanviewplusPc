@@ -8,4 +8,20 @@ public interface IPreferences {
     String P_FILE_LOCATION = "P_FILE_LOCATION";
     String P_QUAD_LIST_ = "P_QUAD_LIST_%1$s";   //name_name_name
     String P_QUAD_DETAIL_ = "P_QUAD_DETAIL_%1$s_%2$s";  //1_name-2_name
+
+    /**
+     * account:  {groupList:[
+     * {groupName:value,
+     * camera_one:value,
+     * camera_two:value,
+     * camera_three:value,
+     * camera_four:value},
+     * {groupName:value,
+     * *  camera_one:value,
+     * *  camera_two:value,
+     * *  camera_three:value,
+     * *  camera_four:value}
+     * ]}
+     */
+    String P_QUAD = "P_QUAD_DETAIL_%1$s";
 }
