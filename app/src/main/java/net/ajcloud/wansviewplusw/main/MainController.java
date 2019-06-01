@@ -189,7 +189,7 @@ public class MainController implements BaseController, Initializable {
                         Base.class.getResource("/css/main.css").toExternalForm());
                 aboutStage = new Stage();
                 aboutStage.setScene(scene);
-                aboutStage.getIcons().add(new Image("/image/ic_launcher.png"));
+                aboutStage.getIcons().add(new Image("/image/ic_launcher.png",48, 48, true, true));
                 aboutStage.setTitle("WansviewCloud");
                 aboutStage.sizeToScene();
                 aboutStage.setResizable(false);
@@ -222,7 +222,7 @@ public class MainController implements BaseController, Initializable {
                         Base.class.getResource("/css/main.css").toExternalForm());
                 settingStage = new Stage();
                 settingStage.setScene(scene);
-                settingStage.getIcons().add(new Image("/image/ic_launcher.png"));
+                settingStage.getIcons().add(new Image("/image/ic_launcher.png",48, 48, true, true));
                 settingStage.setTitle(resourceBundle.getString("home_setting"));
                 settingStage.sizeToScene();
                 settingStage.setResizable(false);

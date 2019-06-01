@@ -65,6 +65,15 @@ public class CameraData {
                 deviceName.textFillProperty().unbind();
             }
         });
+        EventBus.getInstance().register(event -> {
+            if (event.getType() == EventType.CHANGE_TAB) {
+                status.textProperty().unbind();
+                status.styleProperty().unbind();
+                playing_bg.visibleProperty().unbind();
+                deviceName.textFillProperty().unbind();
+                iv_thumbnail.setImage(null);
+            }
+        });
     }
 
     public void setInfo(Camera camera) {

@@ -20,21 +20,42 @@
                         <RowConstraints valignment="CENTER" vgrow="ALWAYS"/>
                     </rowConstraints>
                     <children>
-                        <ImageView fx:id="iv_one" style="-fx-background-color: #CFD8DC" fitHeight="44.0" fitWidth="98.0"
-                                   pickOnBounds="true" preserveRatio="true" GridPane.hgrow="ALWAYS"
-                                   GridPane.vgrow="ALWAYS"/>
-                        <ImageView fx:id="iv_two" style="-fx-background-color: #CFD8DC" fitHeight="44.0" fitWidth="98.0"
-                                   pickOnBounds="true" preserveRatio="true"
-                                   GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS"/>
-                        <ImageView fx:id="iv_three" style="-fx-background-color: #CFD8DC" fitHeight="44.0"
-                                   fitWidth="98.0"
-                                   pickOnBounds="true" preserveRatio="true"
-                                   GridPane.rowIndex="1" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS"/>
-                        <ImageView fx:id="iv_four" style="-fx-background-color: #CFD8DC" fitHeight="44.0"
-                                   fitWidth="98.0"
-                                   pickOnBounds="true" preserveRatio="true"
-                                   GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.hgrow="ALWAYS"
-                                   GridPane.vgrow="ALWAYS"/>
+                        <StackPane minHeight="44" prefHeight="44" maxHeight="44" minWidth="98" prefWidth="98"
+                                   maxWidth="98" style="-fx-background-color: #CFD8DC" GridPane.hgrow="ALWAYS"
+                                   GridPane.vgrow="ALWAYS">
+                            <children>
+                                <ImageView fx:id="iv_one" fitHeight="44.0" fitWidth="98.0"
+                                           pickOnBounds="true" preserveRatio="true"/>
+                            </children>
+                        </StackPane>
+
+                        <StackPane minHeight="44" prefHeight="44" maxHeight="44" minWidth="98" prefWidth="98"
+                                   maxWidth="98" style="-fx-background-color: #CFD8DC" GridPane.hgrow="ALWAYS"
+                                   GridPane.vgrow="ALWAYS" GridPane.columnIndex="1">
+                            <children>
+                                <ImageView fx:id="iv_two" fitHeight="44.0" fitWidth="98.0"
+                                           pickOnBounds="true" preserveRatio="true"/>
+                            </children>
+                        </StackPane>
+
+                        <StackPane minHeight="44" prefHeight="44" maxHeight="44" minWidth="98" prefWidth="98"
+                                   maxWidth="98" style="-fx-background-color: #CFD8DC" GridPane.hgrow="ALWAYS"
+                                   GridPane.vgrow="ALWAYS" GridPane.rowIndex="1">
+                            <children>
+                                <ImageView fx:id="iv_three" fitHeight="44.0" fitWidth="98.0"
+                                           pickOnBounds="true" preserveRatio="true"/>
+                            </children>
+                        </StackPane>
+
+                        <StackPane minHeight="44" prefHeight="44" maxHeight="44" minWidth="98" prefWidth="98"
+                                   maxWidth="98" style="-fx-background-color: #CFD8DC" GridPane.hgrow="ALWAYS"
+                                   GridPane.vgrow="ALWAYS" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                            <children>
+                                <ImageView fx:id="iv_four" fitHeight="44.0" fitWidth="98.0"
+                                           pickOnBounds="true" preserveRatio="true"/>
+                            </children>
+                        </StackPane>
+
                     </children>
                 </GridPane>
                 <StackPane fx:id="sp_play_anim" style="-fx-background-color: rgba(38,50,56,0.3)" visible="false">

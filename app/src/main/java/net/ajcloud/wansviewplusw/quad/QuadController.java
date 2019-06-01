@@ -26,6 +26,8 @@ import net.ajcloud.wansviewplusw.BaseController;
 import net.ajcloud.wansviewplusw.quad.add.AddGroupController;
 import net.ajcloud.wansviewplusw.support.customview.PlayItemController;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
+import net.ajcloud.wansviewplusw.support.eventbus.EventBus;
+import net.ajcloud.wansviewplusw.support.eventbus.event.ChangeTabEvent;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 import net.ajcloud.wansviewplusw.support.utils.WLog;
 
@@ -40,7 +42,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @ViewController(value = "/fxml/quad.fxml", title = "Quad")
-public class QuadController implements BaseController,Initializable {
+public class QuadController implements BaseController, Initializable {
     @FXMLViewFlowContext
     private ViewFlowContext context;
     @FXML
@@ -197,7 +199,7 @@ public class QuadController implements BaseController,Initializable {
                     Base.class.getResource("/css/main.css").toExternalForm());
             if (addGroupStage == null) {
                 addGroupStage = new Stage();
-                addGroupStage.getIcons().add(new Image("/image/ic_launcher.png"));
+                addGroupStage.getIcons().add(new Image("/image/ic_launcher.png", 48, 48, true, true));
                 addGroupStage.setTitle(resourceBundle.getString("quadScreen_creatGroup"));
                 addGroupStage.sizeToScene();
                 addGroupStage.setResizable(false);
@@ -282,6 +284,10 @@ public class QuadController implements BaseController,Initializable {
         deleteButton.setPrefWidth(100);
         deleteButton.getStyleClass().add("dialog-accept");
         deleteButton.setOnAction(event -> {
+            quadBean.setCamera_one_image(null);
+            quadBean.setCamera_two_image(null);
+            quadBean.setCamera_three_image(null);
+            quadBean.setCamera_four_image(null);
             QuadListCache.getInstance().deleteQuadData(quadBean.getGroupName());
             initData();
             if (StringUtil.equals(quadBean.getGroupName(), currentGroupName)) {
@@ -357,12 +363,15 @@ public class QuadController implements BaseController,Initializable {
             for (QuadBean bean :
                     QuadListCache.getInstance().getGroupList(DeviceCache.getInstance().getSigninBean().mail)) {
                 bean.setSelected(false);
+                bean.setCamera_one_image(null);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         for (PlayItemController controller : controllers) {
             controller.destroy();
         }
+        EventBus.getInstance().post(new ChangeTabEvent());
+        System.gc();
     }
 }

@@ -21,10 +21,10 @@ public class QuadBean {
     private BooleanProperty isAnimShow = new SimpleBooleanProperty(false);
     private ObjectProperty<Paint> groupNameBg = new SimpleObjectProperty<>(Color.rgb(38, 50, 56, 1));
 
-    private ObjectProperty<Image> camera_one_image = new SimpleObjectProperty<>(new Image("/image/ic_device_default.png", 98, 44, false, true, false));
-    private ObjectProperty<Image> camera_two_image = new SimpleObjectProperty<>(new Image("/image/ic_device_default.png", 98, 44, false, true, false));
-    private ObjectProperty<Image> camera_three_image = new SimpleObjectProperty<>(new Image("/image/ic_device_default.png", 98, 44, false, true, false));
-    private ObjectProperty<Image> camera_four_image = new SimpleObjectProperty<>(new Image("/image/ic_device_default.png", 98, 44, false, true, false));
+    private ObjectProperty<Image> camera_one_image = new SimpleObjectProperty<>(null);
+    private ObjectProperty<Image> camera_two_image = new SimpleObjectProperty<>(null);
+    private ObjectProperty<Image> camera_three_image = new SimpleObjectProperty<>(null);
+    private ObjectProperty<Image> camera_four_image = new SimpleObjectProperty<>(null);
 
     public void setGroupName(String groupName) {
         this.groupName.set(groupName);

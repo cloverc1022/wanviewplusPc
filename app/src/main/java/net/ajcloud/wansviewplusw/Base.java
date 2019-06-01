@@ -41,7 +41,6 @@ import net.ajcloud.wansviewplusw.support.http.bean.RefreshTokenBean;
 import net.ajcloud.wansviewplusw.support.utils.CanvasPlayerUtil;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 import net.ajcloud.wansviewplusw.support.utils.TimeService;
-import net.ajcloud.wansviewplusw.support.utils.WLog;
 import net.ajcloud.wansviewplusw.support.utils.play.TcprelayHelper;
 import uk.co.caprica.vlcj.binding.LibVlc;
 import uk.co.caprica.vlcj.runtime.RuntimeUtil;
@@ -127,7 +126,7 @@ public class Base extends Application implements LoginController.OnLoginListener
                     Base.class.getResource("/css/jfoenix-design.css").toExternalForm(),
                     Base.class.getResource("/css/main.css").toExternalForm());
             loginStage.setScene(scene);
-            loginStage.getIcons().add(new Image("/image/ic_launcher.png"));
+            loginStage.getIcons().add(new Image("/image/ic_launcher.png", 48, 48, true, true));
             loginStage.setTitle("WansviewCloud");
             loginStage.sizeToScene();
             loginStage.setResizable(false);
@@ -148,7 +147,7 @@ public class Base extends Application implements LoginController.OnLoginListener
         try {
             if (mainStage == null) {
                 mainStage = new Stage(StageStyle.DECORATED);
-                mainStage.getIcons().add(new Image("/image/ic_launcher.png"));
+                mainStage.getIcons().add(new Image("/image/ic_launcher.png",48, 48, true, true));
                 mainStage.setTitle("WansviewCloud");
                 mainStage.setMinWidth(980.0);
                 mainStage.setMinHeight(580.0);

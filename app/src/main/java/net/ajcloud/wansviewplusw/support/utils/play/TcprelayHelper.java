@@ -104,6 +104,33 @@ public class TcprelayHelper {
             LinkInfo linkInfo = runningMap.get(deviceId);
             if (linkInfo != null) {
                 linkInfo.setValid(false);
+            }
+            runningMap.remove(deviceId);
+        }
+        runningMap.put(deviceId, newLinkInfo);
+        if (linksMap.containsKey(deviceId)) {
+            LinkInfo linkInfo = linksMap.get(deviceId);
+            if (linkInfo != null) {
+                int linkNum = linkInfo.getNum();
+                linksMap.remove(deviceId);
+                WLog.w(TAG, "initLink--------relaydisconnect:" + linkNum);
+                tcprelay.relaydisconnect(linkNum);
+            }
+        }
+        new Thread(() -> getLiveSec(newLinkInfo)).start();
+    }
+
+    public void reConnectInner(String deviceId) {
+        Camera camera = DeviceCache.getInstance().get(deviceId);
+        if (camera == null) {
+            WLog.w(TAG, "initLink--------camera==null");
+            return;
+        }
+        LinkInfo newLinkInfo = new LinkInfo(deviceId, camera.getCurrentQuality(), null);
+        if (runningMap.containsKey(deviceId)) {
+            LinkInfo linkInfo = runningMap.get(deviceId);
+            if (linkInfo != null) {
+                linkInfo.setValid(false);
                 newLinkInfo.setConnectCallback(linkInfo.getConnectCallback());
             }
             runningMap.remove(deviceId);
@@ -254,7 +281,7 @@ public class TcprelayHelper {
                 if (linkInfo.getQuality() == quality) {
                     linkInfo.getConnectCallback().onSuccess(linkInfo.getUrl());
                 } else {
-                    reConnect(deviceId);
+                    reConnectInner(deviceId);
                 }
             } else if (linkInfo.getStatus() == 2) {
                 initLink(deviceId, quality, connectCallback);

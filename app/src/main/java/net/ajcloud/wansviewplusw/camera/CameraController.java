@@ -40,6 +40,7 @@ import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.eventbus.EventBus;
 import net.ajcloud.wansviewplusw.support.eventbus.EventType;
+import net.ajcloud.wansviewplusw.support.eventbus.event.ChangeTabEvent;
 import net.ajcloud.wansviewplusw.support.eventbus.event.DeviceRefreshEvent;
 import net.ajcloud.wansviewplusw.support.eventbus.event.SnapshotEvent;
 import net.ajcloud.wansviewplusw.support.http.HttpCommonListener;
@@ -583,6 +584,7 @@ public class CameraController implements BaseController, PoliceHelper.PoliceCont
     }
 
     public void destroy() {
+        imageView.setImage(null);
         writableImage.cancel();
         if (CanvasPlayerUtil.getInstance().getMediaPlayerComponent() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().isPlaying()) {
             stopRecord(false);
@@ -666,6 +668,8 @@ public class CameraController implements BaseController, PoliceHelper.PoliceCont
             e.printStackTrace();
         }
         destroy();
+        EventBus.getInstance().post(new ChangeTabEvent());
+        System.gc();
     }
 
     class ExecuteTimer extends AnimationTimer {
@@ -720,7 +724,7 @@ public class CameraController implements BaseController, PoliceHelper.PoliceCont
     private void setPlayBg(String deviceId) {
         File file = new File(FileUtil.getRealtimeImagePath(deviceId) + File.separator + "realtime_picture.jpg");
         if (file.exists()) {
-            Image image = new Image(file.toURI().toString(), 1920, 1080, false, false, false);
+            Image image = new Image(file.toURI().toString(), 192, 108, true, false, false);
             playBg.setBackground(new Background(new BackgroundImage(image, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER,
                     new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, true, true, true, true))));
             playBg.setEffect(new GaussianBlur(50));
@@ -739,7 +743,7 @@ public class CameraController implements BaseController, PoliceHelper.PoliceCont
         CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().saveSnapshot(file);
 
         ImageView imageView = new ImageView();
-        imageView.setImage(new Image(file.toURI().toString()));
+        imageView.setImage(new Image(file.toURI().toString(), 66, 46, true, false));
         imageView.setFitWidth(playPane.getWidth());
         imageView.setFitHeight(playPane.getHeight());
         play_content.getChildren().add(imageView);

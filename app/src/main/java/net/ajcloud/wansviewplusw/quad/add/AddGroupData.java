@@ -6,6 +6,8 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import net.ajcloud.wansviewplusw.support.eventbus.EventBus;
+import net.ajcloud.wansviewplusw.support.eventbus.EventType;
 import net.ajcloud.wansviewplusw.support.utils.FileUtil;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 
@@ -31,6 +33,13 @@ public class AddGroupData {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        EventBus.getInstance().register(event -> {
+            if (event.getType() == EventType.CHANGE_TAB) {
+                label_selected.textProperty().unbind();
+                label_selected.styleProperty().unbind();
+                iv_thumbnail.setImage(null);
+            }
+        });
         initData(item);
     }
 
