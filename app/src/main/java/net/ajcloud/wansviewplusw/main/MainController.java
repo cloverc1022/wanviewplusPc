@@ -11,7 +11,6 @@ import io.datafx.controller.flow.FlowHandler;
 import io.datafx.controller.flow.container.DefaultFlowContainer;
 import io.datafx.controller.flow.context.FXMLViewFlowContext;
 import io.datafx.controller.flow.context.ViewFlowContext;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -135,6 +134,7 @@ public class MainController implements BaseController, Initializable {
     }
 
     private void replace(final String id) {
+        WLog.w("============1================");
         iv_play.getStyleClass().remove("iv_play_selected");
         iv_play.getStyleClass().remove("iv_play_normal");
         iv_quad.getStyleClass().remove("iv_quad_selected");
@@ -154,17 +154,15 @@ public class MainController implements BaseController, Initializable {
             label_play.getStyleClass().add("label_normal");
             label_quad.getStyleClass().add("label_selected");
         }
+        WLog.w("============2================");
         if (!StringUtil.equals(currentItem, id)) {
-            new Thread(() -> {
-                Platform.runLater(() -> {
-                    try {
-                        flowHandler.handle(id);
-                        currentItem = id;
-                    } catch (Exception ex) {
-                        ex.printStackTrace();
-                    }
-                });
-            }).start();
+            try {
+                flowHandler.handle(id);
+                WLog.w("============3================");
+                currentItem = id;
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
@@ -189,7 +187,7 @@ public class MainController implements BaseController, Initializable {
                         Base.class.getResource("/css/main.css").toExternalForm());
                 aboutStage = new Stage();
                 aboutStage.setScene(scene);
-                aboutStage.getIcons().add(new Image("/image/ic_launcher.png",48, 48, true, true));
+                aboutStage.getIcons().add(new Image("/image/ic_launcher.png", 48, 48, true, true));
                 aboutStage.setTitle("WansviewCloud");
                 aboutStage.sizeToScene();
                 aboutStage.setResizable(false);
@@ -222,7 +220,7 @@ public class MainController implements BaseController, Initializable {
                         Base.class.getResource("/css/main.css").toExternalForm());
                 settingStage = new Stage();
                 settingStage.setScene(scene);
-                settingStage.getIcons().add(new Image("/image/ic_launcher.png",48, 48, true, true));
+                settingStage.getIcons().add(new Image("/image/ic_launcher.png", 48, 48, true, true));
                 settingStage.setTitle(resourceBundle.getString("home_setting"));
                 settingStage.sizeToScene();
                 settingStage.setResizable(false);

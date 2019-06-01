@@ -27,6 +27,7 @@ import net.ajcloud.wansviewplusw.quad.add.AddGroupController;
 import net.ajcloud.wansviewplusw.support.customview.PlayItemController;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
+import net.ajcloud.wansviewplusw.support.utils.WLog;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
