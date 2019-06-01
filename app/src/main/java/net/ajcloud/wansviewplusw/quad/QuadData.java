@@ -7,6 +7,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import net.ajcloud.wansviewplusw.support.eventbus.EventBus;
+import net.ajcloud.wansviewplusw.support.eventbus.EventType;
+import net.ajcloud.wansviewplusw.support.utils.WLog;
 
 import java.io.IOException;
 import java.util.ResourceBundle;

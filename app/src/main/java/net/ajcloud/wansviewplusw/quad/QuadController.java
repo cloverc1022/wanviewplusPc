@@ -26,10 +26,7 @@ import net.ajcloud.wansviewplusw.BaseController;
 import net.ajcloud.wansviewplusw.quad.add.AddGroupController;
 import net.ajcloud.wansviewplusw.support.customview.PlayItemController;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
-import net.ajcloud.wansviewplusw.support.eventbus.EventBus;
-import net.ajcloud.wansviewplusw.support.eventbus.event.ChangeTabEvent;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
-import net.ajcloud.wansviewplusw.support.utils.WLog;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -358,12 +355,10 @@ public class QuadController implements BaseController, Initializable {
 
     @PreDestroy
     public void Destroy() {
-        WLog.w("============================");
         try {
             for (QuadBean bean :
                     QuadListCache.getInstance().getGroupList(DeviceCache.getInstance().getSigninBean().mail)) {
                 bean.setSelected(false);
-                bean.setCamera_one_image(null);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -371,7 +366,6 @@ public class QuadController implements BaseController, Initializable {
         for (PlayItemController controller : controllers) {
             controller.destroy();
         }
-        EventBus.getInstance().post(new ChangeTabEvent());
         System.gc();
     }
 }

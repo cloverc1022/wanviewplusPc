@@ -387,11 +387,14 @@ public class PlayItemController implements BaseController, PoliceHelper.PoliceCo
 
     public void destroy() {
         imageView.setImage(null);
-        writableImage.cancel();
+        writableImage = null;
         if (mediaPlayerComponent != null && mediaPlayerComponent.getMediaPlayer() != null && mediaPlayerComponent.getMediaPlayer().isPlaying()) {
             mediaPlayerComponent.getMediaPlayer().stop();
             mediaPlayerComponent.getMediaPlayer().release();
             startOrCancelTimer(false);
+            if ((play_method == PlayMethod.RELAY || play_method == PlayMethod.P2P) && !StringUtil.isNullOrEmpty(deviceId)) {
+                TcprelayHelper.getInstance().reConnect(deviceId);
+            }
         }
     }
 

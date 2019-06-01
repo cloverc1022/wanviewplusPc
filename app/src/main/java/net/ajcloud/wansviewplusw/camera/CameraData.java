@@ -14,6 +14,7 @@ import net.ajcloud.wansviewplusw.support.eventbus.EventBus;
 import net.ajcloud.wansviewplusw.support.eventbus.EventType;
 import net.ajcloud.wansviewplusw.support.utils.FileUtil;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
+import net.ajcloud.wansviewplusw.support.utils.WLog;
 
 import java.io.File;
 import java.io.IOException;
@@ -63,15 +64,6 @@ public class CameraData {
                 status.styleProperty().unbind();
                 playing_bg.visibleProperty().unbind();
                 deviceName.textFillProperty().unbind();
-            }
-        });
-        EventBus.getInstance().register(event -> {
-            if (event.getType() == EventType.CHANGE_TAB) {
-                status.textProperty().unbind();
-                status.styleProperty().unbind();
-                playing_bg.visibleProperty().unbind();
-                deviceName.textFillProperty().unbind();
-                iv_thumbnail.setImage(null);
             }
         });
     }

@@ -4,5 +4,6 @@ public enum EventType {
     DEVICE_REFRESH,
     SNAPSHOT,
     MAIN_STAGE_CLOSE,
-    CHANGE_TAB
+    CHANGE_CAMERA,
+    CHANGE_QUAD
 }

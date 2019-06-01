@@ -33,13 +33,6 @@ public class AddGroupData {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        EventBus.getInstance().register(event -> {
-            if (event.getType() == EventType.CHANGE_TAB) {
-                label_selected.textProperty().unbind();
-                label_selected.styleProperty().unbind();
-                iv_thumbnail.setImage(null);
-            }
-        });
         initData(item);
     }
 
