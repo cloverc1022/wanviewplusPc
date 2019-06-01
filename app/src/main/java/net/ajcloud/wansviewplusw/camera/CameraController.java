@@ -587,6 +587,7 @@ public class CameraController implements BaseController, PoliceHelper.PoliceCont
         if (CanvasPlayerUtil.getInstance().getMediaPlayerComponent() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer() != null && CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().isPlaying()) {
             stopRecord(false);
             CanvasPlayerUtil.getInstance().getMediaPlayerComponent().getMediaPlayer().stop();
+            CanvasPlayerUtil.getInstance().removeOptions();
             startOrCancelTimer(false);
             timerService.cancel();
         }

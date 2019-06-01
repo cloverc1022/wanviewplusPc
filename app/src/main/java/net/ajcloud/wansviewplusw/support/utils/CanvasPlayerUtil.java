@@ -40,13 +40,24 @@ public class CanvasPlayerUtil {
 
     public void addOptions(PixelWriter pixelWriter, FloatProperty videoSourceRatioProperty, ChangeListener listener, MediaPlayerEventListener mediaPlayerEventListener) {
         if (mediaPlayerComponent != null) {
-            mediaPlayerComponent.setPixelWriter(pixelWriter);
+            if (mediaPlayerComponent.getPixelWriter() == null) {
+                mediaPlayerComponent.setPixelWriter(pixelWriter);
+            }
             if (mediaPlayerComponent.getMediaPlayer() != null) {
                 mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(mediaPlayerEventListener);
             }
         }
         if (canvasBufferFormatCallback != null) {
             canvasBufferFormatCallback.setVideoSourceRatioProperty(videoSourceRatioProperty, listener);
+        }
+    }
+
+    public void removeOptions() {
+        if (mediaPlayerComponent != null) {
+            mediaPlayerComponent.setPixelWriter(null);
+            if (mediaPlayerComponent.getMediaPlayer() != null) {
+                mediaPlayerComponent.getMediaPlayer().addMediaPlayerEventListener(null);
+            }
         }
     }
 
