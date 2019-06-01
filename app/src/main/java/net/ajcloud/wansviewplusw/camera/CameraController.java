@@ -472,8 +472,6 @@ public class CameraController implements BaseController, PoliceHelper.PoliceCont
     public void onPlay(String deviceId, int playMethod, String url, int mVideoHeight, int mVideoWidth) {
         if (StringUtil.equals(this.deviceId, deviceId)) {
             play_method = playMethod;
-            if (playPane != null)
-                fitImageViewSize((float) playPane.getWidth(), (float) playPane.getHeight());
             onVideoPlay(url);
         }
     }
@@ -488,8 +486,6 @@ public class CameraController implements BaseController, PoliceHelper.PoliceCont
                 public void onSuccess(String url) {
                     WLog.w("TcprelayHelper", "play-----------onSuccess:" + url);
                     Platform.runLater(() -> {
-                        if (playPane != null)
-                            fitImageViewSize((float) playPane.getWidth(), (float) playPane.getHeight());
                         onVideoPlay(url);
                     });
                 }
