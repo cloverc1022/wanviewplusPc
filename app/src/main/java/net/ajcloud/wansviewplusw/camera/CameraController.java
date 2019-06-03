@@ -35,6 +35,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import net.ajcloud.wansviewplusw.BaseController;
+import net.ajcloud.wansviewplusw.support.customview.LoadingManager;
 import net.ajcloud.wansviewplusw.support.device.Camera;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.eventbus.EventBus;
@@ -356,10 +357,12 @@ public class CameraController implements BaseController, PoliceHelper.PoliceCont
             if (requestApiUnit == null) {
                 requestApiUnit = new RequestApiUnit();
             }
+            Platform.runLater(() -> LoadingManager.getLoadingManager().showDefaultLoading((Stage) root.getScene().getWindow()));
             requestApiUnit.getDeviceList(new HttpCommonListener<java.util.List<Camera>>() {
                 @Override
                 public void onSuccess(List<Camera> bean) {
                     Platform.runLater(() -> {
+                        LoadingManager.getLoadingManager().hideDefaultLoading();
                         if (bean != null && bean.size() > 0) {
                             content_list.setVisible(true);
                             content_list.setManaged(true);

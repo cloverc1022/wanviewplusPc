@@ -2,7 +2,7 @@ package net.ajcloud.wansviewplusw.quad;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.google.gson.Gson;
+import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.http.bean.group.GroupDetail;
 import net.ajcloud.wansviewplusw.support.http.bean.group.GroupList;
 import net.ajcloud.wansviewplusw.support.utils.IPreferences;
@@ -44,13 +44,49 @@ public class QuadListCache {
             for (GroupDetail groupDetail : groupListBean.groupList) {
                 QuadBean quadBean = new QuadBean();
                 quadBean.setGroupName(groupDetail.groupName);
-                quadBean.setCamera_one(groupDetail.cameraOne);
-                quadBean.setCamera_two(groupDetail.cameraTwo);
-                quadBean.setCamera_three(groupDetail.cameraThree);
-                quadBean.setCamera_four(groupDetail.cameraFour);
+                if (StringUtil.isNullOrEmpty(groupDetail.cameraOne)) {
+                    quadBean.setCamera_one(groupDetail.cameraOne);
+                } else {
+                    if (DeviceCache.getInstance().get(groupDetail.cameraOne) == null) {
+                        quadBean.setCamera_one(null);
+                    } else {
+                        quadBean.setCamera_one(groupDetail.cameraOne);
+                    }
+                }
+
+                if (StringUtil.isNullOrEmpty(groupDetail.cameraTwo)) {
+                    quadBean.setCamera_two(groupDetail.cameraTwo);
+                } else {
+                    if (DeviceCache.getInstance().get(groupDetail.cameraTwo) == null) {
+                        quadBean.setCamera_two(null);
+                    } else {
+                        quadBean.setCamera_two(groupDetail.cameraTwo);
+                    }
+                }
+
+                if (StringUtil.isNullOrEmpty(groupDetail.cameraThree)) {
+                    quadBean.setCamera_three(groupDetail.cameraThree);
+                } else {
+                    if (DeviceCache.getInstance().get(groupDetail.cameraThree) == null) {
+                        quadBean.setCamera_three(null);
+                    } else {
+                        quadBean.setCamera_three(groupDetail.cameraThree);
+                    }
+                }
+
+                if (StringUtil.isNullOrEmpty(groupDetail.cameraFour)) {
+                    quadBean.setCamera_four(groupDetail.cameraFour);
+                } else {
+                    if (DeviceCache.getInstance().get(groupDetail.cameraFour) == null) {
+                        quadBean.setCamera_four(null);
+                    } else {
+                        quadBean.setCamera_four(groupDetail.cameraFour);
+                    }
+                }
                 groupList.add(quadBean);
             }
         }
+        save();
         return groupList;
     }
 
