@@ -13,8 +13,6 @@ import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.eventbus.EventBus;
 import net.ajcloud.wansviewplusw.support.eventbus.EventType;
 import net.ajcloud.wansviewplusw.support.utils.FileUtil;
-import net.ajcloud.wansviewplusw.support.utils.StringUtil;
-import net.ajcloud.wansviewplusw.support.utils.WLog;
 
 import java.io.File;
 import java.io.IOException;
@@ -75,13 +73,8 @@ public class CameraData {
             Image image = new Image(thumbnail.toURI().toString(), 196, 88, false, true, false);
             iv_thumbnail.setImage(image);
         } else {
-            if (StringUtil.isNullOrEmpty(camera.snapshotUrl)) {
-                Image image = new Image("/image/ic_device_default.png", 196, 88, false, true, false);
-                iv_thumbnail.setImage(image);
-            } else {
-                Image image = new Image(camera.snapshotUrl, 196, 88, false, true, false);
-                iv_thumbnail.setImage(image);
-            }
+            Image image = new Image("/image/ic_device_default.png", 196, 88, false, true, false);
+            iv_thumbnail.setImage(image);
         }
     }
 

@@ -4,8 +4,6 @@ import javafx.beans.property.*;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import net.ajcloud.wansviewplusw.support.device.Camera;
-import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.utils.FileUtil;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 
@@ -54,14 +52,8 @@ public class QuadBean {
                     Image image = new Image(thumbnail.toURI().toString(), 98, 44, false, true, false);
                     setCamera_one_image(image);
                 } else {
-                    Camera camera = DeviceCache.getInstance().get(camera_one);
-                    if (camera == null || StringUtil.isNullOrEmpty(camera.snapshotUrl)) {
-                        Image image = new Image("/image/ic_device_default.png", 98, 44, false, true, false);
-                        setCamera_one_image(image);
-                    } else {
-                        Image image = new Image(camera.snapshotUrl, 98, 44, false, true, false);
-                        setCamera_one_image(image);
-                    }
+                    Image image = new Image("/image/ic_device_default.png", 98, 44, false, true, false);
+                    setCamera_one_image(image);
                 }
             }
         }
@@ -83,14 +75,8 @@ public class QuadBean {
                     Image image = new Image(thumbnail.toURI().toString(), 98, 44, false, true, false);
                     setCamera_two_image(image);
                 } else {
-                    Camera camera = DeviceCache.getInstance().get(camera_two);
-                    if (camera == null || StringUtil.isNullOrEmpty(camera.snapshotUrl)) {
-                        Image image = new Image("/image/ic_device_default.png", 98, 44, false, true, false);
-                        setCamera_two_image(image);
-                    } else {
-                        Image image = new Image(camera.snapshotUrl, 98, 44, false, true, false);
-                        setCamera_two_image(image);
-                    }
+                    Image image = new Image("/image/ic_device_default.png", 98, 44, false, true, false);
+                    setCamera_two_image(image);
                 }
             }
         }
@@ -112,14 +98,8 @@ public class QuadBean {
                     Image image = new Image(thumbnail.toURI().toString(), 98, 44, false, true, false);
                     setCamera_three_image(image);
                 } else {
-                    Camera camera = DeviceCache.getInstance().get(camera_three);
-                    if (camera == null || StringUtil.isNullOrEmpty(camera.snapshotUrl)) {
-                        Image image = new Image("/image/ic_device_default.png", 98, 44, false, true, false);
-                        setCamera_three_image(image);
-                    } else {
-                        Image image = new Image(camera.snapshotUrl, 98, 44, false, true, false);
-                        setCamera_three_image(image);
-                    }
+                    Image image = new Image("/image/ic_device_default.png", 98, 44, false, true, false);
+                    setCamera_three_image(image);
                 }
             }
         }
@@ -141,14 +121,8 @@ public class QuadBean {
                     Image image = new Image(thumbnail.toURI().toString(), 98, 44, false, true, false);
                     setCamera_four_image(image);
                 } else {
-                    Camera camera = DeviceCache.getInstance().get(camera_four);
-                    if (camera == null || StringUtil.isNullOrEmpty(camera.snapshotUrl)) {
-                        Image image = new Image("/image/ic_device_default.png", 98, 44, false, true, false);
-                        setCamera_four_image(image);
-                    } else {
-                        Image image = new Image(camera.snapshotUrl, 98, 44, false, true, false);
-                        setCamera_four_image(image);
-                    }
+                    Image image = new Image("/image/ic_device_default.png", 98, 44, false, true, false);
+                    setCamera_four_image(image);
                 }
             }
         }

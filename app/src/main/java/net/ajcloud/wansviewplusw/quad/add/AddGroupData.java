@@ -6,10 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import net.ajcloud.wansviewplusw.support.eventbus.EventBus;
-import net.ajcloud.wansviewplusw.support.eventbus.EventType;
 import net.ajcloud.wansviewplusw.support.utils.FileUtil;
-import net.ajcloud.wansviewplusw.support.utils.StringUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,13 +39,8 @@ public class AddGroupData {
             Image image = new Image(thumbnail.toURI().toString(), 196, 88, false, true, false);
             iv_thumbnail.setImage(image);
         } else {
-            if (StringUtil.isNullOrEmpty(bean.camera.snapshotUrl)) {
-                Image image = new Image("/image/ic_device_default.png", 196, 88, false, true, false);
-                iv_thumbnail.setImage(image);
-            } else {
-                Image image = new Image(bean.camera.snapshotUrl, 196, 88, false, true, false);
-                iv_thumbnail.setImage(image);
-            }
+            Image image = new Image("/image/ic_device_default.png", 196, 88, false, true, false);
+            iv_thumbnail.setImage(image);
         }
         label_deviceId.setText(bean.camera.deviceId);
         label_selected.styleProperty().bind(bean.selectedCssProperty());
