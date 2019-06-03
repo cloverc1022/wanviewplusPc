@@ -38,7 +38,6 @@ import net.ajcloud.wansviewplusw.setting.SettingController;
 import net.ajcloud.wansviewplusw.support.customview.popup.AccountPopController;
 import net.ajcloud.wansviewplusw.support.device.DeviceCache;
 import net.ajcloud.wansviewplusw.support.utils.StringUtil;
-import net.ajcloud.wansviewplusw.support.utils.WLog;
 
 import javax.annotation.PostConstruct;
 import java.io.InputStream;
@@ -189,12 +188,14 @@ public class MainController implements BaseController, Initializable {
                 aboutStage.sizeToScene();
                 aboutStage.setResizable(false);
                 aboutStage.initStyle(StageStyle.DECORATED);
+                aboutStage.setOnCloseRequest(e -> {
+                    e.consume();
+                    aboutStage.close();
+                });
             }
             aboutStage.show();
         } catch (Exception ex) {
             Logger.getLogger(Base.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            System.gc();
         }
     }
 
@@ -222,12 +223,14 @@ public class MainController implements BaseController, Initializable {
                 settingStage.sizeToScene();
                 settingStage.setResizable(false);
                 settingStage.initStyle(StageStyle.DECORATED);
+                settingStage.setOnCloseRequest(e -> {
+                    e.consume();
+                    settingStage.close();
+                });
             }
             settingStage.show();
         } catch (Exception ex) {
             Logger.getLogger(Base.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            System.gc();
         }
     }
 

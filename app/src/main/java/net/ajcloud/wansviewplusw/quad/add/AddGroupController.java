@@ -51,7 +51,9 @@ public class AddGroupController implements BaseController, Initializable {
     private OnFinishListener onFinishListener;
     private boolean isAdd = true;
 
-    public void init(String groupName) {
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        resourceBundle = resources;
         device_list.setCellFactory(param -> {
             AddGroupCell addGroupCell = new AddGroupCell();
             addGroupCell.setOnMouseClicked((v) -> {
@@ -86,13 +88,16 @@ public class AddGroupController implements BaseController, Initializable {
             });
             return addGroupCell;
         });
+    }
+
+    public void init(String groupName) {
         initData(groupName);
         initListener();
     }
 
     private void initData(String groupName) {
         List<Camera> cameras = new ArrayList<>(DeviceCache.getInstance().getAllDevices());
-
+        mInfos.clear();
         if (StringUtil.isNullOrEmpty(groupName)) {
             btn_done.setDisable(true);
             isAdd = true;
@@ -253,11 +258,6 @@ public class AddGroupController implements BaseController, Initializable {
         layout.setActions(hBox);
         alert.setContent(layout);
         alert.show();
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        resourceBundle = resources;
     }
 
     @Override

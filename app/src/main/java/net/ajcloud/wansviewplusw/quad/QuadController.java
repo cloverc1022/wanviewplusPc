@@ -71,6 +71,7 @@ public class QuadController implements BaseController, Initializable {
 
     private ResourceBundle resourceBundle;
     private Stage addGroupStage;
+    private AddGroupController addGroupController;
 
     private String currentGroupName;
     private ObservableList<QuadBean> mInfos = FXCollections.observableArrayList();
@@ -105,6 +106,7 @@ public class QuadController implements BaseController, Initializable {
         addCamera(content_2);
         addCamera(content_3);
         addCamera(content_4);
+        initAddGroup();
         initData();
         initListener();
     }
@@ -169,7 +171,7 @@ public class QuadController implements BaseController, Initializable {
         }
     }
 
-    private void go2AddGroup(String groupName) {
+    private void initAddGroup() {
         try {
             FXMLLoader loader = new FXMLLoader();
             InputStream in = QuadController.class.getResourceAsStream("/fxml/add_group.fxml");
@@ -178,8 +180,7 @@ public class QuadController implements BaseController, Initializable {
             ResourceBundle bundle = ResourceBundle.getBundle("strings");
             loader.setResources(bundle);
             Pane page = loader.load(in);
-            AddGroupController addGroupController = loader.getController();
-            addGroupController.init(groupName);
+            addGroupController = loader.getController();
             addGroupController.setOnFinishListener((newGroup, oldGroup, isAdd) -> {
                 if (addGroupStage != null) {
                     addGroupStage.close();
@@ -195,20 +196,28 @@ public class QuadController implements BaseController, Initializable {
             stylesheets.addAll(Base.class.getResource("/css/jfoenix-fonts.css").toExternalForm(),
                     Base.class.getResource("/css/jfoenix-design.css").toExternalForm(),
                     Base.class.getResource("/css/main.css").toExternalForm());
-            if (addGroupStage == null) {
-                addGroupStage = new Stage();
-                addGroupStage.getIcons().add(new Image("/image/ic_launcher.png", 48, 48, true, true));
-                addGroupStage.setTitle(resourceBundle.getString("quadScreen_creatGroup"));
-                addGroupStage.sizeToScene();
-                addGroupStage.setResizable(false);
-                addGroupStage.initStyle(StageStyle.DECORATED);
-            }
+            addGroupStage = new Stage();
+            addGroupStage.getIcons().add(new Image("/image/ic_launcher.png", 48, 48, true, true));
+            addGroupStage.setTitle(resourceBundle.getString("quadScreen_creatGroup"));
+            addGroupStage.sizeToScene();
+            addGroupStage.setResizable(false);
+            addGroupStage.initStyle(StageStyle.DECORATED);
             addGroupStage.setScene(scene);
-            Platform.runLater(() -> addGroupStage.show());
         } catch (Exception ex) {
             Logger.getLogger(QuadController.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             System.gc();
+        }
+    }
+
+    private void go2AddGroup(String groupName) {
+        try {
+            Platform.runLater(() -> {
+                addGroupController.init(groupName);
+                addGroupStage.show();
+            });
+        } catch (Exception ex) {
+            WLog.w(ex.getMessage());
         }
     }
 
