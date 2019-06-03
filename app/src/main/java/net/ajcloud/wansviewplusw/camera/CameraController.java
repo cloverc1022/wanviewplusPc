@@ -193,7 +193,6 @@ public class CameraController implements BaseController, PoliceHelper.PoliceCont
     @PostConstruct
     public void init() {
         try {
-            WLog.w("============4================");
             Objects.requireNonNull(context, "context");
             fullscreenListener = (FullscreenListener) context.getRegisteredObject("FullscreenListener");
             showLoading(false, "");
@@ -204,7 +203,6 @@ public class CameraController implements BaseController, PoliceHelper.PoliceCont
                     isReady = true;
                 }).start();
             }
-            WLog.w("============5================");
             policeHelper = new PoliceHelper(this);
             videoSourceRatioProperty = new SimpleFloatProperty(0.4f);
             pixelFormat = PixelFormat.getByteBgraPreInstance();
@@ -257,11 +255,8 @@ public class CameraController implements BaseController, PoliceHelper.PoliceCont
             Tooltip tooltip = new Tooltip(resourceBundle.getString("countDown_msg"));
             tooltip.getStyleClass().add("tips");
             Tooltip.install(iv_tips, tooltip);
-            WLog.w("============6================");
             initListener();
-            WLog.w("============7================");
             initData();
-            WLog.w("============8================");
         } catch (Exception e) {
             e.printStackTrace();
         }

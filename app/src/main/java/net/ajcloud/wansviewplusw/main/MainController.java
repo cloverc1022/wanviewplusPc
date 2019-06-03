@@ -134,7 +134,6 @@ public class MainController implements BaseController, Initializable {
     }
 
     private void replace(final String id) {
-        WLog.w("============1================");
         iv_play.getStyleClass().remove("iv_play_selected");
         iv_play.getStyleClass().remove("iv_play_normal");
         iv_quad.getStyleClass().remove("iv_quad_selected");
@@ -154,11 +153,9 @@ public class MainController implements BaseController, Initializable {
             label_play.getStyleClass().add("label_normal");
             label_quad.getStyleClass().add("label_selected");
         }
-        WLog.w("============2================");
         if (!StringUtil.equals(currentItem, id)) {
             try {
                 flowHandler.handle(id);
-                WLog.w("============3================");
                 currentItem = id;
             } catch (Exception ex) {
                 ex.printStackTrace();
